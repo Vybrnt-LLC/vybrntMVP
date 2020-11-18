@@ -1,0 +1,167 @@
+{
+  "project_info": {
+    "project_number": "752086499806",
+    "firebase_url": "https://vybrnt-release-d73d5.firebaseio.com",
+    "project_id": "vybrnt-release-d73d5",
+    "storage_bucket": "vybrnt-release-d73d5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752086499806:android:3b5ac31c5f3d6d64cd1d4f",
+        "android_client_info": {
+          "package_name": "com.example.vybrnt_mvp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752086499806-d8270v194r7e3f7n1sf5je2pgnnslojd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vybrnt_mvp",
+            "certificate_hash": "7dab9202e921695de4e575a765d5b443da76e18e"
+          }
+        },
+        {
+          "client_id": "752086499806-vtlabs6b44n5i8d7c8likaicgekef85p.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vybrnt_mvp",
+            "certificate_hash": "f1242678b11e1d89bf3fca4f3ebcc3c3233be5b9"
+          }
+        },
+        {
+          "client_id": "752086499806-e6i82648imvvrbi13uns7n0rk1uotkch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYSSBqE2MawcX4Zh0fFYbLAn0Kk-iNbPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752086499806-e6i82648imvvrbi13uns7n0rk1uotkch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "752086499806-fv5p9gk830e66eamusuuus6bf5bs7oth.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vybrnt"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752086499806:android:b4151754eba8dbb5cd1d4f",
+        "android_client_info": {
+          "package_name": "com.vybrnt.vybrnt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752086499806-kj0btrvknn8b2u5uqqis4ch0b1tl1e36.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vybrnt.vybrnt",
+            "certificate_hash": "7dab9202e921695de4e575a765d5b443da76e18e"
+          }
+        },
+        {
+          "client_id": "752086499806-fd4330766svo7l1i37ofrubi42js5ol8.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vybrnt.vybrnt",
+            "certificate_hash": "f1242678b11e1d89bf3fca4f3ebcc3c3233be5b9"
+          }
+        },
+        {
+          "client_id": "752086499806-e6i82648imvvrbi13uns7n0rk1uotkch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYSSBqE2MawcX4Zh0fFYbLAn0Kk-iNbPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752086499806-e6i82648imvvrbi13uns7n0rk1uotkch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "752086499806-fv5p9gk830e66eamusuuus6bf5bs7oth.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vybrnt"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:752086499806:android:639d67a4fa917de2cd1d4f",
+        "android_client_info": {
+          "package_name": "com.vybrnt.vybrnt.dev"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "752086499806-mv8be2tfovnq4viom9d231urnjbh3rup.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vybrnt.vybrnt.dev",
+            "certificate_hash": "7dab9202e921695de4e575a765d5b443da76e18e"
+          }
+        },
+        {
+          "client_id": "752086499806-ad4j0ph629iljevcg0t1iciibvh8ni7d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vybrnt.vybrnt.dev",
+            "certificate_hash": "f1242678b11e1d89bf3fca4f3ebcc3c3233be5b9"
+          }
+        },
+        {
+          "client_id": "752086499806-e6i82648imvvrbi13uns7n0rk1uotkch.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAYSSBqE2MawcX4Zh0fFYbLAn0Kk-iNbPg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "752086499806-e6i82648imvvrbi13uns7n0rk1uotkch.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "752086499806-fv5p9gk830e66eamusuuus6bf5bs7oth.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vybrnt"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

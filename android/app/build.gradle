@@ -82,6 +82,22 @@ android {
             signingConfig signingConfigs.debug
             //signingConfig signingConfigs.release
         }
+        debug {
+            signingConfig signingConfigs.debug
+        }
+    }
+
+    flavorDimensions "flavor-type"
+    productFlavors {
+        dev {
+            dimension "flavor-type"
+            applicationIdSuffix ".dev"
+        }
+        prod {
+            dimension "flavor-type"
+            applicationIdSuffix ".uat"
+            versionNameSuffix "-uat"
+        }
     }
 }
 

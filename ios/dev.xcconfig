@@ -1,9 +1,4 @@
-//
-//  dev.xcconfig
-//  Runner
-//
-//  Created by Joel Sakyi on 11/17/20.
-//
-
-// Configuration settings file format documentation can be found at:
-// https://help.apple.com/xcode/#/dev745c5c974
+#include "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include "Generated.xcconfig"
+FLUTTER_TARGET=lib/main_dev.dart
+bundle_suffix = .dev

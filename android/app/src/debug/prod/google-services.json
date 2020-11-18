@@ -1,0 +1,93 @@
+{
+  "project_info": {
+    "project_number": "239436148394",
+    "firebase_url": "https://vybrnt-production-release.firebaseio.com",
+    "project_id": "vybrnt-production-release",
+    "storage_bucket": "vybrnt-production-release.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239436148394:android:7bbea0af5b89d961d9aad3",
+        "android_client_info": {
+          "package_name": "com.vybrnt.vybrnt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239436148394-7171n7gf1k697euo0akfqvbbtd6ctn4q.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.vybrnt.vybrnt",
+            "certificate_hash": "120bcd988a0362fb2fd3b43f1c6486c91f0859a3"
+          }
+        },
+        {
+          "client_id": "239436148394-f556bg4nf573olnnu35mle3u8aveudek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvkqzgu0TaFmrerArdsz6dHI1P-QiXTqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239436148394-f556bg4nf573olnnu35mle3u8aveudek.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "239436148394-kglcsk4h1h8tjlvgsmi63gijtknki97a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vybrnt",
+                "app_store_id": "1526627896"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:239436148394:android:10ffc4ec73d5d1afd9aad3",
+        "android_client_info": {
+          "package_name": "com.vybrnt.vybrnt.uat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "239436148394-f556bg4nf573olnnu35mle3u8aveudek.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDvkqzgu0TaFmrerArdsz6dHI1P-QiXTqQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "239436148394-f556bg4nf573olnnu35mle3u8aveudek.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "239436148394-kglcsk4h1h8tjlvgsmi63gijtknki97a.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.vybrnt",
+                "app_store_id": "1526627896"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

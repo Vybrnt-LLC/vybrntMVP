@@ -15,25 +15,25 @@ import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model
 //import 'package:flutter/services.dart';
 import 'core/injection.dart';
 import 'core/routes/router.gr.dart' as route;
-
+import './config_reader.dart';
 import 'features/authentication/application/auth/bloc/auth_bloc.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  configureInjection(Environment.prod);
-  await Firebase.initializeApp();
-  // Set `enableInDevMode` to true to see reports while in debug mode
-  // This is only to be used for confirming that reports are being
-  // submitted as expected. It is not intended to be used for everyday
-  // development.\
-  if (kDebugMode) {
-    await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
-  }
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   configureInjection(Environment.prod);
+//   await Firebase.initializeApp();
+//   // Set `enableInDevMode` to true to see reports while in debug mode
+//   // This is only to be used for confirming that reports are being
+//   // submitted as expected. It is not intended to be used for everyday
+//   // development.\
+//   if (kDebugMode) {
+//     await FirebaseCrashlytics.instance.setCrashlyticsCollectionEnabled(false);
+//   }
 
-  // Pass all uncaught errors from the framework to Crashlytics.
-  FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
-  runApp(MyApp());
-}
+//   // Pass all uncaught errors from the framework to Crashlytics.
+//   FlutterError.onError = FirebaseCrashlytics.instance.recordFlutterError;
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
