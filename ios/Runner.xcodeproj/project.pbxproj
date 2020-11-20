@@ -14,9 +14,6 @@
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
 		97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FD1CF9000F007C117D /* Assets.xcassets */; };
 		97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FF1CF9000F007C117D /* LaunchScreen.storyboard */; };
-		DF22266123DBB4E900CAD981 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF22266023DBB4E900CAD981 /* GoogleService-Info.plist */; };
-		DF3B15FE25648B16008C2F91 /* GoogleService-Info-dev.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF3B15FD25648B16008C2F91 /* GoogleService-Info-dev.plist */; };
-		DF3B160025648B4D008C2F91 /* GoogleService-Info-prod.plist in Resources */ = {isa = PBXBuildFile; fileRef = DF3B15FF25648B4D008C2F91 /* GoogleService-Info-prod.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -57,11 +54,11 @@
 		CFA89C48DC2660F922B4940B /* Pods-Runner.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig"; sourceTree = "<group>"; };
 		D3DE7ECA1294B6FB726B777F /* Pods-Runner.release-dev.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-dev.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-dev.xcconfig"; sourceTree = "<group>"; };
 		DF1E330B24DFDB18009C8C3D /* Runner.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Runner.entitlements; sourceTree = "<group>"; };
-		DF22266023DBB4E900CAD981 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		DF3B15EC25647A47008C2F91 /* dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = dev.xcconfig; sourceTree = "<group>"; };
 		DF3B15ED25647A70008C2F91 /* prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = prod.xcconfig; sourceTree = "<group>"; };
-		DF3B15FD25648B16008C2F91 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info-dev.plist"; path = "../../../../../Downloads/GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
-		DF3B15FF25648B4D008C2F91 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
+		DF841E0225672B9F00815363 /* GoogleService-Info-dev.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-dev.plist"; sourceTree = "<group>"; };
+		DF841E0425672B9F00815363 /* GoogleService-Info-prod.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info-prod.plist"; sourceTree = "<group>"; };
+		DF841F6825673A0900815363 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		EA4B729C89BE497B18F13C08 /* Pods-Runner.debug-prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.debug-prod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.debug-prod.xcconfig"; sourceTree = "<group>"; };
 		F5B6C34A73783703AEC83119 /* Pods-Runner.release-prod.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Runner.release-prod.xcconfig"; path = "Target Support Files/Pods-Runner/Pods-Runner.release-prod.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -131,7 +128,8 @@
 		97C146F01CF9000F007C117D /* Runner */ = {
 			isa = PBXGroup;
 			children = (
-				DF3B15F625648758008C2F91 /* Firebase */,
+				DF841F6825673A0900815363 /* GoogleService-Info.plist */,
+				DF841E0025672B9F00815363 /* Firebase */,
 				DF1E330B24DFDB18009C8C3D /* Runner.entitlements */,
 				97C146FA1CF9000F007C117D /* Main.storyboard */,
 				97C146FD1CF9000F007C117D /* Assets.xcassets */,
@@ -161,30 +159,29 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		DF3B15F625648758008C2F91 /* Firebase */ = {
+		DF841E0025672B9F00815363 /* Firebase */ = {
 			isa = PBXGroup;
 			children = (
-				DF22266023DBB4E900CAD981 /* GoogleService-Info.plist */,
-				DF3B15F8256487D3008C2F91 /* Production */,
-				DF3B15F725648770008C2F91 /* Development */,
+				DF841E0125672B9F00815363 /* Development */,
+				DF841E0325672B9F00815363 /* Production */,
 			);
-			name = Firebase;
+			path = Firebase;
 			sourceTree = "<group>";
 		};
-		DF3B15F725648770008C2F91 /* Development */ = {
+		DF841E0125672B9F00815363 /* Development */ = {
 			isa = PBXGroup;
 			children = (
-				DF3B15FD25648B16008C2F91 /* GoogleService-Info-dev.plist */,
+				DF841E0225672B9F00815363 /* GoogleService-Info-dev.plist */,
 			);
-			name = Development;
+			path = Development;
 			sourceTree = "<group>";
 		};
-		DF3B15F8256487D3008C2F91 /* Production */ = {
+		DF841E0325672B9F00815363 /* Production */ = {
 			isa = PBXGroup;
 			children = (
-				DF3B15FF25648B4D008C2F91 /* GoogleService-Info-prod.plist */,
+				DF841E0425672B9F00815363 /* GoogleService-Info-prod.plist */,
 			);
-			name = Production;
+			path = Production;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -255,10 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				97C147011CF9000F007C117D /* LaunchScreen.storyboard in Resources */,
-				DF3B15FE25648B16008C2F91 /* GoogleService-Info-dev.plist in Resources */,
-				DF3B160025648B4D008C2F91 /* GoogleService-Info-prod.plist in Resources */,
 				3B3967161E833CAA004F5970 /* AppFrameworkInfo.plist in Resources */,
-				DF22266123DBB4E900CAD981 /* GoogleService-Info.plist in Resources */,
 				97C146FE1CF9000F007C117D /* Assets.xcassets in Resources */,
 				97C146FC1CF9000F007C117D /* Main.storyboard in Resources */,
 			);
@@ -413,7 +407,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug-Development\" ] || [ \"${CONFIGURATION}\" == \"Release-Development\" ] || [ \"${CONFIGURATION}\" == \"Release\" ]; then\ncp -r \"${PROJECT_DIR}/Runner/Firebase/dev/GoogleService-Info-dev.plist\" \"${PROJECT_DIR}/Runner/GoogleService-Info.plist\"\necho \"Development plist copied\"\nelif [ \"${CONFIGURATION}\" == \"Debug-Production\" ] || [ \"${CONFIGURATION}\" == \"Release-Production\" ] || [ \"${CONFIGURATION}\" == \"Debug\" ]; then\ncp -r \"${PROJECT_DIR}/Runner/Firebase/uat/GoogleService-Info-prod.plist\" \"${PROJECT_DIR}/Runner/GoogleService-Info.plist\"\necho \"Production plist copied\"\nfi\n";
+			shellScript = "if [ \"${CONFIGURATION}\" == \"Debug-Development\" ] || [ \"${CONFIGURATION}\" == \"Release-Development\" ] || [ \"${CONFIGURATION}\" == \"Release\" ]; then\ncp -r \"${PROJECT_DIR}/Runner/Firebase/Development/GoogleService-Info-dev.plist\" \"${PROJECT_DIR}/Runner/GoogleService-Info.plist\"\necho \"Development plist copied\"\nelif [ \"${CONFIGURATION}\" == \"Debug-Production\" ] || [ \"${CONFIGURATION}\" == \"Release-Production\" ] || [ \"${CONFIGURATION}\" == \"Debug\" ]; then\ncp -r \"${PROJECT_DIR}/Runner/Firebase/Production/GoogleService-Info-prod.plist\" \"${PROJECT_DIR}/Runner/GoogleService-Info.plist\"\necho \"Production plist copied\"\nfi\n";
 		};
 		DFA52D0524D3AC12007A4D31 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -814,7 +808,7 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				MARKETING_VERSION = 0.5.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt.uat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -901,7 +895,7 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				MARKETING_VERSION = 0.5.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -988,7 +982,7 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				MARKETING_VERSION = 0.5.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt.dev;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
@@ -1075,7 +1069,7 @@
 					"$(PROJECT_DIR)/Flutter",
 				);
 				MARKETING_VERSION = 0.5.1;
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt;
+				PRODUCT_BUNDLE_IDENTIFIER = com.example.vybrnt.uat;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
