@@ -84,7 +84,7 @@ class _SearchScreenState extends State<SearchScreen>
   @override
   void initState() {
     super.initState();
-    _controller = TabController(vsync: this, length: 3);
+    _controller = TabController(vsync: this, length: 2);
   }
 
   @override
@@ -96,7 +96,7 @@ class _SearchScreenState extends State<SearchScreen>
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-        length: 3,
+        length: 2,
         child: BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
           return Scaffold(
             key: scaffoldKey,
@@ -119,9 +119,6 @@ class _SearchScreenState extends State<SearchScreen>
                       bottom: TabBar(
                         controller: _controller,
                         tabs: [
-                          Tab(
-                              icon: Icon(Icons.group_work),
-                              text: 'Verified Orgs'),
                           Tab(icon: Icon(Icons.group), text: 'Orgs'),
                           Tab(icon: Icon(Icons.person), text: 'Users'),
                         ],
@@ -138,10 +135,6 @@ class _SearchScreenState extends State<SearchScreen>
                         onSubmitted: (input) {
                           if (input.isNotEmpty) {
                             if (_controller.index == 0) {
-                              context
-                                  .bloc<SearchBloc>()
-                                  .add(SearchEvent.getVerifiedOrgSearch(input));
-                            } else if (_controller.index == 1) {
                               context
                                   .bloc<SearchBloc>()
                                   .add(SearchEvent.getOrgSearch(input));
@@ -171,7 +164,7 @@ class _SearchScreenState extends State<SearchScreen>
                                 icon: Icon(
                                   Icons.clear,
                                 ),
-                                onPressed: () => _searchController.clear())),
+                                onPressed: _clearSearch())),
                       ),
                     ),
                   ];
@@ -180,24 +173,7 @@ class _SearchScreenState extends State<SearchScreen>
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomScrollView(
-                        key: PageStorageKey<String>(widget.name),
-                        slivers: <Widget>[
-                          SliverList(
-                            delegate: SliverChildBuilderDelegate(
-                              (BuildContext context, int index) {
-                                //Needs to be updated
-
-                                return _buildOrgTile(state.verifiedOrgs[index]);
-                              },
-                              childCount: state.verifiedOrgs.size,
-                            ),
-                          )
-                        ]),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CustomScrollView(
-                        key: PageStorageKey<String>(widget.name),
+                        key: PageStorageKey<String>('org'),
                         slivers: <Widget>[
                           SliverList(
                             delegate: SliverChildBuilderDelegate(

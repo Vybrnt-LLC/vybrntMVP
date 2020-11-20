@@ -67,7 +67,7 @@ class OrgService implements IOrgService {
   @override
   Stream<KtList<OrgList>> searchOrg(String name) async* {
     yield* organizationsRef
-        .where('verified', isEqualTo: false)
+        //.where('verified', isEqualTo: false)
         .where('name', isGreaterThanOrEqualTo: name)
         //.where('name', isGreaterThan: '')
         .orderBy('name')
