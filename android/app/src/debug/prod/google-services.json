@@ -40,11 +40,10 @@
               "client_type": 3
             },
             {
-              "client_id": "239436148394-kglcsk4h1h8tjlvgsmi63gijtknki97a.apps.googleusercontent.com",
+              "client_id": "239436148394-lhevtc5ofluuik0dtkkobqr81rdchchl.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.vybrnt",
-                "app_store_id": "1526627896"
+                "bundle_id": "com.example.vybrnt.uat"
               }
             }
           ]
@@ -77,11 +76,10 @@
               "client_type": 3
             },
             {
-              "client_id": "239436148394-kglcsk4h1h8tjlvgsmi63gijtknki97a.apps.googleusercontent.com",
+              "client_id": "239436148394-lhevtc5ofluuik0dtkkobqr81rdchchl.apps.googleusercontent.com",
               "client_type": 2,
               "ios_info": {
-                "bundle_id": "com.example.vybrnt",
-                "app_store_id": "1526627896"
+                "bundle_id": "com.example.vybrnt.uat"
               }
             }
           ]

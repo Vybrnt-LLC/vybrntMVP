@@ -95,8 +95,7 @@ android {
         }
         prod {
             dimension "flavor-type"
-            applicationIdSuffix ".uat"
-            versionNameSuffix "-uat"
+            applicationId "com.vybrnt.vybrnt"
         }
     }
 }
