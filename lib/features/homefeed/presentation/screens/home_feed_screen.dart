@@ -352,7 +352,8 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                         ],
                         backgroundColor: appBarColor,
                         leading: IconButton(
-                            icon: Icon(Icons.menu),
+                            icon: Icon(Icons.menu,
+                                color: Provider.of<Color>(context)),
                             onPressed: () {
                               SimpleHiddenDrawerController.of(context).toggle();
                             }),
