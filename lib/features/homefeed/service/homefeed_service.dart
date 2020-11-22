@@ -17,6 +17,10 @@ import 'package:rxdart/rxdart.dart';
 class HomeFeedService implements IHomeFeedService {
   final FirebaseFirestore _firestore;
 
+  DocumentSnapshot _lastDocument;
+  List<List<Post>> _allPagedResults = List<List<Post>>();
+  bool _hasMorePosts = true;
+
   HomeFeedService(this._firestore);
 
   @override
@@ -47,6 +51,7 @@ class HomeFeedService implements IHomeFeedService {
   @override
   Stream<Either<PostFailure, KtList<Post>>> watchPostFeed() async* {
     final currentUserID = await _firestore.currentUserID();
+    //_requestPosts(currentUserID);
     yield* feedsRef
         .doc(currentUserID)
         .collection('userFeed')
@@ -68,6 +73,65 @@ class HomeFeedService implements IHomeFeedService {
       }
     });
   }
+
+  // void _requestPosts(String currentUserID) {
+  //   // #2: split the query from the actual subscription
+
+  //   var pagePostsQuery = feedsRef
+  //       .doc(currentUserID)
+  //       .collection('userFeed')
+  //       .orderBy('postTime', descending: true)
+  //       // #3: Limit the amount of results
+  //       .limit(10);
+
+  //   if (_lastDocument != null) {
+  //     pagePostsQuery = pagePostsQuery.startAfterDocument(_lastDocument);
+  //   }
+
+  //   // If there's no more posts then bail out of the function
+  //   if (!_hasMorePosts) return;
+
+  //   var currentRequestIndex = _allPagedResults.length;
+
+  //   pagePostsQuery.snapshots().listen((postsSnapshot) {
+  //     if (postsSnapshot.docs.isNotEmpty) {
+  //       var posts = postsSnapshot
+  //       .map(
+  //         (snapshot) => right<PostFailure, KtList<Post>>(
+  //           snapshot.docs
+  //               .map((doc) => PostDTO.fromFirestore(doc).toDomain())
+  //               .toImmutableList(),
+  //         ),
+  //       )
+  //       .onErrorReturnWith((e) {
+  //     if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
+  //       return left(const PostFailure.insufficientPermissions());
+  //     } else {
+  //       print(e);
+  //       return left(const PostFailure.unexpected());
+  //     }
+  //   });
+  //       .docs
+  //           .map(
+  //         (doc) =>
+  //           PostDTO.fromFirestore(doc).toDomain()).where((mappedItem) => mappedItem.postTime != null)
+  //               .toImmutableList();
+
+  //       )
+  //           .onErrorReturnWith((e) {
+  //         if (e is FirebaseException &&
+  //             e.message.contains('PERMISSION_DENIED')) {
+  //           return left(const PostFailure.insufficientPermissions());
+  //         } else {
+  //           print(e);
+  //           return left(const PostFailure.unexpected());
+  //         }
+  //       });
+
+  //       _postsController.add(posts);
+  //     }
+  //   });
+  // }
 
   @override
   Stream<Either<EventFailure, KtList<Event>>> watchCategoriesUpcomingEvents(

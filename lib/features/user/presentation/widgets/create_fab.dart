@@ -143,6 +143,28 @@ class CreateFAB extends StatelessWidget {
                 color: Colors.white,
                 fontSize: 16.0),
             labelBackgroundColor: Color(0xFF801E48)),
+        SpeedDialChild(
+            child: GestureDetector(
+              onTap: () => launch('http://equity.psu.edu/reportbias'),
+              child: SizedBox(
+                height: _fabDimension,
+                width: _fabDimension,
+                child: Center(
+                  child: Icon(
+                    Icons.report,
+                    color: Theme.of(context).colorScheme.onSecondary,
+                  ),
+                ),
+              ),
+            ),
+            backgroundColor: Colors.amber[900],
+            // onTap: () => widget.onPushPhoto(0),
+            label: 'PSU Report Bias',
+            labelStyle: TextStyle(
+                fontWeight: FontWeight.w500,
+                color: Colors.white,
+                fontSize: 16.0),
+            labelBackgroundColor: Color(0xFF801E48)),
         // FAB 2
         SpeedDialChild(
             child: GestureDetector(
@@ -174,7 +196,7 @@ class CreateFAB extends StatelessWidget {
                 width: _fabDimension,
                 child: Center(
                   child: Icon(
-                    Icons.error,
+                    Icons.bug_report,
                     color: Theme.of(context).colorScheme.onSecondary,
                   ),
                 ),

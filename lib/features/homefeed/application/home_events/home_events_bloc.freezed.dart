@@ -22,6 +22,10 @@ class _$HomeEventsEventTearOff {
       failureOrNotes,
     );
   }
+
+  _RequestMoreData requestMoreData() {
+    return const _RequestMoreData();
+  }
 }
 
 // ignore: unused_element
@@ -34,22 +38,26 @@ mixin _$HomeEventsEvent {
     @required
         Result eventsReceived(
             Either<EventFailure, KtList<Event>> failureOrNotes),
+    @required Result requestMoreData(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result getData(),
     Result eventsReceived(Either<EventFailure, KtList<Event>> failureOrNotes),
+    Result requestMoreData(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result getData(GetData value),
     @required Result eventsReceived(_EventsReceived value),
+    @required Result requestMoreData(_RequestMoreData value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result getData(GetData value),
     Result eventsReceived(_EventsReceived value),
+    Result requestMoreData(_RequestMoreData value),
     @required Result orElse(),
   });
 }
@@ -106,9 +114,11 @@ class _$GetData implements GetData {
     @required
         Result eventsReceived(
             Either<EventFailure, KtList<Event>> failureOrNotes),
+    @required Result requestMoreData(),
   }) {
     assert(getData != null);
     assert(eventsReceived != null);
+    assert(requestMoreData != null);
     return getData();
   }
 
@@ -117,6 +127,7 @@ class _$GetData implements GetData {
   Result maybeWhen<Result extends Object>({
     Result getData(),
     Result eventsReceived(Either<EventFailure, KtList<Event>> failureOrNotes),
+    Result requestMoreData(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -131,9 +142,11 @@ class _$GetData implements GetData {
   Result map<Result extends Object>({
     @required Result getData(GetData value),
     @required Result eventsReceived(_EventsReceived value),
+    @required Result requestMoreData(_RequestMoreData value),
   }) {
     assert(getData != null);
     assert(eventsReceived != null);
+    assert(requestMoreData != null);
     return getData(this);
   }
 
@@ -142,6 +155,7 @@ class _$GetData implements GetData {
   Result maybeMap<Result extends Object>({
     Result getData(GetData value),
     Result eventsReceived(_EventsReceived value),
+    Result requestMoreData(_RequestMoreData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -221,9 +235,11 @@ class _$_EventsReceived implements _EventsReceived {
     @required
         Result eventsReceived(
             Either<EventFailure, KtList<Event>> failureOrNotes),
+    @required Result requestMoreData(),
   }) {
     assert(getData != null);
     assert(eventsReceived != null);
+    assert(requestMoreData != null);
     return eventsReceived(failureOrNotes);
   }
 
@@ -232,6 +248,7 @@ class _$_EventsReceived implements _EventsReceived {
   Result maybeWhen<Result extends Object>({
     Result getData(),
     Result eventsReceived(Either<EventFailure, KtList<Event>> failureOrNotes),
+    Result requestMoreData(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -246,9 +263,11 @@ class _$_EventsReceived implements _EventsReceived {
   Result map<Result extends Object>({
     @required Result getData(GetData value),
     @required Result eventsReceived(_EventsReceived value),
+    @required Result requestMoreData(_RequestMoreData value),
   }) {
     assert(getData != null);
     assert(eventsReceived != null);
+    assert(requestMoreData != null);
     return eventsReceived(this);
   }
 
@@ -257,6 +276,7 @@ class _$_EventsReceived implements _EventsReceived {
   Result maybeMap<Result extends Object>({
     Result getData(GetData value),
     Result eventsReceived(_EventsReceived value),
+    Result requestMoreData(_RequestMoreData value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -273,6 +293,102 @@ abstract class _EventsReceived implements HomeEventsEvent {
 
   Either<EventFailure, KtList<Event>> get failureOrNotes;
   _$EventsReceivedCopyWith<_EventsReceived> get copyWith;
+}
+
+abstract class _$RequestMoreDataCopyWith<$Res> {
+  factory _$RequestMoreDataCopyWith(
+          _RequestMoreData value, $Res Function(_RequestMoreData) then) =
+      __$RequestMoreDataCopyWithImpl<$Res>;
+}
+
+class __$RequestMoreDataCopyWithImpl<$Res>
+    extends _$HomeEventsEventCopyWithImpl<$Res>
+    implements _$RequestMoreDataCopyWith<$Res> {
+  __$RequestMoreDataCopyWithImpl(
+      _RequestMoreData _value, $Res Function(_RequestMoreData) _then)
+      : super(_value, (v) => _then(v as _RequestMoreData));
+
+  @override
+  _RequestMoreData get _value => super._value as _RequestMoreData;
+}
+
+class _$_RequestMoreData implements _RequestMoreData {
+  const _$_RequestMoreData();
+
+  @override
+  String toString() {
+    return 'HomeEventsEvent.requestMoreData()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _RequestMoreData);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result getData(),
+    @required
+        Result eventsReceived(
+            Either<EventFailure, KtList<Event>> failureOrNotes),
+    @required Result requestMoreData(),
+  }) {
+    assert(getData != null);
+    assert(eventsReceived != null);
+    assert(requestMoreData != null);
+    return requestMoreData();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result getData(),
+    Result eventsReceived(Either<EventFailure, KtList<Event>> failureOrNotes),
+    Result requestMoreData(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (requestMoreData != null) {
+      return requestMoreData();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result getData(GetData value),
+    @required Result eventsReceived(_EventsReceived value),
+    @required Result requestMoreData(_RequestMoreData value),
+  }) {
+    assert(getData != null);
+    assert(eventsReceived != null);
+    assert(requestMoreData != null);
+    return requestMoreData(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result getData(GetData value),
+    Result eventsReceived(_EventsReceived value),
+    Result requestMoreData(_RequestMoreData value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (requestMoreData != null) {
+      return requestMoreData(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _RequestMoreData implements HomeEventsEvent {
+  const factory _RequestMoreData() = _$_RequestMoreData;
 }
 
 class _$HomeEventsStateTearOff {

@@ -27,21 +27,20 @@ class HomePostsBloc extends Bloc<HomePostsEvent, HomePostsState> {
   Stream<HomePostsState> mapEventToState(
     HomePostsEvent event,
   ) async* {
-    yield* event.map(
-      getData: (e) async* {
-        yield const HomePostsState.loadInProgress();
-        await _postStreamSubscription?.cancel();
-        _postStreamSubscription = _homeFeedService
-            .watchPostFeed()
-            .listen((post) => add(HomePostsEvent.postsReceived(post)));
-      },
-      postsReceived: (e) async* {
-        yield e.failureOrNotes.fold(
-          (f) => HomePostsState.loadFailure(f),
-          (posts) => HomePostsState.loadSuccess(posts),
-        );
-      },
-    );
+    yield* event.map(getData: (e) async* {
+      yield const HomePostsState.loadInProgress();
+      await _postStreamSubscription?.cancel();
+      _postStreamSubscription = _homeFeedService
+          .watchPostFeed()
+          .listen((post) => add(HomePostsEvent.postsReceived(post)));
+    }, postsReceived: (e) async* {
+      yield e.failureOrNotes.fold(
+        (f) => HomePostsState.loadFailure(f),
+        (posts) => HomePostsState.loadSuccess(posts),
+      );
+    }, requestMoreData: (e) async* {
+      // yield _homeFeedService.requestMoreData();
+    });
   }
 
   @override

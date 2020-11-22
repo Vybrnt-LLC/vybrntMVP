@@ -218,6 +218,13 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     return index == _currentIndex ? 1.0 : 0.4;
   }
 
+  _getButtonHightlight(int index) {
+    // setState(() {
+    //   appBarColor = HomeCategories.predefinedColors[index].color;
+    // });
+    return index == _currentIndex ? Colors.amberAccent : Colors.transparent;
+  }
+
   _getButtonSize(int index) {
     return index == _currentIndex ? 100.0 : 75.0;
   }
@@ -404,6 +411,37 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                             animation: _colorTweenBackgroundOn,
                                             builder: (context, child) =>
                                                 Container(
+                                              foregroundDecoration:
+                                                  BoxDecoration(
+                                                // borderRadius: BorderRadius.only(
+                                                //   bottomRight:
+                                                //       Radius.circular(10),
+                                                //   bottomLeft:
+                                                //       Radius.circular(10),
+                                                // ),
+                                                border: Border(
+                                                  left: BorderSide(
+                                                      width: 5.0,
+                                                      color:
+                                                          _getButtonHightlight(
+                                                              index)),
+                                                  bottom: BorderSide(
+                                                      width: 5.0,
+                                                      color:
+                                                          _getButtonHightlight(
+                                                              index)),
+                                                  right: BorderSide(
+                                                      width: 5.0,
+                                                      color:
+                                                          _getButtonHightlight(
+                                                              index)),
+                                                  // top: BorderSide(
+                                                  //     width: 3.0,
+                                                  //     color:
+                                                  //         _getButtonHightlight(
+                                                  //             index)),
+                                                ),
+                                              ),
                                               height: _getTabHeight(index),
                                               //width: _getButtonSize(index),
                                               decoration: BoxDecoration(

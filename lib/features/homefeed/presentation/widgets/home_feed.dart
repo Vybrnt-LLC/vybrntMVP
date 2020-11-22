@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
+import 'package:vybrnt_mvp/core/ui/creation_aware_list_item.dart';
 
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
@@ -104,21 +105,31 @@ class _HomeFeedState extends State<HomeFeed> {
                                       itemCount: state.events.size,
                                       itemBuilder:
                                           (BuildContext context, int index) =>
-                                              Padding(
-                                        key: ObjectKey(state.events[index]),
-                                        padding: EdgeInsets.all(8),
-                                        child: _OpenContainerWrapper(
-                                            event: state.events[index],
-                                            transitionType: _transitionType,
-                                            closedBuilder: (BuildContext _,
-                                                VoidCallback openContainer) {
-                                              return _InkWellOverlay(
-                                                openContainer: openContainer,
-                                                width: 250,
-                                                child: EventCard(
-                                                    event: state.events[index]),
-                                              );
-                                            }),
+                                              CreationAwareListItem(
+                                        itemCreated: () {
+                                          if (index % 10 == 0) {
+                                            context.bloc<HomePostsBloc>().add(
+                                                HomePostsEvent
+                                                    .requestMoreData());
+                                          }
+                                        },
+                                        child: Padding(
+                                          key: ObjectKey(state.events[index]),
+                                          padding: EdgeInsets.all(8),
+                                          child: _OpenContainerWrapper(
+                                              event: state.events[index],
+                                              transitionType: _transitionType,
+                                              closedBuilder: (BuildContext _,
+                                                  VoidCallback openContainer) {
+                                                return _InkWellOverlay(
+                                                  openContainer: openContainer,
+                                                  width: 250,
+                                                  child: EventCard(
+                                                      event:
+                                                          state.events[index]),
+                                                );
+                                              }),
+                                        ),
                                       ),
                                     ),
                                   );
