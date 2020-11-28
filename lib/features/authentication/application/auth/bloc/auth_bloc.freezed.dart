@@ -19,6 +19,10 @@ class _$AuthEventTearOff {
   SignedOut signedOut() {
     return const SignedOut();
   }
+
+  InitializePushNotifications initializePushNotifications() {
+    return const InitializePushNotifications();
+  }
 }
 
 // ignore: unused_element
@@ -29,22 +33,27 @@ mixin _$AuthEvent {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
+    @required Result initializePushNotifications(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
+    Result initializePushNotifications(),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result authCheckRequested(AuthCheckRequested value),
     @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
     @required Result orElse(),
   });
 }
@@ -100,9 +109,11 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
+    @required Result initializePushNotifications(),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
     return authCheckRequested();
   }
 
@@ -111,6 +122,7 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
+    Result initializePushNotifications(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -125,9 +137,12 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result map<Result extends Object>({
     @required Result authCheckRequested(AuthCheckRequested value),
     @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
     return authCheckRequested(this);
   }
 
@@ -136,6 +151,7 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result maybeMap<Result extends Object>({
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -185,9 +201,11 @@ class _$SignedOut implements SignedOut {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
+    @required Result initializePushNotifications(),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
     return signedOut();
   }
 
@@ -196,6 +214,7 @@ class _$SignedOut implements SignedOut {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
+    Result initializePushNotifications(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -210,9 +229,12 @@ class _$SignedOut implements SignedOut {
   Result map<Result extends Object>({
     @required Result authCheckRequested(AuthCheckRequested value),
     @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
     return signedOut(this);
   }
 
@@ -221,6 +243,7 @@ class _$SignedOut implements SignedOut {
   Result maybeMap<Result extends Object>({
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -233,6 +256,103 @@ class _$SignedOut implements SignedOut {
 
 abstract class SignedOut implements AuthEvent {
   const factory SignedOut() = _$SignedOut;
+}
+
+abstract class $InitializePushNotificationsCopyWith<$Res> {
+  factory $InitializePushNotificationsCopyWith(
+          InitializePushNotifications value,
+          $Res Function(InitializePushNotifications) then) =
+      _$InitializePushNotificationsCopyWithImpl<$Res>;
+}
+
+class _$InitializePushNotificationsCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res>
+    implements $InitializePushNotificationsCopyWith<$Res> {
+  _$InitializePushNotificationsCopyWithImpl(InitializePushNotifications _value,
+      $Res Function(InitializePushNotifications) _then)
+      : super(_value, (v) => _then(v as InitializePushNotifications));
+
+  @override
+  InitializePushNotifications get _value =>
+      super._value as InitializePushNotifications;
+}
+
+class _$InitializePushNotifications implements InitializePushNotifications {
+  const _$InitializePushNotifications();
+
+  @override
+  String toString() {
+    return 'AuthEvent.initializePushNotifications()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is InitializePushNotifications);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result authCheckRequested(),
+    @required Result signedOut(),
+    @required Result initializePushNotifications(),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    return initializePushNotifications();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result authCheckRequested(),
+    Result signedOut(),
+    Result initializePushNotifications(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initializePushNotifications != null) {
+      return initializePushNotifications();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result authCheckRequested(AuthCheckRequested value),
+    @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    return initializePushNotifications(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result authCheckRequested(AuthCheckRequested value),
+    Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initializePushNotifications != null) {
+      return initializePushNotifications(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InitializePushNotifications implements AuthEvent {
+  const factory InitializePushNotifications() = _$InitializePushNotifications;
 }
 
 class _$AuthStateTearOff {

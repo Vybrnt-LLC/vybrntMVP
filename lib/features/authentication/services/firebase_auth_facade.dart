@@ -71,7 +71,7 @@ class FirebaseAuthFacade implements IAuthFacade {
         senderID: SenderID('LHpaJopoy0Tgh1aNB5PjAqzf8X73'),
         orgID: OrgID('cec10340-090e-11eb-a5dc-1d0e34e32b97'),
         postBody: PostBody(
-            'Thank you for trying out our platform! Hope we can keep make it better together. To make a page for your organization, click on the + button in the bottom right corner and add your team as admins. No need to make another accounnt. Make sure to report bug and provide feedback and remember to have fun everyone!!!😁'),
+            'Thank you for trying out our platform! Hope we can make it better together. To make a page for your organization, click on the + button at the bottom right corner and add your team members as admins. No need to create another accounnt. Make sure to report bugs and provide feedback and remember to have fun everyone!!!😁'),
         postHeader: PostHeader('WELCOME TO VYBRNT!!'),
       ));
       await feedsRef

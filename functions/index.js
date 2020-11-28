@@ -1,6 +1,123 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-admin.initializeApp();
+const { parseAsync } = require('json2csv');
+const { uuidv4 } = require('uuid');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+const fss = require('fs-extra');
+const gcs = require('@google-cloud/storage')();
+const csv = require('csv');
+var json2csv = require('json2csv');
+
+//import { parseAsync } from 'json2csv';
+//import { v4 as uuidv4 } from 'uuid';
+// import * as fs from "fs";
+// import * as path from "path";
+// import * as os from "os";
+
+admin.initializeApp({
+    storageBucket: 'vybrnt-release-d73d5.appspot.com',
+  });
+
+  exports.generateApplicationCsv = functions.region('us-central1').pubsub
+  .topic("generate-application-csv")
+  .onPublish(async message => {
+
+    // gets the documents from the firestore collection
+    const usersSnapshot = await admin
+      .firestore()
+      .collection("users")
+      .get();
+
+    const users = usersSnapshot.docs.map(doc => doc.data());
+
+    // csv field headers
+    const fields = [
+      'bannerImageUrl',
+      'bio',
+      'email',
+      'major',
+      'primaryColor',
+      'profileImageUrl',
+      'profileName',
+     'secondaryColor',
+      
+];
+
+    // get csv output
+    const output = await parseAsync(users, { fields });
+    const storage = gcs.bucket('vybrnt-release-d73d5.appspot.com');
+
+    // generate filename
+    const dateTime = new Date().toISOString().replace(/\W/g, "");
+    const filename = `users_${dateTime}.csv`;
+
+    const tempLocalFile = path.join(os.tmpdir(), filename);
+
+    return new Promise((resolve, reject) => {
+      //write contents of csv into the temp file
+      fs.writeFile(tempLocalFile, output, error => {
+        if (error) {
+          reject(error);
+          return;
+        }
+        const bucket = admin.storage().bucket();
+
+        // upload the file into the current firebase project default bucket
+        bucket
+           .upload(tempLocalFile, {
+            // Workaround: firebase console not generating token for files
+            // uploaded via Firebase Admin SDK
+            // https://github.com/firebase/firebase-admin-node/issues/694
+            metadata: {
+              metadata: {
+                firebaseStorageDownloadTokens: uuidv4(),
+              }
+            },
+          })
+          .then(() => resolve())
+          .catch(errorr => reject(errorr));
+      });
+    });
+  });
+
+//   exports.createCsv = functions.region('us-central1').pubsub
+//   .topic("create-csv")
+//   .onPublish(async message => {
+
+//     // gets the documents from the firestore collection
+//     const usersSnapshot = await admin
+//       .firestore()
+//       .collection("users")
+//       .get();
+
+//     const users = usersSnapshot.docs.map(doc => doc.data());
+
+//     // csv field headers
+//     const fields = [
+//       'bannerImageUrl',
+//       'bio',
+//       'email',
+//       'major',
+//       'primaryColor',
+//       'profileImageUrl',
+//       'profileName',
+//      'secondaryColor',
+      
+// ];
+
+//     // get csv output
+//     const output = await parseAsync(users, { fields });
+
+//     // generate filename
+//     const dateTime = new Date().toISOString().replace(/\W/g, "");
+//     const filename = `users_${dateTime}.csv`;
+
+//     const tempLocalFile = path.join(os.tmpdir(), filename);
+
+    
+//   });
 
 exports.onFollowUser = functions.firestore
     .document('/followers/{userID}/userFollowers/{followerID}')
