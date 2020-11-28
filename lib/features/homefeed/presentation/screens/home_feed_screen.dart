@@ -130,6 +130,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
   bool _buttonTap = false;
 
   void initState() {
+    super.initState();
     for (int index = 0;
         index < HomeCategories.predefinedColors.length;
         index++) {
@@ -171,7 +172,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     //     setState(() {});
     //   });
 
-    super.initState();
     // _colorTweenForegroundOn =
     //     ColorTween(begin: _foregroundOff, end: _foregroundOn)
     //        .animate(_animationControllerOn);
