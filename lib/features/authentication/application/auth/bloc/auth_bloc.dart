@@ -30,14 +30,11 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield userOption.fold(() => const AuthState.unauthenticated(), (user) {
         return AuthState.authenticated(user);
       });
-
-      // ignore: unrelated_type_equality_checks
-      if (state == Authenticated) {
-        await _pushNotificationService.initialize();
-      }
     }, signedOut: (e) async* {
       await _authFacade.signOut();
       yield const AuthState.unauthenticated();
+    }, initializePushNotifications: (e) async* {
+      await _pushNotificationService.initialize();
     });
   }
 }

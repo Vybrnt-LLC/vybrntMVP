@@ -19,100 +19,97 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^4.0.2
-  provider_architecture: ^1.0.5
-  http: ^0.12.0+4
-  get_it: ^4.0.2
-  responsive_builder: ^0.1.4
-  firebase_auth: ^0.18.0+1
-  flutter_spinkit: ^4.1.1+1
-  cloud_firestore: ^0.14.0+2
-  equatable: ^1.0.0
-  dartz: ^0.9.1
-  shared_preferences: ^0.5.8
-  mockito: ^4.1.0
-  data_connection_checker: ^0.3.4
-  firebase_analytics: ^5.0.11
-  image_picker:
-    git:
-     url: https://github.com/knaeckeKami/plugins.git
-     path: packages/image_picker/image_picker
-  cached_network_image: ^2.0.0-rc
-  firebase_storage: ^4.0.0
-  flutter_image_compress: ^0.6.3
-  path_provider: ^1.2.0
-  uuid: ^2.0.4
-  image_cropper: ^1.2.1
-  animator: ^1.0.0+5
-  intl: ^0.16.1
-  async: ^2.4.0
-  flutter_statusbarcolor: ^0.2.3
-  material_design_icons_flutter: ^3.4.4895
-  flutter_speed_dial: ^1.2.5
-  table_calendar: ^2.2.2
-  getflutter: ^1.0.9
-  flutter_circle_color_picker: ^0.2.0
-  animated_splash: ^1.0.0
-  firebase_core: ^0.5.0
-  freezed_annotation: ^0.7.1
-  flutter_bloc: ^6.0.5
-  google_sign_in: ^4.5.4
-  injectable: ^1.0.4
-  flushbar: ^1.10.4
-  bloc: ^6.0.3
-  page_transition: ^1.1.6
-  meta: ^1.1.8
-  kt_dart: ^0.7.0+1
-  reorderables: ^0.3.2
-  flutter_staggered_animations: ^0.1.2
-  json_annotation: ^3.0.1
-  rxdart: ^0.23.1
-  flutter_datetime_picker: ^1.3.8
-  flutter_hooks: ^0.10.0
-  adobe_xd: ^0.1.4
-  sign_in_with_apple: ^2.5.2
-  timeago: ^2.0.26
-  animated_splash_screen: ^1.0.1
-  url_launcher: ^5.4.10
-  animations: ^1.1.1
-  flutter_plugin_android_lifecycle: ^1.0.8
-  flutter_slidable: ^0.5.4
-  flutter_material_color_picker: ^1.0.5
-  dropdown_search: ^0.4.4
-  bordered_text: ^1.0.0
-  firebase_crashlytics: ^0.2.1
-  firebase_performance: ^0.3.2
-  firebase_messaging: ^6.0.16
-  auto_animated: ^2.1.0
   focused_menu:
     git:
       url: https://github.com/Vybrnt-LLC/focused_menu
-  google_fonts: ^1.1.0
-  auto_size_text: ^2.1.0
-  file_picker: ^2.0.7
-
-  # The following adds the Cupertino Icons font to your application.
-  # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^0.1.2
-  hidden_drawer_menu: 
+  hidden_drawer_menu:
     git:
       url: https://github.com/Vybrnt-LLC/hidden_drawer_menu
+  image_picker:
+    git:
+      url: https://github.com/knaeckeKami/plugins.git
+      path: packages/image_picker/image_picker
+  adobe_xd: ^0.1.4
+  animated_splash: ^1.0.0
+  animated_splash_screen: ^1.0.1
+  animations: ^1.1.1
+  animator: ^1.0.0+5
+  async: ^2.4.0
+  auto_animated: ^2.1.0
   auto_route: ^0.6.7
+  auto_size_text: ^2.1.0
+  bloc: ^6.0.3
+  bordered_text: ^1.0.0
+  cached_network_image: ^2.0.0-rc
+  cloud_firestore: ^0.14.0+2
+  cupertino_icons: ^0.1.2
+  dartz: ^0.9.1
+  data_connection_checker: ^0.3.4
+  dropdown_search: ^0.4.4
+  equatable: ^1.0.0
+  file_picker: ^2.0.7
+  firebase_analytics: ^5.0.11
+  firebase_auth: ^0.18.0+1
+  firebase_core: ^0.5.0
+  firebase_crashlytics: ^0.2.1
+  firebase_messaging: ^7.0.3
+  firebase_performance: ^0.3.2
+  firebase_storage: ^4.0.0
+  flushbar: ^1.10.4
+  flutter_bloc: ^6.0.5
+  flutter_circle_color_picker: ^0.2.0
+  flutter_datetime_picker: ^1.3.8
+  flutter_hooks: ^0.10.0
+  flutter_image_compress: ^0.6.3
   flutter_local_notifications: ^1.4.4+4
+  flutter_material_color_picker: ^1.0.5
+  flutter_plugin_android_lifecycle: ^1.0.8
+  flutter_slidable: ^0.5.4
+  flutter_speed_dial: ^1.2.5
+  flutter_spinkit: ^4.1.1+1
+  flutter_staggered_animations: ^0.1.2
+  flutter_statusbarcolor: ^0.2.3
+  freezed_annotation: ^0.7.1
+  get_it: ^4.0.2
+  getflutter: ^1.0.9
+  google_fonts: ^1.1.0
+  google_sign_in: ^4.5.4
+  http: ^0.12.0+4
+  image_cropper: ^1.2.1
+  injectable: ^1.0.4
+  intl: ^0.16.1
+  json_annotation: ^3.0.1
+  kt_dart: ^0.7.0+1
+  material_design_icons_flutter: ^3.4.4895
+  meta: ^1.1.8
+  mockito: ^4.1.0
+  page_transition: ^1.1.6
+  path_provider: ^1.2.0
+  provider: ^4.0.2
+  provider_architecture: ^1.0.5
+  reorderables: ^0.3.2
+  responsive_builder: ^0.1.4
+  rxdart: ^0.23.1
+  shared_preferences: ^0.5.8
+  shimmer: ^1.1.2
+  sign_in_with_apple: ^2.5.2
   simple_url_preview: ^1.1.0
+  table_calendar: ^2.2.2
+  timeago: ^2.0.26
+  url_launcher: ^5.4.10
+  uuid: ^2.0.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  auto_route_generator: ^0.6.8
+  build_runner: ^1.10.2
+  flutter_launcher_icons: ^0.7.5
   freezed: ^0.10.8
-  lint: ^1.2.0
   injectable_generator: ^1.0.4
 
   json_serializable: ^3.4.1
-  build_runner: ^1.10.2
-  flutter_launcher_icons: ^0.7.5
-  auto_route_generator: ^0.6.8
-
+  lint: ^1.2.0
 
 flutter_icons:
   android: true
@@ -159,4 +156,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-

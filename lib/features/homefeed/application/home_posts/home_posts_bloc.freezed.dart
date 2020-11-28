@@ -12,8 +12,10 @@ T _$identity<T>(T value) => value;
 class _$HomePostsEventTearOff {
   const _$HomePostsEventTearOff();
 
-  GetData getData() {
-    return const GetData();
+  GetData getData(String currentUserID) {
+    return GetData(
+      currentUserID,
+    );
   }
 
   _PostsReceived postsReceived(
@@ -23,8 +25,10 @@ class _$HomePostsEventTearOff {
     );
   }
 
-  _RequestMoreData requestMoreData() {
-    return const _RequestMoreData();
+  _RequestMoreData requestMoreData(String currentUserID) {
+    return _RequestMoreData(
+      currentUserID,
+    );
   }
 }
 
@@ -34,16 +38,16 @@ const $HomePostsEvent = _$HomePostsEventTearOff();
 mixin _$HomePostsEvent {
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result getData(),
+    @required Result getData(String currentUserID),
     @required
         Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    @required Result requestMoreData(),
+    @required Result requestMoreData(String currentUserID),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result getData(),
+    Result getData(String currentUserID),
     Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    Result requestMoreData(),
+    Result requestMoreData(String currentUserID),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -79,6 +83,7 @@ class _$HomePostsEventCopyWithImpl<$Res>
 abstract class $GetDataCopyWith<$Res> {
   factory $GetDataCopyWith(GetData value, $Res Function(GetData) then) =
       _$GetDataCopyWithImpl<$Res>;
+  $Res call({String currentUserID});
 }
 
 class _$GetDataCopyWithImpl<$Res> extends _$HomePostsEventCopyWithImpl<$Res>
@@ -88,49 +93,70 @@ class _$GetDataCopyWithImpl<$Res> extends _$HomePostsEventCopyWithImpl<$Res>
 
   @override
   GetData get _value => super._value as GetData;
+
+  @override
+  $Res call({
+    Object currentUserID = freezed,
+  }) {
+    return _then(GetData(
+      currentUserID == freezed ? _value.currentUserID : currentUserID as String,
+    ));
+  }
 }
 
 class _$GetData implements GetData {
-  const _$GetData();
+  const _$GetData(this.currentUserID) : assert(currentUserID != null);
+
+  @override
+  final String currentUserID;
 
   @override
   String toString() {
-    return 'HomePostsEvent.getData()';
+    return 'HomePostsEvent.getData(currentUserID: $currentUserID)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is GetData);
+    return identical(this, other) ||
+        (other is GetData &&
+            (identical(other.currentUserID, currentUserID) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUserID, currentUserID)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(currentUserID);
+
+  @override
+  $GetDataCopyWith<GetData> get copyWith =>
+      _$GetDataCopyWithImpl<GetData>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result getData(),
+    @required Result getData(String currentUserID),
     @required
         Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    @required Result requestMoreData(),
+    @required Result requestMoreData(String currentUserID),
   }) {
     assert(getData != null);
     assert(postsReceived != null);
     assert(requestMoreData != null);
-    return getData();
+    return getData(currentUserID);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result getData(),
+    Result getData(String currentUserID),
     Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    Result requestMoreData(),
+    Result requestMoreData(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (getData != null) {
-      return getData();
+      return getData(currentUserID);
     }
     return orElse();
   }
@@ -165,7 +191,10 @@ class _$GetData implements GetData {
 }
 
 abstract class GetData implements HomePostsEvent {
-  const factory GetData() = _$GetData;
+  const factory GetData(String currentUserID) = _$GetData;
+
+  String get currentUserID;
+  $GetDataCopyWith<GetData> get copyWith;
 }
 
 abstract class _$PostsReceivedCopyWith<$Res> {
@@ -229,10 +258,10 @@ class _$_PostsReceived implements _PostsReceived {
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result getData(),
+    @required Result getData(String currentUserID),
     @required
         Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    @required Result requestMoreData(),
+    @required Result requestMoreData(String currentUserID),
   }) {
     assert(getData != null);
     assert(postsReceived != null);
@@ -243,9 +272,9 @@ class _$_PostsReceived implements _PostsReceived {
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result getData(),
+    Result getData(String currentUserID),
     Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    Result requestMoreData(),
+    Result requestMoreData(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -296,6 +325,7 @@ abstract class _$RequestMoreDataCopyWith<$Res> {
   factory _$RequestMoreDataCopyWith(
           _RequestMoreData value, $Res Function(_RequestMoreData) then) =
       __$RequestMoreDataCopyWithImpl<$Res>;
+  $Res call({String currentUserID});
 }
 
 class __$RequestMoreDataCopyWithImpl<$Res>
@@ -307,49 +337,70 @@ class __$RequestMoreDataCopyWithImpl<$Res>
 
   @override
   _RequestMoreData get _value => super._value as _RequestMoreData;
+
+  @override
+  $Res call({
+    Object currentUserID = freezed,
+  }) {
+    return _then(_RequestMoreData(
+      currentUserID == freezed ? _value.currentUserID : currentUserID as String,
+    ));
+  }
 }
 
 class _$_RequestMoreData implements _RequestMoreData {
-  const _$_RequestMoreData();
+  const _$_RequestMoreData(this.currentUserID) : assert(currentUserID != null);
+
+  @override
+  final String currentUserID;
 
   @override
   String toString() {
-    return 'HomePostsEvent.requestMoreData()';
+    return 'HomePostsEvent.requestMoreData(currentUserID: $currentUserID)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is _RequestMoreData);
+    return identical(this, other) ||
+        (other is _RequestMoreData &&
+            (identical(other.currentUserID, currentUserID) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUserID, currentUserID)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(currentUserID);
+
+  @override
+  _$RequestMoreDataCopyWith<_RequestMoreData> get copyWith =>
+      __$RequestMoreDataCopyWithImpl<_RequestMoreData>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
-    @required Result getData(),
+    @required Result getData(String currentUserID),
     @required
         Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    @required Result requestMoreData(),
+    @required Result requestMoreData(String currentUserID),
   }) {
     assert(getData != null);
     assert(postsReceived != null);
     assert(requestMoreData != null);
-    return requestMoreData();
+    return requestMoreData(currentUserID);
   }
 
   @override
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
-    Result getData(),
+    Result getData(String currentUserID),
     Result postsReceived(Either<PostFailure, KtList<Post>> failureOrNotes),
-    Result requestMoreData(),
+    Result requestMoreData(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (requestMoreData != null) {
-      return requestMoreData();
+      return requestMoreData(currentUserID);
     }
     return orElse();
   }
@@ -384,7 +435,10 @@ class _$_RequestMoreData implements _RequestMoreData {
 }
 
 abstract class _RequestMoreData implements HomePostsEvent {
-  const factory _RequestMoreData() = _$_RequestMoreData;
+  const factory _RequestMoreData(String currentUserID) = _$_RequestMoreData;
+
+  String get currentUserID;
+  _$RequestMoreDataCopyWith<_RequestMoreData> get copyWith;
 }
 
 class _$HomePostsStateTearOff {

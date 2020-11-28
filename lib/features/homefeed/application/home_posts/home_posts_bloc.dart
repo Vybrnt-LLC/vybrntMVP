@@ -31,15 +31,21 @@ class HomePostsBloc extends Bloc<HomePostsEvent, HomePostsState> {
       yield const HomePostsState.loadInProgress();
       await _postStreamSubscription?.cancel();
       _postStreamSubscription = _homeFeedService
-          .watchPostFeed()
+          .watchPostFeedPaginated(e.currentUserID)
           .listen((post) => add(HomePostsEvent.postsReceived(post)));
     }, postsReceived: (e) async* {
       yield e.failureOrNotes.fold(
         (f) => HomePostsState.loadFailure(f),
-        (posts) => HomePostsState.loadSuccess(posts),
+        (posts) => HomePostsState.loadSuccess(
+            posts), // send the posts back to the requestMoreData
+
+        //TODO posts need to be turned to service file from here to complete
+        /*the rest of the pagination. A new subscription is needed to stream the
+         complete set of updated posts to the presented. To the load success.
+          Should create a new event that serves as the final send off of updated posts*/
       );
     }, requestMoreData: (e) async* {
-      // yield _homeFeedService.requestMoreData();
+      _homeFeedService.requestMoreData(e.currentUserID);
     });
   }
 

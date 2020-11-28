@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:dartz/dartz.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
@@ -17,8 +19,15 @@ import 'package:rxdart/rxdart.dart';
 class HomeFeedService implements IHomeFeedService {
   final FirebaseFirestore _firestore;
 
+  final StreamController<Either<PostFailure, KtList<Post>>> _postsController =
+      StreamController<Either<PostFailure, KtList<Post>>>.broadcast();
+
+  // #6: Create a list that will keep the paged results
+  List<KtList<Post>> _allPagedResults = List<KtList<Post>>();
+
+  static const int PostsLimit = 5;
+
   DocumentSnapshot _lastDocument;
-  List<List<Post>> _allPagedResults = List<List<Post>>();
   bool _hasMorePosts = true;
 
   HomeFeedService(this._firestore);
@@ -51,7 +60,7 @@ class HomeFeedService implements IHomeFeedService {
   @override
   Stream<Either<PostFailure, KtList<Post>>> watchPostFeed() async* {
     final currentUserID = await _firestore.currentUserID();
-    //_requestPosts(currentUserID);
+    yield* _postsController.stream;
     yield* feedsRef
         .doc(currentUserID)
         .collection('userFeed')
@@ -74,64 +83,81 @@ class HomeFeedService implements IHomeFeedService {
     });
   }
 
-  // void _requestPosts(String currentUserID) {
-  //   // #2: split the query from the actual subscription
+  @override
+  Stream<Either<PostFailure, KtList<Post>>> watchPostFeedPaginated(
+      String currentUserID) {
+    // Register the handler for when the posts data changes
 
-  //   var pagePostsQuery = feedsRef
-  //       .doc(currentUserID)
-  //       .collection('userFeed')
-  //       .orderBy('postTime', descending: true)
-  //       // #3: Limit the amount of results
-  //       .limit(10);
+    _requestPosts(currentUserID);
 
-  //   if (_lastDocument != null) {
-  //     pagePostsQuery = pagePostsQuery.startAfterDocument(_lastDocument);
-  //   }
+    return _postsController.stream;
+  }
 
-  //   // If there's no more posts then bail out of the function
-  //   if (!_hasMorePosts) return;
+  // #1: Move the request posts into it's own function
+  void _requestPosts(String currentUserID) {
+    Either<PostFailure, KtList<Post>> updatedPosts;
+    // #2: split the query from the actual subscription
+    try {
+      var pagePostsQuery = feedsRef
+          .doc(currentUserID)
+          .collection('userFeed')
+          .orderBy('postTime', descending: true)
+          // #3: Limit the amount of results
+          .limit(PostsLimit);
 
-  //   var currentRequestIndex = _allPagedResults.length;
+      // #5: If we have a document start the query after it
+      if (_lastDocument != null) {
+        pagePostsQuery = pagePostsQuery.startAfterDocument(_lastDocument);
+      }
 
-  //   pagePostsQuery.snapshots().listen((postsSnapshot) {
-  //     if (postsSnapshot.docs.isNotEmpty) {
-  //       var posts = postsSnapshot
-  //       .map(
-  //         (snapshot) => right<PostFailure, KtList<Post>>(
-  //           snapshot.docs
-  //               .map((doc) => PostDTO.fromFirestore(doc).toDomain())
-  //               .toImmutableList(),
-  //         ),
-  //       )
-  //       .onErrorReturnWith((e) {
-  //     if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
-  //       return left(const PostFailure.insufficientPermissions());
-  //     } else {
-  //       print(e);
-  //       return left(const PostFailure.unexpected());
-  //     }
-  //   });
-  //       .docs
-  //           .map(
-  //         (doc) =>
-  //           PostDTO.fromFirestore(doc).toDomain()).where((mappedItem) => mappedItem.postTime != null)
-  //               .toImmutableList();
+      if (!_hasMorePosts) return;
 
-  //       )
-  //           .onErrorReturnWith((e) {
-  //         if (e is FirebaseException &&
-  //             e.message.contains('PERMISSION_DENIED')) {
-  //           return left(const PostFailure.insufficientPermissions());
-  //         } else {
-  //           print(e);
-  //           return left(const PostFailure.unexpected());
-  //         }
-  //       });
+      // #7: Get and store the page index that the results belong to
+      var currentRequestIndex = _allPagedResults.length;
 
-  //       _postsController.add(posts);
-  //     }
-  //   });
-  // }
+      pagePostsQuery.snapshots().listen((postsSnapshot) {
+        if (postsSnapshot.docs.isNotEmpty) {
+          var posts = postsSnapshot.docs
+              .map((doc) => PostDTO.fromFirestore(doc).toDomain())
+              .where((mappedItem) => mappedItem.postTime != null)
+              .toImmutableList();
+
+          // #8: Check if the page exists or not
+          var pageExists = currentRequestIndex < _allPagedResults.length;
+
+          // #9: If the page exists update the posts for that page
+          if (pageExists) {
+            _allPagedResults[currentRequestIndex] = posts;
+          }
+          // #10: If the page doesn't exist add the page data
+          else {
+            _allPagedResults.add(posts);
+          }
+
+          // #11: Concatenate the full list to be shown
+          var allPosts = _allPagedResults.fold<List<Post>>(
+              List<Post>(),
+              (initialValue, pageItems) =>
+                  initialValue..addAll(pageItems.iter));
+
+          updatedPosts = right(allPosts.kt);
+
+          // #12: Broadcase all posts
+          _postsController.add(updatedPosts);
+          // #13: Save the last document from the results only if it's the current last page
+          if (currentRequestIndex == _allPagedResults.length - 1) {
+            _lastDocument = postsSnapshot.docs.last;
+          }
+
+          // #14: Determine if there's more posts to request
+          _hasMorePosts = posts.size == PostsLimit;
+        }
+      });
+    } catch (e) {
+      updatedPosts = left(const PostFailure.unexpected());
+      _postsController.add(updatedPosts);
+    }
+  }
 
   @override
   Stream<Either<EventFailure, KtList<Event>>> watchCategoriesUpcomingEvents(
@@ -182,4 +208,7 @@ class HomeFeedService implements IHomeFeedService {
       }
     });
   }
+
+  @override
+  void requestMoreData(String currentUserID) => _requestPosts(currentUserID);
 }

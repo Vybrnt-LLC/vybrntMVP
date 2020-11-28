@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:provider/provider.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/ui/creation_aware_list_item.dart';
 
@@ -52,8 +53,68 @@ class _HomeFeedState extends State<HomeFeed> {
             builder: (context, state) {
           return state.map(
               initial: (_) => Container(),
-              loadInProgress: (_) => const Center(
-                    child: CircularProgressIndicator(),
+              loadInProgress: (_) => RefreshIndicator(
+                    onRefresh: () async => context
+                        .bloc<HomePostsBloc>()
+                        .add(HomePostsEvent.getData(currentUserID)),
+                    child: Container(
+                      child: Shimmer.fromColors(
+                        baseColor: Colors.grey[300],
+                        highlightColor: Colors.grey[100],
+                        //enabled: _enabled,
+                        child: ListView.builder(
+                          itemBuilder: (_, __) => Padding(
+                            padding: const EdgeInsets.all(12.0),
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Container(
+                                  width: 48.0,
+                                  height: 48.0,
+                                  color: Colors.white,
+                                ),
+                                const Padding(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 8.0),
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: <Widget>[
+                                      Container(
+                                        width: double.infinity,
+                                        height: 8.0,
+                                        color: Colors.white,
+                                      ),
+                                      const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 2.0),
+                                      ),
+                                      Container(
+                                        width: double.infinity,
+                                        height: 8.0,
+                                        color: Colors.white,
+                                      ),
+                                      const Padding(
+                                        padding:
+                                            EdgeInsets.symmetric(vertical: 2.0),
+                                      ),
+                                      Container(
+                                        width: 40.0,
+                                        height: 8.0,
+                                        color: Colors.white,
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          itemCount: 12,
+                        ),
+                      ),
+                    ),
                   ),
               loadFailure: (state) {
                 return Icon(
@@ -65,7 +126,7 @@ class _HomeFeedState extends State<HomeFeed> {
                 return RefreshIndicator(
                   onRefresh: () async => context
                       .bloc<HomePostsBloc>()
-                      .add(HomePostsEvent.getData()),
+                      .add(HomePostsEvent.getData(currentUserID)),
                   child: CustomScrollView(
                     key: PageStorageKey<String>(widget.name),
                     slivers: <Widget>[
@@ -86,9 +147,8 @@ class _HomeFeedState extends State<HomeFeed> {
                                     builder: (context, state) {
                               return state.map(
                                 initial: (_) => Container(),
-                                loadInProgress: (_) => const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
+                                loadInProgress: (_) =>
+                                    CircularProgressIndicator(),
                                 loadFailure: (state) {
                                   return Icon(Icons
                                       .error_outline); // return CriticalFailureDisplay(
@@ -105,31 +165,21 @@ class _HomeFeedState extends State<HomeFeed> {
                                       itemCount: state.events.size,
                                       itemBuilder:
                                           (BuildContext context, int index) =>
-                                              CreationAwareListItem(
-                                        itemCreated: () {
-                                          if (index % 10 == 0) {
-                                            context.bloc<HomePostsBloc>().add(
-                                                HomePostsEvent
-                                                    .requestMoreData());
-                                          }
-                                        },
-                                        child: Padding(
-                                          key: ObjectKey(state.events[index]),
-                                          padding: EdgeInsets.all(8),
-                                          child: _OpenContainerWrapper(
-                                              event: state.events[index],
-                                              transitionType: _transitionType,
-                                              closedBuilder: (BuildContext _,
-                                                  VoidCallback openContainer) {
-                                                return _InkWellOverlay(
-                                                  openContainer: openContainer,
-                                                  width: 250,
-                                                  child: EventCard(
-                                                      event:
-                                                          state.events[index]),
-                                                );
-                                              }),
-                                        ),
+                                              Padding(
+                                        key: ObjectKey(state.events[index]),
+                                        padding: EdgeInsets.all(8),
+                                        child: _OpenContainerWrapper(
+                                            event: state.events[index],
+                                            transitionType: _transitionType,
+                                            closedBuilder: (BuildContext _,
+                                                VoidCallback openContainer) {
+                                              return _InkWellOverlay(
+                                                openContainer: openContainer,
+                                                width: 250,
+                                                child: EventCard(
+                                                    event: state.events[index]),
+                                              );
+                                            }),
                                       ),
                                     ),
                                   );
@@ -170,11 +220,20 @@ class _HomeFeedState extends State<HomeFeed> {
                                                 senderID: state
                                                     .posts[index].senderID
                                                     .getOrCrash())),
-                                      child: Container(
-                                          child: PostCard(
-                                        //user: _profileUser,
-                                        post: state.posts[index],
-                                      ))),
+                                      child: CreationAwareListItem(
+                                        itemCreated: () {
+                                          if (index % 5 == 0) {
+                                            context.bloc<HomePostsBloc>().add(
+                                                HomePostsEvent.requestMoreData(
+                                                    currentUserID));
+                                          }
+                                        },
+                                        child: Container(
+                                            child: PostCard(
+                                          //user: _profileUser,
+                                          post: state.posts[index],
+                                        )),
+                                      )),
                                 );
                               },
                             );

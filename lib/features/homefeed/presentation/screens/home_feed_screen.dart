@@ -56,6 +56,10 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
 
   // this will give the background color values of a button when it changes to an on state
   Animation _colorTweenBackgroundOn;
+
+  // AnimationController _animationTabController;
+
+  // Animation _animation;
   // Animation _colorTweenBackgroundOff;
 
   // // this will give the foreground color values of a button when it changes to an on state
@@ -126,8 +130,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
   bool _buttonTap = false;
 
   void initState() {
-    super.initState();
-
     for (int index = 0;
         index < HomeCategories.predefinedColors.length;
         index++) {
@@ -160,9 +162,19 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     _colorTweenBackgroundOn =
         ColorTween(begin: _backgroundOff, end: _backgroundOn)
             .animate(_animationControllerOn);
+    // _animationTabController =
+    //     AnimationController(vsync: this, duration: Duration(seconds: 2));
+
+    // _animationTabController.repeat(reverse: true);
+    // _animation = Tween(begin: 1.0, end: 0.2).animate(_animationTabController)
+    //   ..addListener(() {
+    //     setState(() {});
+    //   });
+
+    super.initState();
     // _colorTweenForegroundOn =
     //     ColorTween(begin: _foregroundOff, end: _foregroundOn)
-    //         .animate(_animationControllerOn);
+    //        .animate(_animationControllerOn);
   }
 
   // runs during the switching tabs animation
@@ -245,10 +257,12 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     // reset the animations so they're ready to go
     _animationControllerOn.reset();
     _animationControllerOff.reset();
+    //_animationTabController.reset();
 
     // run the animations!
     _animationControllerOn.forward();
     _animationControllerOff.forward();
+    //_animationTabController.forward();
   }
 
   _scrollTo(int index) {
@@ -532,7 +546,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                         providers: [
                           BlocProvider<HomePostsBloc>(
                               create: (context) => getIt<HomePostsBloc>()
-                                ..add(HomePostsEvent.getData())),
+                                ..add(HomePostsEvent.getData(currentUserID))),
                           BlocProvider<HomeEventsBloc>(
                             create: (context) => getIt<HomeEventsBloc>()
                               ..add(HomeEventsEvent.getData()),
