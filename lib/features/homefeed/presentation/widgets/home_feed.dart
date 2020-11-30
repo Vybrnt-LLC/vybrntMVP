@@ -222,7 +222,7 @@ class _HomeFeedState extends State<HomeFeed> {
                                                     .getOrCrash())),
                                       child: CreationAwareListItem(
                                         itemCreated: () {
-                                          if (index % 5 == 0) {
+                                          if (index % 20 == 0) {
                                             context.bloc<HomePostsBloc>().add(
                                                 HomePostsEvent.requestMoreData(
                                                     currentUserID));
