@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_push_notification.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/i_auth_facade.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_auth.dart';
@@ -16,8 +17,10 @@ part 'auth_bloc.freezed.dart';
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthFacade _authFacade;
   final IPushNotificationService _pushNotificationService;
+  final IAnalyticsService _analyticsService;
 
-  AuthBloc(this._authFacade, this._pushNotificationService)
+  AuthBloc(
+      this._authFacade, this._pushNotificationService, this._analyticsService)
       : super(AuthState.initial());
 
   @override
@@ -35,6 +38,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       yield const AuthState.unauthenticated();
     }, initializePushNotifications: (e) async* {
       await _pushNotificationService.initialize();
+    }, setAnalyticsUserID: (e) async* {
+      await _analyticsService.setUserProperties(userID: e.currentUserID);
     });
   }
 }

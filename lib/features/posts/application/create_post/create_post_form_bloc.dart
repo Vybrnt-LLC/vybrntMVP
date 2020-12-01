@@ -9,6 +9,7 @@ import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
 import 'package:vybrnt_mvp/features/organization/domain/i_org_service.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/i_post_repository.dart';
@@ -27,8 +28,10 @@ class CreatePostFormBloc
     extends Bloc<CreatePostFormEvent, CreatePostFormState> {
   final IPostRepository _postRepository;
   final IOrgService _orgService;
+  final IAnalyticsService _analyticsService;
 
-  CreatePostFormBloc(this._postRepository, this._orgService)
+  CreatePostFormBloc(
+      this._postRepository, this._orgService, this._analyticsService)
       : super(CreatePostFormState.initial());
 
   StreamSubscription<KtList<String>> _adminStreamSubscription;
@@ -157,6 +160,10 @@ class CreatePostFormBloc
                 categories: state.categories,
                 orgID: state.post.orgID.getOrCrash());
           }
+        }
+        if (failureOrSuccess.isRight()) {
+          await _analyticsService.logPostCreated(
+              hasImage: state.post.postImageURL.getOrCrash().isNotEmpty);
         }
         yield state.copyWith(
           isSaving: false,

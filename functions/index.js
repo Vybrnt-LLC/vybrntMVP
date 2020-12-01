@@ -17,10 +17,10 @@ const os = require('os');
 // import * as os from "os";
 
 admin.initializeApp({options: functions.config().functions,
-    storageBucket: 'vybrnt-release-d73d5.appspot.com',
+    storageBucket: 'vybrnt-production-release.appspot.com',
 });
 
-  exports.generateApplicationCsv = functions.region('us-central1').pubsub
+  exports.generateApplicationCsv = functions.region('us-east4').pubsub
   .topic("generate-application-csv")
   .onPublish(async message => {
 

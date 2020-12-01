@@ -5,6 +5,7 @@ import 'package:dartz/dartz.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/auth_failure.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/i_auth_facade.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/value_objects.dart';
@@ -17,8 +18,10 @@ part 'sign_in_form_bloc.freezed.dart';
 @injectable
 class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
   final IAuthFacade _authFacade;
+  final IAnalyticsService _analyticsService;
 
-  SignInFormBloc(this._authFacade) : super(SignInFormState.initial());
+  SignInFormBloc(this._authFacade, this._analyticsService)
+      : super(SignInFormState.initial());
 
   @override
   Stream<SignInFormState> mapEventToState(
@@ -46,6 +49,13 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         authFailureOrSuccessOption: none(),
       );
       final failureOrSuccess = await _authFacade.signInWithGoogle();
+      if (failureOrSuccess.isRight()) {
+        if (_authFacade.isUserRegistering()) {
+          await _analyticsService.logSignUp();
+        } else {
+          await _analyticsService.logLogin();
+        }
+      }
       yield state.copyWith(
         isSubmitting: false,
         authFailureOrSuccessOption: some(failureOrSuccess),
@@ -56,6 +66,11 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
         authFailureOrSuccessOption: none(),
       );
       final failureOrSuccess = await _authFacade.signInWithApple();
+      if (_authFacade.isUserRegistering()) {
+        await _analyticsService.logSignUp();
+      } else {
+        await _analyticsService.logLogin();
+      }
       yield state.copyWith(
         isSubmitting: false,
         authFailureOrSuccessOption: some(failureOrSuccess),
@@ -81,6 +96,14 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
 
       failureOrSuccess = await forwardedCall(
           emailAddress: state.emailAddress, password: state.password);
+    }
+
+    if (failureOrSuccess.isRight()) {
+      if (isRegistering) {
+        await _analyticsService.logSignUp();
+      } else {
+        await _analyticsService.logLogin();
+      }
     }
 
     yield state.copyWith(

@@ -7,6 +7,7 @@ import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:vybrnt_mvp/core/report/report_page.dart';
 import 'package:vybrnt_mvp/core/swipe_menu/widgets/simple_hidden_drawer_bloc.dart';
 import 'package:vybrnt_mvp/features/activity/application/bloc/activity_bloc.dart';
+import 'package:vybrnt_mvp/features/activity/repository/analytics_service.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/application/bloc/calendar_bloc.dart';
 import 'package:vybrnt_mvp/features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
@@ -28,7 +29,6 @@ import 'package:vybrnt_mvp/features/search/application/bloc/search_bloc.dart';
 import 'package:vybrnt_mvp/features/search/presentation/screens/search_screen.dart';
 import 'package:vybrnt_mvp/features/user/application/edit_user_bloc/edit_user_bloc.dart';
 import 'package:vybrnt_mvp/features/user/application/user_watcher_bloc/user_watcher_bloc.dart';
-import 'package:vybrnt_mvp/features/user/domain/models/photo_model.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/activity/presentation/activity_screen.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/edit_user_profile_screen.dart';
@@ -88,6 +88,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.userList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.userList](context)));
   }
@@ -113,6 +114,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.report),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.report](context)));
   }
@@ -124,6 +126,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.likes),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.likes](context)));
   }
@@ -135,6 +138,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.reposts),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.reposts](context)));
   }
@@ -146,6 +150,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.followerList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.followerList](context)));
   }
@@ -157,6 +162,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.followingList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.followingList](context)));
   }
@@ -168,6 +174,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.orgList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.orgList](context)));
   }
@@ -179,6 +186,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.orgPage),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.orgPage](context)));
   }
@@ -191,6 +199,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.userProfile),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.userProfile](context)));
   }
@@ -201,6 +210,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.editUserProfile),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.editUserProfile](context)));
   }
@@ -211,6 +221,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.editOrgPage),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.editOrgPage](context)));
   }
@@ -221,6 +232,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.postDetail),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.postDetail](context)));
   }
@@ -231,6 +243,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.eventDetail),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.eventDetail](context)));
   }
@@ -728,13 +741,15 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
       tabNavigator: this,
       child: Navigator(
           observers: [
-            HeroController(), // this could has caused the hero issue
+            HeroController(),
+            getIt<AnalyticsService>()
+                .getAnalyticsObserver(), // this could has caused the hero issue
           ],
           key: navigatorKey,
           initialRoute: TabNavigatorRoutes.root,
           onGenerateRoute: (routeSettings) {
             return MaterialPageRoute(
-                settings: RouteSettings(name: "/"),
+                settings: RouteSettings(name: routeSettings.name),
                 builder: (context) =>
                     routeBuilders[routeSettings.name](context));
           }),
