@@ -1,6 +1,124 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-admin.initializeApp();
+const { parseAsync } = require('json2csv');
+const { v4: uuidv4 } = require('uuid');
+const fs = require('fs');
+const path = require('path');
+const os = require('os');
+// const fss = require('fs-extra');
+// const gcs = require('@google-cloud/storage')();
+// const csv = require('csv');
+// var json2csv = require('json2csv');
+
+//import { parseAsync } from 'json2csv';
+//import { v4 as uuidv4 } from 'uuid';
+// import * as fs from "fs";
+// import * as path from "path";
+// import * as os from "os";
+
+admin.initializeApp({options: functions.config().functions,
+    storageBucket: 'vybrnt-production-release.appspot.com',
+});
+
+  exports.generateApplicationCsv = functions.region('us-east4').pubsub
+  .topic("generate-application-csv")
+  .onPublish(async message => {
+
+    // gets the documents from the firestore collection
+    const usersSnapshot = await admin
+      .firestore()
+      .collection("users")
+      .get();
+
+    const users = usersSnapshot.docs.map(doc => doc.data());
+
+    // csv field headers
+    const fields = [
+      'bannerImageUrl',
+      'bio',
+      'email',
+      'major',
+      'primaryColor',
+      'profileImageUrl',
+      'profileName',
+     'secondaryColor',
+      
+];
+
+    // get csv output
+    const output = await parseAsync(users, { fields });
+    //const storage = gcs.bucket('vybrnt-release-d73d5.appspot.com');
+
+    // generate filename
+    const dateTime = new Date().toISOString().replace(/\W/g, "");
+    const filename = `users_${dateTime}.csv`;
+
+    const tempLocalFile = path.join(os.tmpdir(), filename);
+
+    return new Promise((resolve, reject) => {
+      //write contents of csv into the temp file
+      fs.writeFile(tempLocalFile, output, error => {
+        if (error) {
+          reject(error);
+          console.log(error);
+          return;
+        }
+        const bucket = admin.storage().bucket();
+
+        // upload the file into the current firebase project default bucket
+        bucket
+           .upload(tempLocalFile, {
+            // Workaround: firebase console not generating token for files
+            // uploaded via Firebase Admin SDK
+            // https://github.com/firebase/firebase-admin-node/issues/694
+            metadata: {
+              metadata: {
+                firebaseStorageDownloadTokens: uuidv4(),
+              }
+            },
+          })
+          .then(() => resolve())
+          .catch(errorr => console.log(errorr));
+      });
+    });
+  });
+
+//   exports.createCsv = functions.region('us-central1').pubsub
+//   .topic("create-csv")
+//   .onPublish(async message => {
+
+//     // gets the documents from the firestore collection
+//     const usersSnapshot = await admin
+//       .firestore()
+//       .collection("users")
+//       .get();
+
+//     const users = usersSnapshot.docs.map(doc => doc.data());
+
+//     // csv field headers
+//     const fields = [
+//       'bannerImageUrl',
+//       'bio',
+//       'email',
+//       'major',
+//       'primaryColor',
+//       'profileImageUrl',
+//       'profileName',
+//      'secondaryColor',
+      
+// ];
+
+//     // get csv output
+//     const output = await parseAsync(users, { fields });
+
+//     // generate filename
+//     const dateTime = new Date().toISOString().replace(/\W/g, "");
+//     const filename = `users_${dateTime}.csv`;
+
+//     const tempLocalFile = path.join(os.tmpdir(), filename);
+
+    
+//   });
 
 exports.onFollowUser = functions.firestore
     .document('/followers/{userID}/userFollowers/{followerID}')
@@ -700,131 +818,137 @@ exports.onUpdateOrgEvent = functions.firestore
         });
     });
 
-exports.onCreateActivityFeedItem = functions.firestore
-.document('/activities/{userID}/userActivityFeed/{activityID}')
-.onCreate(async (snapshot, context) => {
-
-    // 1) Get user connected to the feed
-    const userID = context.params.userID;
-    let body;
-    let username;
-    let typeID; 
-    const userRef = admin.firestore().collection('users').doc(userID);
-    const doc = await userRef.get();
-
-    // 2) Once we have user, check if they have a notification token
-    const androidNotificationToken = doc.data()
-    .androidNotificationToken;
+    exports.onCreateActivityFeedItem = functions.firestore
+    .document('/activities/{userID}/userActivityFeed/{activityID}')
+    .onCreate(async (snapshot, context) => {
     
-    const activity = snapshot.data();
+        // 1) Get user connected to the feed
+        const userID = context.params.userID;
+        let body;
+        let username;
+        let typeID; 
+        let isOrg;
+        const userRef = admin.firestore().collection('users').doc(userID);
+        const doc = await userRef.get();
+      
     
-    //admin.messaging().send(message);
-    if(androidNotificationToken) {
-        // send notification
+        // 2) Once we have user, check if they have a notification token
+        const androidNotificationToken = doc.data()
+        .androidNotificationToken;
         
-        if(activity.username) {
-            username = activity.username;
+        const activity = snapshot.data();
+          if(activity.isOrg){
+            isOrg = "true";
         } else {
-            username = "Anonymous User";
+            isOrg = "false";
         }
-
-        switch (activity.type) {
-            case "likeUser":
-              {
-                body = `${username} liked your post`;
-                typeID = activity.postID;
-              }
-              break;
-            case "repostUser":
-              {
-                body = `${username} reposted your post`;
-                typeID = activity.postID;
-              }
-              break;
-            case "commentUser":
-              {
-                body = `${username} commented on your post`;
-                typeID = activity.postID;
-              }
-              break;
-            case "likeOrg":
-              {
-                body = `${username} liked your organization's post`;
-                typeID = activity.postID;
-              }
-              break;
-            case 'repostOrg':
-              {
-                body = `${username} reposted your organization's post`;
-                typeID = activity.postID;
-              }
-              break;
-            case "commentOrg":
-              {
-                body = `${username} commented on your organization's post`;
-                typeID = activity.postID;
-              }
-              break;
-            case "followUser":
-              {
-                body = `${username} followed you`;
-                typeID = activity.userID;
-              }
-              break;
-            case "followOrg":
-              {
-                body = `${username} joined your organization page`;
-                typeID = activity.orgID;
-              }
-              break;
-            case "post":
-              {
-                body = `${username} posted an update`;
-                typeID = activity.postID;
-              }
-              break;
-            case "event":
-              {
-                body = `${username} created a new event`;
-                typeID = activity.eventID;
-              }
-              break;
-            case "eventStart":
-              {
-                body = `${username} event is starting soon`;
-                typeID = activity.eventID;
-              }
-              break;
-            case "admin":
-              {
-                body = `${username} has given you admin access`;
-                typeID = activity.orgID;
-              }
-              break;
-            default:
-                body = `${username}`;
-          }
-
-          // 4) Create message for push notification
-          const message = {
-            notification: {body: body, title: 'Vybrnt', click_action: FLUTTER_NOTIFICATION_CLICK, icon: activity.profileImageURL },
-            token: androidNotificationToken,
-            data: {userID: userID, typeID: typeID, type: activity.type, isOrg: activity.isOrg, orgID: activity.orgID }
+        //admin.messaging().send(message);
+        if(androidNotificationToken) {
+            // send notification
             
-        };
-          // 5) Send message with admin.messaging()
-
-          try {
-            admin.messaging().send(message);
-             console.log("Successfully sent message", response);
+            if(activity.username) {
+                username = activity.username;
+            } else {
+                username = "Anonymous User";
+            }
+    
+            switch (activity.type) {
+                case "likeUser":
+                  {
+                    body = `${username} liked your post`;
+                    typeID = activity.postID;
+                  }
+                  break;
+                case "repostUser":
+                  {
+                    body = `${username} reposted your post`;
+                    typeID = activity.postID;
+                  }
+                  break;
+                case "commentUser":
+                  {
+                    body = `${username} commented on your post`;
+                    typeID = activity.postID;
+                  }
+                  break;
+                case "likeOrg":
+                  {
+                    body = `${username} liked your organization's post`;
+                    typeID = activity.postID;
+                  }
+                  break;
+                case 'repostOrg':
+                  {
+                    body = `${username} reposted your organization's post`;
+                    typeID = activity.postID;
+                  }
+                  break;
+                case "commentOrg":
+                  {
+                    body = `${username} commented on your organization's post`;
+                    typeID = activity.postID;
+                  }
+                  break;
+                case "followUser":
+                  {
+                    body = `${username} followed you`;
+                    typeID = activity.userID;
+                  }
+                  break;
+                case "followOrg":
+                  {
+                    body = `${username} joined your organization page`;
+                    typeID = activity.orgID;
+                  }
+                  break;
+                case "post":
+                  {
+                    body = `${username} posted an update`;
+                    typeID = activity.postID;
+                  }
+                  break;
+                case "event":
+                  {
+                    body = `${username} created a new event`;
+                    typeID = activity.eventID;
+                  }
+                  break;
+                case "eventStart":
+                  {
+                    body = `${username} event is starting soon`;
+                    typeID = activity.eventID;
+                  }
+                  break;
+                case "admin":
+                  {
+                    body = `${username} has given you admin access`;
+                    typeID = activity.orgID;
+                  }
+                  break;
+                default:
+                    body = `${username}`;
+              }
+    
+              // 4) Create message for push notification
+              const message = {
+                notification: {body: body, title: 'Vybrnt' },
+                token: androidNotificationToken,
+                data: {userID: userID, typeID: typeID, type: activity.type, isOrg: isOrg, orgID: activity.orgID, click_action: 'FLUTTER_NOTIFICATION_CLICK',  icon: activity.profileImageURL }
+                
+            };
+              // 5) Send message with admin.messaging()
+    
+              try {
+                admin.messaging().send(message);
+                 console.log("Successfully sent message", response);
+            }
+            catch (error) {
+                console.log("Error sending message", error);
+            }
+        } else {
+            console.log("No token for user, cannot send notification");
         }
-        catch (error) {
-            console.log("Error sending message", error);
-        }
-    } else {
-        console.log("No token for user, cannot send notification");
-    }
-
-  
-});
-
+    
+      
+    });
+    

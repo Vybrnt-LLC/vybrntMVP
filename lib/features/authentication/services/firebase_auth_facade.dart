@@ -22,12 +22,18 @@ import './firebase_user_mapper.dart';
 class FirebaseAuthFacade implements IAuthFacade {
   final firebaseAuth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
+  bool isRegistering = false;
 
   FirebaseAuthFacade(this._firebaseAuth, this._googleSignIn);
 
   @override
   Future<Option<UserAuth>> getSignedInUser() async =>
       optionOf(_firebaseAuth.currentUser?.toDomain());
+
+  @override
+  bool isUserRegistering() {
+    return isRegistering;
+  }
 
   //.then((firebaseUser) => optionOf(firebaseUser?.toDomain()));
 
@@ -71,7 +77,7 @@ class FirebaseAuthFacade implements IAuthFacade {
         senderID: SenderID('LHpaJopoy0Tgh1aNB5PjAqzf8X73'),
         orgID: OrgID('cec10340-090e-11eb-a5dc-1d0e34e32b97'),
         postBody: PostBody(
-            'Thank you for trying out our platform! Hope we can keep make it better together. To make a page for your organization, click on the + button in the bottom right corner and add your team as admins. No need to make another accounnt. Make sure to report bug and provide feedback and remember to have fun everyone!!!😁'),
+            'Thank you for trying out our platform! Hope we can make it better together. To make a page for your organization, click on the + button at the bottom right corner and add your team members as admins. No need to create another accounnt. Make sure to report bugs and provide feedback and remember to have fun everyone!!!😁'),
         postHeader: PostHeader('WELCOME TO VYBRNT!!'),
       ));
       await feedsRef
@@ -131,12 +137,15 @@ class FirebaseAuthFacade implements IAuthFacade {
         bool userExists =
             await usersRef.doc(result.user.uid).get().then((doc) => doc.exists);
         if (!userExists) {
+          isRegistering = true;
           User newUser = User.empty();
           final userDTO = UserDto.fromDomain(newUser.copyWith(
             userID: UniqueId.fromUniqueString(result.user.uid),
           ));
           await usersRef.doc(result.user.uid).set(userDTO.toJson());
           await addFirstPost(result.user);
+        } else {
+          isRegistering = false;
         }
 
         return right(unit);
@@ -183,12 +192,15 @@ class FirebaseAuthFacade implements IAuthFacade {
       bool userExists =
           await usersRef.doc(result.user.uid).get().then((doc) => doc.exists);
       if (!userExists) {
+        isRegistering = true;
         User newUser = User.empty();
         final userDTO = UserDto.fromDomain(newUser.copyWith(
           userID: UniqueId.fromUniqueString(result.user.uid),
         ));
         await usersRef.doc(result.user.uid).set(userDTO.toJson());
         await addFirstPost(result.user);
+      } else {
+        isRegistering = false;
       }
 
       return right(unit);

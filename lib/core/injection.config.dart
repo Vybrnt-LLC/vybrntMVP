@@ -4,6 +4,7 @@
 // InjectableConfigGenerator
 // **************************************************************************
 
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -14,6 +15,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 import '../features/activity/application/actor/activity_actor_bloc.dart';
 import '../features/activity/application/bloc/activity_bloc.dart';
 import '../features/activity/repository/activity_service.dart';
+import '../features/activity/repository/analytics_service.dart';
 import '../features/authentication/application/auth/bloc/auth_bloc.dart';
 import '../features/posts/application/bookmark_watcher/bookmark_watcher_bloc.dart';
 import '../features/calendar/application/bloc/calendar_bloc.dart';
@@ -35,6 +37,7 @@ import '../features/homefeed/application/home_events/home_events_bloc.dart';
 import '../features/homefeed/service/homefeed_service.dart';
 import '../features/homefeed/application/home_posts/home_posts_bloc.dart';
 import '../features/activity/domain/i_activity_service.dart';
+import '../features/activity/domain/i_analytics_service.dart';
 import '../features/authentication/domain/i_auth_facade.dart';
 import '../features/calendar/domain/i_calendar_service.dart';
 import '../features/calendar/domain/i_event_detail_service.dart';
@@ -71,6 +74,10 @@ GetIt $initGetIt(
 }) {
   final gh = GetItHelper(get, environment, environmentFilter);
   final firebaseInjectableModule = _$FirebaseInjectableModule();
+  gh.lazySingleton<AnalyticsService>(
+      () => firebaseInjectableModule.analyticsService);
+  gh.lazySingleton<FirebaseAnalytics>(
+      () => firebaseInjectableModule.firebaseAnalytics);
   gh.lazySingleton<FirebaseAuth>(() => firebaseInjectableModule.firebaseAuth);
   gh.lazySingleton<FirebaseFirestore>(() => firebaseInjectableModule.firestore);
   gh.lazySingleton<FirebaseMessaging>(
@@ -78,6 +85,7 @@ GetIt $initGetIt(
   gh.lazySingleton<GoogleSignIn>(() => firebaseInjectableModule.googleSignIn);
   gh.lazySingleton<IActivityService>(
       () => ActivityService(get<FirebaseFirestore>()));
+  gh.lazySingleton<IAnalyticsService>(() => AnalyticsService());
   gh.lazySingleton<IAuthFacade>(
       () => FirebaseAuthFacade(get<FirebaseAuth>(), get<GoogleSignIn>()));
   gh.lazySingleton<ICalendarService>(
@@ -101,7 +109,8 @@ GetIt $initGetIt(
   gh.factory<PostActorBloc>(() => PostActorBloc(get<IPostRepository>()));
   gh.factory<PostWatcherBloc>(() => PostWatcherBloc(get<IPostRepository>()));
   gh.factory<SearchBloc>(() => SearchBloc(get<IOrgService>()));
-  gh.factory<SignInFormBloc>(() => SignInFormBloc(get<IAuthFacade>()));
+  gh.factory<SignInFormBloc>(
+      () => SignInFormBloc(get<IAuthFacade>(), get<IAnalyticsService>()));
   gh.factory<UserBloc>(() => UserBloc(get<IUserService>()));
   gh.factory<UserEventListBloc>(() => UserEventListBloc(get<IUserService>()));
   gh.factory<UserListBloc>(() => UserListBloc(get<IOrgService>()));
@@ -121,9 +130,13 @@ GetIt $initGetIt(
         get<ICalendarService>(),
         get<IEventDetailService>(),
         get<IOrgService>(),
+        get<IAnalyticsService>(),
       ));
-  gh.factory<CreatePostFormBloc>(
-      () => CreatePostFormBloc(get<IPostRepository>(), get<IOrgService>()));
+  gh.factory<CreatePostFormBloc>(() => CreatePostFormBloc(
+        get<IPostRepository>(),
+        get<IOrgService>(),
+        get<IAnalyticsService>(),
+      ));
   gh.factory<EditOrgBloc>(() => EditOrgBloc(get<IOrgService>()));
   gh.factory<EditUserBloc>(() => EditUserBloc(get<IUserService>()));
   gh.factory<EventDetailBloc>(
@@ -137,8 +150,11 @@ GetIt $initGetIt(
         navigationService: get<NavigationService>(),
         firestore: get<FirebaseFirestore>(),
       ));
-  gh.factory<AuthBloc>(
-      () => AuthBloc(get<IAuthFacade>(), get<IPushNotificationService>()));
+  gh.factory<AuthBloc>(() => AuthBloc(
+        get<IAuthFacade>(),
+        get<IPushNotificationService>(),
+        get<IAnalyticsService>(),
+      ));
   return get;
 }
 

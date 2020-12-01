@@ -1,21 +1,19 @@
 //import 'package:firebase_auth/firebase_auth.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 //import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
-import 'package:flutter/foundation.dart' show kDebugMode;
-import 'package:injectable/injectable.dart';
 
 import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/features/activity/repository/analytics_service.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 //import 'package:flutter/services.dart';
 import 'core/injection.dart';
 import 'core/routes/router.gr.dart' as route;
-import './config_reader.dart';
+
 import 'features/authentication/application/auth/bloc/auth_bloc.dart';
 
 // Future<void> main() async {
@@ -62,6 +60,7 @@ class MyApp extends StatelessWidget {
           debugShowCheckedModeBanner: false,
           builder: ExtendedNavigator.builder(
               navigatorKey: getIt<NavigationService>().navigatorKey,
+              observers: [getIt<AnalyticsService>().getAnalyticsObserver()],
               router: route.Router(),
               initialRoute: '/',
               builder: (ctx, extendedNav) => Theme(

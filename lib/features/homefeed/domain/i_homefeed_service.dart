@@ -12,4 +12,8 @@ abstract class IHomeFeedService {
       String documentName);
   Stream<Either<PostFailure, KtList<Post>>> watchCategoriesPostFeed(
       String documentName);
+  void requestMoreData(String currentUserID);
+  Stream<Either<PostFailure, KtList<Post>>> watchPostFeedPaginated(
+      String currentUserID);
+  void resetPostList();
 }

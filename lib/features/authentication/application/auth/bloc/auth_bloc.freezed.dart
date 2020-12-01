@@ -19,6 +19,16 @@ class _$AuthEventTearOff {
   SignedOut signedOut() {
     return const SignedOut();
   }
+
+  InitializePushNotifications initializePushNotifications() {
+    return const InitializePushNotifications();
+  }
+
+  SetAnalyticsUserID setAnalyticsUserID(String currentUserID) {
+    return SetAnalyticsUserID(
+      currentUserID,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -29,22 +39,31 @@ mixin _$AuthEvent {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
+    @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
+    Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
     @required Result orElse(),
   });
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result authCheckRequested(AuthCheckRequested value),
     @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result orElse(),
   });
 }
@@ -100,9 +119,13 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
+    @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
     return authCheckRequested();
   }
 
@@ -111,6 +134,8 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
+    Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -125,9 +150,14 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result map<Result extends Object>({
     @required Result authCheckRequested(AuthCheckRequested value),
     @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
     return authCheckRequested(this);
   }
 
@@ -136,6 +166,8 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result maybeMap<Result extends Object>({
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -185,9 +217,13 @@ class _$SignedOut implements SignedOut {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
+    @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
     return signedOut();
   }
 
@@ -196,6 +232,8 @@ class _$SignedOut implements SignedOut {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
+    Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -210,9 +248,14 @@ class _$SignedOut implements SignedOut {
   Result map<Result extends Object>({
     @required Result authCheckRequested(AuthCheckRequested value),
     @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
     return signedOut(this);
   }
 
@@ -221,6 +264,8 @@ class _$SignedOut implements SignedOut {
   Result maybeMap<Result extends Object>({
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -233,6 +278,236 @@ class _$SignedOut implements SignedOut {
 
 abstract class SignedOut implements AuthEvent {
   const factory SignedOut() = _$SignedOut;
+}
+
+abstract class $InitializePushNotificationsCopyWith<$Res> {
+  factory $InitializePushNotificationsCopyWith(
+          InitializePushNotifications value,
+          $Res Function(InitializePushNotifications) then) =
+      _$InitializePushNotificationsCopyWithImpl<$Res>;
+}
+
+class _$InitializePushNotificationsCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res>
+    implements $InitializePushNotificationsCopyWith<$Res> {
+  _$InitializePushNotificationsCopyWithImpl(InitializePushNotifications _value,
+      $Res Function(InitializePushNotifications) _then)
+      : super(_value, (v) => _then(v as InitializePushNotifications));
+
+  @override
+  InitializePushNotifications get _value =>
+      super._value as InitializePushNotifications;
+}
+
+class _$InitializePushNotifications implements InitializePushNotifications {
+  const _$InitializePushNotifications();
+
+  @override
+  String toString() {
+    return 'AuthEvent.initializePushNotifications()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is InitializePushNotifications);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result authCheckRequested(),
+    @required Result signedOut(),
+    @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    return initializePushNotifications();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result authCheckRequested(),
+    Result signedOut(),
+    Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initializePushNotifications != null) {
+      return initializePushNotifications();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result authCheckRequested(AuthCheckRequested value),
+    @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    return initializePushNotifications(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result authCheckRequested(AuthCheckRequested value),
+    Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (initializePushNotifications != null) {
+      return initializePushNotifications(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InitializePushNotifications implements AuthEvent {
+  const factory InitializePushNotifications() = _$InitializePushNotifications;
+}
+
+abstract class $SetAnalyticsUserIDCopyWith<$Res> {
+  factory $SetAnalyticsUserIDCopyWith(
+          SetAnalyticsUserID value, $Res Function(SetAnalyticsUserID) then) =
+      _$SetAnalyticsUserIDCopyWithImpl<$Res>;
+  $Res call({String currentUserID});
+}
+
+class _$SetAnalyticsUserIDCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res>
+    implements $SetAnalyticsUserIDCopyWith<$Res> {
+  _$SetAnalyticsUserIDCopyWithImpl(
+      SetAnalyticsUserID _value, $Res Function(SetAnalyticsUserID) _then)
+      : super(_value, (v) => _then(v as SetAnalyticsUserID));
+
+  @override
+  SetAnalyticsUserID get _value => super._value as SetAnalyticsUserID;
+
+  @override
+  $Res call({
+    Object currentUserID = freezed,
+  }) {
+    return _then(SetAnalyticsUserID(
+      currentUserID == freezed ? _value.currentUserID : currentUserID as String,
+    ));
+  }
+}
+
+class _$SetAnalyticsUserID implements SetAnalyticsUserID {
+  const _$SetAnalyticsUserID(this.currentUserID)
+      : assert(currentUserID != null);
+
+  @override
+  final String currentUserID;
+
+  @override
+  String toString() {
+    return 'AuthEvent.setAnalyticsUserID(currentUserID: $currentUserID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SetAnalyticsUserID &&
+            (identical(other.currentUserID, currentUserID) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUserID, currentUserID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(currentUserID);
+
+  @override
+  $SetAnalyticsUserIDCopyWith<SetAnalyticsUserID> get copyWith =>
+      _$SetAnalyticsUserIDCopyWithImpl<SetAnalyticsUserID>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result authCheckRequested(),
+    @required Result signedOut(),
+    @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    return setAnalyticsUserID(currentUserID);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result authCheckRequested(),
+    Result signedOut(),
+    Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (setAnalyticsUserID != null) {
+      return setAnalyticsUserID(currentUserID);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result authCheckRequested(AuthCheckRequested value),
+    @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    return setAnalyticsUserID(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result authCheckRequested(AuthCheckRequested value),
+    Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (setAnalyticsUserID != null) {
+      return setAnalyticsUserID(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SetAnalyticsUserID implements AuthEvent {
+  const factory SetAnalyticsUserID(String currentUserID) = _$SetAnalyticsUserID;
+
+  String get currentUserID;
+  $SetAnalyticsUserIDCopyWith<SetAnalyticsUserID> get copyWith;
 }
 
 class _$AuthStateTearOff {

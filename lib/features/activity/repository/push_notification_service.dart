@@ -44,7 +44,7 @@ class PushNotificationService implements IPushNotificationService {
             print('Notification shown');
           }
         },
-        //onBackgroundMessage: myBackgroundMessageHandler,
+        onBackgroundMessage: myBackgroundMessageHandler,
         onResume: (Map<String, dynamic> message) async {
           print("on resume: $message\n");
           final String recipientID = message['data']['recipient'];
@@ -92,7 +92,7 @@ class PushNotificationService implements IPushNotificationService {
   }
 
   @override
-  void serializeAndNavigate(Map<String, dynamic> message) {
+  void serializeAndNavigate(Map<dynamic, dynamic> message) {
     var notificationData = message['data'];
     var type = notificationData['type'];
 
