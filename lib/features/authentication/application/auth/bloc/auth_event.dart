@@ -8,4 +8,6 @@ abstract class AuthEvent with _$AuthEvent {
       InitializePushNotifications;
   const factory AuthEvent.setAnalyticsUserID(String currentUserID) =
       SetAnalyticsUserID;
+  const factory AuthEvent.navigateTo({String routeName, dynamic arguments}) =
+      NavigateTo;
 }

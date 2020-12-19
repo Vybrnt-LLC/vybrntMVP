@@ -17,6 +17,7 @@ import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/screens/event_detail_screen.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/widgets/event_tile.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/widgets/org_calendar_list.dart';
+import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
 import 'package:vybrnt_mvp/features/user/presentation/widgets/create_fab.dart';
 
 class CalendarMonthScreen extends StatefulWidget {
@@ -385,7 +386,10 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
           ),
         ),
       ),
-      floatingActionButton: CreateFAB(),
+      floatingActionButton: BlocProvider(
+        create: (context) => getIt<FabBloc>(),
+        child: CreateFAB(),
+      ),
     );
   }
 

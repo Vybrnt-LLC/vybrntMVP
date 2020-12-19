@@ -18,9 +18,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final IAuthFacade _authFacade;
   final IPushNotificationService _pushNotificationService;
   final IAnalyticsService _analyticsService;
+  final INavigationService _navigationService;
 
-  AuthBloc(
-      this._authFacade, this._pushNotificationService, this._analyticsService)
+  AuthBloc(this._authFacade, this._pushNotificationService,
+      this._analyticsService, this._navigationService)
       : super(AuthState.initial());
 
   @override
@@ -40,6 +41,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _pushNotificationService.initialize();
     }, setAnalyticsUserID: (e) async* {
       await _analyticsService.setUserProperties(userID: e.currentUserID);
+    }, navigateTo: (e) async* {
+      await _navigationService.navigateTo(e.routeName, arguments: e.arguments);
     });
   }
 }

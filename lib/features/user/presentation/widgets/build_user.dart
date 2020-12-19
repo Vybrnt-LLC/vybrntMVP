@@ -17,6 +17,7 @@ import 'package:vybrnt_mvp/features/organization/application/event_list_bloc/eve
 import 'package:vybrnt_mvp/features/organization/presentation/widgets/create_photo_fab.dart';
 import 'package:vybrnt_mvp/features/posts/application/post_watcher/post_watcher_bloc.dart';
 import 'package:vybrnt_mvp/features/user/application/bloc/user_bloc.dart';
+import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/item_model.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/user_profile_about_tab.dart';
@@ -177,7 +178,10 @@ class _BuildUserState extends State<BuildUser> {
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
       return Scaffold(
           backgroundColor: Colors.white,
-          floatingActionButton: CreateFAB(),
+          floatingActionButton: BlocProvider(
+            create: (context) => getIt<FabBloc>(),
+            child: CreateFAB(),
+          ),
           body: SafeArea(
             top: false,
             child: DefaultTabController(

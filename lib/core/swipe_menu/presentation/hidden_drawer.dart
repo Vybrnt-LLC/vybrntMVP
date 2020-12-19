@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hidden_drawer_menu/hidden_drawer_menu.dart';
 import 'package:hidden_drawer_menu/model/item_hidden_menu.dart';
 import 'package:hidden_drawer_menu/model/screen_hidden_drawer.dart';
+import 'package:vybrnt_mvp/core/navbar/application/bloc/navbar_bloc.dart';
 
 import 'package:vybrnt_mvp/core/navbar/navbar_setup.dart';
 import 'package:vybrnt_mvp/core/routes/router.gr.dart' as route;
@@ -34,7 +35,11 @@ class HiddenDrawer extends StatelessWidget {
                 TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 25.0),
             selectedStyle: TextStyle(color: Colors.teal),
           ),
-          NavBarSetUp(userID: userID)),
+          BlocProvider(
+            create: (context) =>
+                getIt<NavbarBloc>()..add(const NavbarEvent.initialize()),
+            child: NavBarSetUp(userID: userID),
+          )),
       // ScreenHiddenDrawer(
       //     ItemHiddenMenu(
       //       name: "Settings",

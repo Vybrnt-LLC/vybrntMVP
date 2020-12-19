@@ -31,6 +31,7 @@ import '../features/calendar/application/event_detail_bloc/event_detail_bloc.dar
 import '../features/calendar/services/event_detail_service.dart';
 import '../features/organization/application/event_list_bloc/event_list_bloc.dart';
 import '../features/calendar/application/event_tile_bloc/event_tile_bloc.dart';
+import '../features/user/application/fab_bloc/fab_bloc.dart';
 import '../features/authentication/services/firebase_auth_facade.dart';
 import 'auth/firebase_injectable_module.dart';
 import '../features/homefeed/application/home_events/home_events_bloc.dart';
@@ -47,6 +48,7 @@ import '../features/organization/domain/i_org_service.dart';
 import '../features/posts/domain/posts/i_post_repository.dart';
 import '../features/activity/domain/i_push_notification.dart';
 import '../features/user/domain/i_user_service.dart';
+import 'navbar/application/bloc/navbar_bloc.dart';
 import 'routes/navigation_service.dart';
 import '../features/organization/application/bloc/org_bloc.dart';
 import '../features/calendar/application/org_bloc/org_calendar_bloc.dart';
@@ -100,13 +102,15 @@ GetIt $initGetIt(
       () => PostRepository(get<FirebaseFirestore>()));
   gh.lazySingleton<IUserService>(
       () => UserService(firestore: get<FirebaseFirestore>()));
+  gh.factory<NavbarBloc>(() => NavbarBloc(get<AnalyticsService>()));
   gh.lazySingleton<NavigationService>(
       () => firebaseInjectableModule.navigationService);
   gh.factory<OrgBloc>(() => OrgBloc(get<IOrgService>()));
   gh.factory<OrgCalendarBloc>(
       () => OrgCalendarBloc(get<ICalendarService>(), get<IOrgService>()));
   gh.factory<OrgWatcherBloc>(() => OrgWatcherBloc(get<IOrgService>()));
-  gh.factory<PostActorBloc>(() => PostActorBloc(get<IPostRepository>()));
+  gh.factory<PostActorBloc>(
+      () => PostActorBloc(get<IPostRepository>(), get<IAnalyticsService>()));
   gh.factory<PostWatcherBloc>(() => PostWatcherBloc(get<IPostRepository>()));
   gh.factory<SearchBloc>(() => SearchBloc(get<IOrgService>()));
   gh.factory<SignInFormBloc>(
@@ -118,13 +122,13 @@ GetIt $initGetIt(
   gh.factory<ActivityActorBloc>(
       () => ActivityActorBloc(get<IActivityService>()));
   gh.factory<ActivityBloc>(() => ActivityBloc(get<IActivityService>()));
-  gh.factory<BookmarkWatcherBloc>(
-      () => BookmarkWatcherBloc(get<IPostRepository>()));
+  gh.factory<BookmarkWatcherBloc>(() =>
+      BookmarkWatcherBloc(get<IPostRepository>(), get<IAnalyticsService>()));
   gh.factory<CalendarBloc>(() => CalendarBloc(get<ICalendarService>()));
   gh.factory<CategoryEventsBloc>(
       () => CategoryEventsBloc(get<IHomeFeedService>()));
-  gh.factory<CategoryPostsBloc>(
-      () => CategoryPostsBloc(get<IHomeFeedService>()));
+  gh.factory<CategoryPostsBloc>(() =>
+      CategoryPostsBloc(get<IHomeFeedService>(), get<IAnalyticsService>()));
   gh.factory<CommentActorBloc>(() => CommentActorBloc(get<IPostRepository>()));
   gh.factory<CreateEventBloc>(() => CreateEventBloc(
         get<ICalendarService>(),
@@ -139,10 +143,14 @@ GetIt $initGetIt(
       ));
   gh.factory<EditOrgBloc>(() => EditOrgBloc(get<IOrgService>()));
   gh.factory<EditUserBloc>(() => EditUserBloc(get<IUserService>()));
-  gh.factory<EventDetailBloc>(
-      () => EventDetailBloc(get<IEventDetailService>(), get<IOrgService>()));
+  gh.factory<EventDetailBloc>(() => EventDetailBloc(
+        get<IEventDetailService>(),
+        get<IOrgService>(),
+        get<IAnalyticsService>(),
+      ));
   gh.factory<EventListBloc>(() => EventListBloc(get<IOrgService>()));
   gh.factory<EventTileBloc>(() => EventTileBloc(get<IEventDetailService>()));
+  gh.factory<FabBloc>(() => FabBloc(get<IAnalyticsService>()));
   gh.factory<HomeEventsBloc>(() => HomeEventsBloc(get<IHomeFeedService>()));
   gh.factory<HomePostsBloc>(() => HomePostsBloc(get<IHomeFeedService>()));
   gh.lazySingleton<IPushNotificationService>(() => PushNotificationService(
@@ -154,6 +162,7 @@ GetIt $initGetIt(
         get<IAuthFacade>(),
         get<IPushNotificationService>(),
         get<IAnalyticsService>(),
+        get<INavigationService>(),
       ));
   return get;
 }

@@ -719,4 +719,14 @@ class PostRepository implements IPostRepository {
             }));
     return notifyFollowersIDs;
   }
+
+  @override
+  Future<Post> getPost({String postID, String type, String typeID}) async {
+    DocumentSnapshot postDoc;
+
+    postDoc =
+        await postsRef.doc(typeID).collection(type + 'Posts').doc(postID).get();
+
+    return PostDTO.fromFirestore(postDoc).toDomain();
+  }
 }

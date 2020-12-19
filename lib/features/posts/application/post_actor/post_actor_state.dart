@@ -4,6 +4,7 @@ part of 'post_actor_bloc.dart';
 abstract class PostActorState with _$PostActorState {
   const factory PostActorState(
       {@required Organization org,
+      @required Post post,
       @required User senderUser,
       @required User reposterUser,
       @required bool isCurrentUsersPost,
@@ -18,6 +19,7 @@ abstract class PostActorState with _$PostActorState {
 
   factory PostActorState.inital() => _PostActorState(
         org: Organization.empty(),
+        post: Post.empty(),
         senderUser: User.empty(),
         reposterUser: User.empty(),
         isCurrentUsersPost: false,

@@ -104,6 +104,20 @@ class _$PostActorEventTearOff {
       currentUserID,
     );
   }
+
+  _SetCurrentScreen setCurrentScreen() {
+    return const _SetCurrentScreen();
+  }
+
+  GetPost getPost(
+      {String postID, String type, String typeID, String currentUserID}) {
+    return GetPost(
+      postID: postID,
+      type: type,
+      typeID: typeID,
+      currentUserID: currentUserID,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -137,6 +151,10 @@ mixin _$PostActorEvent {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -159,6 +177,9 @@ mixin _$PostActorEvent {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -175,6 +196,8 @@ mixin _$PostActorEvent {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -190,6 +213,8 @@ mixin _$PostActorEvent {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   });
 }
@@ -327,6 +352,10 @@ class _$_GetData implements _GetData {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -340,6 +369,8 @@ class _$_GetData implements _GetData {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return getData(post, senderID, currentUserID, orgID);
   }
 
@@ -365,6 +396,9 @@ class _$_GetData implements _GetData {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -389,6 +423,8 @@ class _$_GetData implements _GetData {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -402,6 +438,8 @@ class _$_GetData implements _GetData {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return getData(this);
   }
 
@@ -420,6 +458,8 @@ class _$_GetData implements _GetData {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -542,6 +582,10 @@ class _$_Opened implements _Opened {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -555,6 +599,8 @@ class _$_Opened implements _Opened {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return openPostDetail(post, commenting);
   }
 
@@ -580,6 +626,9 @@ class _$_Opened implements _Opened {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -604,6 +653,8 @@ class _$_Opened implements _Opened {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -617,6 +668,8 @@ class _$_Opened implements _Opened {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return openPostDetail(this);
   }
 
@@ -635,6 +688,8 @@ class _$_Opened implements _Opened {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -744,6 +799,10 @@ class _$_Delete implements _Delete {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -757,6 +816,8 @@ class _$_Delete implements _Delete {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return delete(post);
   }
 
@@ -782,6 +843,9 @@ class _$_Delete implements _Delete {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -806,6 +870,8 @@ class _$_Delete implements _Delete {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -819,6 +885,8 @@ class _$_Delete implements _Delete {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return delete(this);
   }
 
@@ -837,6 +905,8 @@ class _$_Delete implements _Delete {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -937,6 +1007,10 @@ class _$_CommentBodyChanged implements _CommentBodyChanged {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -950,6 +1024,8 @@ class _$_CommentBodyChanged implements _CommentBodyChanged {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return commentBodyChanged(commnentBody);
   }
 
@@ -975,6 +1051,9 @@ class _$_CommentBodyChanged implements _CommentBodyChanged {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -999,6 +1078,8 @@ class _$_CommentBodyChanged implements _CommentBodyChanged {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1012,6 +1093,8 @@ class _$_CommentBodyChanged implements _CommentBodyChanged {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return commentBodyChanged(this);
   }
 
@@ -1030,6 +1113,8 @@ class _$_CommentBodyChanged implements _CommentBodyChanged {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1153,6 +1238,10 @@ class _$_SubmitComment implements _SubmitComment {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1166,6 +1255,8 @@ class _$_SubmitComment implements _SubmitComment {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return submitComment(currentUserID, post);
   }
 
@@ -1191,6 +1282,9 @@ class _$_SubmitComment implements _SubmitComment {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1215,6 +1309,8 @@ class _$_SubmitComment implements _SubmitComment {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1228,6 +1324,8 @@ class _$_SubmitComment implements _SubmitComment {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return submitComment(this);
   }
 
@@ -1246,6 +1344,8 @@ class _$_SubmitComment implements _SubmitComment {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1363,6 +1463,10 @@ class _$_LikesReceived implements _LikesReceived {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1376,6 +1480,8 @@ class _$_LikesReceived implements _LikesReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return likesReceived(likesOrFailure, currentUserID);
   }
 
@@ -1401,6 +1507,9 @@ class _$_LikesReceived implements _LikesReceived {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1425,6 +1534,8 @@ class _$_LikesReceived implements _LikesReceived {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1438,6 +1549,8 @@ class _$_LikesReceived implements _LikesReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return likesReceived(this);
   }
 
@@ -1456,6 +1569,8 @@ class _$_LikesReceived implements _LikesReceived {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1574,6 +1689,10 @@ class _$_RepostsReceived implements _RepostsReceived {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1587,6 +1706,8 @@ class _$_RepostsReceived implements _RepostsReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return repostsReceived(repostsOrFailure, currentUserID);
   }
 
@@ -1612,6 +1733,9 @@ class _$_RepostsReceived implements _RepostsReceived {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1636,6 +1760,8 @@ class _$_RepostsReceived implements _RepostsReceived {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1649,6 +1775,8 @@ class _$_RepostsReceived implements _RepostsReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return repostsReceived(this);
   }
 
@@ -1667,6 +1795,8 @@ class _$_RepostsReceived implements _RepostsReceived {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1785,6 +1915,10 @@ class _$_CommentsReceived implements _CommentsReceived {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1798,6 +1932,8 @@ class _$_CommentsReceived implements _CommentsReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return commentsReceived(commentsOrFailure, currentUserID);
   }
 
@@ -1823,6 +1959,9 @@ class _$_CommentsReceived implements _CommentsReceived {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1847,6 +1986,8 @@ class _$_CommentsReceived implements _CommentsReceived {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -1860,6 +2001,8 @@ class _$_CommentsReceived implements _CommentsReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return commentsReceived(this);
   }
 
@@ -1878,6 +2021,8 @@ class _$_CommentsReceived implements _CommentsReceived {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -1996,6 +2141,10 @@ class _$_BookmarksReceived implements _BookmarksReceived {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2009,6 +2158,8 @@ class _$_BookmarksReceived implements _BookmarksReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return bookmarksReceived(bookmarksOrFailure, currentUserID);
   }
 
@@ -2034,6 +2185,9 @@ class _$_BookmarksReceived implements _BookmarksReceived {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2058,6 +2212,8 @@ class _$_BookmarksReceived implements _BookmarksReceived {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2071,6 +2227,8 @@ class _$_BookmarksReceived implements _BookmarksReceived {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return bookmarksReceived(this);
   }
 
@@ -2089,6 +2247,8 @@ class _$_BookmarksReceived implements _BookmarksReceived {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2211,6 +2371,10 @@ class _$_Liked implements _Liked {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2224,6 +2388,8 @@ class _$_Liked implements _Liked {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return toggleLikePost(post, currentUserID);
   }
 
@@ -2249,6 +2415,9 @@ class _$_Liked implements _Liked {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2273,6 +2442,8 @@ class _$_Liked implements _Liked {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2286,6 +2457,8 @@ class _$_Liked implements _Liked {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return toggleLikePost(this);
   }
 
@@ -2304,6 +2477,8 @@ class _$_Liked implements _Liked {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2424,6 +2599,10 @@ class _$_Reposted implements _Reposted {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2437,6 +2616,8 @@ class _$_Reposted implements _Reposted {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return toggleRepostPost(post, currentUserID);
   }
 
@@ -2462,6 +2643,9 @@ class _$_Reposted implements _Reposted {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2486,6 +2670,8 @@ class _$_Reposted implements _Reposted {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2499,6 +2685,8 @@ class _$_Reposted implements _Reposted {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return toggleRepostPost(this);
   }
 
@@ -2517,6 +2705,8 @@ class _$_Reposted implements _Reposted {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2639,6 +2829,10 @@ class _$_Bookmarked implements _Bookmarked {
     @required Result toggleLikePost(Post post, String currentUserID),
     @required Result toggleRepostPost(Post post, String currentUserID),
     @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2652,6 +2846,8 @@ class _$_Bookmarked implements _Bookmarked {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return toggleBookmarkPost(post, currentUserID);
   }
 
@@ -2677,6 +2873,9 @@ class _$_Bookmarked implements _Bookmarked {
     Result toggleLikePost(Post post, String currentUserID),
     Result toggleRepostPost(Post post, String currentUserID),
     Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2701,6 +2900,8 @@ class _$_Bookmarked implements _Bookmarked {
     @required Result toggleLikePost(_Liked value),
     @required Result toggleRepostPost(_Reposted value),
     @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
   }) {
     assert(getData != null);
     assert(openPostDetail != null);
@@ -2714,6 +2915,8 @@ class _$_Bookmarked implements _Bookmarked {
     assert(toggleLikePost != null);
     assert(toggleRepostPost != null);
     assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
     return toggleBookmarkPost(this);
   }
 
@@ -2732,6 +2935,8 @@ class _$_Bookmarked implements _Bookmarked {
     Result toggleLikePost(_Liked value),
     Result toggleRepostPost(_Reposted value),
     Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -2750,11 +2955,431 @@ abstract class _Bookmarked implements PostActorEvent {
   _$BookmarkedCopyWith<_Bookmarked> get copyWith;
 }
 
+abstract class _$SetCurrentScreenCopyWith<$Res> {
+  factory _$SetCurrentScreenCopyWith(
+          _SetCurrentScreen value, $Res Function(_SetCurrentScreen) then) =
+      __$SetCurrentScreenCopyWithImpl<$Res>;
+}
+
+class __$SetCurrentScreenCopyWithImpl<$Res>
+    extends _$PostActorEventCopyWithImpl<$Res>
+    implements _$SetCurrentScreenCopyWith<$Res> {
+  __$SetCurrentScreenCopyWithImpl(
+      _SetCurrentScreen _value, $Res Function(_SetCurrentScreen) _then)
+      : super(_value, (v) => _then(v as _SetCurrentScreen));
+
+  @override
+  _SetCurrentScreen get _value => super._value as _SetCurrentScreen;
+}
+
+class _$_SetCurrentScreen implements _SetCurrentScreen {
+  const _$_SetCurrentScreen();
+
+  @override
+  String toString() {
+    return 'PostActorEvent.setCurrentScreen()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is _SetCurrentScreen);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required
+        Result getData(
+            Post post, String senderID, String currentUserID, String orgID),
+    @required Result openPostDetail(Post post, bool commenting),
+    @required Result delete(Post post),
+    @required Result commentBodyChanged(String commnentBody),
+    @required Result submitComment(String currentUserID, Post post),
+    @required
+        Result likesReceived(Either<PostFailure, KtList<String>> likesOrFailure,
+            String currentUserID),
+    @required
+        Result repostsReceived(
+            Either<PostFailure, KtList<String>> repostsOrFailure,
+            String currentUserID),
+    @required
+        Result commentsReceived(
+            Either<PostFailure, KtList<Comment>> commentsOrFailure,
+            String currentUserID),
+    @required
+        Result bookmarksReceived(
+            Either<PostFailure, KtList<String>> bookmarksOrFailure,
+            String currentUserID),
+    @required Result toggleLikePost(Post post, String currentUserID),
+    @required Result toggleRepostPost(Post post, String currentUserID),
+    @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
+  }) {
+    assert(getData != null);
+    assert(openPostDetail != null);
+    assert(delete != null);
+    assert(commentBodyChanged != null);
+    assert(submitComment != null);
+    assert(likesReceived != null);
+    assert(repostsReceived != null);
+    assert(commentsReceived != null);
+    assert(bookmarksReceived != null);
+    assert(toggleLikePost != null);
+    assert(toggleRepostPost != null);
+    assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
+    return setCurrentScreen();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result getData(
+        Post post, String senderID, String currentUserID, String orgID),
+    Result openPostDetail(Post post, bool commenting),
+    Result delete(Post post),
+    Result commentBodyChanged(String commnentBody),
+    Result submitComment(String currentUserID, Post post),
+    Result likesReceived(Either<PostFailure, KtList<String>> likesOrFailure,
+        String currentUserID),
+    Result repostsReceived(Either<PostFailure, KtList<String>> repostsOrFailure,
+        String currentUserID),
+    Result commentsReceived(
+        Either<PostFailure, KtList<Comment>> commentsOrFailure,
+        String currentUserID),
+    Result bookmarksReceived(
+        Either<PostFailure, KtList<String>> bookmarksOrFailure,
+        String currentUserID),
+    Result toggleLikePost(Post post, String currentUserID),
+    Result toggleRepostPost(Post post, String currentUserID),
+    Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (setCurrentScreen != null) {
+      return setCurrentScreen();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result getData(_GetData value),
+    @required Result openPostDetail(_Opened value),
+    @required Result delete(_Delete value),
+    @required Result commentBodyChanged(_CommentBodyChanged value),
+    @required Result submitComment(_SubmitComment value),
+    @required Result likesReceived(_LikesReceived value),
+    @required Result repostsReceived(_RepostsReceived value),
+    @required Result commentsReceived(_CommentsReceived value),
+    @required Result bookmarksReceived(_BookmarksReceived value),
+    @required Result toggleLikePost(_Liked value),
+    @required Result toggleRepostPost(_Reposted value),
+    @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
+  }) {
+    assert(getData != null);
+    assert(openPostDetail != null);
+    assert(delete != null);
+    assert(commentBodyChanged != null);
+    assert(submitComment != null);
+    assert(likesReceived != null);
+    assert(repostsReceived != null);
+    assert(commentsReceived != null);
+    assert(bookmarksReceived != null);
+    assert(toggleLikePost != null);
+    assert(toggleRepostPost != null);
+    assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
+    return setCurrentScreen(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result getData(_GetData value),
+    Result openPostDetail(_Opened value),
+    Result delete(_Delete value),
+    Result commentBodyChanged(_CommentBodyChanged value),
+    Result submitComment(_SubmitComment value),
+    Result likesReceived(_LikesReceived value),
+    Result repostsReceived(_RepostsReceived value),
+    Result commentsReceived(_CommentsReceived value),
+    Result bookmarksReceived(_BookmarksReceived value),
+    Result toggleLikePost(_Liked value),
+    Result toggleRepostPost(_Reposted value),
+    Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (setCurrentScreen != null) {
+      return setCurrentScreen(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class _SetCurrentScreen implements PostActorEvent {
+  const factory _SetCurrentScreen() = _$_SetCurrentScreen;
+}
+
+abstract class $GetPostCopyWith<$Res> {
+  factory $GetPostCopyWith(GetPost value, $Res Function(GetPost) then) =
+      _$GetPostCopyWithImpl<$Res>;
+  $Res call({String postID, String type, String typeID, String currentUserID});
+}
+
+class _$GetPostCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
+    implements $GetPostCopyWith<$Res> {
+  _$GetPostCopyWithImpl(GetPost _value, $Res Function(GetPost) _then)
+      : super(_value, (v) => _then(v as GetPost));
+
+  @override
+  GetPost get _value => super._value as GetPost;
+
+  @override
+  $Res call({
+    Object postID = freezed,
+    Object type = freezed,
+    Object typeID = freezed,
+    Object currentUserID = freezed,
+  }) {
+    return _then(GetPost(
+      postID: postID == freezed ? _value.postID : postID as String,
+      type: type == freezed ? _value.type : type as String,
+      typeID: typeID == freezed ? _value.typeID : typeID as String,
+      currentUserID: currentUserID == freezed
+          ? _value.currentUserID
+          : currentUserID as String,
+    ));
+  }
+}
+
+class _$GetPost implements GetPost {
+  const _$GetPost({this.postID, this.type, this.typeID, this.currentUserID});
+
+  @override
+  final String postID;
+  @override
+  final String type;
+  @override
+  final String typeID;
+  @override
+  final String currentUserID;
+
+  @override
+  String toString() {
+    return 'PostActorEvent.getPost(postID: $postID, type: $type, typeID: $typeID, currentUserID: $currentUserID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is GetPost &&
+            (identical(other.postID, postID) ||
+                const DeepCollectionEquality().equals(other.postID, postID)) &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.typeID, typeID) ||
+                const DeepCollectionEquality().equals(other.typeID, typeID)) &&
+            (identical(other.currentUserID, currentUserID) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUserID, currentUserID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(postID) ^
+      const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(typeID) ^
+      const DeepCollectionEquality().hash(currentUserID);
+
+  @override
+  $GetPostCopyWith<GetPost> get copyWith =>
+      _$GetPostCopyWithImpl<GetPost>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required
+        Result getData(
+            Post post, String senderID, String currentUserID, String orgID),
+    @required Result openPostDetail(Post post, bool commenting),
+    @required Result delete(Post post),
+    @required Result commentBodyChanged(String commnentBody),
+    @required Result submitComment(String currentUserID, Post post),
+    @required
+        Result likesReceived(Either<PostFailure, KtList<String>> likesOrFailure,
+            String currentUserID),
+    @required
+        Result repostsReceived(
+            Either<PostFailure, KtList<String>> repostsOrFailure,
+            String currentUserID),
+    @required
+        Result commentsReceived(
+            Either<PostFailure, KtList<Comment>> commentsOrFailure,
+            String currentUserID),
+    @required
+        Result bookmarksReceived(
+            Either<PostFailure, KtList<String>> bookmarksOrFailure,
+            String currentUserID),
+    @required Result toggleLikePost(Post post, String currentUserID),
+    @required Result toggleRepostPost(Post post, String currentUserID),
+    @required Result toggleBookmarkPost(Post post, String currentUserID),
+    @required Result setCurrentScreen(),
+    @required
+        Result getPost(
+            String postID, String type, String typeID, String currentUserID),
+  }) {
+    assert(getData != null);
+    assert(openPostDetail != null);
+    assert(delete != null);
+    assert(commentBodyChanged != null);
+    assert(submitComment != null);
+    assert(likesReceived != null);
+    assert(repostsReceived != null);
+    assert(commentsReceived != null);
+    assert(bookmarksReceived != null);
+    assert(toggleLikePost != null);
+    assert(toggleRepostPost != null);
+    assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
+    return getPost(postID, type, typeID, currentUserID);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result getData(
+        Post post, String senderID, String currentUserID, String orgID),
+    Result openPostDetail(Post post, bool commenting),
+    Result delete(Post post),
+    Result commentBodyChanged(String commnentBody),
+    Result submitComment(String currentUserID, Post post),
+    Result likesReceived(Either<PostFailure, KtList<String>> likesOrFailure,
+        String currentUserID),
+    Result repostsReceived(Either<PostFailure, KtList<String>> repostsOrFailure,
+        String currentUserID),
+    Result commentsReceived(
+        Either<PostFailure, KtList<Comment>> commentsOrFailure,
+        String currentUserID),
+    Result bookmarksReceived(
+        Either<PostFailure, KtList<String>> bookmarksOrFailure,
+        String currentUserID),
+    Result toggleLikePost(Post post, String currentUserID),
+    Result toggleRepostPost(Post post, String currentUserID),
+    Result toggleBookmarkPost(Post post, String currentUserID),
+    Result setCurrentScreen(),
+    Result getPost(
+        String postID, String type, String typeID, String currentUserID),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPost != null) {
+      return getPost(postID, type, typeID, currentUserID);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result getData(_GetData value),
+    @required Result openPostDetail(_Opened value),
+    @required Result delete(_Delete value),
+    @required Result commentBodyChanged(_CommentBodyChanged value),
+    @required Result submitComment(_SubmitComment value),
+    @required Result likesReceived(_LikesReceived value),
+    @required Result repostsReceived(_RepostsReceived value),
+    @required Result commentsReceived(_CommentsReceived value),
+    @required Result bookmarksReceived(_BookmarksReceived value),
+    @required Result toggleLikePost(_Liked value),
+    @required Result toggleRepostPost(_Reposted value),
+    @required Result toggleBookmarkPost(_Bookmarked value),
+    @required Result setCurrentScreen(_SetCurrentScreen value),
+    @required Result getPost(GetPost value),
+  }) {
+    assert(getData != null);
+    assert(openPostDetail != null);
+    assert(delete != null);
+    assert(commentBodyChanged != null);
+    assert(submitComment != null);
+    assert(likesReceived != null);
+    assert(repostsReceived != null);
+    assert(commentsReceived != null);
+    assert(bookmarksReceived != null);
+    assert(toggleLikePost != null);
+    assert(toggleRepostPost != null);
+    assert(toggleBookmarkPost != null);
+    assert(setCurrentScreen != null);
+    assert(getPost != null);
+    return getPost(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result getData(_GetData value),
+    Result openPostDetail(_Opened value),
+    Result delete(_Delete value),
+    Result commentBodyChanged(_CommentBodyChanged value),
+    Result submitComment(_SubmitComment value),
+    Result likesReceived(_LikesReceived value),
+    Result repostsReceived(_RepostsReceived value),
+    Result commentsReceived(_CommentsReceived value),
+    Result bookmarksReceived(_BookmarksReceived value),
+    Result toggleLikePost(_Liked value),
+    Result toggleRepostPost(_Reposted value),
+    Result toggleBookmarkPost(_Bookmarked value),
+    Result setCurrentScreen(_SetCurrentScreen value),
+    Result getPost(GetPost value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (getPost != null) {
+      return getPost(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetPost implements PostActorEvent {
+  const factory GetPost(
+      {String postID,
+      String type,
+      String typeID,
+      String currentUserID}) = _$GetPost;
+
+  String get postID;
+  String get type;
+  String get typeID;
+  String get currentUserID;
+  $GetPostCopyWith<GetPost> get copyWith;
+}
+
 class _$PostActorStateTearOff {
   const _$PostActorStateTearOff();
 
   _PostActorState call(
       {@required Organization org,
+      @required Post post,
       @required User senderUser,
       @required User reposterUser,
       @required bool isCurrentUsersPost,
@@ -2768,6 +3393,7 @@ class _$PostActorStateTearOff {
       @required KtList<String> bookmarkedPosts}) {
     return _PostActorState(
       org: org,
+      post: post,
       senderUser: senderUser,
       reposterUser: reposterUser,
       isCurrentUsersPost: isCurrentUsersPost,
@@ -2788,6 +3414,7 @@ const $PostActorState = _$PostActorStateTearOff();
 
 mixin _$PostActorState {
   Organization get org;
+  Post get post;
   User get senderUser;
   User get reposterUser;
   bool get isCurrentUsersPost;
@@ -2809,6 +3436,7 @@ abstract class $PostActorStateCopyWith<$Res> {
       _$PostActorStateCopyWithImpl<$Res>;
   $Res call(
       {Organization org,
+      Post post,
       User senderUser,
       User reposterUser,
       bool isCurrentUsersPost,
@@ -2822,6 +3450,7 @@ abstract class $PostActorStateCopyWith<$Res> {
       KtList<String> bookmarkedPosts});
 
   $OrganizationCopyWith<$Res> get org;
+  $PostCopyWith<$Res> get post;
   $UserCopyWith<$Res> get senderUser;
   $UserCopyWith<$Res> get reposterUser;
   $CommentCopyWith<$Res> get comment;
@@ -2838,6 +3467,7 @@ class _$PostActorStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object org = freezed,
+    Object post = freezed,
     Object senderUser = freezed,
     Object reposterUser = freezed,
     Object isCurrentUsersPost = freezed,
@@ -2852,6 +3482,7 @@ class _$PostActorStateCopyWithImpl<$Res>
   }) {
     return _then(_value.copyWith(
       org: org == freezed ? _value.org : org as Organization,
+      post: post == freezed ? _value.post : post as Post,
       senderUser:
           senderUser == freezed ? _value.senderUser : senderUser as User,
       reposterUser:
@@ -2882,6 +3513,16 @@ class _$PostActorStateCopyWithImpl<$Res>
     }
     return $OrganizationCopyWith<$Res>(_value.org, (value) {
       return _then(_value.copyWith(org: value));
+    });
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
     });
   }
 
@@ -2924,6 +3565,7 @@ abstract class _$PostActorStateCopyWith<$Res>
   @override
   $Res call(
       {Organization org,
+      Post post,
       User senderUser,
       User reposterUser,
       bool isCurrentUsersPost,
@@ -2938,6 +3580,8 @@ abstract class _$PostActorStateCopyWith<$Res>
 
   @override
   $OrganizationCopyWith<$Res> get org;
+  @override
+  $PostCopyWith<$Res> get post;
   @override
   $UserCopyWith<$Res> get senderUser;
   @override
@@ -2959,6 +3603,7 @@ class __$PostActorStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object org = freezed,
+    Object post = freezed,
     Object senderUser = freezed,
     Object reposterUser = freezed,
     Object isCurrentUsersPost = freezed,
@@ -2973,6 +3618,7 @@ class __$PostActorStateCopyWithImpl<$Res>
   }) {
     return _then(_PostActorState(
       org: org == freezed ? _value.org : org as Organization,
+      post: post == freezed ? _value.post : post as Post,
       senderUser:
           senderUser == freezed ? _value.senderUser : senderUser as User,
       reposterUser:
@@ -3000,6 +3646,7 @@ class __$PostActorStateCopyWithImpl<$Res>
 class _$_PostActorState implements _PostActorState {
   const _$_PostActorState(
       {@required this.org,
+      @required this.post,
       @required this.senderUser,
       @required this.reposterUser,
       @required this.isCurrentUsersPost,
@@ -3012,6 +3659,7 @@ class _$_PostActorState implements _PostActorState {
       @required this.comments,
       @required this.bookmarkedPosts})
       : assert(org != null),
+        assert(post != null),
         assert(senderUser != null),
         assert(reposterUser != null),
         assert(isCurrentUsersPost != null),
@@ -3026,6 +3674,8 @@ class _$_PostActorState implements _PostActorState {
 
   @override
   final Organization org;
+  @override
+  final Post post;
   @override
   final User senderUser;
   @override
@@ -3051,7 +3701,7 @@ class _$_PostActorState implements _PostActorState {
 
   @override
   String toString() {
-    return 'PostActorState(org: $org, senderUser: $senderUser, reposterUser: $reposterUser, isCurrentUsersPost: $isCurrentUsersPost, isLiked: $isLiked, isReposted: $isReposted, isBookmarked: $isBookmarked, comment: $comment, likes: $likes, reposts: $reposts, comments: $comments, bookmarkedPosts: $bookmarkedPosts)';
+    return 'PostActorState(org: $org, post: $post, senderUser: $senderUser, reposterUser: $reposterUser, isCurrentUsersPost: $isCurrentUsersPost, isLiked: $isLiked, isReposted: $isReposted, isBookmarked: $isBookmarked, comment: $comment, likes: $likes, reposts: $reposts, comments: $comments, bookmarkedPosts: $bookmarkedPosts)';
   }
 
   @override
@@ -3060,6 +3710,8 @@ class _$_PostActorState implements _PostActorState {
         (other is _PostActorState &&
             (identical(other.org, org) ||
                 const DeepCollectionEquality().equals(other.org, org)) &&
+            (identical(other.post, post) ||
+                const DeepCollectionEquality().equals(other.post, post)) &&
             (identical(other.senderUser, senderUser) ||
                 const DeepCollectionEquality()
                     .equals(other.senderUser, senderUser)) &&
@@ -3098,6 +3750,7 @@ class _$_PostActorState implements _PostActorState {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(org) ^
+      const DeepCollectionEquality().hash(post) ^
       const DeepCollectionEquality().hash(senderUser) ^
       const DeepCollectionEquality().hash(reposterUser) ^
       const DeepCollectionEquality().hash(isCurrentUsersPost) ^
@@ -3118,6 +3771,7 @@ class _$_PostActorState implements _PostActorState {
 abstract class _PostActorState implements PostActorState {
   const factory _PostActorState(
       {@required Organization org,
+      @required Post post,
       @required User senderUser,
       @required User reposterUser,
       @required bool isCurrentUsersPost,
@@ -3132,6 +3786,8 @@ abstract class _PostActorState implements PostActorState {
 
   @override
   Organization get org;
+  @override
+  Post get post;
   @override
   User get senderUser;
   @override

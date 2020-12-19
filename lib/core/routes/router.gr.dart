@@ -16,11 +16,11 @@ import '../../features/authentication/presentation/widgets/wrapper.dart';
 import '../../features/authentication/presentation/widgets/wrapper2.dart';
 import '../../features/calendar/domain/models/event.dart';
 import '../../features/calendar/presentation/screens/create_event_screen.dart';
-import '../../features/calendar/presentation/screens/event_detail_screen.dart';
+import '../../features/calendar/presentation/screens/event_screen.dart';
 import '../../features/calendar/presentation/widgets/event_detail_image.dart';
 import '../../features/messaging/presentation/screens/chat_screen.dart';
 import '../../features/messaging/presentation/screens/messaging_screen.dart';
-import '../../features/posts/presentation/core/post_detail_with_bloc_provider.dart';
+import '../../features/posts/presentation/posts/post_detail/post_screen.dart';
 
 class Routes {
   static const String signInPage = '/sign-in-page';
@@ -30,9 +30,9 @@ class Routes {
   static const String eventDetailImage = '/event-detail-image';
   static const String createEvent = '/create-event-screen';
   static const String messaging = '/messaging-screen';
-  static const String eventDetailScreen = '/event-detail-screen';
+  static const String eventDetailScreen = '/event-screen';
   static const String chat = '/chat-screen';
-  static const String postDetail = '/post-detail-bloc-provider';
+  static const String postDetail = '/post-screen';
   static const all = <String>{
     signInPage,
     wrapper,
@@ -58,9 +58,9 @@ class Router extends RouterBase {
     RouteDef(Routes.eventDetailImage, page: EventDetailImage),
     RouteDef(Routes.createEvent, page: CreateEventScreen),
     RouteDef(Routes.messaging, page: MessagingScreen),
-    RouteDef(Routes.eventDetailScreen, page: EventDetailScreen),
+    RouteDef(Routes.eventDetailScreen, page: EventScreen),
     RouteDef(Routes.chat, page: ChatScreen),
-    RouteDef(Routes.postDetail, page: PostDetailBlocProvider),
+    RouteDef(Routes.postDetail, page: PostScreen),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -120,25 +120,27 @@ class Router extends RouterBase {
       final args = data.getArgs<MessagingScreenArguments>(
         orElse: () => MessagingScreenArguments(),
       );
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => MessagingScreen(
+      return PageRouteBuilder<dynamic>(
+        pageBuilder: (context, animation, secondaryAnimation) =>
+            MessagingScreen(
           onPush: args.onPush,
           onPushSearch: args.onPushSearch,
         ),
         settings: data,
+        transitionsBuilder: TransitionsBuilders.fadeIn,
         fullscreenDialog: true,
       );
     },
-    EventDetailScreen: (data) {
-      final args = data.getArgs<EventDetailScreenArguments>(
-        orElse: () => EventDetailScreenArguments(),
+    EventScreen: (data) {
+      final args = data.getArgs<EventScreenArguments>(
+        orElse: () => EventScreenArguments(),
       );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => EventDetailScreen(
+        builder: (context) => EventScreen(
           key: args.key,
-          event: args.event,
-          name: args.name,
-          isAdmin: args.isAdmin,
+          eventID: args.eventID,
+          type: args.type,
+          typeID: args.typeID,
         ),
         settings: data,
         fullscreenDialog: true,
@@ -151,15 +153,16 @@ class Router extends RouterBase {
         fullscreenDialog: true,
       );
     },
-    PostDetailBlocProvider: (data) {
-      final args = data.getArgs<PostDetailBlocProviderArguments>(
-        orElse: () => PostDetailBlocProviderArguments(),
+    PostScreen: (data) {
+      final args = data.getArgs<PostScreenArguments>(
+        orElse: () => PostScreenArguments(),
       );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => PostDetailBlocProvider(
+        builder: (context) => PostScreen(
           key: args.key,
           postID: args.postID,
-          isOrg: args.isOrg,
+          type: args.type,
+          typeID: args.typeID,
         ),
         settings: data,
         fullscreenDialog: true,
@@ -206,20 +209,20 @@ class MessagingScreenArguments {
   MessagingScreenArguments({this.onPush, this.onPushSearch});
 }
 
-/// EventDetailScreen arguments holder class
-class EventDetailScreenArguments {
+/// EventScreen arguments holder class
+class EventScreenArguments {
   final Key key;
-  final Event event;
-  final String name;
-  final bool isAdmin;
-  EventDetailScreenArguments(
-      {this.key, this.event, this.name, this.isAdmin = false});
+  final String eventID;
+  final String type;
+  final String typeID;
+  EventScreenArguments({this.key, this.eventID, this.type, this.typeID});
 }
 
-/// PostDetailBlocProvider arguments holder class
-class PostDetailBlocProviderArguments {
+/// PostScreen arguments holder class
+class PostScreenArguments {
   final Key key;
   final String postID;
-  final bool isOrg;
-  PostDetailBlocProviderArguments({this.key, this.postID, this.isOrg});
+  final String type;
+  final String typeID;
+  PostScreenArguments({this.key, this.postID, this.type, this.typeID});
 }

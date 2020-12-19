@@ -27,6 +27,7 @@ import 'package:vybrnt_mvp/features/organization/presentation/widgets/create_pho
 import 'package:vybrnt_mvp/features/organization/presentation/widgets/sliver_org_appbar_delegate.dart';
 import 'package:vybrnt_mvp/features/organization/presentation/widgets/sliver_org_header_delegate.dart';
 import 'package:vybrnt_mvp/features/posts/application/post_watcher/post_watcher_bloc.dart';
+import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
 
 import 'package:vybrnt_mvp/features/user/presentation/widgets/create_fab.dart';
 
@@ -172,8 +173,15 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     return BlocBuilder<OrgBloc, OrgState>(builder: (context, state) {
       return Scaffold(
         floatingActionButton: state.isAdmin
-            ? CreatePhotoFAB(orgID: widget.org.orgID.getOrCrash(), isOrg: true)
-            : CreateFAB(),
+            ? BlocProvider(
+                create: (context) => getIt<FabBloc>(),
+                child: CreatePhotoFAB(
+                    orgID: widget.org.orgID.getOrCrash(), isOrg: true),
+              )
+            : BlocProvider(
+                create: (context) => getIt<FabBloc>(),
+                child: CreateFAB(),
+              ),
         backgroundColor: Colors.white,
         body: SafeArea(
           top: false,

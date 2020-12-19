@@ -14,4 +14,6 @@ abstract class EventDetailEvent with _$EventDetailEvent {
       Either<EventFailure, KtList<UserList>> rsvpList,
       String currentUserID) = RSVPListReceived;
   const factory EventDetailEvent.deleteEvent(Event event) = DeleteEvent;
+  const factory EventDetailEvent.getEvent(
+      {String eventID, String type, String typeID}) = GetEvent;
 }

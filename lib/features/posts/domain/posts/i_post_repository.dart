@@ -54,4 +54,6 @@ abstract class IPostRepository {
   Future<Either<PostFailure, Unit>> bookmark(String currentUserID, Post post);
   Future<Either<PostFailure, Unit>> unbookmark(String currentUserID, Post post);
   Future<Either<PostFailure, Unit>> openPostDetail(Post post);
+
+  Future<Post> getPost({String postID, String type, String typeID});
 }
