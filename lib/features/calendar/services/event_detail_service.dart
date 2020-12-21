@@ -226,4 +226,17 @@ class EventDetailService implements IEventDetailService {
       });
     }
   }
+
+  @override
+  Future<Event> getEvent({String eventID, String type, String typeID}) async {
+    DocumentSnapshot eventDoc;
+
+    eventDoc = await eventsRef
+        .doc(typeID)
+        .collection(type + 'Events')
+        .doc(eventID)
+        .get();
+
+    return EventDto.fromFirestore(eventDoc).toDomain();
+  }
 }

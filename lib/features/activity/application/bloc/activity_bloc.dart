@@ -9,6 +9,7 @@ import 'package:kt_dart/kt.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity_failure.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 
 part 'activity_event.dart';
 part 'activity_state.dart';
@@ -28,6 +29,7 @@ class ActivityBloc extends Bloc<ActivityEvent, ActivityState> {
   ) async* {
     yield* event.map(getData: (e) async* {
       yield const ActivityState.loadInProgress();
+
       await _activityStreamSubscription?.cancel();
       _activityStreamSubscription = _activityService.watchAll().listen(
           (activities) => add(ActivityEvent.activitiesReceived(activities)));

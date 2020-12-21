@@ -21,6 +21,8 @@ part 'create_event_state.dart';
 
 part 'create_event_bloc.freezed.dart';
 
+const String screenName = 'create_event';
+
 @injectable
 class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
   final ICalendarService _calendarService;
@@ -41,6 +43,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
     yield* event.map(
       initialized: (e) async* {
         await _adminStreamSubscription?.cancel();
+        await _analyticsService.setCurrentScreen(screenName);
         _adminStreamSubscription = _calendarService
             .getAdminIDs(e.currentUserID)
             .listen((admins) =>

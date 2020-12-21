@@ -43,4 +43,9 @@ class AnalyticsService implements IAnalyticsService {
     await _analytics
         .logEvent(name: 'create_event', parameters: {'has_image': hasImage});
   }
+
+  @override
+  Future setCurrentScreen(String screenName) async {
+    await _analytics.setCurrentScreen(screenName: screenName);
+  }
 }

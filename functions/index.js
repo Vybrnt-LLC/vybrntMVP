@@ -932,10 +932,13 @@ exports.onUpdateOrgEvent = functions.firestore
               // 4) Create message for push notification
               const message = {
                 notification: {body: body, title: 'Vybrnt' },
+                priority: "high",
                 token: androidNotificationToken,
-                data: {userID: userID, typeID: typeID, type: activity.type, isOrg: isOrg, orgID: activity.orgID, click_action: 'FLUTTER_NOTIFICATION_CLICK',  icon: activity.profileImageURL }
+                data: {userID: userID, typeID: typeID, type: activity.type, isOrg: isOrg, orgID: activity.orgID, click_action: 'FLUTTER_NOTIFICATION_CLICK',  icon: activity.profileImageURL, id: activity.activityID, status: 'done' }
                 
             };
+
+           
               // 5) Send message with admin.messaging()
     
               try {

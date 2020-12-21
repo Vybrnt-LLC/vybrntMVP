@@ -6,7 +6,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
 import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
-
+import 'package:auto_route/auto_route.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
+import 'package:vybrnt_mvp/features/authentication/application/auth/bloc/auth_bloc.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/homefeed/application/category_events/category_events_bloc.dart';
 import 'package:vybrnt_mvp/features/homefeed/application/category_posts/category_posts_bloc.dart';
@@ -16,9 +18,11 @@ import 'package:vybrnt_mvp/features/homefeed/domain/models/home_categories.dart'
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/category_feed.dart';
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/home_feed.dart';
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/sliver_home_app_bar.dart';
-
+import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart' as route;
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/user/presentation/widgets/create_fab.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart' as route;
 
 class HomeFeedScreen extends StatefulWidget {
   static final String id = 'home_feed_screen';
@@ -367,6 +371,42 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                           IconButton(
                               icon: Icon(Icons.message),
                               onPressed: () =>
+                                  // context
+                                  //     .bloc<AuthBloc>()
+                                  //     .add(AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.org,
+                                  //         arguments: OrgScreenArguments(
+                                  //           orgID:
+                                  //               '0951c430-da94-11ea-bbd0-d942609b3bd5',
+                                  //         ))))
+                                  // context.bloc<AuthBloc>().add(
+                                  //     AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.eventDetail,
+                                  //         arguments: EventScreenArguments(
+                                  //             eventID:
+                                  //                 '090a6370-db6f-11ea-ab19-c1eeec76c7b6',
+                                  //             type: 'user',
+                                  //             typeID:
+                                  //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
+                                  // context.bloc<AuthBloc>().add(
+                                  //     AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.eventDetail,
+                                  //         arguments: EventScreenArguments(
+                                  //             eventID:
+                                  //                 '090a6370-db6f-11ea-ab19-c1eeec76c7b6',
+                                  //             type: 'user',
+                                  //             typeID:
+                                  //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
+                                  // context.bloc<AuthBloc>().add(
+                                  //     AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.postDetail,
+                                  //         arguments: PostScreenArguments(
+                                  //             postID: '7XRLC1DN8ut1j0xc4BJp',
+                                  //             type: 'user',
+                                  //             typeID:
+                                  //                 '4HwvsCmoGHP6xbt0CJ0mlyiQGOp1'))))
+                                  // context.navigator
+                                  //     .push(route.Routes.messaging)),
                                   Scaffold.of(context).showSnackBar(snackBar)),
                           // () =>
                           //     Router.navigator.pushNamed(Router.messaging)),

@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 
 import 'package:vybrnt_mvp/features/calendar/domain/i_event_detail_service.dart';
@@ -21,12 +22,16 @@ part 'event_detail_bloc.freezed.dart';
 part 'event_detail_event.dart';
 part 'event_detail_state.dart';
 
+const String screenName = 'event_detail';
+
 @injectable
 class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
   final IEventDetailService _eventDetailService;
   final IOrgService _orgService;
+  final IAnalyticsService _analyticsService;
 
-  EventDetailBloc(this._eventDetailService, this._orgService)
+  EventDetailBloc(
+      this._eventDetailService, this._orgService, this._analyticsService)
       : super(EventDetailState.initial());
 
   StreamSubscription<Either<EventFailure, KtList<UserList>>>
@@ -37,6 +42,7 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
     EventDetailEvent event,
   ) async* {
     yield* event.map(getData: (e) async* {
+      await _analyticsService.setCurrentScreen(screenName);
       if (e.isOrg) {
         final org = await _eventDetailService.getOrgProfile(e.orgID);
         final user = await _eventDetailService.getUserProfile(e.senderID);
@@ -96,6 +102,9 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
     }, deleteEvent: (e) async* {
       await _eventDetailService.deleteEvent(e.event);
       yield state;
+    }, getEvent: (e) async* {
+      await _eventDetailService.getEvent(
+          eventID: e.eventID, typeID: e.typeID, type: e.type);
     });
   }
 }

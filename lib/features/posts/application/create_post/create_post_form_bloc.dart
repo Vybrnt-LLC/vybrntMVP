@@ -23,6 +23,8 @@ part 'create_post_form_state.dart';
 
 part 'create_post_form_bloc.freezed.dart';
 
+const String screenName = 'create_post';
+
 @injectable
 class CreatePostFormBloc
     extends Bloc<CreatePostFormEvent, CreatePostFormState> {
@@ -43,7 +45,7 @@ class CreatePostFormBloc
     yield* event.map(
       initialized: (e) async* {
         await _adminStreamSubscription?.cancel();
-
+        await _analyticsService.setCurrentScreen(screenName);
         yield state.copyWith(
           post: state.post.copyWith(senderID: SenderID(e.currentUserID)),
         );

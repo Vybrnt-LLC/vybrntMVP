@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/homefeed/domain/i_homefeed_service.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/post.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/post_failure.dart';

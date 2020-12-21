@@ -139,6 +139,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                       (BuildContext context, int index) {
                         // This builder is called for each child.
                         // In this example, we just number each list item.
+                        context
+                            .bloc<PostActorBloc>()
+                            .add(PostActorEvent.setCurrentScreen());
                         return BlocProvider<CommentActorBloc>(
                             create: (context) => getIt<CommentActorBloc>()
                               ..add(CommentActorEvent.getData(

@@ -7,10 +7,12 @@ abstract class EventDetailState with _$EventDetailState {
     @required Organization org,
     @required User user,
     @required bool isRSVPed,
+    @required Event event,
   }) = _EventDetailState;
 
   factory EventDetailState.initial() => EventDetailState(
       isRSVPed: false,
+      event: Event.empty(),
       rsvpList: KtList.empty(),
       org: Organization.empty(),
       user: User.empty());

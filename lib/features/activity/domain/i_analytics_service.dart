@@ -8,4 +8,5 @@ abstract class IAnalyticsService {
   Future logSignUp();
   Future logPostCreated({bool hasImage});
   Future logEventCreated({bool hasImage});
+  Future setCurrentScreen(String screenName);
 }
