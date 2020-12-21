@@ -35,9 +35,4 @@ abstract class PostActorEvent with _$PostActorEvent {
   const factory PostActorEvent.toggleBookmarkPost(
       Post post, String currentUserID) = _Bookmarked;
   const factory PostActorEvent.setCurrentScreen() = _SetCurrentScreen;
-  const factory PostActorEvent.getPost(
-      {String postID,
-      String type,
-      String typeID,
-      String currentUserID}) = GetPost;
 }

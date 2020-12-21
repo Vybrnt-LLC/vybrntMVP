@@ -10,8 +10,10 @@ import 'package:vybrnt_mvp/features/calendar/presentation/screens/event_screen.d
 import 'package:vybrnt_mvp/features/calendar/presentation/widgets/event_detail_image.dart';
 import 'package:vybrnt_mvp/features/messaging/presentation/screens/chat_screen.dart';
 import 'package:vybrnt_mvp/features/messaging/presentation/screens/messaging_screen.dart';
+import 'package:vybrnt_mvp/features/organization/presentation/screens/org_screen.dart';
 import 'package:vybrnt_mvp/features/posts/presentation/core/post_detail_with_bloc_provider.dart';
 import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_screen.dart';
+import 'package:vybrnt_mvp/features/user/presentation/screens/user_screen.dart';
 
 @MaterialAutoRouter(
   routes: <AutoRoute>[
@@ -32,7 +34,7 @@ import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_sc
         fullscreenDialog: true),
     MaterialRoute(
         page: EventScreen,
-        name: 'eventDetailScreen',
+        name: 'eventDetail',
         initial: false,
         fullscreenDialog: true),
     MaterialRoute(
@@ -42,6 +44,10 @@ import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_sc
         name: 'postDetail',
         initial: false,
         fullscreenDialog: true),
+    MaterialRoute(
+        page: UserScreen, name: 'user', initial: false, fullscreenDialog: true),
+    MaterialRoute(
+        page: OrgScreen, name: 'org', initial: false, fullscreenDialog: true),
   ],
 )
 class $Router {}

@@ -20,7 +20,9 @@ import '../../features/calendar/presentation/screens/event_screen.dart';
 import '../../features/calendar/presentation/widgets/event_detail_image.dart';
 import '../../features/messaging/presentation/screens/chat_screen.dart';
 import '../../features/messaging/presentation/screens/messaging_screen.dart';
+import '../../features/organization/presentation/screens/org_screen.dart';
 import '../../features/posts/presentation/posts/post_detail/post_screen.dart';
+import '../../features/user/presentation/screens/user_screen.dart';
 
 class Routes {
   static const String signInPage = '/sign-in-page';
@@ -30,9 +32,11 @@ class Routes {
   static const String eventDetailImage = '/event-detail-image';
   static const String createEvent = '/create-event-screen';
   static const String messaging = '/messaging-screen';
-  static const String eventDetailScreen = '/event-screen';
+  static const String eventDetail = '/event-screen';
   static const String chat = '/chat-screen';
   static const String postDetail = '/post-screen';
+  static const String user = '/user-screen';
+  static const String org = '/org-screen';
   static const all = <String>{
     signInPage,
     wrapper,
@@ -41,9 +45,11 @@ class Routes {
     eventDetailImage,
     createEvent,
     messaging,
-    eventDetailScreen,
+    eventDetail,
     chat,
     postDetail,
+    user,
+    org,
   };
 }
 
@@ -58,9 +64,11 @@ class Router extends RouterBase {
     RouteDef(Routes.eventDetailImage, page: EventDetailImage),
     RouteDef(Routes.createEvent, page: CreateEventScreen),
     RouteDef(Routes.messaging, page: MessagingScreen),
-    RouteDef(Routes.eventDetailScreen, page: EventScreen),
+    RouteDef(Routes.eventDetail, page: EventScreen),
     RouteDef(Routes.chat, page: ChatScreen),
     RouteDef(Routes.postDetail, page: PostScreen),
+    RouteDef(Routes.user, page: UserScreen),
+    RouteDef(Routes.org, page: OrgScreen),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -168,6 +176,32 @@ class Router extends RouterBase {
         fullscreenDialog: true,
       );
     },
+    UserScreen: (data) {
+      final args = data.getArgs<UserScreenArguments>(
+        orElse: () => UserScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UserScreen(
+          key: args.key,
+          userID: args.userID,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    OrgScreen: (data) {
+      final args = data.getArgs<OrgScreenArguments>(
+        orElse: () => OrgScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OrgScreen(
+          key: args.key,
+          orgID: args.orgID,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
   };
 }
 
@@ -225,4 +259,18 @@ class PostScreenArguments {
   final String type;
   final String typeID;
   PostScreenArguments({this.key, this.postID, this.type, this.typeID});
+}
+
+/// UserScreen arguments holder class
+class UserScreenArguments {
+  final Key key;
+  final String userID;
+  UserScreenArguments({this.key, this.userID});
+}
+
+/// OrgScreen arguments holder class
+class OrgScreenArguments {
+  final Key key;
+  final String orgID;
+  OrgScreenArguments({this.key, this.orgID});
 }

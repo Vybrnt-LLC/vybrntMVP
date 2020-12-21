@@ -30,6 +30,7 @@ import '../features/user/application/edit_user_bloc/edit_user_bloc.dart';
 import '../features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
 import '../features/calendar/services/event_detail_service.dart';
 import '../features/organization/application/event_list_bloc/event_list_bloc.dart';
+import '../features/calendar/application/event_notification/bloc/event_notification_bloc.dart';
 import '../features/calendar/application/event_tile_bloc/event_tile_bloc.dart';
 import '../features/user/application/fab_bloc/fab_bloc.dart';
 import '../features/authentication/services/firebase_auth_facade.dart';
@@ -55,6 +56,7 @@ import '../features/calendar/application/org_bloc/org_calendar_bloc.dart';
 import '../features/organization/services/org_service.dart';
 import '../features/organization/application/org_watcher_bloc/org_watcher_bloc.dart';
 import '../features/posts/application/post_actor/post_actor_bloc.dart';
+import '../features/posts/application/post_notification/bloc/post_notification_bloc.dart';
 import '../features/posts/infrastructure/posts/post_repository.dart';
 import '../features/posts/application/post_watcher/post_watcher_bloc.dart';
 import '../features/activity/repository/push_notification_service.dart';
@@ -111,6 +113,8 @@ GetIt $initGetIt(
   gh.factory<OrgWatcherBloc>(() => OrgWatcherBloc(get<IOrgService>()));
   gh.factory<PostActorBloc>(
       () => PostActorBloc(get<IPostRepository>(), get<IAnalyticsService>()));
+  gh.factory<PostNotificationBloc>(
+      () => PostNotificationBloc(get<IPostRepository>()));
   gh.factory<PostWatcherBloc>(() => PostWatcherBloc(get<IPostRepository>()));
   gh.factory<SearchBloc>(() => SearchBloc(get<IOrgService>()));
   gh.factory<SignInFormBloc>(
@@ -149,6 +153,8 @@ GetIt $initGetIt(
         get<IAnalyticsService>(),
       ));
   gh.factory<EventListBloc>(() => EventListBloc(get<IOrgService>()));
+  gh.factory<EventNotificationBloc>(
+      () => EventNotificationBloc(get<IEventDetailService>()));
   gh.factory<EventTileBloc>(() => EventTileBloc(get<IEventDetailService>()));
   gh.factory<FabBloc>(() => FabBloc(get<IAnalyticsService>()));
   gh.factory<HomeEventsBloc>(() => HomeEventsBloc(get<IHomeFeedService>()));
