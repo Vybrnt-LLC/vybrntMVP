@@ -370,43 +370,44 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                         actions: <Widget>[
                           IconButton(
                               icon: Icon(Icons.message),
-                              onPressed: () => context
-                                  .bloc<AuthBloc>()
-                                  .add(AuthEvent.navigateTo(
-                                      routeName: route.Routes.org,
-                                      arguments: OrgScreenArguments(
-                                        orgID:
-                                            '0951c430-da94-11ea-bbd0-d942609b3bd5',
-                                      ))))
-                          // context.bloc<AuthBloc>().add(
-                          //     AuthEvent.navigateTo(
-                          //         routeName: route.Routes.eventDetail,
-                          //         arguments: EventScreenArguments(
-                          //             eventID:
-                          //                 '090a6370-db6f-11ea-ab19-c1eeec76c7b6',
-                          //             type: 'user',
-                          //             typeID:
-                          //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
-                          // context.bloc<AuthBloc>().add(
-                          //     AuthEvent.navigateTo(
-                          //         routeName: route.Routes.eventDetail,
-                          //         arguments: EventScreenArguments(
-                          //             eventID:
-                          //                 '090a6370-db6f-11ea-ab19-c1eeec76c7b6',
-                          //             type: 'user',
-                          //             typeID:
-                          //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
-                          // context.bloc<AuthBloc>().add(
-                          //     AuthEvent.navigateTo(
-                          //         routeName: route.Routes.postDetail,
-                          //         arguments: PostScreenArguments(
-                          //             postID: '7XRLC1DN8ut1j0xc4BJp',
-                          //             type: 'user',
-                          //             typeID:
-                          //                 '4HwvsCmoGHP6xbt0CJ0mlyiQGOp1'))))
-                          // context.navigator
-                          //     .push(route.Routes.messaging)),
-                          //Scaffold.of(context).showSnackBar(snackBar)),
+                              onPressed: () =>
+                                  // context
+                                  //     .bloc<AuthBloc>()
+                                  //     .add(AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.org,
+                                  //         arguments: OrgScreenArguments(
+                                  //           orgID:
+                                  //               '0951c430-da94-11ea-bbd0-d942609b3bd5',
+                                  //         ))))
+                                  // context.bloc<AuthBloc>().add(
+                                  //     AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.eventDetail,
+                                  //         arguments: EventScreenArguments(
+                                  //             eventID:
+                                  //                 '090a6370-db6f-11ea-ab19-c1eeec76c7b6',
+                                  //             type: 'user',
+                                  //             typeID:
+                                  //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
+                                  // context.bloc<AuthBloc>().add(
+                                  //     AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.eventDetail,
+                                  //         arguments: EventScreenArguments(
+                                  //             eventID:
+                                  //                 '090a6370-db6f-11ea-ab19-c1eeec76c7b6',
+                                  //             type: 'user',
+                                  //             typeID:
+                                  //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
+                                  // context.bloc<AuthBloc>().add(
+                                  //     AuthEvent.navigateTo(
+                                  //         routeName: route.Routes.postDetail,
+                                  //         arguments: PostScreenArguments(
+                                  //             postID: '7XRLC1DN8ut1j0xc4BJp',
+                                  //             type: 'user',
+                                  //             typeID:
+                                  //                 '4HwvsCmoGHP6xbt0CJ0mlyiQGOp1'))))
+                                  // context.navigator
+                                  //     .push(route.Routes.messaging)),
+                                  Scaffold.of(context).showSnackBar(snackBar)),
                           // () =>
                           //     Router.navigator.pushNamed(Router.messaging)),
                         ],
