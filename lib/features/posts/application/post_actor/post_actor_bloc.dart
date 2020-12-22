@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/comment.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/i_post_repository.dart';
@@ -20,10 +21,14 @@ part 'post_actor_state.dart';
 
 part 'post_actor_bloc.freezed.dart';
 
+const String screenName = 'post_detail';
+
 @injectable
 class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
   final IPostRepository _postRepository;
-  PostActorBloc(this._postRepository) : super(PostActorState.inital());
+  final IAnalyticsService _analyticsService;
+  PostActorBloc(this._postRepository, this._analyticsService)
+      : super(PostActorState.inital());
 
   StreamSubscription<Either<PostFailure, KtList<String>>>
       _likeStreamSubscription;
@@ -163,6 +168,9 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
           ),
         );
         await _postRepository.createComment(e.post, state.comment);
+      },
+      setCurrentScreen: (e) async* {
+        await _analyticsService.setCurrentScreen(screenName);
       },
     );
   }

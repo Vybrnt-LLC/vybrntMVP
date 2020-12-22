@@ -5,12 +5,15 @@ import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/shape/gf_avatar_shape.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/core/swipe_menu/widgets/simple_hidden_drawer_provider.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
 import 'package:vybrnt_mvp/features/search/application/bloc/search_bloc.dart';
+import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user_list_model.dart';
+import 'package:vybrnt_mvp/features/user/presentation/widgets/create_fab.dart';
 
 class SearchScreen extends StatefulWidget {
   final String name;
@@ -99,6 +102,10 @@ class _SearchScreenState extends State<SearchScreen>
         length: 2,
         child: BlocBuilder<SearchBloc, SearchState>(builder: (context, state) {
           return Scaffold(
+            floatingActionButton: BlocProvider(
+              create: (context) => getIt<FabBloc>(),
+              child: CreateFAB(),
+            ),
             key: scaffoldKey,
             backgroundColor: Colors.white,
             body: SafeArea(

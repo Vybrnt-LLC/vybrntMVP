@@ -20,4 +20,5 @@ abstract class IEventDetailService {
   Future<Organization> getOrgProfile(String orgID);
   Future<User> getUserProfile(String userID);
   Future deleteEvent(Event event);
+  Future<Event> getEvent({String eventID, String type, String typeID});
 }

@@ -39,6 +39,7 @@ abstract class Activity with _$Activity {
       );
 }
 
+//TODO Need to add Title and maybe description field to notification to indicate organizations. Should talk to dewey. This update will go to rewrite
 extension ActivityX on Activity {
   Option<ValueFailure<dynamic>> get failureOption {
     return activityID.failureOrUnit.fold((f) => some(f), (_) => none());

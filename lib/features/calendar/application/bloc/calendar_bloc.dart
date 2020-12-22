@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/i_calendar_service.dart';
 
@@ -14,6 +15,8 @@ import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 part 'calendar_bloc.freezed.dart';
 part 'calendar_event.dart';
 part 'calendar_state.dart';
+
+const String screenName = 'calendar';
 
 @injectable
 class CalendarBloc extends Bloc<CalendarEvent, CalendarState> {

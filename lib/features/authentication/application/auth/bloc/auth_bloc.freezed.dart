@@ -23,6 +23,19 @@ class _$AuthEventTearOff {
   InitializePushNotifications initializePushNotifications() {
     return const InitializePushNotifications();
   }
+
+  SetAnalyticsUserID setAnalyticsUserID(String currentUserID) {
+    return SetAnalyticsUserID(
+      currentUserID,
+    );
+  }
+
+  NavigateTo navigateTo({String routeName, dynamic arguments}) {
+    return NavigateTo(
+      routeName: routeName,
+      arguments: arguments,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -34,12 +47,16 @@ mixin _$AuthEvent {
     @required Result authCheckRequested(),
     @required Result signedOut(),
     @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
     Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -48,12 +65,16 @@ mixin _$AuthEvent {
     @required Result signedOut(SignedOut value),
     @required
         Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
     Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
     @required Result orElse(),
   });
 }
@@ -110,10 +131,14 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     @required Result authCheckRequested(),
     @required Result signedOut(),
     @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
     return authCheckRequested();
   }
 
@@ -123,6 +148,8 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     Result authCheckRequested(),
     Result signedOut(),
     Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -139,10 +166,14 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     @required Result signedOut(SignedOut value),
     @required
         Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
     return authCheckRequested(this);
   }
 
@@ -152,6 +183,8 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
     Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -202,10 +235,14 @@ class _$SignedOut implements SignedOut {
     @required Result authCheckRequested(),
     @required Result signedOut(),
     @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
     return signedOut();
   }
 
@@ -215,6 +252,8 @@ class _$SignedOut implements SignedOut {
     Result authCheckRequested(),
     Result signedOut(),
     Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -231,10 +270,14 @@ class _$SignedOut implements SignedOut {
     @required Result signedOut(SignedOut value),
     @required
         Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
     return signedOut(this);
   }
 
@@ -244,6 +287,8 @@ class _$SignedOut implements SignedOut {
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
     Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -299,10 +344,14 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     @required Result authCheckRequested(),
     @required Result signedOut(),
     @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
     return initializePushNotifications();
   }
 
@@ -312,6 +361,8 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     Result authCheckRequested(),
     Result signedOut(),
     Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -328,10 +379,14 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     @required Result signedOut(SignedOut value),
     @required
         Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
     return initializePushNotifications(this);
   }
 
@@ -341,6 +396,8 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     Result authCheckRequested(AuthCheckRequested value),
     Result signedOut(SignedOut value),
     Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -353,6 +410,280 @@ class _$InitializePushNotifications implements InitializePushNotifications {
 
 abstract class InitializePushNotifications implements AuthEvent {
   const factory InitializePushNotifications() = _$InitializePushNotifications;
+}
+
+abstract class $SetAnalyticsUserIDCopyWith<$Res> {
+  factory $SetAnalyticsUserIDCopyWith(
+          SetAnalyticsUserID value, $Res Function(SetAnalyticsUserID) then) =
+      _$SetAnalyticsUserIDCopyWithImpl<$Res>;
+  $Res call({String currentUserID});
+}
+
+class _$SetAnalyticsUserIDCopyWithImpl<$Res>
+    extends _$AuthEventCopyWithImpl<$Res>
+    implements $SetAnalyticsUserIDCopyWith<$Res> {
+  _$SetAnalyticsUserIDCopyWithImpl(
+      SetAnalyticsUserID _value, $Res Function(SetAnalyticsUserID) _then)
+      : super(_value, (v) => _then(v as SetAnalyticsUserID));
+
+  @override
+  SetAnalyticsUserID get _value => super._value as SetAnalyticsUserID;
+
+  @override
+  $Res call({
+    Object currentUserID = freezed,
+  }) {
+    return _then(SetAnalyticsUserID(
+      currentUserID == freezed ? _value.currentUserID : currentUserID as String,
+    ));
+  }
+}
+
+class _$SetAnalyticsUserID implements SetAnalyticsUserID {
+  const _$SetAnalyticsUserID(this.currentUserID)
+      : assert(currentUserID != null);
+
+  @override
+  final String currentUserID;
+
+  @override
+  String toString() {
+    return 'AuthEvent.setAnalyticsUserID(currentUserID: $currentUserID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is SetAnalyticsUserID &&
+            (identical(other.currentUserID, currentUserID) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUserID, currentUserID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(currentUserID);
+
+  @override
+  $SetAnalyticsUserIDCopyWith<SetAnalyticsUserID> get copyWith =>
+      _$SetAnalyticsUserIDCopyWithImpl<SetAnalyticsUserID>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result authCheckRequested(),
+    @required Result signedOut(),
+    @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    return setAnalyticsUserID(currentUserID);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result authCheckRequested(),
+    Result signedOut(),
+    Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (setAnalyticsUserID != null) {
+      return setAnalyticsUserID(currentUserID);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result authCheckRequested(AuthCheckRequested value),
+    @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    return setAnalyticsUserID(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result authCheckRequested(AuthCheckRequested value),
+    Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (setAnalyticsUserID != null) {
+      return setAnalyticsUserID(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class SetAnalyticsUserID implements AuthEvent {
+  const factory SetAnalyticsUserID(String currentUserID) = _$SetAnalyticsUserID;
+
+  String get currentUserID;
+  $SetAnalyticsUserIDCopyWith<SetAnalyticsUserID> get copyWith;
+}
+
+abstract class $NavigateToCopyWith<$Res> {
+  factory $NavigateToCopyWith(
+          NavigateTo value, $Res Function(NavigateTo) then) =
+      _$NavigateToCopyWithImpl<$Res>;
+  $Res call({String routeName, dynamic arguments});
+}
+
+class _$NavigateToCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
+    implements $NavigateToCopyWith<$Res> {
+  _$NavigateToCopyWithImpl(NavigateTo _value, $Res Function(NavigateTo) _then)
+      : super(_value, (v) => _then(v as NavigateTo));
+
+  @override
+  NavigateTo get _value => super._value as NavigateTo;
+
+  @override
+  $Res call({
+    Object routeName = freezed,
+    Object arguments = freezed,
+  }) {
+    return _then(NavigateTo(
+      routeName: routeName == freezed ? _value.routeName : routeName as String,
+      arguments: arguments == freezed ? _value.arguments : arguments as dynamic,
+    ));
+  }
+}
+
+class _$NavigateTo implements NavigateTo {
+  const _$NavigateTo({this.routeName, this.arguments});
+
+  @override
+  final String routeName;
+  @override
+  final dynamic arguments;
+
+  @override
+  String toString() {
+    return 'AuthEvent.navigateTo(routeName: $routeName, arguments: $arguments)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is NavigateTo &&
+            (identical(other.routeName, routeName) ||
+                const DeepCollectionEquality()
+                    .equals(other.routeName, routeName)) &&
+            (identical(other.arguments, arguments) ||
+                const DeepCollectionEquality()
+                    .equals(other.arguments, arguments)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(routeName) ^
+      const DeepCollectionEquality().hash(arguments);
+
+  @override
+  $NavigateToCopyWith<NavigateTo> get copyWith =>
+      _$NavigateToCopyWithImpl<NavigateTo>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result authCheckRequested(),
+    @required Result signedOut(),
+    @required Result initializePushNotifications(),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    return navigateTo(routeName, arguments);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result authCheckRequested(),
+    Result signedOut(),
+    Result initializePushNotifications(),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (navigateTo != null) {
+      return navigateTo(routeName, arguments);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result authCheckRequested(AuthCheckRequested value),
+    @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    return navigateTo(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result authCheckRequested(AuthCheckRequested value),
+    Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (navigateTo != null) {
+      return navigateTo(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class NavigateTo implements AuthEvent {
+  const factory NavigateTo({String routeName, dynamic arguments}) =
+      _$NavigateTo;
+
+  String get routeName;
+  dynamic get arguments;
+  $NavigateToCopyWith<NavigateTo> get copyWith;
 }
 
 class _$AuthStateTearOff {

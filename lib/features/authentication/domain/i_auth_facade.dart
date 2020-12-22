@@ -18,4 +18,5 @@ abstract class IAuthFacade {
   Future<Either<AuthFailure, Unit>> signInWithGoogle();
   Future<Either<AuthFailure, Unit>> signInWithApple();
   Future<void> signOut();
+  bool isUserRegistering();
 }

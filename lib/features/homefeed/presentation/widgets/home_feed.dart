@@ -1,9 +1,11 @@
 import 'dart:ui';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animations/animations.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
@@ -146,7 +148,38 @@ class _HomeFeedState extends State<HomeFeed> {
                                 BlocBuilder<HomeEventsBloc, HomeEventsState>(
                                     builder: (context, state) {
                               return state.map(
-                                initial: (_) => Container(),
+                                initial: (_) => Container(
+                                  child: Padding(
+                                    padding: EdgeInsets.all(8.0),
+                                    child: Center(
+                                        child: Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: <Widget>[
+                                        SizedBox(width: 20.0, height: 100.0),
+                                        Text(
+                                          "Find Your",
+                                          style: GoogleFonts.righteous(
+                                              textStyle: TextStyle(
+                                            fontSize: 25.0,
+                                          )),
+                                        ),
+                                        SizedBox(width: 10.0, height: 100.0),
+                                        RotateAnimatedTextKit(
+                                            //duration: Duration(minutes: 1),
+                                            text: [
+                                              "Home",
+                                              "Vybe",
+                                              "Opportunities"
+                                            ],
+                                            textStyle: GoogleFonts.righteous(
+                                                textStyle: TextStyle(
+                                              fontSize: 25.0,
+                                            )),
+                                            textAlign: TextAlign.start),
+                                      ],
+                                    )),
+                                  ),
+                                ),
                                 loadInProgress: (_) =>
                                     CircularProgressIndicator(),
                                 loadFailure: (state) {
@@ -222,7 +255,7 @@ class _HomeFeedState extends State<HomeFeed> {
                                                     .getOrCrash())),
                                       child: CreationAwareListItem(
                                         itemCreated: () {
-                                          if (index % 5 == 0) {
+                                          if (index % 20 == 0) {
                                             context.bloc<HomePostsBloc>().add(
                                                 HomePostsEvent.requestMoreData(
                                                     currentUserID));

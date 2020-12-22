@@ -10,6 +10,7 @@ import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'package:vybrnt_mvp/features/calendar/services/event_dtos.dart';
 import 'package:vybrnt_mvp/features/homefeed/domain/i_homefeed_service.dart';
+import 'package:vybrnt_mvp/features/posts/domain/core/failures.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/post.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/post_failure.dart';
 import 'package:vybrnt_mvp/features/posts/infrastructure/posts/post_dtos.dart';
@@ -25,7 +26,7 @@ class HomeFeedService implements IHomeFeedService {
   // #6: Create a list that will keep the paged results
   List<KtList<Post>> _allPagedResults = List<KtList<Post>>();
 
-  static const int PostsLimit = 5;
+  static const int PostsLimit = 20;
 
   DocumentSnapshot _lastDocument;
   bool _hasMorePosts = true;
@@ -211,4 +212,11 @@ class HomeFeedService implements IHomeFeedService {
 
   @override
   void requestMoreData(String currentUserID) => _requestPosts(currentUserID);
+
+  @override
+  void resetPostList() {
+    _allPagedResults = List.empty(growable: true);
+    _lastDocument = null;
+    _hasMorePosts = true;
+  }
 }

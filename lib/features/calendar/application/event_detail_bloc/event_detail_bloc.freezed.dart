@@ -52,6 +52,14 @@ class _$EventDetailEventTearOff {
       event,
     );
   }
+
+  GetEvent getEvent({String eventID, String type, String typeID}) {
+    return GetEvent(
+      eventID: eventID,
+      type: type,
+      typeID: typeID,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -69,6 +77,7 @@ mixin _$EventDetailEvent {
         Result rsvpListReceived(Either<EventFailure, KtList<UserList>> rsvpList,
             String currentUserID),
     @required Result deleteEvent(Event event),
+    @required Result getEvent(String eventID, String type, String typeID),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -79,6 +88,7 @@ mixin _$EventDetailEvent {
     Result rsvpListReceived(
         Either<EventFailure, KtList<UserList>> rsvpList, String currentUserID),
     Result deleteEvent(Event event),
+    Result getEvent(String eventID, String type, String typeID),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -88,6 +98,7 @@ mixin _$EventDetailEvent {
     @required Result removeFromRSVP(RemoveFromRSVP value),
     @required Result rsvpListReceived(RSVPListReceived value),
     @required Result deleteEvent(DeleteEvent value),
+    @required Result getEvent(GetEvent value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -96,6 +107,7 @@ mixin _$EventDetailEvent {
     Result removeFromRSVP(RemoveFromRSVP value),
     Result rsvpListReceived(RSVPListReceived value),
     Result deleteEvent(DeleteEvent value),
+    Result getEvent(GetEvent value),
     @required Result orElse(),
   });
 }
@@ -225,12 +237,14 @@ class _$GetUserData implements GetUserData {
         Result rsvpListReceived(Either<EventFailure, KtList<UserList>> rsvpList,
             String currentUserID),
     @required Result deleteEvent(Event event),
+    @required Result getEvent(String eventID, String type, String typeID),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return getData(senderID, currentUserID, orgID, eventID, isOrg);
   }
 
@@ -244,6 +258,7 @@ class _$GetUserData implements GetUserData {
     Result rsvpListReceived(
         Either<EventFailure, KtList<UserList>> rsvpList, String currentUserID),
     Result deleteEvent(Event event),
+    Result getEvent(String eventID, String type, String typeID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -261,12 +276,14 @@ class _$GetUserData implements GetUserData {
     @required Result removeFromRSVP(RemoveFromRSVP value),
     @required Result rsvpListReceived(RSVPListReceived value),
     @required Result deleteEvent(DeleteEvent value),
+    @required Result getEvent(GetEvent value),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return getData(this);
   }
 
@@ -278,6 +295,7 @@ class _$GetUserData implements GetUserData {
     Result removeFromRSVP(RemoveFromRSVP value),
     Result rsvpListReceived(RSVPListReceived value),
     Result deleteEvent(DeleteEvent value),
+    Result getEvent(GetEvent value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -379,12 +397,14 @@ class _$AddToRSVP implements AddToRSVP {
         Result rsvpListReceived(Either<EventFailure, KtList<UserList>> rsvpList,
             String currentUserID),
     @required Result deleteEvent(Event event),
+    @required Result getEvent(String eventID, String type, String typeID),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return addToRSVP(event);
   }
 
@@ -398,6 +418,7 @@ class _$AddToRSVP implements AddToRSVP {
     Result rsvpListReceived(
         Either<EventFailure, KtList<UserList>> rsvpList, String currentUserID),
     Result deleteEvent(Event event),
+    Result getEvent(String eventID, String type, String typeID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -415,12 +436,14 @@ class _$AddToRSVP implements AddToRSVP {
     @required Result removeFromRSVP(RemoveFromRSVP value),
     @required Result rsvpListReceived(RSVPListReceived value),
     @required Result deleteEvent(DeleteEvent value),
+    @required Result getEvent(GetEvent value),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return addToRSVP(this);
   }
 
@@ -432,6 +455,7 @@ class _$AddToRSVP implements AddToRSVP {
     Result removeFromRSVP(RemoveFromRSVP value),
     Result rsvpListReceived(RSVPListReceived value),
     Result deleteEvent(DeleteEvent value),
+    Result getEvent(GetEvent value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -527,12 +551,14 @@ class _$RemoveFromRSVP implements RemoveFromRSVP {
         Result rsvpListReceived(Either<EventFailure, KtList<UserList>> rsvpList,
             String currentUserID),
     @required Result deleteEvent(Event event),
+    @required Result getEvent(String eventID, String type, String typeID),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return removeFromRSVP(event);
   }
 
@@ -546,6 +572,7 @@ class _$RemoveFromRSVP implements RemoveFromRSVP {
     Result rsvpListReceived(
         Either<EventFailure, KtList<UserList>> rsvpList, String currentUserID),
     Result deleteEvent(Event event),
+    Result getEvent(String eventID, String type, String typeID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -563,12 +590,14 @@ class _$RemoveFromRSVP implements RemoveFromRSVP {
     @required Result removeFromRSVP(RemoveFromRSVP value),
     @required Result rsvpListReceived(RSVPListReceived value),
     @required Result deleteEvent(DeleteEvent value),
+    @required Result getEvent(GetEvent value),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return removeFromRSVP(this);
   }
 
@@ -580,6 +609,7 @@ class _$RemoveFromRSVP implements RemoveFromRSVP {
     Result removeFromRSVP(RemoveFromRSVP value),
     Result rsvpListReceived(RSVPListReceived value),
     Result deleteEvent(DeleteEvent value),
+    Result getEvent(GetEvent value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -678,12 +708,14 @@ class _$RSVPListReceived implements RSVPListReceived {
         Result rsvpListReceived(Either<EventFailure, KtList<UserList>> rsvpList,
             String currentUserID),
     @required Result deleteEvent(Event event),
+    @required Result getEvent(String eventID, String type, String typeID),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return rsvpListReceived(rsvpList, currentUserID);
   }
 
@@ -697,6 +729,7 @@ class _$RSVPListReceived implements RSVPListReceived {
     Result rsvpListReceived(
         Either<EventFailure, KtList<UserList>> rsvpList, String currentUserID),
     Result deleteEvent(Event event),
+    Result getEvent(String eventID, String type, String typeID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -714,12 +747,14 @@ class _$RSVPListReceived implements RSVPListReceived {
     @required Result removeFromRSVP(RemoveFromRSVP value),
     @required Result rsvpListReceived(RSVPListReceived value),
     @required Result deleteEvent(DeleteEvent value),
+    @required Result getEvent(GetEvent value),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return rsvpListReceived(this);
   }
 
@@ -731,6 +766,7 @@ class _$RSVPListReceived implements RSVPListReceived {
     Result removeFromRSVP(RemoveFromRSVP value),
     Result rsvpListReceived(RSVPListReceived value),
     Result deleteEvent(DeleteEvent value),
+    Result getEvent(GetEvent value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -829,12 +865,14 @@ class _$DeleteEvent implements DeleteEvent {
         Result rsvpListReceived(Either<EventFailure, KtList<UserList>> rsvpList,
             String currentUserID),
     @required Result deleteEvent(Event event),
+    @required Result getEvent(String eventID, String type, String typeID),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return deleteEvent(event);
   }
 
@@ -848,6 +886,7 @@ class _$DeleteEvent implements DeleteEvent {
     Result rsvpListReceived(
         Either<EventFailure, KtList<UserList>> rsvpList, String currentUserID),
     Result deleteEvent(Event event),
+    Result getEvent(String eventID, String type, String typeID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -865,12 +904,14 @@ class _$DeleteEvent implements DeleteEvent {
     @required Result removeFromRSVP(RemoveFromRSVP value),
     @required Result rsvpListReceived(RSVPListReceived value),
     @required Result deleteEvent(DeleteEvent value),
+    @required Result getEvent(GetEvent value),
   }) {
     assert(getData != null);
     assert(addToRSVP != null);
     assert(removeFromRSVP != null);
     assert(rsvpListReceived != null);
     assert(deleteEvent != null);
+    assert(getEvent != null);
     return deleteEvent(this);
   }
 
@@ -882,6 +923,7 @@ class _$DeleteEvent implements DeleteEvent {
     Result removeFromRSVP(RemoveFromRSVP value),
     Result rsvpListReceived(RSVPListReceived value),
     Result deleteEvent(DeleteEvent value),
+    Result getEvent(GetEvent value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -899,6 +941,164 @@ abstract class DeleteEvent implements EventDetailEvent {
   $DeleteEventCopyWith<DeleteEvent> get copyWith;
 }
 
+abstract class $GetEventCopyWith<$Res> {
+  factory $GetEventCopyWith(GetEvent value, $Res Function(GetEvent) then) =
+      _$GetEventCopyWithImpl<$Res>;
+  $Res call({String eventID, String type, String typeID});
+}
+
+class _$GetEventCopyWithImpl<$Res> extends _$EventDetailEventCopyWithImpl<$Res>
+    implements $GetEventCopyWith<$Res> {
+  _$GetEventCopyWithImpl(GetEvent _value, $Res Function(GetEvent) _then)
+      : super(_value, (v) => _then(v as GetEvent));
+
+  @override
+  GetEvent get _value => super._value as GetEvent;
+
+  @override
+  $Res call({
+    Object eventID = freezed,
+    Object type = freezed,
+    Object typeID = freezed,
+  }) {
+    return _then(GetEvent(
+      eventID: eventID == freezed ? _value.eventID : eventID as String,
+      type: type == freezed ? _value.type : type as String,
+      typeID: typeID == freezed ? _value.typeID : typeID as String,
+    ));
+  }
+}
+
+class _$GetEvent implements GetEvent {
+  const _$GetEvent({this.eventID, this.type, this.typeID});
+
+  @override
+  final String eventID;
+  @override
+  final String type;
+  @override
+  final String typeID;
+
+  @override
+  String toString() {
+    return 'EventDetailEvent.getEvent(eventID: $eventID, type: $type, typeID: $typeID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is GetEvent &&
+            (identical(other.eventID, eventID) ||
+                const DeepCollectionEquality()
+                    .equals(other.eventID, eventID)) &&
+            (identical(other.type, type) ||
+                const DeepCollectionEquality().equals(other.type, type)) &&
+            (identical(other.typeID, typeID) ||
+                const DeepCollectionEquality().equals(other.typeID, typeID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(eventID) ^
+      const DeepCollectionEquality().hash(type) ^
+      const DeepCollectionEquality().hash(typeID);
+
+  @override
+  $GetEventCopyWith<GetEvent> get copyWith =>
+      _$GetEventCopyWithImpl<GetEvent>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required
+        Result getData(String senderID, String currentUserID, String orgID,
+            String eventID, bool isOrg),
+    @required Result addToRSVP(Event event),
+    @required Result removeFromRSVP(Event event),
+    @required
+        Result rsvpListReceived(Either<EventFailure, KtList<UserList>> rsvpList,
+            String currentUserID),
+    @required Result deleteEvent(Event event),
+    @required Result getEvent(String eventID, String type, String typeID),
+  }) {
+    assert(getData != null);
+    assert(addToRSVP != null);
+    assert(removeFromRSVP != null);
+    assert(rsvpListReceived != null);
+    assert(deleteEvent != null);
+    assert(getEvent != null);
+    return getEvent(eventID, type, typeID);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result getData(String senderID, String currentUserID, String orgID,
+        String eventID, bool isOrg),
+    Result addToRSVP(Event event),
+    Result removeFromRSVP(Event event),
+    Result rsvpListReceived(
+        Either<EventFailure, KtList<UserList>> rsvpList, String currentUserID),
+    Result deleteEvent(Event event),
+    Result getEvent(String eventID, String type, String typeID),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (getEvent != null) {
+      return getEvent(eventID, type, typeID);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result getData(GetUserData value),
+    @required Result addToRSVP(AddToRSVP value),
+    @required Result removeFromRSVP(RemoveFromRSVP value),
+    @required Result rsvpListReceived(RSVPListReceived value),
+    @required Result deleteEvent(DeleteEvent value),
+    @required Result getEvent(GetEvent value),
+  }) {
+    assert(getData != null);
+    assert(addToRSVP != null);
+    assert(removeFromRSVP != null);
+    assert(rsvpListReceived != null);
+    assert(deleteEvent != null);
+    assert(getEvent != null);
+    return getEvent(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result getData(GetUserData value),
+    Result addToRSVP(AddToRSVP value),
+    Result removeFromRSVP(RemoveFromRSVP value),
+    Result rsvpListReceived(RSVPListReceived value),
+    Result deleteEvent(DeleteEvent value),
+    Result getEvent(GetEvent value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (getEvent != null) {
+      return getEvent(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class GetEvent implements EventDetailEvent {
+  const factory GetEvent({String eventID, String type, String typeID}) =
+      _$GetEvent;
+
+  String get eventID;
+  String get type;
+  String get typeID;
+  $GetEventCopyWith<GetEvent> get copyWith;
+}
+
 class _$EventDetailStateTearOff {
   const _$EventDetailStateTearOff();
 
@@ -906,12 +1106,14 @@ class _$EventDetailStateTearOff {
       {@required KtList<UserList> rsvpList,
       @required Organization org,
       @required User user,
-      @required bool isRSVPed}) {
+      @required bool isRSVPed,
+      @required Event event}) {
     return _EventDetailState(
       rsvpList: rsvpList,
       org: org,
       user: user,
       isRSVPed: isRSVPed,
+      event: event,
     );
   }
 }
@@ -924,6 +1126,7 @@ mixin _$EventDetailState {
   Organization get org;
   User get user;
   bool get isRSVPed;
+  Event get event;
 
   $EventDetailStateCopyWith<EventDetailState> get copyWith;
 }
@@ -933,10 +1136,15 @@ abstract class $EventDetailStateCopyWith<$Res> {
           EventDetailState value, $Res Function(EventDetailState) then) =
       _$EventDetailStateCopyWithImpl<$Res>;
   $Res call(
-      {KtList<UserList> rsvpList, Organization org, User user, bool isRSVPed});
+      {KtList<UserList> rsvpList,
+      Organization org,
+      User user,
+      bool isRSVPed,
+      Event event});
 
   $OrganizationCopyWith<$Res> get org;
   $UserCopyWith<$Res> get user;
+  $EventCopyWith<$Res> get event;
 }
 
 class _$EventDetailStateCopyWithImpl<$Res>
@@ -953,6 +1161,7 @@ class _$EventDetailStateCopyWithImpl<$Res>
     Object org = freezed,
     Object user = freezed,
     Object isRSVPed = freezed,
+    Object event = freezed,
   }) {
     return _then(_value.copyWith(
       rsvpList:
@@ -960,6 +1169,7 @@ class _$EventDetailStateCopyWithImpl<$Res>
       org: org == freezed ? _value.org : org as Organization,
       user: user == freezed ? _value.user : user as User,
       isRSVPed: isRSVPed == freezed ? _value.isRSVPed : isRSVPed as bool,
+      event: event == freezed ? _value.event : event as Event,
     ));
   }
 
@@ -982,6 +1192,16 @@ class _$EventDetailStateCopyWithImpl<$Res>
       return _then(_value.copyWith(user: value));
     });
   }
+
+  @override
+  $EventCopyWith<$Res> get event {
+    if (_value.event == null) {
+      return null;
+    }
+    return $EventCopyWith<$Res>(_value.event, (value) {
+      return _then(_value.copyWith(event: value));
+    });
+  }
 }
 
 abstract class _$EventDetailStateCopyWith<$Res>
@@ -991,12 +1211,18 @@ abstract class _$EventDetailStateCopyWith<$Res>
       __$EventDetailStateCopyWithImpl<$Res>;
   @override
   $Res call(
-      {KtList<UserList> rsvpList, Organization org, User user, bool isRSVPed});
+      {KtList<UserList> rsvpList,
+      Organization org,
+      User user,
+      bool isRSVPed,
+      Event event});
 
   @override
   $OrganizationCopyWith<$Res> get org;
   @override
   $UserCopyWith<$Res> get user;
+  @override
+  $EventCopyWith<$Res> get event;
 }
 
 class __$EventDetailStateCopyWithImpl<$Res>
@@ -1015,6 +1241,7 @@ class __$EventDetailStateCopyWithImpl<$Res>
     Object org = freezed,
     Object user = freezed,
     Object isRSVPed = freezed,
+    Object event = freezed,
   }) {
     return _then(_EventDetailState(
       rsvpList:
@@ -1022,6 +1249,7 @@ class __$EventDetailStateCopyWithImpl<$Res>
       org: org == freezed ? _value.org : org as Organization,
       user: user == freezed ? _value.user : user as User,
       isRSVPed: isRSVPed == freezed ? _value.isRSVPed : isRSVPed as bool,
+      event: event == freezed ? _value.event : event as Event,
     ));
   }
 }
@@ -1031,11 +1259,13 @@ class _$_EventDetailState implements _EventDetailState {
       {@required this.rsvpList,
       @required this.org,
       @required this.user,
-      @required this.isRSVPed})
+      @required this.isRSVPed,
+      @required this.event})
       : assert(rsvpList != null),
         assert(org != null),
         assert(user != null),
-        assert(isRSVPed != null);
+        assert(isRSVPed != null),
+        assert(event != null);
 
   @override
   final KtList<UserList> rsvpList;
@@ -1045,10 +1275,12 @@ class _$_EventDetailState implements _EventDetailState {
   final User user;
   @override
   final bool isRSVPed;
+  @override
+  final Event event;
 
   @override
   String toString() {
-    return 'EventDetailState(rsvpList: $rsvpList, org: $org, user: $user, isRSVPed: $isRSVPed)';
+    return 'EventDetailState(rsvpList: $rsvpList, org: $org, user: $user, isRSVPed: $isRSVPed, event: $event)';
   }
 
   @override
@@ -1064,7 +1296,9 @@ class _$_EventDetailState implements _EventDetailState {
                 const DeepCollectionEquality().equals(other.user, user)) &&
             (identical(other.isRSVPed, isRSVPed) ||
                 const DeepCollectionEquality()
-                    .equals(other.isRSVPed, isRSVPed)));
+                    .equals(other.isRSVPed, isRSVPed)) &&
+            (identical(other.event, event) ||
+                const DeepCollectionEquality().equals(other.event, event)));
   }
 
   @override
@@ -1073,7 +1307,8 @@ class _$_EventDetailState implements _EventDetailState {
       const DeepCollectionEquality().hash(rsvpList) ^
       const DeepCollectionEquality().hash(org) ^
       const DeepCollectionEquality().hash(user) ^
-      const DeepCollectionEquality().hash(isRSVPed);
+      const DeepCollectionEquality().hash(isRSVPed) ^
+      const DeepCollectionEquality().hash(event);
 
   @override
   _$EventDetailStateCopyWith<_EventDetailState> get copyWith =>
@@ -1085,7 +1320,8 @@ abstract class _EventDetailState implements EventDetailState {
       {@required KtList<UserList> rsvpList,
       @required Organization org,
       @required User user,
-      @required bool isRSVPed}) = _$_EventDetailState;
+      @required bool isRSVPed,
+      @required Event event}) = _$_EventDetailState;
 
   @override
   KtList<UserList> get rsvpList;
@@ -1095,6 +1331,8 @@ abstract class _EventDetailState implements EventDetailState {
   User get user;
   @override
   bool get isRSVPed;
+  @override
+  Event get event;
   @override
   _$EventDetailStateCopyWith<_EventDetailState> get copyWith;
 }

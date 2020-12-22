@@ -7,6 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/i_calendar_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/i_event_detail_service.dart';
@@ -20,14 +21,17 @@ part 'create_event_state.dart';
 
 part 'create_event_bloc.freezed.dart';
 
+const String screenName = 'create_event';
+
 @injectable
 class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
   final ICalendarService _calendarService;
   final IEventDetailService _eventDetailService;
   final IOrgService _orgService;
+  final IAnalyticsService _analyticsService;
 
-  CreateEventBloc(
-      this._calendarService, this._eventDetailService, this._orgService)
+  CreateEventBloc(this._calendarService, this._eventDetailService,
+      this._orgService, this._analyticsService)
       : super(CreateEventState.initial());
 
   StreamSubscription<KtList<String>> _adminStreamSubscription;
@@ -39,6 +43,7 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
     yield* event.map(
       initialized: (e) async* {
         await _adminStreamSubscription?.cancel();
+        await _analyticsService.setCurrentScreen(screenName);
         _adminStreamSubscription = _calendarService
             .getAdminIDs(e.currentUserID)
             .listen((admins) =>
@@ -179,6 +184,10 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
                   event: state.event,
                   categories: state.categories,
                   orgID: state.id);
+        }
+        if (failureOrSuccess.isRight()) {
+          await _analyticsService.logEventCreated(
+              hasImage: state.event.eventImageUrl.isNotEmpty);
         }
         yield state.copyWith(
           isSaving: false,

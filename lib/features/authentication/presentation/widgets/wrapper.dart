@@ -18,6 +18,9 @@ class Wrapper extends StatelessWidget {
               context
                   .bloc<AuthBloc>()
                   .add(AuthEvent.initializePushNotifications());
+              context
+                  .bloc<AuthBloc>()
+                  .add(AuthEvent.setAnalyticsUserID(_.user.id.getOrCrash()));
               Provider.of<UserData>(context, listen: false).currentUserID =
                   _.user.id.getOrCrash();
               // ExtendedNavigator.of(context);

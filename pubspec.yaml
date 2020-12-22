@@ -98,6 +98,7 @@ dependencies:
   timeago: ^2.0.26
   url_launcher: ^5.4.10
   uuid: ^2.0.4
+  animated_text_kit: ^2.5.4
 
 dev_dependencies:
   flutter_test:
@@ -146,6 +147,9 @@ flutter:
     - family: Socicon
       fonts:
         - asset: assets/icons/Socicon.ttf
+    # - family: Righteous
+    #   fonts:
+    #     - asset: assets/fonts/Righteous-Regular.tff
   #       - asset: fonts/Schyler-Italic.ttf
   #         style: italic
   #   - family: Trajan Pro
