@@ -826,17 +826,18 @@ exports.onUpdateOrgEvent = functions.firestore
         const userID = context.params.userID;
         let body;
         let username;
-        let typeID; 
+        //let typeID; 
         let isOrg;
         const userRef = admin.firestore().collection('users').doc(userID);
         const doc = await userRef.get();
-      
+        
     
         // 2) Once we have user, check if they have a notification token
         const androidNotificationToken = doc.data()
         .androidNotificationToken;
         
         const activity = snapshot.data();
+        let activityString = JSON.stringify(activity);
           if(activity.isOrg){
             isOrg = "true";
         } else {
@@ -856,73 +857,73 @@ exports.onUpdateOrgEvent = functions.firestore
                 case "likeUser":
                   {
                     body = `${username} liked your post`;
-                    typeID = activity.postID;
+                    //typeID = activity.postID;
                   }
                   break;
                 case "repostUser":
                   {
                     body = `${username} reposted your post`;
-                    typeID = activity.postID;
+                    //typeID = activity.postID;
                   }
                   break;
                 case "commentUser":
                   {
                     body = `${username} commented on your post`;
-                    typeID = activity.postID;
+                   //typeID = activity.postID;
                   }
                   break;
                 case "likeOrg":
                   {
                     body = `${username} liked your organization's post`;
-                    typeID = activity.postID;
+                    //typeID = activity.postID;
                   }
                   break;
                 case 'repostOrg':
                   {
                     body = `${username} reposted your organization's post`;
-                    typeID = activity.postID;
+                    //typeID = activity.postID;
                   }
                   break;
                 case "commentOrg":
                   {
                     body = `${username} commented on your organization's post`;
-                    typeID = activity.postID;
+                    //typeID = activity.postID;
                   }
                   break;
                 case "followUser":
                   {
                     body = `${username} followed you`;
-                    typeID = activity.userID;
+                    //typeID = activity.userID;
                   }
                   break;
                 case "followOrg":
                   {
                     body = `${username} joined your organization page`;
-                    typeID = activity.orgID;
+                    //typeID = activity.orgID;
                   }
                   break;
                 case "post":
                   {
                     body = `${username} posted an update`;
-                    typeID = activity.postID;
+                   // typeID = activity.postID;
                   }
                   break;
                 case "event":
                   {
                     body = `${username} created a new event`;
-                    typeID = activity.eventID;
+                    //typeID = activity.eventID;
                   }
                   break;
                 case "eventStart":
                   {
                     body = `${username} event is starting soon`;
-                    typeID = activity.eventID;
+                    //typeID = activity.eventID;
                   }
                   break;
                 case "admin":
                   {
                     body = `${username} has given you admin access`;
-                    typeID = activity.orgID;
+                    //typeID = activity.orgID;
                   }
                   break;
                 default:
@@ -931,18 +932,22 @@ exports.onUpdateOrgEvent = functions.firestore
     
               // 4) Create message for push notification
               const message = {
-                notification: {body: body, title: 'Vybrnt' },
-                priority: "high",
+                notification: {body: body, title: "Vybrnt" },
+                
                 token: androidNotificationToken,
-                data: {userID: userID, typeID: typeID, type: activity.type, isOrg: isOrg, orgID: activity.orgID, click_action: 'FLUTTER_NOTIFICATION_CLICK',  icon: activity.profileImageURL, id: activity.activityID, status: 'done' }
+                
+                data: {activity: activityString, click_action: "FLUTTER_NOTIFICATION_CLICK", id: "1" }
+                // data: {userID: userID, typeID: typeID, type: activity.type, isOrg: isOrg, orgID: activity.orgID, click_action: 'FLUTTER_NOTIFICATION_CLICK',  icon: activity.profileImageURL, id: activity.activityID, status: 'done' }
                 
             };
+
+            //const message = {notification: {body: "this is a body", title: "this is a title",}, token: androidNotificationToken, data: {click_action: "FLUTTER_NOTIFICATION_CLICK", id: "1"}, };
 
            
               // 5) Send message with admin.messaging()
     
               try {
-                admin.messaging().send(message);
+                const response = admin.messaging().send(message);
                  console.log("Successfully sent message", response);
             }
             catch (error) {

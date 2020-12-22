@@ -397,17 +397,16 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                   //             type: 'user',
                                   //             typeID:
                                   //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
-                                  // context.bloc<AuthBloc>().add(
-                                  //     AuthEvent.navigateTo(
-                                  //         routeName: route.Routes.postDetail,
-                                  //         arguments: PostScreenArguments(
-                                  //             postID: '7XRLC1DN8ut1j0xc4BJp',
-                                  //             type: 'user',
-                                  //             typeID:
-                                  //                 '4HwvsCmoGHP6xbt0CJ0mlyiQGOp1'))))
-                                  // context.navigator
-                                  //     .push(route.Routes.messaging)),
-                                  Scaffold.of(context).showSnackBar(snackBar)),
+                                  context.bloc<AuthBloc>().add(AuthEvent.navigateTo(
+                                      routeName: route.Routes.postDetail,
+                                      arguments: PostScreenArguments(
+                                          postID: '7XRLC1DN8ut1j0xc4BJp',
+                                          type: 'user',
+                                          typeID:
+                                              '4HwvsCmoGHP6xbt0CJ0mlyiQGOp1'))))
+                          // context.navigator
+                          //     .push(route.Routes.messaging)),
+                          //Scaffold.of(context).showSnackBar(snackBar)),
                           // () =>
                           //     Router.navigator.pushNamed(Router.messaging)),
                         ],
