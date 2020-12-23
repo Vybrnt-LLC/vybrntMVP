@@ -28,10 +28,11 @@ class PushNotificationService implements IPushNotificationService {
 
       firebaseMessaging.getToken().then((token) {
         print("Firebase Messaging Token: $token\n");
-        if (Platform.isAndroid) {
-          usersRef.doc(currentUserID).set(
-              {"androidNotificationToken": token}, SetOptions(merge: true));
-        }
+        //if (Platform.isAndroid) {
+        usersRef
+            .doc(currentUserID)
+            .set({"androidNotificationToken": token}, SetOptions(merge: true));
+        // }
       });
 
       firebaseMessaging.configure(
