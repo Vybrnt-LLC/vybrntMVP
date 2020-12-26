@@ -25,6 +25,7 @@ import '../features/homefeed/application/category_posts/category_posts_bloc.dart
 import '../features/posts/application/comment_actor/comment_actor_bloc.dart';
 import '../features/calendar/application/create_event_bloc/create_event_bloc.dart';
 import '../features/posts/application/create_post/create_post_form_bloc.dart';
+import 'routes/dynamic_link_service.dart';
 import '../features/organization/application/edit_org_bloc/edit_org_bloc.dart';
 import '../features/user/application/edit_user_bloc/edit_user_bloc.dart';
 import '../features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
@@ -42,6 +43,7 @@ import '../features/activity/domain/i_activity_service.dart';
 import '../features/activity/domain/i_analytics_service.dart';
 import '../features/authentication/domain/i_auth_facade.dart';
 import '../features/calendar/domain/i_calendar_service.dart';
+import 'routes/i_dynamic_link_serivce.dart';
 import '../features/calendar/domain/i_event_detail_service.dart';
 import '../features/homefeed/domain/i_homefeed_service.dart';
 import 'routes/i_navigation_service.dart';
@@ -107,19 +109,15 @@ GetIt $initGetIt(
   gh.factory<NavbarBloc>(() => NavbarBloc(get<AnalyticsService>()));
   gh.lazySingleton<NavigationService>(
       () => firebaseInjectableModule.navigationService);
-  gh.factory<OrgBloc>(() => OrgBloc(get<IOrgService>()));
   gh.factory<OrgCalendarBloc>(
       () => OrgCalendarBloc(get<ICalendarService>(), get<IOrgService>()));
   gh.factory<OrgWatcherBloc>(() => OrgWatcherBloc(get<IOrgService>()));
-  gh.factory<PostActorBloc>(
-      () => PostActorBloc(get<IPostRepository>(), get<IAnalyticsService>()));
   gh.factory<PostNotificationBloc>(
       () => PostNotificationBloc(get<IPostRepository>()));
   gh.factory<PostWatcherBloc>(() => PostWatcherBloc(get<IPostRepository>()));
   gh.factory<SearchBloc>(() => SearchBloc(get<IOrgService>()));
   gh.factory<SignInFormBloc>(
       () => SignInFormBloc(get<IAuthFacade>(), get<IAnalyticsService>()));
-  gh.factory<UserBloc>(() => UserBloc(get<IUserService>()));
   gh.factory<UserEventListBloc>(() => UserEventListBloc(get<IUserService>()));
   gh.factory<UserListBloc>(() => UserListBloc(get<IOrgService>()));
   gh.factory<UserWatcherBloc>(() => UserWatcherBloc(get<IUserService>()));
@@ -147,11 +145,6 @@ GetIt $initGetIt(
       ));
   gh.factory<EditOrgBloc>(() => EditOrgBloc(get<IOrgService>()));
   gh.factory<EditUserBloc>(() => EditUserBloc(get<IUserService>()));
-  gh.factory<EventDetailBloc>(() => EventDetailBloc(
-        get<IEventDetailService>(),
-        get<IOrgService>(),
-        get<IAnalyticsService>(),
-      ));
   gh.factory<EventListBloc>(() => EventListBloc(get<IOrgService>()));
   gh.factory<EventNotificationBloc>(
       () => EventNotificationBloc(get<IEventDetailService>()));
@@ -159,16 +152,34 @@ GetIt $initGetIt(
   gh.factory<FabBloc>(() => FabBloc(get<IAnalyticsService>()));
   gh.factory<HomeEventsBloc>(() => HomeEventsBloc(get<IHomeFeedService>()));
   gh.factory<HomePostsBloc>(() => HomePostsBloc(get<IHomeFeedService>()));
+  gh.lazySingleton<IDynamicLinkService>(
+      () => DynamicLinkService(get<INavigationService>()));
   gh.lazySingleton<IPushNotificationService>(() => PushNotificationService(
         firebaseMessaging: get<FirebaseMessaging>(),
         navigationService: get<NavigationService>(),
         firestore: get<FirebaseFirestore>(),
       ));
+  gh.factory<OrgBloc>(
+      () => OrgBloc(get<IOrgService>(), get<IDynamicLinkService>()));
+  gh.factory<PostActorBloc>(() => PostActorBloc(
+        get<IPostRepository>(),
+        get<IAnalyticsService>(),
+        get<IDynamicLinkService>(),
+      ));
+  gh.factory<UserBloc>(
+      () => UserBloc(get<IUserService>(), get<IDynamicLinkService>()));
   gh.factory<AuthBloc>(() => AuthBloc(
         get<IAuthFacade>(),
         get<IPushNotificationService>(),
         get<IAnalyticsService>(),
         get<INavigationService>(),
+        get<IDynamicLinkService>(),
+      ));
+  gh.factory<EventDetailBloc>(() => EventDetailBloc(
+        get<IEventDetailService>(),
+        get<IOrgService>(),
+        get<IAnalyticsService>(),
+        get<IDynamicLinkService>(),
       ));
   return get;
 }

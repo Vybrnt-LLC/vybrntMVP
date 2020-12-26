@@ -15,7 +15,8 @@ abstract class PostActorState with _$PostActorState {
       @required KtList<String> likes,
       @required KtList<String> reposts,
       @required KtList<Comment> comments,
-      @required KtList<String> bookmarkedPosts}) = _PostActorState;
+      @required KtList<String> bookmarkedPosts,
+      @required String shareLink}) = _PostActorState;
 
   factory PostActorState.inital() => _PostActorState(
         org: Organization.empty(),
@@ -31,5 +32,6 @@ abstract class PostActorState with _$PostActorState {
         reposts: KtList<String>.empty(),
         comments: KtList<Comment>.empty(),
         bookmarkedPosts: KtList<String>.empty(),
+        shareLink: '',
       );
 }

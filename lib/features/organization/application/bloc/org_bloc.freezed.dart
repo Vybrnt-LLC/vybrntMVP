@@ -1614,7 +1614,8 @@ class _$OrgStateTearOff {
       @required int memberCount,
       @required int photoCount,
       @required KtList<String> userIDList,
-      @required bool isNotified}) {
+      @required bool isNotified,
+      @required String shareLink}) {
     return _OrgState(
       isAdmin: isAdmin,
       isFollowing: isFollowing,
@@ -1624,6 +1625,7 @@ class _$OrgStateTearOff {
       photoCount: photoCount,
       userIDList: userIDList,
       isNotified: isNotified,
+      shareLink: shareLink,
     );
   }
 }
@@ -1640,6 +1642,7 @@ mixin _$OrgState {
   int get photoCount;
   KtList<String> get userIDList;
   bool get isNotified;
+  String get shareLink;
 
   $OrgStateCopyWith<OrgState> get copyWith;
 }
@@ -1655,7 +1658,8 @@ abstract class $OrgStateCopyWith<$Res> {
       int memberCount,
       int photoCount,
       KtList<String> userIDList,
-      bool isNotified});
+      bool isNotified,
+      String shareLink});
 }
 
 class _$OrgStateCopyWithImpl<$Res> implements $OrgStateCopyWith<$Res> {
@@ -1675,6 +1679,7 @@ class _$OrgStateCopyWithImpl<$Res> implements $OrgStateCopyWith<$Res> {
     Object photoCount = freezed,
     Object userIDList = freezed,
     Object isNotified = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_value.copyWith(
       isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
@@ -1691,6 +1696,7 @@ class _$OrgStateCopyWithImpl<$Res> implements $OrgStateCopyWith<$Res> {
           : userIDList as KtList<String>,
       isNotified:
           isNotified == freezed ? _value.isNotified : isNotified as bool,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 }
@@ -1707,7 +1713,8 @@ abstract class _$OrgStateCopyWith<$Res> implements $OrgStateCopyWith<$Res> {
       int memberCount,
       int photoCount,
       KtList<String> userIDList,
-      bool isNotified});
+      bool isNotified,
+      String shareLink});
 }
 
 class __$OrgStateCopyWithImpl<$Res> extends _$OrgStateCopyWithImpl<$Res>
@@ -1728,6 +1735,7 @@ class __$OrgStateCopyWithImpl<$Res> extends _$OrgStateCopyWithImpl<$Res>
     Object photoCount = freezed,
     Object userIDList = freezed,
     Object isNotified = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_OrgState(
       isAdmin: isAdmin == freezed ? _value.isAdmin : isAdmin as bool,
@@ -1744,6 +1752,7 @@ class __$OrgStateCopyWithImpl<$Res> extends _$OrgStateCopyWithImpl<$Res>
           : userIDList as KtList<String>,
       isNotified:
           isNotified == freezed ? _value.isNotified : isNotified as bool,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 }
@@ -1757,7 +1766,8 @@ class _$_OrgState implements _OrgState {
       @required this.memberCount,
       @required this.photoCount,
       @required this.userIDList,
-      @required this.isNotified})
+      @required this.isNotified,
+      @required this.shareLink})
       : assert(isAdmin != null),
         assert(isFollowing != null),
         assert(isBlocking != null),
@@ -1765,7 +1775,8 @@ class _$_OrgState implements _OrgState {
         assert(memberCount != null),
         assert(photoCount != null),
         assert(userIDList != null),
-        assert(isNotified != null);
+        assert(isNotified != null),
+        assert(shareLink != null);
 
   @override
   final bool isAdmin;
@@ -1783,10 +1794,12 @@ class _$_OrgState implements _OrgState {
   final KtList<String> userIDList;
   @override
   final bool isNotified;
+  @override
+  final String shareLink;
 
   @override
   String toString() {
-    return 'OrgState(isAdmin: $isAdmin, isFollowing: $isFollowing, isBlocking: $isBlocking, postCount: $postCount, memberCount: $memberCount, photoCount: $photoCount, userIDList: $userIDList, isNotified: $isNotified)';
+    return 'OrgState(isAdmin: $isAdmin, isFollowing: $isFollowing, isBlocking: $isBlocking, postCount: $postCount, memberCount: $memberCount, photoCount: $photoCount, userIDList: $userIDList, isNotified: $isNotified, shareLink: $shareLink)';
   }
 
   @override
@@ -1816,7 +1829,10 @@ class _$_OrgState implements _OrgState {
                     .equals(other.userIDList, userIDList)) &&
             (identical(other.isNotified, isNotified) ||
                 const DeepCollectionEquality()
-                    .equals(other.isNotified, isNotified)));
+                    .equals(other.isNotified, isNotified)) &&
+            (identical(other.shareLink, shareLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.shareLink, shareLink)));
   }
 
   @override
@@ -1829,7 +1845,8 @@ class _$_OrgState implements _OrgState {
       const DeepCollectionEquality().hash(memberCount) ^
       const DeepCollectionEquality().hash(photoCount) ^
       const DeepCollectionEquality().hash(userIDList) ^
-      const DeepCollectionEquality().hash(isNotified);
+      const DeepCollectionEquality().hash(isNotified) ^
+      const DeepCollectionEquality().hash(shareLink);
 
   @override
   _$OrgStateCopyWith<_OrgState> get copyWith =>
@@ -1845,7 +1862,8 @@ abstract class _OrgState implements OrgState {
       @required int memberCount,
       @required int photoCount,
       @required KtList<String> userIDList,
-      @required bool isNotified}) = _$_OrgState;
+      @required bool isNotified,
+      @required String shareLink}) = _$_OrgState;
 
   @override
   bool get isAdmin;
@@ -1863,6 +1881,8 @@ abstract class _OrgState implements OrgState {
   KtList<String> get userIDList;
   @override
   bool get isNotified;
+  @override
+  String get shareLink;
   @override
   _$OrgStateCopyWith<_OrgState> get copyWith;
 }

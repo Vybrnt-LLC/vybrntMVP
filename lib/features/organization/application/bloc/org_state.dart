@@ -11,6 +11,7 @@ abstract class OrgState with _$OrgState {
     @required int photoCount,
     @required KtList<String> userIDList,
     @required bool isNotified,
+    @required String shareLink,
   }) = _OrgState;
 
   factory OrgState.initial() => OrgState(
@@ -21,5 +22,6 @@ abstract class OrgState with _$OrgState {
       isNotified: false,
       memberCount: 0,
       photoCount: 0,
-      userIDList: KtList.empty());
+      userIDList: KtList.empty(),
+      shareLink: '');
 }

@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/routes/router.gr.dart' as route;
-
 import 'package:vybrnt_mvp/features/authentication/application/auth/bloc/auth_bloc.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 

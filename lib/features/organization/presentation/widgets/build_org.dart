@@ -6,10 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/shape/gf_avatar_shape.dart';
 
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
@@ -171,6 +173,10 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
         Provider.of<UserData>(context, listen: false).currentUserID;
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     return BlocBuilder<OrgBloc, OrgState>(builder: (context, state) {
+      final shareLink = state.shareLink;
+      final name = widget.org.name;
+      final String shareMessage =
+          'Check out $name\'s profile on Vybrnt! \n$shareLink';
       return Scaffold(
         floatingActionButton: state.isAdmin
             ? BlocProvider(
@@ -191,6 +197,15 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                 return <Widget>[
                   SliverAppBar(
                     actions: [
+                      IconButton(
+                          icon: FaIcon(FontAwesomeIcons.share,
+                              color: Colors.white),
+                          onPressed: () {
+                            final RenderBox box = context.findRenderObject();
+                            Share.share(shareMessage,
+                                sharePositionOrigin:
+                                    box.localToGlobal(Offset.zero) & box.size);
+                          }),
                       FocusedMenuHolder(
                         menuWidth: MediaQuery.of(context).size.width * 0.50,
                         blurSize: 5.0,

@@ -2195,7 +2195,8 @@ class _$UserStateTearOff {
       @required KtList<String> followerIDs,
       @required KtList<String> followedOrgIDs,
       @required KtList<String> photos,
-      @required bool isNotified}) {
+      @required bool isNotified,
+      @required String shareLink}) {
     return _UserState(
       isFollowing: isFollowing,
       isBlocking: isBlocking,
@@ -2207,6 +2208,7 @@ class _$UserStateTearOff {
       followedOrgIDs: followedOrgIDs,
       photos: photos,
       isNotified: isNotified,
+      shareLink: shareLink,
     );
   }
 }
@@ -2225,6 +2227,7 @@ mixin _$UserState {
   KtList<String> get followedOrgIDs;
   KtList<String> get photos;
   bool get isNotified;
+  String get shareLink;
 
   $UserStateCopyWith<UserState> get copyWith;
 }
@@ -2242,7 +2245,8 @@ abstract class $UserStateCopyWith<$Res> {
       KtList<String> followerIDs,
       KtList<String> followedOrgIDs,
       KtList<String> photos,
-      bool isNotified});
+      bool isNotified,
+      String shareLink});
 }
 
 class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
@@ -2264,6 +2268,7 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
     Object followedOrgIDs = freezed,
     Object photos = freezed,
     Object isNotified = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_value.copyWith(
       isFollowing:
@@ -2289,6 +2294,7 @@ class _$UserStateCopyWithImpl<$Res> implements $UserStateCopyWith<$Res> {
       photos: photos == freezed ? _value.photos : photos as KtList<String>,
       isNotified:
           isNotified == freezed ? _value.isNotified : isNotified as bool,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 }
@@ -2308,7 +2314,8 @@ abstract class _$UserStateCopyWith<$Res> implements $UserStateCopyWith<$Res> {
       KtList<String> followerIDs,
       KtList<String> followedOrgIDs,
       KtList<String> photos,
-      bool isNotified});
+      bool isNotified,
+      String shareLink});
 }
 
 class __$UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
@@ -2331,6 +2338,7 @@ class __$UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
     Object followedOrgIDs = freezed,
     Object photos = freezed,
     Object isNotified = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_UserState(
       isFollowing:
@@ -2356,6 +2364,7 @@ class __$UserStateCopyWithImpl<$Res> extends _$UserStateCopyWithImpl<$Res>
       photos: photos == freezed ? _value.photos : photos as KtList<String>,
       isNotified:
           isNotified == freezed ? _value.isNotified : isNotified as bool,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 }
@@ -2371,7 +2380,8 @@ class _$_UserState implements _UserState {
       @required this.followerIDs,
       @required this.followedOrgIDs,
       @required this.photos,
-      @required this.isNotified})
+      @required this.isNotified,
+      @required this.shareLink})
       : assert(isFollowing != null),
         assert(isBlocking != null),
         assert(followerCount != null),
@@ -2381,7 +2391,8 @@ class _$_UserState implements _UserState {
         assert(followerIDs != null),
         assert(followedOrgIDs != null),
         assert(photos != null),
-        assert(isNotified != null);
+        assert(isNotified != null),
+        assert(shareLink != null);
 
   @override
   final bool isFollowing;
@@ -2403,10 +2414,12 @@ class _$_UserState implements _UserState {
   final KtList<String> photos;
   @override
   final bool isNotified;
+  @override
+  final String shareLink;
 
   @override
   String toString() {
-    return 'UserState(isFollowing: $isFollowing, isBlocking: $isBlocking, followerCount: $followerCount, followingCount: $followingCount, photoCount: $photoCount, followingIDs: $followingIDs, followerIDs: $followerIDs, followedOrgIDs: $followedOrgIDs, photos: $photos, isNotified: $isNotified)';
+    return 'UserState(isFollowing: $isFollowing, isBlocking: $isBlocking, followerCount: $followerCount, followingCount: $followingCount, photoCount: $photoCount, followingIDs: $followingIDs, followerIDs: $followerIDs, followedOrgIDs: $followedOrgIDs, photos: $photos, isNotified: $isNotified, shareLink: $shareLink)';
   }
 
   @override
@@ -2441,7 +2454,10 @@ class _$_UserState implements _UserState {
                 const DeepCollectionEquality().equals(other.photos, photos)) &&
             (identical(other.isNotified, isNotified) ||
                 const DeepCollectionEquality()
-                    .equals(other.isNotified, isNotified)));
+                    .equals(other.isNotified, isNotified)) &&
+            (identical(other.shareLink, shareLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.shareLink, shareLink)));
   }
 
   @override
@@ -2456,7 +2472,8 @@ class _$_UserState implements _UserState {
       const DeepCollectionEquality().hash(followerIDs) ^
       const DeepCollectionEquality().hash(followedOrgIDs) ^
       const DeepCollectionEquality().hash(photos) ^
-      const DeepCollectionEquality().hash(isNotified);
+      const DeepCollectionEquality().hash(isNotified) ^
+      const DeepCollectionEquality().hash(shareLink);
 
   @override
   _$UserStateCopyWith<_UserState> get copyWith =>
@@ -2474,7 +2491,8 @@ abstract class _UserState implements UserState {
       @required KtList<String> followerIDs,
       @required KtList<String> followedOrgIDs,
       @required KtList<String> photos,
-      @required bool isNotified}) = _$_UserState;
+      @required bool isNotified,
+      @required String shareLink}) = _$_UserState;
 
   @override
   bool get isFollowing;
@@ -2496,6 +2514,8 @@ abstract class _UserState implements UserState {
   KtList<String> get photos;
   @override
   bool get isNotified;
+  @override
+  String get shareLink;
   @override
   _$UserStateCopyWith<_UserState> get copyWith;
 }

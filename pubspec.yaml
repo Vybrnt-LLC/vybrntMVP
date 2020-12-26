@@ -32,6 +32,7 @@ dependencies:
   adobe_xd: ^0.1.4
   animated_splash: ^1.0.0
   animated_splash_screen: ^1.0.1
+  animated_text_kit: ^2.5.4
   animations: ^1.1.1
   animator: ^1.0.0+5
   async: ^2.4.0
@@ -52,6 +53,7 @@ dependencies:
   firebase_auth: ^0.18.0+1
   firebase_core: ^0.5.0
   firebase_crashlytics: ^0.2.1
+  firebase_dynamic_links: ^0.6.3
   firebase_messaging: ^7.0.3
   firebase_performance: ^0.3.2
   firebase_storage: ^4.0.0
@@ -69,6 +71,7 @@ dependencies:
   flutter_spinkit: ^4.1.1+1
   flutter_staggered_animations: ^0.1.2
   flutter_statusbarcolor: ^0.2.3
+  font_awesome_flutter: ^8.11.0
   freezed_annotation: ^0.7.1
   get_it: ^4.0.2
   getflutter: ^1.0.9
@@ -83,6 +86,7 @@ dependencies:
   material_design_icons_flutter: ^3.4.4895
   meta: ^1.1.8
   mockito: ^4.1.0
+  overlay_support: ^1.0.5
   page_transition: ^1.1.6
   path_provider: ^1.2.0
   provider: ^4.0.2
@@ -90,6 +94,7 @@ dependencies:
   reorderables: ^0.3.2
   responsive_builder: ^0.1.4
   rxdart: ^0.23.1
+  share: ^0.6.5+4
   shared_preferences: ^0.5.8
   shimmer: ^1.1.2
   sign_in_with_apple: ^2.5.2
@@ -98,7 +103,6 @@ dependencies:
   timeago: ^2.0.26
   url_launcher: ^5.4.10
   uuid: ^2.0.4
-  animated_text_kit: ^2.5.4
 
 dev_dependencies:
   flutter_test:

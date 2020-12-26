@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/core/routes/i_dynamic_link_serivce.dart';
 
 import 'package:vybrnt_mvp/features/user/domain/i_user_service.dart';
 
@@ -15,8 +16,10 @@ part 'user_state.dart';
 @injectable
 class UserBloc extends Bloc<UserEvent, UserState> {
   final IUserService _userService;
+  final IDynamicLinkService _dynamicLinkService;
 
-  UserBloc(this._userService) : super(UserState.initial());
+  UserBloc(this._userService, this._dynamicLinkService)
+      : super(UserState.initial());
 
   StreamSubscription<KtList<String>> _followingStreamSubscription;
   StreamSubscription<KtList<String>> _followersStreamSubscription;
@@ -31,8 +34,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       final isFollowing = await _userService.isFollowing(e.userID);
       final isNotified = await _userService.isNotified(e.userID);
       final isBlocking = await _userService.isBlocking(e.userID);
+      final shareLink = await _dynamicLinkService.createUserLink(e.userID);
 
       yield state.copyWith(
+          shareLink: shareLink,
           isFollowing: isFollowing,
           isNotified: isNotified,
           isBlocking: isBlocking);

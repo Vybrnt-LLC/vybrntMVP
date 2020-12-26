@@ -4,8 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/getflutter.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
@@ -14,17 +17,17 @@ import 'package:vybrnt_mvp/features/posts/application/post_actor/post_actor_bloc
 import 'package:vybrnt_mvp/features/posts/domain/posts/post.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-class PostCard extends StatefulWidget {
-  @required
+class PostCard extends StatelessWidget {
   final Post post;
   final Color color;
-  @override
-  _PostCardState createState() => _PostCardState();
-  PostCard({Key key, this.post, this.color = Colors.black38}) : super(key: key);
-}
+  final ContainerTransitionType transitionType;
 
-class _PostCardState extends State<PostCard> {
-  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+  PostCard(
+      {Key key,
+      this.post,
+      this.color = Colors.black38,
+      this.transitionType = ContainerTransitionType.fade})
+      : super(key: key);
   @override
   Widget build(BuildContext context) {
     final imageHEIGHT = MediaQuery.of(context).size.width / 2.5;
@@ -33,11 +36,18 @@ class _PostCardState extends State<PostCard> {
 
     return BlocBuilder<PostActorBloc, PostActorState>(
         builder: (context, state) {
+      final shareLink = state.shareLink;
+      final name = state.org.orgID.getOrCrash().isNotEmpty
+          ? state.org.name
+          : state.senderUser.profileName;
+
+      final String shareMessage =
+          'Check out $name\'s post on Vybrnt! \n$shareLink';
       return Container(
           padding: EdgeInsets.all(12.0),
           decoration: BoxDecoration(
             border: Border(
-              top: BorderSide(width: 0.5, color: widget.color),
+              top: BorderSide(width: 0.5, color: color),
               //bottom: BorderSide(width: 0.5, color: widget.color),
             ),
           ),
@@ -48,7 +58,7 @@ class _PostCardState extends State<PostCard> {
               children: [
                 Flexible(
                   flex: 2,
-                  child: widget.post.postType.getOrCrash().contains("org")
+                  child: post.postType.getOrCrash().contains("org")
                       ? GestureDetector(
                           onTap: () => TabNavigatorProvider.of(context)
                               .pushOrgPage(context,
@@ -56,8 +66,7 @@ class _PostCardState extends State<PostCard> {
                           child: Container(
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(10),
-                              border:
-                                  Border.all(color: widget.color, width: 3.0),
+                              border: Border.all(color: color, width: 3.0),
                             ),
                             child: GFAvatar(
                               shape: GFAvatarShape.square,
@@ -76,7 +85,7 @@ class _PostCardState extends State<PostCard> {
                               .pushUserProfile(context,
                                   userID: state.senderUser.userID.getOrCrash()),
                           child: CircleAvatar(
-                            backgroundColor: widget.color,
+                            backgroundColor: color,
                             radius: 30.0,
                             child: CircleAvatar(
                                 radius: 27,
@@ -126,7 +135,7 @@ class _PostCardState extends State<PostCard> {
                                 ],
                               ),
                             ),
-                      widget.post.orgID.getOrCrash().isNotEmpty
+                      post.orgID.getOrCrash().isNotEmpty
                           ? GestureDetector(
                               onTap: () => TabNavigatorProvider.of(context)
                                   .pushOrgPage(context,
@@ -145,7 +154,7 @@ class _PostCardState extends State<PostCard> {
                             ),
                       Row(
                         children: [
-                          widget.post.orgID.getOrCrash().isNotEmpty
+                          post.orgID.getOrCrash().isNotEmpty
                               ? GestureDetector(
                                   onTap: () => TabNavigatorProvider.of(context)
                                       .pushUserProfile(context,
@@ -156,11 +165,11 @@ class _PostCardState extends State<PostCard> {
                                       ),
                                 )
                               : SizedBox.shrink(),
-                          widget.post.orgID.getOrCrash().isNotEmpty
+                          post.orgID.getOrCrash().isNotEmpty
                               ? SizedBox(width: 5)
                               : SizedBox.shrink(),
-                          Text(timeago.format(
-                              widget.post.postTime.getOrCrash().toDate())),
+                          Text(timeago
+                              .format(post.postTime.getOrCrash().toDate())),
                         ],
                       ),
                     ],
@@ -169,7 +178,7 @@ class _PostCardState extends State<PostCard> {
                 // Expanded(flex: 2, child: SizedBox()),
                 Flexible(
                   flex: 1,
-                  child: currentUserID == widget.post.senderID.getOrCrash()
+                  child: currentUserID == post.senderID.getOrCrash()
                       ? FocusedMenuHolder(
                           menuWidth: MediaQuery.of(context).size.width * 0.50,
                           blurSize: 5.0,
@@ -187,25 +196,32 @@ class _PostCardState extends State<PostCard> {
                               80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
                           menuItems: <FocusedMenuItem>[
                             FocusedMenuItem(
+                                title: Text(
+                                  "Bookmark",
+                                ),
+                                trailingIcon: state.isBookmarked
+                                    ? Icon(Icons.bookmark)
+                                    : Icon(Icons.bookmark_border),
+                                onPressed: () => context
+                                    .bloc<PostActorBloc>()
+                                    .add(PostActorEvent.toggleBookmarkPost(
+                                        post, currentUserID))),
+                            FocusedMenuItem(
                                 title: Text("Report"),
                                 trailingIcon: Icon(Icons.flag),
                                 onPressed: () =>
                                     TabNavigatorProvider.of(context).pushReport(
                                         context,
                                         currentUserID: currentUserID,
-                                        contentID:
-                                            widget.post.eventID.getOrCrash(),
+                                        contentID: post.eventID.getOrCrash(),
                                         contentType: 'post',
-                                        ownerID: widget.post.orgID
-                                                .getOrCrash()
-                                                .isEmpty
-                                            ? widget.post.senderID.getOrCrash()
-                                            : widget.post.orgID.getOrCrash(),
-                                        ownerType: widget.post.orgID
-                                                .getOrCrash()
-                                                .isEmpty
-                                            ? 'user'
-                                            : 'org')),
+                                        ownerID: post.orgID.getOrCrash().isEmpty
+                                            ? post.senderID.getOrCrash()
+                                            : post.orgID.getOrCrash(),
+                                        ownerType:
+                                            post.orgID.getOrCrash().isEmpty
+                                                ? 'user'
+                                                : 'org')),
                             FocusedMenuItem(
                               title: Text(
                                 "Delete",
@@ -214,7 +230,7 @@ class _PostCardState extends State<PostCard> {
                               trailingIcon: Icon(Icons.delete),
                               onPressed: () => context
                                   .bloc<PostActorBloc>()
-                                  .add(PostActorEvent.delete(widget.post)),
+                                  .add(PostActorEvent.delete(post)),
                             )
                           ],
                           onPressed: () {},
@@ -240,25 +256,32 @@ class _PostCardState extends State<PostCard> {
                               80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
                           menuItems: <FocusedMenuItem>[
                             FocusedMenuItem(
+                                title: Text(
+                                  "Bookmark",
+                                ),
+                                trailingIcon: state.isBookmarked
+                                    ? Icon(Icons.bookmark)
+                                    : Icon(Icons.bookmark_border),
+                                onPressed: () => context
+                                    .bloc<PostActorBloc>()
+                                    .add(PostActorEvent.toggleBookmarkPost(
+                                        post, currentUserID))),
+                            FocusedMenuItem(
                                 title: Text("Report"),
                                 trailingIcon: Icon(Icons.flag),
                                 onPressed: () =>
                                     TabNavigatorProvider.of(context).pushReport(
                                         context,
                                         currentUserID: currentUserID,
-                                        contentID:
-                                            widget.post.eventID.getOrCrash(),
+                                        contentID: post.eventID.getOrCrash(),
                                         contentType: 'post',
-                                        ownerID: widget.post.orgID
-                                                .getOrCrash()
-                                                .isEmpty
-                                            ? widget.post.senderID.getOrCrash()
-                                            : widget.post.orgID.getOrCrash(),
-                                        ownerType: widget.post.orgID
-                                                .getOrCrash()
-                                                .isEmpty
-                                            ? 'user'
-                                            : 'org')),
+                                        ownerID: post.orgID.getOrCrash().isEmpty
+                                            ? post.senderID.getOrCrash()
+                                            : post.orgID.getOrCrash(),
+                                        ownerType:
+                                            post.orgID.getOrCrash().isEmpty
+                                                ? 'user'
+                                                : 'org')),
                           ],
                           onPressed: () {},
                           child: Icon(
@@ -283,7 +306,7 @@ class _PostCardState extends State<PostCard> {
                       children: [
                         Expanded(
                           child: Text(
-                            widget.post.postHeader.getOrCrash(),
+                            post.postHeader.getOrCrash(),
                             textAlign: TextAlign.start,
                             maxLines: 2,
                             style: TextStyle(
@@ -295,16 +318,16 @@ class _PostCardState extends State<PostCard> {
                       ],
                     ), //This contains the header
 
-                    widget.post.postImageURL.getOrCrash().isNotEmpty
+                    post.postImageURL.getOrCrash().isNotEmpty
                         ? //checks if there is an image
                         Padding(
                             padding: const EdgeInsets.fromLTRB(0, 5, 0, 5),
                             child: OpenContainer<bool>(
-                                transitionType: _transitionType,
+                                transitionType: transitionType,
                                 openBuilder: (BuildContext _,
                                     VoidCallback openContainer) {
                                   return EventDetailImage(
-                                      widget.post.postImageURL.getOrCrash());
+                                      post.postImageURL.getOrCrash());
                                 },
                                 closedShape: const RoundedRectangleBorder(),
                                 closedElevation: 0.0,
@@ -316,12 +339,12 @@ class _PostCardState extends State<PostCard> {
                                     height: imageHEIGHT,
                                     width: imageWIDTH,
                                     decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: widget.color, width: 0.5),
+                                      border:
+                                          Border.all(color: color, width: 0.5),
                                       borderRadius: BorderRadius.circular(10),
                                       image: DecorationImage(
-                                        image: CachedNetworkImageProvider(widget
-                                            .post.postImageURL
+                                        image: CachedNetworkImageProvider(post
+                                            .postImageURL
                                             .getOrCrash()), //Here is the image if there is one, and the caption comes after that
                                         fit: BoxFit.cover,
                                       ),
@@ -333,16 +356,16 @@ class _PostCardState extends State<PostCard> {
                     SizedBox(
                       height: 10,
                     ),
-                    Text(widget.post.postBody.getOrCrash(),
+                    Text(post.postBody.getOrCrash(),
                         style: TextStyle(
                           height: 1.3,
                           fontSize: 18,
                         ) //here is the post body
                         ),
                     SizedBox(height: 5),
-                    widget.post.postURL.getOrCrash().isNotEmpty
+                    post.postURL.getOrCrash().isNotEmpty
                         ? SimpleUrlPreview(
-                            url: widget.post.postURL.getOrCrash(),
+                            url: post.postURL.getOrCrash(),
                             textColor: Colors.white,
                             titleLines: 2,
                             descriptionLines: 2,
@@ -374,15 +397,15 @@ class _PostCardState extends State<PostCard> {
                           state.likes.size > 0
                               ? state.likes.size.toString()
                               : "",
-                          style: TextStyle(color: widget.color, fontSize: 14)),
+                          style: TextStyle(color: color, fontSize: 14)),
                     ),
                     IconButton(
                         icon: Icon(Icons.thumb_up,
-                            color: state.isLiked ? widget.color : Colors.black),
+                            color: state.isLiked ? color : Colors.black),
                         onPressed: () {
                           context.bloc<PostActorBloc>().add(
                               PostActorEvent.toggleLikePost(
-                                  widget.post, currentUserID));
+                                  post, currentUserID));
                         }),
                   ],
                 ),
@@ -391,7 +414,7 @@ class _PostCardState extends State<PostCard> {
                       state.comments.size > 0
                           ? state.comments.size.toString()
                           : "",
-                      style: TextStyle(color: widget.color, fontSize: 14)),
+                      style: TextStyle(color: color, fontSize: 14)),
                   SizedBox(width: 10),
                   Icon(
                     Icons.mode_comment,
@@ -407,31 +430,23 @@ class _PostCardState extends State<PostCard> {
                           state.reposts.size > 0
                               ? state.reposts.size.toString()
                               : "",
-                          style: TextStyle(color: widget.color, fontSize: 14)),
+                          style: TextStyle(color: color, fontSize: 14)),
                     ),
                     IconButton(
                         icon: Icon(Icons.loop,
-                            color:
-                                state.isReposted ? widget.color : Colors.black),
+                            color: state.isReposted ? color : Colors.black),
                         onPressed: () => context.bloc<PostActorBloc>().add(
                             PostActorEvent.toggleRepostPost(
-                                widget.post, currentUserID))),
+                                post, currentUserID))),
                   ],
                 ),
                 IconButton(
-                    icon: state.isBookmarked
-                        ? Icon(Icons.bookmark,
-                            color: state.isBookmarked
-                                ? widget.color
-                                : Colors.black)
-                        : Icon(Icons.bookmark_border,
-                            color: state.isBookmarked
-                                ? widget.color
-                                : Colors.black),
+                    icon: FaIcon(FontAwesomeIcons.share, color: Colors.black),
                     onPressed: () {
-                      context.bloc<PostActorBloc>().add(
-                          PostActorEvent.toggleBookmarkPost(
-                              widget.post, currentUserID));
+                      final RenderBox box = context.findRenderObject();
+                      Share.share(shareMessage,
+                          sharePositionOrigin:
+                              box.localToGlobal(Offset.zero) & box.size);
                     }),
               ],
             )

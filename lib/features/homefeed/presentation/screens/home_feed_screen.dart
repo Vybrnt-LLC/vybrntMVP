@@ -1,14 +1,14 @@
 import 'dart:ui';
 
 import 'package:bordered_text/bordered_text.dart';
+import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
+import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
-import 'package:auto_route/auto_route.dart';
-import 'package:vybrnt_mvp/core/routes/router.gr.dart';
-import 'package:vybrnt_mvp/features/authentication/application/auth/bloc/auth_bloc.dart';
+
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/homefeed/application/category_events/category_events_bloc.dart';
 import 'package:vybrnt_mvp/features/homefeed/application/category_posts/category_posts_bloc.dart';
@@ -18,11 +18,9 @@ import 'package:vybrnt_mvp/features/homefeed/domain/models/home_categories.dart'
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/category_feed.dart';
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/home_feed.dart';
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/sliver_home_app_bar.dart';
-import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
-import 'package:vybrnt_mvp/core/routes/router.gr.dart' as route;
+
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/user/presentation/widgets/create_fab.dart';
-import 'package:vybrnt_mvp/core/routes/router.gr.dart' as route;
 
 class HomeFeedScreen extends StatefulWidget {
   static final String id = 'home_feed_screen';
@@ -397,16 +395,71 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                   //             type: 'user',
                                   //             typeID:
                                   //                 '0K4wKb8kYThCjheIawngoHjVxrz2'))))
-                                  context.bloc<AuthBloc>().add(AuthEvent.navigateTo(
-                                      routeName: route.Routes.postDetail,
-                                      arguments: PostScreenArguments(
-                                          postID: '7XRLC1DN8ut1j0xc4BJp',
-                                          type: 'user',
-                                          typeID:
-                                              '4HwvsCmoGHP6xbt0CJ0mlyiQGOp1'))))
-                          // context.navigator
-                          //     .push(route.Routes.messaging)),
-                          //Scaffold.of(context).showSnackBar(snackBar)),
+                                  // context.bloc<AuthBloc>().add(AuthEvent.navigateTo(
+                                  //     routeName: route.Routes.postDetail,
+                                  //     arguments: PostScreenArguments(
+                                  //         postID: '7XRLC1DN8ut1j0xc4BJp',
+                                  //         type: 'user',
+                                  //         typeID:
+                                  //             '4HwvsCmoGHP6xbt0CJ0mlyiQGOp1'))))
+                                  // context.navigator
+                                  //     .push(route.Routes.messaging)),
+                                  Scaffold.of(context).showSnackBar(snackBar)),
+                          // showSimpleNotification(
+                          //   Flushbar(
+                          //     title: "Hey Ninja",
+                          //     message:
+                          //         "Lorem Ipsum is simply dummy text of the printing and typesetting industry",
+                          //     flushbarPosition: FlushbarPosition.TOP,
+                          //     flushbarStyle: FlushbarStyle.FLOATING,
+                          //     reverseAnimationCurve: Curves.decelerate,
+                          //     forwardAnimationCurve: Curves.elasticOut,
+                          //     backgroundColor: Colors.red,
+                          //     boxShadows: [
+                          //       BoxShadow(
+                          //           color: Colors.blue[800],
+                          //           offset: Offset(0.0, 2.0),
+                          //           blurRadius: 3.0)
+                          //     ],
+                          //     backgroundGradient: LinearGradient(
+                          //         colors: [
+                          //           Colors.blueGrey,
+                          //           Colors.black
+                          //         ]),
+                          //     isDismissible: false,
+                          //     duration: Duration(seconds: 4),
+                          //     icon: Icon(
+                          //       Icons.check,
+                          //       color: Colors.greenAccent,
+                          //     ),
+                          //     mainButton: FlatButton(
+                          //       onPressed: () {},
+                          //       child: Text(
+                          //         "CLAP",
+                          //         style: TextStyle(color: Colors.amber),
+                          //       ),
+                          //     ),
+                          //     showProgressIndicator: true,
+                          //     progressIndicatorBackgroundColor:
+                          //         Colors.blueGrey,
+                          //     titleText: Text(
+                          //       "Hello Hero",
+                          //       style: TextStyle(
+                          //           fontWeight: FontWeight.bold,
+                          //           fontSize: 20.0,
+                          //           color: Colors.yellow[600],
+                          //           fontFamily: "ShadowsIntoLightTwo"),
+                          //     ),
+                          //     messageText: Text(
+                          //       "You killed that giant monster in the city. Congratulations!",
+                          //       style: TextStyle(
+                          //           fontSize: 18.0,
+                          //           color: Colors.green,
+                          //           fontFamily: "ShadowsIntoLightTwo"),
+                          //     ),
+                          //   ),
+                          // )),
+
                           // () =>
                           //     Router.navigator.pushNamed(Router.messaging)),
                         ],

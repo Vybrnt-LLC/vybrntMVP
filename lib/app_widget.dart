@@ -4,6 +4,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:overlay_support/overlay_support.dart';
 //import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 
 import 'package:provider/provider.dart';
@@ -52,26 +53,29 @@ class MyApp extends StatelessWidget {
           getIt<AuthBloc>()..add(const AuthEvent.authCheckRequested()),
       child: ChangeNotifierProvider(
         create: (context) => UserData(),
-        child: MaterialApp(
-          color: Colors.white,
-          title: 'Vybrnt',
+        child: OverlaySupport(
+          child: MaterialApp(
+            color: Colors.white,
+            title: 'Vybrnt',
+            //  onGenerateRoute: ,
 
-          //theme: ThemeData.light(),
-          debugShowCheckedModeBanner: false,
-          builder: ExtendedNavigator.builder(
-              navigatorKey: getIt<NavigationService>().navigatorKey,
-              observers: [getIt<AnalyticsService>().getAnalyticsObserver()],
-              router: route.Router(),
-              initialRoute: '/',
-              builder: (ctx, extendedNav) => Theme(
-                    data: ThemeData.light(),
-                    child: extendedNav,
-                  )),
-          // onGenerateRoute: route.Router.onGenerateRoute,
-          // initialRoute: route.Router.wrapper,
-          // navigatorKey: route.Router.navigator.key,
+            //theme: ThemeData.light(),
+            debugShowCheckedModeBanner: false,
+            builder: ExtendedNavigator.builder(
+                navigatorKey: getIt<NavigationService>().navigatorKey,
+                observers: [getIt<AnalyticsService>().getAnalyticsObserver()],
+                router: route.Router(),
+                initialRoute: '/',
+                builder: (ctx, extendedNav) => Theme(
+                      data: ThemeData.light(),
+                      child: extendedNav,
+                    )),
+            // onGenerateRoute: route.Router.onGenerateRoute,
+            // initialRoute: route.Router.wrapper,
+            // navigatorKey: route.Router.navigator.key,
 
-          // },
+            // },
+          ),
         ),
       ),
     );

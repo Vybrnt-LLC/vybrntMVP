@@ -13,6 +13,7 @@ abstract class UserState with _$UserState {
     @required KtList<String> followedOrgIDs,
     @required KtList<String> photos,
     @required bool isNotified,
+    @required String shareLink,
   }) = _UserState;
 
   factory UserState.initial() => UserState(
@@ -25,5 +26,6 @@ abstract class UserState with _$UserState {
       followingIDs: KtList.empty(),
       followedOrgIDs: KtList.empty(),
       followerIDs: KtList.empty(),
-      photos: KtList.empty());
+      photos: KtList.empty(),
+      shareLink: '');
 }

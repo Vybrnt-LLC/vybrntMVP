@@ -7,10 +7,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/shape/gf_avatar_shape.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -49,12 +51,28 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         child: BlocBuilder<EventDetailBloc, EventDetailState>(
           //bloc: BlocProvider.of<EventDetailBloc>(context),
           builder: (BuildContext context, state) {
+            final shareLink = state.shareLink;
+            final name = state.org.orgID.getOrCrash().isNotEmpty
+                ? state.org.name
+                : state.user.profileName;
+            final eventName = widget.event.eventName;
+            final String shareMessage =
+                'Check out $name\'s event: $eventName on Vybrnt! \n$shareLink';
             return NestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
                     actions: <Widget>[
+                      IconButton(
+                          icon: FaIcon(FontAwesomeIcons.share,
+                              color: Colors.white),
+                          onPressed: () {
+                            final RenderBox box = context.findRenderObject();
+                            Share.share(shareMessage,
+                                sharePositionOrigin:
+                                    box.localToGlobal(Offset.zero) & box.size);
+                          }),
                       currentUserID == widget.event.senderID
                           ? FocusedMenuHolder(
                               menuWidth:

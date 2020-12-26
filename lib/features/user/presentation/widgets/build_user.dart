@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
@@ -176,6 +178,10 @@ class _BuildUserState extends State<BuildUser> {
     final currentUserID =
         Provider.of<UserData>(context, listen: false).currentUserID;
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+      final shareLink = state.shareLink;
+      final profileName = widget.user.profileName;
+      final String shareMessage =
+          'Check out $profileName\'s profile on Vybrnt! \n$shareLink';
       return Scaffold(
           backgroundColor: Colors.white,
           floatingActionButton: BlocProvider(
@@ -192,6 +198,16 @@ class _BuildUserState extends State<BuildUser> {
                   return <Widget>[
                     SliverAppBar(
                       actions: [
+                        IconButton(
+                            icon: FaIcon(FontAwesomeIcons.share,
+                                color: Colors.white),
+                            onPressed: () {
+                              final RenderBox box = context.findRenderObject();
+                              Share.share(shareMessage,
+                                  sharePositionOrigin:
+                                      box.localToGlobal(Offset.zero) &
+                                          box.size);
+                            }),
                         FocusedMenuHolder(
                           menuWidth: MediaQuery.of(context).size.width * 0.50,
                           blurSize: 5.0,

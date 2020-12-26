@@ -6,6 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/core/routes/i_dynamic_link_serivce.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 
@@ -29,9 +30,10 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
   final IEventDetailService _eventDetailService;
   final IOrgService _orgService;
   final IAnalyticsService _analyticsService;
+  final IDynamicLinkService _dynamicLinkService;
 
-  EventDetailBloc(
-      this._eventDetailService, this._orgService, this._analyticsService)
+  EventDetailBloc(this._eventDetailService, this._orgService,
+      this._analyticsService, this._dynamicLinkService)
       : super(EventDetailState.initial());
 
   StreamSubscription<Either<EventFailure, KtList<UserList>>>
@@ -43,6 +45,14 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
   ) async* {
     yield* event.map(getData: (e) async* {
       await _analyticsService.setCurrentScreen(screenName);
+      String shareLink;
+      if (e.orgID.isNotEmpty) {
+        shareLink = await _dynamicLinkService.createEventLink(
+            type: 'org', typeID: e.orgID, eventID: e.eventID);
+      } else {
+        shareLink = await _dynamicLinkService.createEventLink(
+            type: 'user', typeID: e.senderID, eventID: e.eventID);
+      }
       if (e.isOrg) {
         final org = await _eventDetailService.getOrgProfile(e.orgID);
         final user = await _eventDetailService.getUserProfile(e.senderID);
@@ -56,6 +66,7 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
           org: org,
           user: user,
           isRSVPed: isRSVPed,
+          shareLink: shareLink,
         );
         await _rsvpStreamSubscription?.cancel();
         _rsvpStreamSubscription = _eventDetailService
@@ -74,10 +85,9 @@ class EventDetailBloc extends Bloc<EventDetailEvent, EventDetailState> {
             isOrg: e.isOrg,
             userID: e.senderID,
             orgID: e.orgID);
+
         yield state.copyWith(
-          user: user,
-          isRSVPed: isRSVPed,
-        );
+            user: user, isRSVPed: isRSVPed, shareLink: shareLink);
         await _rsvpStreamSubscription?.cancel();
         _rsvpStreamSubscription = _eventDetailService
             .rsvpList(

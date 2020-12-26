@@ -7,6 +7,7 @@ import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:vybrnt_mvp/core/routes/i_dynamic_link_serivce.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_analytics_service.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/comment.dart';
@@ -27,7 +28,9 @@ const String screenName = 'post_detail';
 class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
   final IPostRepository _postRepository;
   final IAnalyticsService _analyticsService;
-  PostActorBloc(this._postRepository, this._analyticsService)
+  final IDynamicLinkService _dynamicLinkService;
+  PostActorBloc(
+      this._postRepository, this._analyticsService, this._dynamicLinkService)
       : super(PostActorState.inital());
 
   StreamSubscription<Either<PostFailure, KtList<String>>>
@@ -47,8 +50,22 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
       getData: (e) async* {
         Organization org = Organization.empty();
         User reposterUser = User.empty();
+        String shareLink;
         if (e.post.orgID.getOrCrash().isNotEmpty) {
           org = await _postRepository.getOrgProfile(e.post.orgID.getOrCrash());
+        }
+
+        if (e.post.repostID.getOrCrash().isEmpty &&
+            e.post.orgID.getOrCrash().isNotEmpty) {
+          shareLink = await _dynamicLinkService.createPostLink(
+              type: 'org',
+              typeID: e.post.orgID.getOrCrash(),
+              postID: e.post.postID.getOrCrash());
+        } else {
+          shareLink = await _dynamicLinkService.createPostLink(
+              type: 'user',
+              typeID: e.post.senderID.getOrCrash(),
+              postID: e.post.postID.getOrCrash());
         }
 
         final senderUser =
@@ -61,6 +78,7 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
 
         final isCurrentUsersPost =
             _postRepository.isSignedInUsersPost(e.currentUserID, e.post);
+
         await _likeStreamSubscription?.cancel();
         _likeStreamSubscription = _postRepository.watchLikes(e.post).listen(
             (likes) =>
@@ -84,7 +102,8 @@ class PostActorBloc extends Bloc<PostActorEvent, PostActorState> {
             org: org,
             senderUser: senderUser,
             reposterUser: reposterUser,
-            isCurrentUsersPost: isCurrentUsersPost);
+            isCurrentUsersPost: isCurrentUsersPost,
+            shareLink: shareLink);
       },
       openPostDetail: (_Opened value) async* {},
       toggleLikePost: (_Liked value) async* {
