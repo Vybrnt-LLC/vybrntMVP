@@ -246,7 +246,13 @@ class PushNotificationService implements IPushNotificationService {
   }
 
   Activity _convertMessageToActivity(Map<String, dynamic> message) {
-    final String activityString = message['data']['activity'];
+    String activityString;
+    if (Platform.isAndroid) {
+      activityString = message['data']['activity'];
+    } else {
+      activityString = message['activity'];
+    }
+
     dynamic activityJSON = jsonDecode(activityString);
     final activity = ActivityDTO.fromJson(activityJSON)
         .copyWith(
