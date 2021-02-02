@@ -11,8 +11,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 const double _fabDimension = 56.0;
 
-//TODO: Make a bloc for the FAB and put the event in the openbuilder function. Do the same for the events and post detail pages
-
 class CreateFAB extends StatelessWidget {
   final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
 

@@ -72,7 +72,6 @@ class PushNotificationService implements IPushNotificationService {
 
       firebaseMessaging.configure(
         onLaunch: (Map<String, dynamic> message) async {
-          //TODO: Push Notification
           print("on launch: $message\n");
           final activity = _convertMessageToActivity(message);
           serializeAndNavigate(activity);
@@ -83,10 +82,8 @@ class PushNotificationService implements IPushNotificationService {
           //   print('Notification shown');
           // }
         },
-        // onBackgroundMessage:
-        //     myBackgroundMessageHandler, //TODO: Fix the background Handler
+        onBackgroundMessage: myBackgroundMessageHandler,
         onResume: (Map<String, dynamic> message) async {
-          //TODO: Push Notification
           print("on resume: $message\n");
           final activity = _convertMessageToActivity(message);
           serializeAndNavigate(activity);
@@ -98,7 +95,6 @@ class PushNotificationService implements IPushNotificationService {
           // }
         },
         onMessage: (Map<String, dynamic> message) async {
-          //TODO: In-App Notification
           print("on message: $message\n");
           //final String recipientID = message['data']['recipient'];
           final String body = message['notification']['body'];
@@ -196,17 +192,8 @@ class PushNotificationService implements IPushNotificationService {
 
   Future<dynamic> myBackgroundMessageHandler(
       Map<String, dynamic> message) async {
-    if (message.containsKey('data')) {
-      // Handle data message
-      final dynamic data = message['data'];
-    }
-//TODO:Figure out this class
-    if (message.containsKey('notification')) {
-      // Handle notification message
-      final dynamic notification = message['notification'];
-    }
-
-    // Or do other work.
+    final activity = _convertMessageToActivity(message);
+    serializeAndNavigate(activity);
   }
 
   getiOSPermission() async {
@@ -233,7 +220,7 @@ class PushNotificationService implements IPushNotificationService {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
                   postID: activity.objectID,
-                  type: ActivityTypeHelper.stringOf(activity.activityType),
+                  type: OwnerTypeHelper.stringOf(activity.ownerType),
                   typeID: activity.ownerID));
         }
         break;
@@ -242,7 +229,7 @@ class PushNotificationService implements IPushNotificationService {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
                   postID: activity.objectID,
-                  type: ActivityTypeHelper.stringOf(activity.activityType),
+                  type: OwnerTypeHelper.stringOf(activity.ownerType),
                   typeID: activity.ownerID));
         }
         break;
@@ -251,7 +238,7 @@ class PushNotificationService implements IPushNotificationService {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
                   postID: activity.objectID,
-                  type: ActivityTypeHelper.stringOf(activity.activityType),
+                  type: OwnerTypeHelper.stringOf(activity.ownerType),
                   typeID: activity.ownerID));
         }
         break;
@@ -302,7 +289,14 @@ class PushNotificationService implements IPushNotificationService {
   }
 
   Activity _convertMessageToActivity(Map<String, dynamic> message) {
-    final String activityString = message['data']['activity'];
+    String activityString;
+    if (Platform.isAndroid) {
+      activityString = message['data']['activity'];
+    }
+    if (Platform.isIOS) {
+      activityString = message['activity'];
+    }
+
     dynamic activityJSON = jsonDecode(activityString);
     final activity = ActivityDTO.fromJson(activityJSON)
         .copyWith(
