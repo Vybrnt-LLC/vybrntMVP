@@ -9,9 +9,13 @@ import 'router.gr.dart';
 class DynamicLinkService implements IDynamicLinkService {
   final INavigationService _navigationService;
 
+  String uri;
   DynamicLinkService(this._navigationService);
   @override
-  Future handleDynamicLinks() async {
+  Future handleDynamicLinks(String env) async {
+    uri = env == 'prod'
+        ? 'https://vybrnt.page.link'
+        : 'https://vybrntmvp.page.link';
     //Get initial dynamic link if the app is started using the link
     final PendingDynamicLinkData data =
         await FirebaseDynamicLinks.instance.getInitialLink();
@@ -31,7 +35,7 @@ class DynamicLinkService implements IDynamicLinkService {
   Future<String> createPostLink(
       {String type, String typeID, String postID}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://vybrnt.page.link',
+      uriPrefix: uri,
       link: Uri.parse(
           'https://vybrntllc.com/post?type=$type&typeID=$typeID&postID=$postID'),
       androidParameters: AndroidParameters(packageName: 'com.vybrnt.vybrnt'),
@@ -65,7 +69,7 @@ class DynamicLinkService implements IDynamicLinkService {
   Future<String> createEventLink(
       {String type, String typeID, String eventID}) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://vybrnt.page.link',
+      uriPrefix: uri,
       link: Uri.parse(
           'https://vybrntllc.com/event?type=$type&typeID=$typeID&eventID=$eventID'),
       androidParameters: AndroidParameters(packageName: 'com.vybrnt.vybrnt'),
@@ -98,7 +102,7 @@ class DynamicLinkService implements IDynamicLinkService {
   @override
   Future<String> createUserLink(String userID) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://vybrnt.page.link',
+      uriPrefix: uri,
       link: Uri.parse('https://vybrntllc.com/userProfile?userID=$userID'),
       androidParameters: AndroidParameters(packageName: 'com.vybrnt.vybrnt'),
       iosParameters: IosParameters(
@@ -130,7 +134,7 @@ class DynamicLinkService implements IDynamicLinkService {
   @override
   Future<String> createOrgLink(String orgID) async {
     final DynamicLinkParameters parameters = DynamicLinkParameters(
-      uriPrefix: 'https://vybrnt.page.link',
+      uriPrefix: uri,
       link: Uri.parse('https://vybrntllc.com/orgProfile?orgID=$orgID'),
       androidParameters: AndroidParameters(packageName: 'com.vybrnt.vybrnt'),
       iosParameters: IosParameters(

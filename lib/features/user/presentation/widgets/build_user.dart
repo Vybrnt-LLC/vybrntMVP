@@ -12,6 +12,8 @@ import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/widgets/event_detail_image.dart';
@@ -75,9 +77,13 @@ class _BuildUserState extends State<BuildUser> {
             child: FlatButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              onPressed: () => TabNavigatorProvider.of(context)
-                  .pushEditUserProfile(context,
-                      user: user), //widget.onPushEdit(user),
+              onPressed: () => TabNavigatorProvider.of(context) != null
+                  ? TabNavigatorProvider.of(context)
+                      .pushEditUserProfile(context, user: user)
+                  : getIt<NavigationService>().navigateTo(
+                      Routes.editUserProfile,
+                      arguments: EditUserProfileScreenArguments(
+                          user: user)), //widget.onPushEdit(user),
               color: stringToColor(widget.user.secondaryColor),
               textColor: Colors.white,
               child: Text(
@@ -257,14 +263,24 @@ class _BuildUserState extends State<BuildUser> {
                             FocusedMenuItem(
                                 title: Text("Report"),
                                 trailingIcon: Icon(Icons.flag),
-                                onPressed: () =>
-                                    TabNavigatorProvider.of(context).pushReport(
-                                        context,
-                                        contentID: '',
-                                        contentType: '',
-                                        ownerID:
-                                            widget.user.userID.getOrCrash(),
-                                        ownerType: 'user')),
+                                onPressed: () => TabNavigatorProvider.of(
+                                            context) !=
+                                        null
+                                    ? TabNavigatorProvider.of(context)
+                                        .pushReport(context,
+                                            contentID: '',
+                                            contentType: '',
+                                            ownerID:
+                                                widget.user.userID.getOrCrash(),
+                                            ownerType: 'user')
+                                    : getIt<NavigationService>().navigateTo(
+                                        Routes.report,
+                                        arguments: ReportScreenArguments(
+                                            contentID: '',
+                                            contentType: '',
+                                            ownerID:
+                                                widget.user.userID.getOrCrash(),
+                                            ownerType: 'user'))),
                           ],
                           onPressed: () {},
                           child: Padding(

@@ -12,7 +12,6 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../features/activity/application/actor/activity_actor_bloc.dart';
 import '../features/activity/application/bloc/activity_bloc.dart';
 import '../features/activity/repository/activity_service.dart';
 import '../features/activity/repository/analytics_service.dart';
@@ -95,17 +94,16 @@ GetIt $initGetIt(
   gh.lazySingleton<IAuthFacade>(
       () => FirebaseAuthFacade(get<FirebaseAuth>(), get<GoogleSignIn>()));
   gh.lazySingleton<ICalendarService>(
-      () => CalendarService(get<FirebaseFirestore>()));
-  gh.lazySingleton<IEventDetailService>(() => EventDetailService());
+      () => CalendarService(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.lazySingleton<IHomeFeedService>(
       () => HomeFeedService(get<FirebaseFirestore>()));
   gh.lazySingleton<INavigationService>(() => NavigationService());
   gh.lazySingleton<IOrgService>(
-      () => OrgService(firestore: get<FirebaseFirestore>()));
+      () => OrgService(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.lazySingleton<IPostRepository>(
-      () => PostRepository(get<FirebaseFirestore>()));
+      () => PostRepository(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.lazySingleton<IUserService>(
-      () => UserService(firestore: get<FirebaseFirestore>()));
+      () => UserService(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.factory<NavbarBloc>(() => NavbarBloc(get<AnalyticsService>()));
   gh.lazySingleton<NavigationService>(
       () => firebaseInjectableModule.navigationService);
@@ -121,8 +119,6 @@ GetIt $initGetIt(
   gh.factory<UserEventListBloc>(() => UserEventListBloc(get<IUserService>()));
   gh.factory<UserListBloc>(() => UserListBloc(get<IOrgService>()));
   gh.factory<UserWatcherBloc>(() => UserWatcherBloc(get<IUserService>()));
-  gh.factory<ActivityActorBloc>(
-      () => ActivityActorBloc(get<IActivityService>()));
   gh.factory<ActivityBloc>(() => ActivityBloc(get<IActivityService>()));
   gh.factory<BookmarkWatcherBloc>(() =>
       BookmarkWatcherBloc(get<IPostRepository>(), get<IAnalyticsService>()));
@@ -132,12 +128,6 @@ GetIt $initGetIt(
   gh.factory<CategoryPostsBloc>(() =>
       CategoryPostsBloc(get<IHomeFeedService>(), get<IAnalyticsService>()));
   gh.factory<CommentActorBloc>(() => CommentActorBloc(get<IPostRepository>()));
-  gh.factory<CreateEventBloc>(() => CreateEventBloc(
-        get<ICalendarService>(),
-        get<IEventDetailService>(),
-        get<IOrgService>(),
-        get<IAnalyticsService>(),
-      ));
   gh.factory<CreatePostFormBloc>(() => CreatePostFormBloc(
         get<IPostRepository>(),
         get<IOrgService>(),
@@ -146,9 +136,6 @@ GetIt $initGetIt(
   gh.factory<EditOrgBloc>(() => EditOrgBloc(get<IOrgService>()));
   gh.factory<EditUserBloc>(() => EditUserBloc(get<IUserService>()));
   gh.factory<EventListBloc>(() => EventListBloc(get<IOrgService>()));
-  gh.factory<EventNotificationBloc>(
-      () => EventNotificationBloc(get<IEventDetailService>()));
-  gh.factory<EventTileBloc>(() => EventTileBloc(get<IEventDetailService>()));
   gh.factory<FabBloc>(() => FabBloc(get<IAnalyticsService>()));
   gh.factory<HomeEventsBloc>(() => HomeEventsBloc(get<IHomeFeedService>()));
   gh.factory<HomePostsBloc>(() => HomePostsBloc(get<IHomeFeedService>()));
@@ -175,12 +162,23 @@ GetIt $initGetIt(
         get<INavigationService>(),
         get<IDynamicLinkService>(),
       ));
+  gh.lazySingleton<IEventDetailService>(() => EventDetailService(
+      get<FirebaseFirestore>(), get<IPushNotificationService>()));
+  gh.factory<CreateEventBloc>(() => CreateEventBloc(
+        get<ICalendarService>(),
+        get<IEventDetailService>(),
+        get<IOrgService>(),
+        get<IAnalyticsService>(),
+      ));
   gh.factory<EventDetailBloc>(() => EventDetailBloc(
         get<IEventDetailService>(),
         get<IOrgService>(),
         get<IAnalyticsService>(),
         get<IDynamicLinkService>(),
       ));
+  gh.factory<EventNotificationBloc>(
+      () => EventNotificationBloc(get<IEventDetailService>()));
+  gh.factory<EventTileBloc>(() => EventTileBloc(get<IEventDetailService>()));
   return get;
 }
 

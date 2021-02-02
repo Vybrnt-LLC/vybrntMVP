@@ -22,16 +22,16 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
 abstract class ActivityDTO with _$ActivityDTO {
   factory ActivityDTO({
     @JsonKey(ignore: true) String activityID,
-    @required String type,
-    @required String userID,
-    @required String orgID,
-    @required String profileImageURL,
-    @required String postID,
-    @required String eventID,
-    @required String commentID,
-    @required String username,
+    @required String activityType,
+    @required String objectID,
+    @required String ownerType,
+    @required String ownerID,
+    @required String titleSubject,
+    @required String bodySubject,
     @required dynamic timeStamp,
-    @required bool isOrg,
+    @required String imageURL,
+    @required String profileID,
+    @required String profileType,
     @required @ServerTimestampConverter() FieldValue serverTimeStamp,
   }) = _ActivityDTO;
 
@@ -42,16 +42,16 @@ abstract class ActivityDTO with _$ActivityDTO {
   factory ActivityDTO.fromDomain(Activity activity) {
     return ActivityDTO(
       activityID: activity.activityID.getOrCrash(),
-      type: activity.type,
-      userID: activity.userID,
-      orgID: activity.orgID,
-      profileImageURL: activity.profileImageURL,
-      postID: activity.postID,
-      eventID: activity.eventID,
-      username: activity.username,
-      commentID: activity.commentID,
+      activityType: ActivityTypeHelper.stringOf(activity.activityType),
+      objectID: activity.objectID,
+      ownerID: activity.ownerID,
+      imageURL: activity.imageURL,
+      ownerType: OwnerTypeHelper.stringOf(activity.ownerType),
+      titleSubject: activity.titleSubject,
+      bodySubject: activity.bodySubject,
+      profileID: activity.profileID,
+      profileType: OwnerTypeHelper.stringOf(activity.profileType),
       timeStamp: activity.timeStamp,
-      isOrg: activity.isOrg,
       serverTimeStamp: FieldValue.serverTimestamp(),
     );
   }
@@ -64,16 +64,16 @@ extension ActivityDTOX on ActivityDTO {
   Activity toDomain() {
     return Activity(
       activityID: UniqueId.fromUniqueString(activityID),
-      type: type,
-      userID: userID,
-      orgID: orgID,
-      commentID: commentID,
-      profileImageURL: profileImageURL,
-      postID: postID,
-      eventID: eventID,
-      username: username,
+      activityType: ActivityTypeHelper.valueOf(activityType),
+      objectID: objectID,
+      ownerID: ownerID,
+      imageURL: imageURL,
+      ownerType: OwnerTypeHelper.valueOf(ownerType),
+      titleSubject: titleSubject,
+      bodySubject: bodySubject,
+      profileID: profileID,
+      profileType: OwnerTypeHelper.valueOf(profileType),
       timeStamp: timeStamp.toDate(),
-      isOrg: isOrg,
     );
   }
 }

@@ -6,9 +6,14 @@ import 'package:vybrnt_mvp/core/routes/router.gr.dart' as route;
 import 'package:vybrnt_mvp/features/authentication/application/auth/bloc/auth_bloc.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 
+import '../../../../environment.dart';
+
 class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final env = Provider.of<Color>(context).toString() == Colors.red.toString()
+        ? Environment.dev
+        : Environment.prod;
     return BlocListener<AuthBloc, AuthState>(
       listener: (context, state) {
         state.map(
@@ -16,7 +21,7 @@ class Wrapper extends StatelessWidget {
             authenticated: (_) {
               context
                   .bloc<AuthBloc>()
-                  .add(AuthEvent.initializePushNotifications());
+                  .add(AuthEvent.initializePushNotifications(env));
               context
                   .bloc<AuthBloc>()
                   .add(AuthEvent.setAnalyticsUserID(_.user.id.getOrCrash()));

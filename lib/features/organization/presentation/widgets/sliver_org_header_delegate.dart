@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kt_dart/kt.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 
 class SliverOrgHeaderDelegate extends SliverPersistentHeaderDelegate {
@@ -57,8 +60,14 @@ class SliverOrgHeaderDelegate extends SliverPersistentHeaderDelegate {
                                   TextStyle(color: Colors.white, fontSize: 18))
                         ]),
                         GestureDetector(
-                          onTap: () => TabNavigatorProvider.of(context)
-                              .pushUserList(context, userIDList: userIDList),
+                          onTap: () => TabNavigatorProvider.of(context) != null
+                              ? TabNavigatorProvider.of(context)
+                                  .pushUserList(context, userIDList: userIDList)
+                              : getIt<NavigationService>().navigateTo(
+                                  Routes.userList,
+                                  arguments: UserListScreenArguments(
+                                      userIDList: userIDList,
+                                      title: 'Members')),
                           child: Column(children: [
                             Text('$memberCount',
                                 style: TextStyle(

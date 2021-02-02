@@ -5,8 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
 import 'package:intl/intl.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
-
-import 'package:vybrnt_mvp/features/activity/application/actor/activity_actor_bloc.dart';
 import 'package:vybrnt_mvp/features/activity/application/bloc/activity_bloc.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
 import 'package:vybrnt_mvp/features/activity/presentation/widget/activity_item.dart';
@@ -69,14 +67,7 @@ class _ActivityScreenState extends State<ActivityScreen> {
                     child: ListView.builder(
                       itemCount: state.activities.size,
                       itemBuilder: (BuildContext context, int index) {
-                        return BlocProvider<ActivityActorBloc>(
-                          key: ObjectKey(state.activities[index]),
-                          create: (context) => getIt<ActivityActorBloc>()
-                            ..add(ActivityActorEvent.getData(
-                                state.activities[index])),
-                          child:
-                              ActivityItem(activity: state.activities[index]),
-                        );
+                        return ActivityItem(activity: state.activities[index]);
                       },
                     ),
                   );

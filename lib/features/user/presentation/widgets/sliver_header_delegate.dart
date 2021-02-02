@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:kt_dart/kt.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 
 import '../../domain/models/user.dart';
 
@@ -52,9 +55,15 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         GestureDetector(
-                          onTap: () => TabNavigatorProvider.of(context)
-                              .pushFollowersList(context,
-                                  userIDList: followers),
+                          onTap: () => TabNavigatorProvider.of(context) != null
+                              ? TabNavigatorProvider.of(context)
+                                  .pushFollowersList(context,
+                                      userIDList: followers)
+                              : getIt<NavigationService>().navigateTo(
+                                  Routes.userList,
+                                  arguments: UserListScreenArguments(
+                                      userIDList: followers,
+                                      title: 'Followers')),
                           child: Column(children: [
                             Text('$followersCount',
                                 style: TextStyle(
@@ -65,9 +74,15 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                           ]),
                         ),
                         GestureDetector(
-                          onTap: () => TabNavigatorProvider.of(context)
-                              .pushFollowingList(context,
-                                  userIDList: following),
+                          onTap: () => TabNavigatorProvider.of(context) != null
+                              ? TabNavigatorProvider.of(context)
+                                  .pushFollowingList(context,
+                                      userIDList: following)
+                              : getIt<NavigationService>().navigateTo(
+                                  Routes.userList,
+                                  arguments: UserListScreenArguments(
+                                      userIDList: following,
+                                      title: 'Following')),
                           child: Column(children: [
                             Text('$followingCount',
                                 style: TextStyle(
@@ -78,8 +93,13 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                           ]),
                         ),
                         GestureDetector(
-                          onTap: () => TabNavigatorProvider.of(context)
-                              .pushOrgList(context, orgIDList: orgList),
+                          onTap: () => TabNavigatorProvider.of(context) != null
+                              ? TabNavigatorProvider.of(context)
+                                  .pushOrgList(context, orgIDList: orgList)
+                              : getIt<NavigationService>().navigateTo(
+                                  Routes.orgList,
+                                  arguments: OrgListScreenArguments(
+                                      orgIDList: orgList)),
                           child: Column(children: [
                             Text('$orgCount',
                                 style: TextStyle(

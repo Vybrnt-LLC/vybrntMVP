@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/getflutter.dart';
 import 'package:kt_dart/kt.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
 
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
 import 'package:vybrnt_mvp/features/organization/application/user_list_bloc/user_list_bloc.dart';
@@ -39,26 +40,30 @@ class _OrgListScreenState extends State<OrgListScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-          backgroundColor: Colors.black,
-          //centerTitle: true,
-          title: Text('My Communities')),
-      backgroundColor: Colors.white,
-      body: Container(
-        child: SafeArea(
-          bottom: false,
-          child: BlocBuilder<UserListBloc, UserListState>(
-              builder: (context, state) {
-            return ListView.builder(
-              itemCount: state.orgs.size,
-              itemBuilder: (BuildContext context, int index) {
-                //Needs to be updated
+    return BlocProvider<UserListBloc>(
+      create: (context) => getIt<UserListBloc>()
+        ..add(UserListEvent.getOrgData(widget.orgIDList)),
+      child: Scaffold(
+        appBar: AppBar(
+            backgroundColor: Colors.black,
+            //centerTitle: true,
+            title: Text('My Communities')),
+        backgroundColor: Colors.white,
+        body: Container(
+          child: SafeArea(
+            bottom: false,
+            child: BlocBuilder<UserListBloc, UserListState>(
+                builder: (context, state) {
+              return ListView.builder(
+                itemCount: state.orgs.size,
+                itemBuilder: (BuildContext context, int index) {
+                  //Needs to be updated
 
-                return _buildOrgTile(state.orgs[index]);
-              },
-            );
-          }),
+                  return _buildOrgTile(state.orgs[index]);
+                },
+              );
+            }),
+          ),
         ),
       ),
     );

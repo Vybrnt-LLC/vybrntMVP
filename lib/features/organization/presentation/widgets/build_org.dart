@@ -14,6 +14,8 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/widgets/event_detail_image.dart';
@@ -225,13 +227,26 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                           FocusedMenuItem(
                               title: Text("Report"),
                               trailingIcon: Icon(Icons.flag),
-                              onPressed: () => TabNavigatorProvider.of(context)
-                                  .pushReport(context,
-                                      currentUserID: currentUserID,
-                                      contentID: '',
-                                      contentType: '',
-                                      ownerID: widget.org.orgID.getOrCrash(),
-                                      ownerType: 'org')),
+                              onPressed: () =>
+                                  TabNavigatorProvider.of(context) != null
+                                      ? TabNavigatorProvider.of(context)
+                                          .pushReport(
+                                              context,
+                                              currentUserID: currentUserID,
+                                              contentID: '',
+                                              contentType: '',
+                                              ownerID:
+                                                  widget.org.orgID.getOrCrash(),
+                                              ownerType: 'org')
+                                      : getIt<NavigationService>().navigateTo(
+                                          Routes.report,
+                                          arguments: ReportScreenArguments(
+                                              currentUserID: currentUserID,
+                                              contentID: '',
+                                              contentType: '',
+                                              ownerID:
+                                                  widget.org.orgID.getOrCrash(),
+                                              ownerType: 'org'))),
                         ],
                         onPressed: () {},
                         child: Padding(
@@ -389,10 +404,17 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(15)),
-                                    onPressed: () =>
-                                        TabNavigatorProvider.of(context)
+                                    onPressed: () => TabNavigatorProvider.of(
+                                                context) !=
+                                            null
+                                        ? TabNavigatorProvider.of(context)
                                             .pushEditOrgPage(context,
-                                                org: widget.org),
+                                                org: widget.org)
+                                        : getIt<NavigationService>().navigateTo(
+                                            Routes.editOrganizationPageScreen,
+                                            arguments:
+                                                EditOrganizationPageScreenArguments(
+                                                    org: widget.org)),
                                     color: stringToColor(
                                         widget.org.secondaryColor),
                                     textColor: Colors.white,

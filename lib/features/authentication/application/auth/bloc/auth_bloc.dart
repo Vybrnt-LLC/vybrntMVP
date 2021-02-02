@@ -40,7 +40,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _authFacade.signOut();
       yield const AuthState.unauthenticated();
     }, initializePushNotifications: (e) async* {
-      await _dynamicLinkService.handleDynamicLinks();
+      await _dynamicLinkService.handleDynamicLinks(e.env);
       await _pushNotificationService.initialize();
     }, setAnalyticsUserID: (e) async* {
       await _analyticsService.setUserProperties(userID: e.currentUserID);

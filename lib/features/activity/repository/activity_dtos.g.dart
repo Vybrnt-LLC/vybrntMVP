@@ -8,16 +8,16 @@ part of 'activity_dtos.dart';
 
 _$_ActivityDTO _$_$_ActivityDTOFromJson(Map<String, dynamic> json) {
   return _$_ActivityDTO(
-    type: json['type'] as String,
-    userID: json['userID'] as String,
-    orgID: json['orgID'] as String,
-    profileImageURL: json['profileImageURL'] as String,
-    postID: json['postID'] as String,
-    eventID: json['eventID'] as String,
-    commentID: json['commentID'] as String,
-    username: json['username'] as String,
+    activityType: json['activityType'] as String,
+    objectID: json['objectID'] as String,
+    ownerType: json['ownerType'] as String,
+    ownerID: json['ownerID'] as String,
+    titleSubject: json['titleSubject'] as String,
+    bodySubject: json['bodySubject'] as String,
     timeStamp: json['timeStamp'],
-    isOrg: json['isOrg'] as bool,
+    imageURL: json['imageURL'] as String,
+    profileID: json['profileID'] as String,
+    profileType: json['profileType'] as String,
     serverTimeStamp:
         const ServerTimestampConverter().fromJson(json['serverTimeStamp']),
   );
@@ -25,16 +25,16 @@ _$_ActivityDTO _$_$_ActivityDTOFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$_$_ActivityDTOToJson(_$_ActivityDTO instance) =>
     <String, dynamic>{
-      'type': instance.type,
-      'userID': instance.userID,
-      'orgID': instance.orgID,
-      'profileImageURL': instance.profileImageURL,
-      'postID': instance.postID,
-      'eventID': instance.eventID,
-      'commentID': instance.commentID,
-      'username': instance.username,
+      'activityType': instance.activityType,
+      'objectID': instance.objectID,
+      'ownerType': instance.ownerType,
+      'ownerID': instance.ownerID,
+      'titleSubject': instance.titleSubject,
+      'bodySubject': instance.bodySubject,
       'timeStamp': instance.timeStamp,
-      'isOrg': instance.isOrg,
+      'imageURL': instance.imageURL,
+      'profileID': instance.profileID,
+      'profileType': instance.profileType,
       'serverTimeStamp':
           const ServerTimestampConverter().toJson(instance.serverTimeStamp),
     };

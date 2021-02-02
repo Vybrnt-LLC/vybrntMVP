@@ -2,8 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:timeago/timeago.dart' as timeago;
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/features/posts/application/comment_actor/comment_actor_bloc.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/comment.dart';
 
@@ -20,8 +23,12 @@ class CommentTile extends StatelessWidget {
         builder: (context, state) {
       return ListTile(
         leading: GestureDetector(
-          onTap: () => TabNavigatorProvider.of(context)
-              .pushUserProfile(context, userID: comment.senderID.getOrCrash()),
+          onTap: () => TabNavigatorProvider.of(context) != null
+              ? TabNavigatorProvider.of(context).pushUserProfile(context,
+                  userID: comment.senderID.getOrCrash())
+              : getIt<NavigationService>().navigateTo(Routes.user,
+                  arguments: UserScreenArguments(
+                      userID: comment.senderID.getOrCrash())),
           child: CircleAvatar(
             radius: 25.0,
             backgroundColor: Colors.grey,

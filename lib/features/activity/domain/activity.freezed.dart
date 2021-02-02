@@ -14,28 +14,28 @@ class _$ActivityTearOff {
 
   _Activity call(
       {@required UniqueId activityID,
-      @required String type,
-      @required String userID,
-      @required String orgID,
-      @required String profileImageURL,
-      @required String postID,
-      @required String eventID,
-      @required String commentID,
-      @required String username,
+      @required ActivityType activityType,
+      @required String objectID,
+      @required OwnerType ownerType,
+      @required String ownerID,
+      @required String titleSubject,
+      @required String bodySubject,
       @required DateTime timeStamp,
-      @required bool isOrg}) {
+      @required String imageURL,
+      @required String profileID,
+      @required OwnerType profileType}) {
     return _Activity(
       activityID: activityID,
-      type: type,
-      userID: userID,
-      orgID: orgID,
-      profileImageURL: profileImageURL,
-      postID: postID,
-      eventID: eventID,
-      commentID: commentID,
-      username: username,
+      activityType: activityType,
+      objectID: objectID,
+      ownerType: ownerType,
+      ownerID: ownerID,
+      titleSubject: titleSubject,
+      bodySubject: bodySubject,
       timeStamp: timeStamp,
-      isOrg: isOrg,
+      imageURL: imageURL,
+      profileID: profileID,
+      profileType: profileType,
     );
   }
 }
@@ -45,16 +45,16 @@ const $Activity = _$ActivityTearOff();
 
 mixin _$Activity {
   UniqueId get activityID;
-  String get type;
-  String get userID;
-  String get orgID;
-  String get profileImageURL;
-  String get postID;
-  String get eventID;
-  String get commentID;
-  String get username;
+  ActivityType get activityType;
+  String get objectID;
+  OwnerType get ownerType;
+  String get ownerID;
+  String get titleSubject;
+  String get bodySubject;
   DateTime get timeStamp;
-  bool get isOrg;
+  String get imageURL;
+  String get profileID;
+  OwnerType get profileType;
 
   $ActivityCopyWith<Activity> get copyWith;
 }
@@ -64,16 +64,16 @@ abstract class $ActivityCopyWith<$Res> {
       _$ActivityCopyWithImpl<$Res>;
   $Res call(
       {UniqueId activityID,
-      String type,
-      String userID,
-      String orgID,
-      String profileImageURL,
-      String postID,
-      String eventID,
-      String commentID,
-      String username,
+      ActivityType activityType,
+      String objectID,
+      OwnerType ownerType,
+      String ownerID,
+      String titleSubject,
+      String bodySubject,
       DateTime timeStamp,
-      bool isOrg});
+      String imageURL,
+      String profileID,
+      OwnerType profileType});
 }
 
 class _$ActivityCopyWithImpl<$Res> implements $ActivityCopyWith<$Res> {
@@ -86,33 +86,39 @@ class _$ActivityCopyWithImpl<$Res> implements $ActivityCopyWith<$Res> {
   @override
   $Res call({
     Object activityID = freezed,
-    Object type = freezed,
-    Object userID = freezed,
-    Object orgID = freezed,
-    Object profileImageURL = freezed,
-    Object postID = freezed,
-    Object eventID = freezed,
-    Object commentID = freezed,
-    Object username = freezed,
+    Object activityType = freezed,
+    Object objectID = freezed,
+    Object ownerType = freezed,
+    Object ownerID = freezed,
+    Object titleSubject = freezed,
+    Object bodySubject = freezed,
     Object timeStamp = freezed,
-    Object isOrg = freezed,
+    Object imageURL = freezed,
+    Object profileID = freezed,
+    Object profileType = freezed,
   }) {
     return _then(_value.copyWith(
       activityID:
           activityID == freezed ? _value.activityID : activityID as UniqueId,
-      type: type == freezed ? _value.type : type as String,
-      userID: userID == freezed ? _value.userID : userID as String,
-      orgID: orgID == freezed ? _value.orgID : orgID as String,
-      profileImageURL: profileImageURL == freezed
-          ? _value.profileImageURL
-          : profileImageURL as String,
-      postID: postID == freezed ? _value.postID : postID as String,
-      eventID: eventID == freezed ? _value.eventID : eventID as String,
-      commentID: commentID == freezed ? _value.commentID : commentID as String,
-      username: username == freezed ? _value.username : username as String,
+      activityType: activityType == freezed
+          ? _value.activityType
+          : activityType as ActivityType,
+      objectID: objectID == freezed ? _value.objectID : objectID as String,
+      ownerType:
+          ownerType == freezed ? _value.ownerType : ownerType as OwnerType,
+      ownerID: ownerID == freezed ? _value.ownerID : ownerID as String,
+      titleSubject: titleSubject == freezed
+          ? _value.titleSubject
+          : titleSubject as String,
+      bodySubject:
+          bodySubject == freezed ? _value.bodySubject : bodySubject as String,
       timeStamp:
           timeStamp == freezed ? _value.timeStamp : timeStamp as DateTime,
-      isOrg: isOrg == freezed ? _value.isOrg : isOrg as bool,
+      imageURL: imageURL == freezed ? _value.imageURL : imageURL as String,
+      profileID: profileID == freezed ? _value.profileID : profileID as String,
+      profileType: profileType == freezed
+          ? _value.profileType
+          : profileType as OwnerType,
     ));
   }
 }
@@ -123,16 +129,16 @@ abstract class _$ActivityCopyWith<$Res> implements $ActivityCopyWith<$Res> {
   @override
   $Res call(
       {UniqueId activityID,
-      String type,
-      String userID,
-      String orgID,
-      String profileImageURL,
-      String postID,
-      String eventID,
-      String commentID,
-      String username,
+      ActivityType activityType,
+      String objectID,
+      OwnerType ownerType,
+      String ownerID,
+      String titleSubject,
+      String bodySubject,
       DateTime timeStamp,
-      bool isOrg});
+      String imageURL,
+      String profileID,
+      OwnerType profileType});
 }
 
 class __$ActivityCopyWithImpl<$Res> extends _$ActivityCopyWithImpl<$Res>
@@ -146,33 +152,39 @@ class __$ActivityCopyWithImpl<$Res> extends _$ActivityCopyWithImpl<$Res>
   @override
   $Res call({
     Object activityID = freezed,
-    Object type = freezed,
-    Object userID = freezed,
-    Object orgID = freezed,
-    Object profileImageURL = freezed,
-    Object postID = freezed,
-    Object eventID = freezed,
-    Object commentID = freezed,
-    Object username = freezed,
+    Object activityType = freezed,
+    Object objectID = freezed,
+    Object ownerType = freezed,
+    Object ownerID = freezed,
+    Object titleSubject = freezed,
+    Object bodySubject = freezed,
     Object timeStamp = freezed,
-    Object isOrg = freezed,
+    Object imageURL = freezed,
+    Object profileID = freezed,
+    Object profileType = freezed,
   }) {
     return _then(_Activity(
       activityID:
           activityID == freezed ? _value.activityID : activityID as UniqueId,
-      type: type == freezed ? _value.type : type as String,
-      userID: userID == freezed ? _value.userID : userID as String,
-      orgID: orgID == freezed ? _value.orgID : orgID as String,
-      profileImageURL: profileImageURL == freezed
-          ? _value.profileImageURL
-          : profileImageURL as String,
-      postID: postID == freezed ? _value.postID : postID as String,
-      eventID: eventID == freezed ? _value.eventID : eventID as String,
-      commentID: commentID == freezed ? _value.commentID : commentID as String,
-      username: username == freezed ? _value.username : username as String,
+      activityType: activityType == freezed
+          ? _value.activityType
+          : activityType as ActivityType,
+      objectID: objectID == freezed ? _value.objectID : objectID as String,
+      ownerType:
+          ownerType == freezed ? _value.ownerType : ownerType as OwnerType,
+      ownerID: ownerID == freezed ? _value.ownerID : ownerID as String,
+      titleSubject: titleSubject == freezed
+          ? _value.titleSubject
+          : titleSubject as String,
+      bodySubject:
+          bodySubject == freezed ? _value.bodySubject : bodySubject as String,
       timeStamp:
           timeStamp == freezed ? _value.timeStamp : timeStamp as DateTime,
-      isOrg: isOrg == freezed ? _value.isOrg : isOrg as bool,
+      imageURL: imageURL == freezed ? _value.imageURL : imageURL as String,
+      profileID: profileID == freezed ? _value.profileID : profileID as String,
+      profileType: profileType == freezed
+          ? _value.profileType
+          : profileType as OwnerType,
     ));
   }
 }
@@ -180,54 +192,54 @@ class __$ActivityCopyWithImpl<$Res> extends _$ActivityCopyWithImpl<$Res>
 class _$_Activity with DiagnosticableTreeMixin implements _Activity {
   const _$_Activity(
       {@required this.activityID,
-      @required this.type,
-      @required this.userID,
-      @required this.orgID,
-      @required this.profileImageURL,
-      @required this.postID,
-      @required this.eventID,
-      @required this.commentID,
-      @required this.username,
+      @required this.activityType,
+      @required this.objectID,
+      @required this.ownerType,
+      @required this.ownerID,
+      @required this.titleSubject,
+      @required this.bodySubject,
       @required this.timeStamp,
-      @required this.isOrg})
+      @required this.imageURL,
+      @required this.profileID,
+      @required this.profileType})
       : assert(activityID != null),
-        assert(type != null),
-        assert(userID != null),
-        assert(orgID != null),
-        assert(profileImageURL != null),
-        assert(postID != null),
-        assert(eventID != null),
-        assert(commentID != null),
-        assert(username != null),
+        assert(activityType != null),
+        assert(objectID != null),
+        assert(ownerType != null),
+        assert(ownerID != null),
+        assert(titleSubject != null),
+        assert(bodySubject != null),
         assert(timeStamp != null),
-        assert(isOrg != null);
+        assert(imageURL != null),
+        assert(profileID != null),
+        assert(profileType != null);
 
   @override
   final UniqueId activityID;
   @override
-  final String type;
+  final ActivityType activityType;
   @override
-  final String userID;
+  final String objectID;
   @override
-  final String orgID;
+  final OwnerType ownerType;
   @override
-  final String profileImageURL;
+  final String ownerID;
   @override
-  final String postID;
+  final String titleSubject;
   @override
-  final String eventID;
-  @override
-  final String commentID;
-  @override
-  final String username;
+  final String bodySubject;
   @override
   final DateTime timeStamp;
   @override
-  final bool isOrg;
+  final String imageURL;
+  @override
+  final String profileID;
+  @override
+  final OwnerType profileType;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Activity(activityID: $activityID, type: $type, userID: $userID, orgID: $orgID, profileImageURL: $profileImageURL, postID: $postID, eventID: $eventID, commentID: $commentID, username: $username, timeStamp: $timeStamp, isOrg: $isOrg)';
+    return 'Activity(activityID: $activityID, activityType: $activityType, objectID: $objectID, ownerType: $ownerType, ownerID: $ownerID, titleSubject: $titleSubject, bodySubject: $bodySubject, timeStamp: $timeStamp, imageURL: $imageURL, profileID: $profileID, profileType: $profileType)';
   }
 
   @override
@@ -236,16 +248,16 @@ class _$_Activity with DiagnosticableTreeMixin implements _Activity {
     properties
       ..add(DiagnosticsProperty('type', 'Activity'))
       ..add(DiagnosticsProperty('activityID', activityID))
-      ..add(DiagnosticsProperty('type', type))
-      ..add(DiagnosticsProperty('userID', userID))
-      ..add(DiagnosticsProperty('orgID', orgID))
-      ..add(DiagnosticsProperty('profileImageURL', profileImageURL))
-      ..add(DiagnosticsProperty('postID', postID))
-      ..add(DiagnosticsProperty('eventID', eventID))
-      ..add(DiagnosticsProperty('commentID', commentID))
-      ..add(DiagnosticsProperty('username', username))
+      ..add(DiagnosticsProperty('activityType', activityType))
+      ..add(DiagnosticsProperty('objectID', objectID))
+      ..add(DiagnosticsProperty('ownerType', ownerType))
+      ..add(DiagnosticsProperty('ownerID', ownerID))
+      ..add(DiagnosticsProperty('titleSubject', titleSubject))
+      ..add(DiagnosticsProperty('bodySubject', bodySubject))
       ..add(DiagnosticsProperty('timeStamp', timeStamp))
-      ..add(DiagnosticsProperty('isOrg', isOrg));
+      ..add(DiagnosticsProperty('imageURL', imageURL))
+      ..add(DiagnosticsProperty('profileID', profileID))
+      ..add(DiagnosticsProperty('profileType', profileType));
   }
 
   @override
@@ -255,47 +267,52 @@ class _$_Activity with DiagnosticableTreeMixin implements _Activity {
             (identical(other.activityID, activityID) ||
                 const DeepCollectionEquality()
                     .equals(other.activityID, activityID)) &&
-            (identical(other.type, type) ||
-                const DeepCollectionEquality().equals(other.type, type)) &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)) &&
-            (identical(other.orgID, orgID) ||
-                const DeepCollectionEquality().equals(other.orgID, orgID)) &&
-            (identical(other.profileImageURL, profileImageURL) ||
+            (identical(other.activityType, activityType) ||
                 const DeepCollectionEquality()
-                    .equals(other.profileImageURL, profileImageURL)) &&
-            (identical(other.postID, postID) ||
-                const DeepCollectionEquality().equals(other.postID, postID)) &&
-            (identical(other.eventID, eventID) ||
+                    .equals(other.activityType, activityType)) &&
+            (identical(other.objectID, objectID) ||
                 const DeepCollectionEquality()
-                    .equals(other.eventID, eventID)) &&
-            (identical(other.commentID, commentID) ||
+                    .equals(other.objectID, objectID)) &&
+            (identical(other.ownerType, ownerType) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentID, commentID)) &&
-            (identical(other.username, username) ||
+                    .equals(other.ownerType, ownerType)) &&
+            (identical(other.ownerID, ownerID) ||
                 const DeepCollectionEquality()
-                    .equals(other.username, username)) &&
+                    .equals(other.ownerID, ownerID)) &&
+            (identical(other.titleSubject, titleSubject) ||
+                const DeepCollectionEquality()
+                    .equals(other.titleSubject, titleSubject)) &&
+            (identical(other.bodySubject, bodySubject) ||
+                const DeepCollectionEquality()
+                    .equals(other.bodySubject, bodySubject)) &&
             (identical(other.timeStamp, timeStamp) ||
                 const DeepCollectionEquality()
                     .equals(other.timeStamp, timeStamp)) &&
-            (identical(other.isOrg, isOrg) ||
-                const DeepCollectionEquality().equals(other.isOrg, isOrg)));
+            (identical(other.imageURL, imageURL) ||
+                const DeepCollectionEquality()
+                    .equals(other.imageURL, imageURL)) &&
+            (identical(other.profileID, profileID) ||
+                const DeepCollectionEquality()
+                    .equals(other.profileID, profileID)) &&
+            (identical(other.profileType, profileType) ||
+                const DeepCollectionEquality()
+                    .equals(other.profileType, profileType)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(activityID) ^
-      const DeepCollectionEquality().hash(type) ^
-      const DeepCollectionEquality().hash(userID) ^
-      const DeepCollectionEquality().hash(orgID) ^
-      const DeepCollectionEquality().hash(profileImageURL) ^
-      const DeepCollectionEquality().hash(postID) ^
-      const DeepCollectionEquality().hash(eventID) ^
-      const DeepCollectionEquality().hash(commentID) ^
-      const DeepCollectionEquality().hash(username) ^
+      const DeepCollectionEquality().hash(activityType) ^
+      const DeepCollectionEquality().hash(objectID) ^
+      const DeepCollectionEquality().hash(ownerType) ^
+      const DeepCollectionEquality().hash(ownerID) ^
+      const DeepCollectionEquality().hash(titleSubject) ^
+      const DeepCollectionEquality().hash(bodySubject) ^
       const DeepCollectionEquality().hash(timeStamp) ^
-      const DeepCollectionEquality().hash(isOrg);
+      const DeepCollectionEquality().hash(imageURL) ^
+      const DeepCollectionEquality().hash(profileID) ^
+      const DeepCollectionEquality().hash(profileType);
 
   @override
   _$ActivityCopyWith<_Activity> get copyWith =>
@@ -305,39 +322,39 @@ class _$_Activity with DiagnosticableTreeMixin implements _Activity {
 abstract class _Activity implements Activity {
   const factory _Activity(
       {@required UniqueId activityID,
-      @required String type,
-      @required String userID,
-      @required String orgID,
-      @required String profileImageURL,
-      @required String postID,
-      @required String eventID,
-      @required String commentID,
-      @required String username,
+      @required ActivityType activityType,
+      @required String objectID,
+      @required OwnerType ownerType,
+      @required String ownerID,
+      @required String titleSubject,
+      @required String bodySubject,
       @required DateTime timeStamp,
-      @required bool isOrg}) = _$_Activity;
+      @required String imageURL,
+      @required String profileID,
+      @required OwnerType profileType}) = _$_Activity;
 
   @override
   UniqueId get activityID;
   @override
-  String get type;
+  ActivityType get activityType;
   @override
-  String get userID;
+  String get objectID;
   @override
-  String get orgID;
+  OwnerType get ownerType;
   @override
-  String get profileImageURL;
+  String get ownerID;
   @override
-  String get postID;
+  String get titleSubject;
   @override
-  String get eventID;
-  @override
-  String get commentID;
-  @override
-  String get username;
+  String get bodySubject;
   @override
   DateTime get timeStamp;
   @override
-  bool get isOrg;
+  String get imageURL;
+  @override
+  String get profileID;
+  @override
+  OwnerType get profileType;
   @override
   _$ActivityCopyWith<_Activity> get copyWith;
 }

@@ -12,6 +12,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
 import 'package:vybrnt_mvp/features/activity/repository/activity_dtos.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/i_calendar_service.dart';
@@ -29,8 +30,9 @@ import 'org_calendar_dtos.dart';
 @LazySingleton(as: ICalendarService)
 class CalendarService implements ICalendarService {
   final FirebaseFirestore _firestore;
+  final IActivityService _activityService;
 
-  CalendarService(this._firestore);
+  CalendarService(this._firestore, this._activityService);
 
   @override
   Future toggleTrue(String currentUserID, String orgID) async {
@@ -219,7 +221,7 @@ class CalendarService implements ICalendarService {
       final currentUserID = await _firestore.currentUserID();
       final eventDto =
           EventDto.fromDomain(event.copyWith(eventImageUrl: profileImageUrl));
-      if (orgID.isEmpty) {
+      if (event.orgID.isEmpty) {
         await eventsRef
             .doc(currentUserID)
             .collection('userEvents')
@@ -250,6 +252,8 @@ class CalendarService implements ICalendarService {
             .doc(event.eventID.getOrCrash())
             .set(eventDto.toJson());
       }
+
+      await _activityService.addEventToActivityFeed(event);
       return right(unit);
     } on FirebaseException catch (e) {
       // These error codes and messages aren't in the documentation AFAIK, experiment in the debugger to find out about them.
@@ -259,56 +263,6 @@ class CalendarService implements ICalendarService {
         return left(const EventFailure.unexpected());
       }
     }
-  }
-
-  Future addEventToActivityFeed(Event event) async {
-    final currentUserID = await _firestore.currentUserID();
-
-    bool isNotEventOwner = currentUserID != event.senderID;
-    DocumentSnapshot doc;
-
-    if (isNotEventOwner) {
-      if (event.orgID.isNotEmpty) {
-        doc = await organizationsRef.doc(event.orgID).get();
-      } else {
-        doc = await usersRef.doc(event.senderID).get();
-      }
-      Activity newLikeActivity = Activity.empty();
-      final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-          username:
-              event.orgID.isNotEmpty ? doc.get('profileName') : doc.get('name'),
-          userID: event.senderID,
-          orgID: event.orgID,
-          type: 'event',
-          profileImageURL: doc.get('profileImageUrl'),
-          eventID: event.eventID.getOrCrash(),
-          isOrg: event.orgID.isNotEmpty ? true : false));
-
-      final notifyFollowers = event.orgID.isNotEmpty
-          ? await getNotifyFollowers(event.orgID, 'org')
-          : await getNotifyFollowers(event.senderID, 'user');
-
-      for (int i = 0; i < notifyFollowers.length; i++) {
-        activitiesRef
-            .doc(notifyFollowers[i])
-            .collection('userActivityFeed')
-            .doc(activityDTO.activityID)
-            .set(activityDTO.toJson());
-      }
-    }
-  }
-
-  Future<List<String>> getNotifyFollowers(String id, String type) async {
-    List<String> notifyFollowersIDs = [];
-    await followersRef
-        .doc(id)
-        .collection(type + 'Followers')
-        .where('notify', isEqualTo: true)
-        .get()
-        .then((value) => value.docs.forEach((element) {
-              notifyFollowersIDs.add(element.id);
-            }));
-    return notifyFollowersIDs;
   }
 
   @override

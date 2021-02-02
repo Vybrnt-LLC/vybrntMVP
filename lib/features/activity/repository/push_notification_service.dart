@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_native_timezone/flutter_native_timezone.dart';
 import 'package:injectable/injectable.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 import 'package:vybrnt_mvp/core/auth/value_objects.dart';
@@ -13,7 +15,9 @@ import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_push_notification.dart';
-
+import 'package:timezone/data/latest.dart' as tz;
+import 'package:timezone/timezone.dart' as tz;
+import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'activity_dtos.dart';
 
 @LazySingleton(as: IPushNotificationService)
@@ -26,9 +30,33 @@ class PushNotificationService implements IPushNotificationService {
   PushNotificationService(
       {this.firebaseMessaging, this.navigationService, this.firestore});
 
+  FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+      FlutterLocalNotificationsPlugin();
+
   @override
   Future initialize() async {
     if (!_initialized) {
+      await _configureLocalTimeZone();
+      await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+// initialise the plugin. app_icon needs to be a added as a drawable resource to the Android head project
+      const AndroidInitializationSettings initializationSettingsAndroid =
+          AndroidInitializationSettings('vybrnt');
+      final IOSInitializationSettings initializationSettingsIOS =
+          IOSInitializationSettings(
+              requestAlertPermission: false,
+              requestBadgePermission: false,
+              requestSoundPermission: false,
+              onDidReceiveLocalNotification: onDidReceiveLocalNotification);
+      final MacOSInitializationSettings initializationSettingsMacOS =
+          MacOSInitializationSettings();
+      final InitializationSettings initializationSettings =
+          InitializationSettings(
+              android: initializationSettingsAndroid,
+              iOS: initializationSettingsIOS,
+              macOS: initializationSettingsMacOS);
+      await flutterLocalNotificationsPlugin.initialize(initializationSettings,
+          onSelectNotification: selectNotification);
+
       String currentUserID = await firestore.currentUserID();
 
       if (Platform.isIOS) getiOSPermission();
@@ -82,8 +110,88 @@ class PushNotificationService implements IPushNotificationService {
           // }
         },
       );
+
       _initialized = true;
     }
+  }
+
+  @override
+  Future scheduleEventReminder(Event event) async {
+    final typeID = event.isOrg ? event.orgID : event.senderID;
+    final eventID = event.eventID.getOrCrash();
+    final type = event.isOrg ? 'org' : 'user';
+
+    final eventName = event.eventName;
+    final startTime = DateFormat.jm().format(event.startTime);
+    final notificationTime =
+        event.startTime.subtract(new Duration(minutes: 15));
+    final payload =
+        'https://vybrnt.com/eventStart?type=$type&typeID=$typeID&eventID=$eventID';
+    DocumentSnapshot doc;
+    String creatorName;
+    if (event.isOrg) {
+      doc = await organizationsRef.doc(event.orgID).get();
+      creatorName = doc.get('name');
+    } else {
+      doc = await usersRef.doc(event.senderID).get();
+      creatorName = doc.get('profileName');
+    }
+    await flutterLocalNotificationsPlugin.zonedSchedule(
+        0,
+        '$eventName is starting at $startTime',
+        'Organized by $creatorName',
+        tz.TZDateTime(
+            tz.local,
+            notificationTime.year,
+            notificationTime.month,
+            notificationTime.day,
+            notificationTime.hour,
+            notificationTime.minute), //now(tz.local).add(
+        //const Duration(seconds: 5)), // from(notificationTime, location),
+        const NotificationDetails(
+            android: AndroidNotificationDetails('Channel ID', 'Upcoming Event',
+                'Notifies users of new events')),
+        androidAllowWhileIdle: true,
+        uiLocalNotificationDateInterpretation:
+            UILocalNotificationDateInterpretation.absoluteTime,
+        payload: payload);
+  }
+
+  Future onDidReceiveLocalNotification(
+      int id, String title, String body, String payload) async {
+    // display a dialog with the notification details, tap ok to go to another page
+    final payloadUri = Uri.parse(payload);
+    var type = payloadUri.queryParameters['type'];
+    var typeID = payloadUri.queryParameters['typeID'];
+    var eventID = payloadUri.queryParameters['eventID'];
+    showSimpleNotification(
+      ListTile(
+          leading: Icon(
+            Icons.info_outline,
+            color: Colors.white,
+          ),
+          title: Text(title, style: TextStyle(color: Colors.white)),
+          subtitle: Text(body, style: TextStyle(color: Colors.white)),
+          onTap: () => navigationService.navigateTo(Routes.eventDetail,
+              arguments: EventScreenArguments(
+                  eventID: eventID, type: type, typeID: typeID))),
+      duration: Duration(seconds: 5),
+    );
+  }
+
+  Future selectNotification(String payload) async {
+    if (payload != null) {
+      debugPrint('notification payload: $payload');
+    }
+    final payloadUri = Uri.parse(payload);
+    var type = payloadUri.queryParameters['type'];
+    var typeID = payloadUri.queryParameters['typeID'];
+    var eventID = payloadUri.queryParameters['eventID'];
+    Future.delayed(Duration(seconds: 3), () async {
+      await navigationService.navigateTo(Routes.eventDetail,
+          arguments: EventScreenArguments(
+              eventID: eventID, type: type, typeID: typeID));
+    });
   }
 
   Future<dynamic> myBackgroundMessageHandler(
@@ -92,7 +200,7 @@ class PushNotificationService implements IPushNotificationService {
       // Handle data message
       final dynamic data = message['data'];
     }
-
+//TODO:Figure out this class
     if (message.containsKey('notification')) {
       // Handle notification message
       final dynamic notification = message['notification'];
@@ -101,98 +209,80 @@ class PushNotificationService implements IPushNotificationService {
     // Or do other work.
   }
 
-  getiOSPermission() {
+  getiOSPermission() async {
     firebaseMessaging.requestNotificationPermissions(
         IosNotificationSettings(alert: true, badge: true, sound: true));
     firebaseMessaging.onIosSettingsRegistered.listen((settings) {
       print("Settings registered: $settings");
     });
+    final bool result = await flutterLocalNotificationsPlugin
+        .resolvePlatformSpecificImplementation<
+            MacOSFlutterLocalNotificationsPlugin>()
+        ?.requestPermissions(
+          alert: true,
+          badge: true,
+          sound: true,
+        );
   }
 
   @override
   Future<dynamic> serializeAndNavigate(Activity activity) {
-    String type = activity.isOrg ? 'org' : 'user';
-    String typeID = activity.isOrg ? activity.orgID : activity.userID;
-    switch (activity.type) {
-      case 'likeUser':
+    switch (activity.activityType) {
+      case ActivityType.LIKE:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
-                  postID: activity.postID, type: type, typeID: typeID));
+                  postID: activity.objectID,
+                  type: ActivityTypeHelper.stringOf(activity.activityType),
+                  typeID: activity.ownerID));
         }
         break;
-      case 'repostUser':
+      case ActivityType.REPOST:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
-                  postID: activity.postID, type: type, typeID: typeID));
+                  postID: activity.objectID,
+                  type: ActivityTypeHelper.stringOf(activity.activityType),
+                  typeID: activity.ownerID));
         }
         break;
-      case 'commentUser':
+      case ActivityType.COMMENT:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
-                  postID: activity.postID, type: type, typeID: typeID));
+                  postID: activity.objectID,
+                  type: ActivityTypeHelper.stringOf(activity.activityType),
+                  typeID: activity.ownerID));
         }
         break;
-      case 'likeOrg':
-        {
-          return navigationService.navigateTo(Routes.postDetail,
-              arguments: PostScreenArguments(
-                  postID: activity.postID, type: type, typeID: typeID));
-        }
-        break;
-      case 'repostOrg':
-        {
-          return navigationService.navigateTo(Routes.postDetail,
-              arguments: PostScreenArguments(
-                  postID: activity.postID, type: type, typeID: typeID));
-        }
-        break;
-      case 'commentOrg':
-        {
-          return navigationService.navigateTo(Routes.postDetail,
-              arguments: PostScreenArguments(
-                  postID: activity.postID, type: type, typeID: typeID));
-        }
-        break;
-      case 'followUser':
+      case ActivityType.FOLLOW:
         {
           return navigationService.navigateTo(Routes.user,
-              arguments: UserScreenArguments(userID: activity.userID));
+              arguments: UserScreenArguments(userID: activity.objectID));
         }
         break;
-      case 'followOrg':
-        {
-          return navigationService.navigateTo(Routes.org,
-              arguments: OrgScreenArguments(orgID: activity.orgID));
-        }
-        break;
-      case 'post':
+      case ActivityType.POST:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
-                  postID: activity.postID, type: type, typeID: typeID));
+                  postID: activity.objectID,
+                  type: OwnerTypeHelper.stringOf(activity.ownerType),
+                  typeID: activity.ownerID));
         }
         break;
-      case 'event':
+      case ActivityType.EVENT:
         {
           return navigationService.navigateTo(Routes.eventDetail,
               arguments: EventScreenArguments(
-                  eventID: activity.eventID, type: type, typeID: typeID));
+                  eventID: activity.objectID,
+                  type: OwnerTypeHelper.stringOf(activity.ownerType),
+                  typeID: activity.ownerID));
         }
         break;
-      case 'eventStart':
-        {
-          return navigationService.navigateTo(Routes.eventDetail,
-              arguments: EventScreenArguments(
-                  eventID: activity.eventID, type: type, typeID: typeID));
-        }
-        break;
-      case 'admin':
+      case ActivityType.ADMIN:
         {
           return navigationService.navigateTo(Routes.org,
-              arguments: OrgScreenArguments(orgID: activity.orgID));
+              arguments: OrgScreenArguments(orgID: activity.objectID));
         }
         break;
     }
@@ -200,40 +290,6 @@ class PushNotificationService implements IPushNotificationService {
 
   void _showInAppNotification(String body, Activity activity) {
     showSimpleNotification(
-      // Flushbar(
-      //   //padding: const EdgeInsets.all(0),
-      //   flushbarPosition: FlushbarPosition.TOP,
-      //   flushbarStyle: FlushbarStyle.FLOATING,
-      //   reverseAnimationCurve: Curves.decelerate,
-      //   forwardAnimationCurve: Curves.elasticOut,
-      //   backgroundColor: Colors.transparent,
-      //   // boxShadows: [
-      //   //   BoxShadow(
-      //   //       color: Colors.blue[800],
-      //   //       offset: Offset(0.0, 2.0),
-      //   //       blurRadius: 3.0)
-      //   // ],
-      //   // backgroundGradient:
-      //   //     LinearGradient(colors: [Colors.blueGrey, Colors.black]),
-      //   isDismissible: false,
-      //   //duration: Duration(minutes: 1),
-      //   icon: Icon(
-      //     Icons.info_outline,
-      //     color: Colors.white,
-      //   ),
-      //   //showProgressIndicator: true,
-      //   progressIndicatorBackgroundColor: Colors.blueGrey,
-      //   messageText: Text(
-      //     body,
-      //     style: TextStyle(
-      //       fontSize: 18.0,
-      //       color: Colors.white,
-      //     ),
-      //   ),
-      //   onTap: (_) {
-      //     serializeAndNavigate(activity);
-      //   },
-      // ),
       ListTile(
           leading: Icon(
             Icons.info_outline,
@@ -254,4 +310,10 @@ class PushNotificationService implements IPushNotificationService {
         .toDomain();
     return activity;
   }
+}
+
+Future<void> _configureLocalTimeZone() async {
+  tz.initializeTimeZones();
+  final String timeZoneName = await FlutterNativeTimezone.getLocalTimezone();
+  tz.setLocalLocation(tz.getLocation(timeZoneName));
 }

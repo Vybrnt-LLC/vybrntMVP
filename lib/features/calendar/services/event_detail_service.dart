@@ -4,6 +4,7 @@ import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_push_notification.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/i_event_detail_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
@@ -19,7 +20,10 @@ import 'event_dtos.dart';
 
 @LazySingleton(as: IEventDetailService)
 class EventDetailService implements IEventDetailService {
-  FirebaseFirestore _firestore;
+  final FirebaseFirestore _firestore;
+  final IPushNotificationService _pushNotificationService;
+
+  EventDetailService(this._firestore, this._pushNotificationService);
   @override
   Stream<Either<EventFailure, KtList<UserList>>> rsvpList(
       {String eventID, bool isOrg, String userID, String orgID}) async* {
@@ -114,6 +118,8 @@ class EventDetailService implements IEventDetailService {
           .doc(event.eventID.getOrCrash())
           .set(eventDto.toJson());
     }
+
+    _pushNotificationService.scheduleEventReminder(event);
   }
 
   @override

@@ -544,14 +544,14 @@ packages:
       name: flutter_local_notifications
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.4.4+4"
+    version: "4.0.0"
   flutter_local_notifications_platform_interface:
     dependency: transitive
     description:
       name: flutter_local_notifications_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.1"
+    version: "2.0.0+1"
   flutter_material_color_picker:
     dependency: "direct main"
     description:
@@ -559,6 +559,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
+  flutter_native_timezone:
+    dependency: "direct main"
+    description:
+      name: flutter_native_timezone
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   flutter_plugin_android_lifecycle:
     dependency: "direct main"
     description:
@@ -827,6 +834,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.0+1"
+  like_button:
+    dependency: "direct main"
+    description:
+      name: like_button
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.4"
   lint:
     dependency: "direct dev"
     description:
@@ -1280,6 +1294,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.27"
+  timezone:
+    dependency: "direct main"
+    description:
+      name: timezone
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.1"
   timing:
     dependency: transitive
     description:
@@ -1287,6 +1308,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+2"
+  truncate:
+    dependency: "direct main"
+    description:
+      name: truncate
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.2"
   typed_data:
     dependency: transitive
     description:

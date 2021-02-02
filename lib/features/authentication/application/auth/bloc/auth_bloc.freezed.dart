@@ -20,8 +20,10 @@ class _$AuthEventTearOff {
     return const SignedOut();
   }
 
-  InitializePushNotifications initializePushNotifications() {
-    return const InitializePushNotifications();
+  InitializePushNotifications initializePushNotifications(String env) {
+    return InitializePushNotifications(
+      env,
+    );
   }
 
   SetAnalyticsUserID setAnalyticsUserID(String currentUserID) {
@@ -46,7 +48,7 @@ mixin _$AuthEvent {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
-    @required Result initializePushNotifications(),
+    @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
   });
@@ -54,7 +56,7 @@ mixin _$AuthEvent {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
-    Result initializePushNotifications(),
+    Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
@@ -130,7 +132,7 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
-    @required Result initializePushNotifications(),
+    @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
   }) {
@@ -147,7 +149,7 @@ class _$AuthCheckRequested implements AuthCheckRequested {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
-    Result initializePushNotifications(),
+    Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
@@ -234,7 +236,7 @@ class _$SignedOut implements SignedOut {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
-    @required Result initializePushNotifications(),
+    @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
   }) {
@@ -251,7 +253,7 @@ class _$SignedOut implements SignedOut {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
-    Result initializePushNotifications(),
+    Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
@@ -308,6 +310,7 @@ abstract class $InitializePushNotificationsCopyWith<$Res> {
           InitializePushNotifications value,
           $Res Function(InitializePushNotifications) then) =
       _$InitializePushNotificationsCopyWithImpl<$Res>;
+  $Res call({String env});
 }
 
 class _$InitializePushNotificationsCopyWithImpl<$Res>
@@ -320,30 +323,51 @@ class _$InitializePushNotificationsCopyWithImpl<$Res>
   @override
   InitializePushNotifications get _value =>
       super._value as InitializePushNotifications;
+
+  @override
+  $Res call({
+    Object env = freezed,
+  }) {
+    return _then(InitializePushNotifications(
+      env == freezed ? _value.env : env as String,
+    ));
+  }
 }
 
 class _$InitializePushNotifications implements InitializePushNotifications {
-  const _$InitializePushNotifications();
+  const _$InitializePushNotifications(this.env) : assert(env != null);
+
+  @override
+  final String env;
 
   @override
   String toString() {
-    return 'AuthEvent.initializePushNotifications()';
+    return 'AuthEvent.initializePushNotifications(env: $env)';
   }
 
   @override
   bool operator ==(dynamic other) {
-    return identical(this, other) || (other is InitializePushNotifications);
+    return identical(this, other) ||
+        (other is InitializePushNotifications &&
+            (identical(other.env, env) ||
+                const DeepCollectionEquality().equals(other.env, env)));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(env);
+
+  @override
+  $InitializePushNotificationsCopyWith<InitializePushNotifications>
+      get copyWith => _$InitializePushNotificationsCopyWithImpl<
+          InitializePushNotifications>(this, _$identity);
 
   @override
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
-    @required Result initializePushNotifications(),
+    @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
   }) {
@@ -352,7 +376,7 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
-    return initializePushNotifications();
+    return initializePushNotifications(env);
   }
 
   @override
@@ -360,14 +384,14 @@ class _$InitializePushNotifications implements InitializePushNotifications {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
-    Result initializePushNotifications(),
+    Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (initializePushNotifications != null) {
-      return initializePushNotifications();
+      return initializePushNotifications(env);
     }
     return orElse();
   }
@@ -409,7 +433,12 @@ class _$InitializePushNotifications implements InitializePushNotifications {
 }
 
 abstract class InitializePushNotifications implements AuthEvent {
-  const factory InitializePushNotifications() = _$InitializePushNotifications;
+  const factory InitializePushNotifications(String env) =
+      _$InitializePushNotifications;
+
+  String get env;
+  $InitializePushNotificationsCopyWith<InitializePushNotifications>
+      get copyWith;
 }
 
 abstract class $SetAnalyticsUserIDCopyWith<$Res> {
@@ -473,7 +502,7 @@ class _$SetAnalyticsUserID implements SetAnalyticsUserID {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
-    @required Result initializePushNotifications(),
+    @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
   }) {
@@ -490,7 +519,7 @@ class _$SetAnalyticsUserID implements SetAnalyticsUserID {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
-    Result initializePushNotifications(),
+    Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),
@@ -612,7 +641,7 @@ class _$NavigateTo implements NavigateTo {
   Result when<Result extends Object>({
     @required Result authCheckRequested(),
     @required Result signedOut(),
-    @required Result initializePushNotifications(),
+    @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
   }) {
@@ -629,7 +658,7 @@ class _$NavigateTo implements NavigateTo {
   Result maybeWhen<Result extends Object>({
     Result authCheckRequested(),
     Result signedOut(),
-    Result initializePushNotifications(),
+    Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
     @required Result orElse(),

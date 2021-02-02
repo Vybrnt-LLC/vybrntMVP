@@ -17,29 +17,29 @@ class _$ActivityDTOTearOff {
 
   _ActivityDTO call(
       {@JsonKey(ignore: true) String activityID,
-      @required String type,
-      @required String userID,
-      @required String orgID,
-      @required String profileImageURL,
-      @required String postID,
-      @required String eventID,
-      @required String commentID,
-      @required String username,
+      @required String activityType,
+      @required String objectID,
+      @required String ownerType,
+      @required String ownerID,
+      @required String titleSubject,
+      @required String bodySubject,
       @required dynamic timeStamp,
-      @required bool isOrg,
+      @required String imageURL,
+      @required String profileID,
+      @required String profileType,
       @required @ServerTimestampConverter() FieldValue serverTimeStamp}) {
     return _ActivityDTO(
       activityID: activityID,
-      type: type,
-      userID: userID,
-      orgID: orgID,
-      profileImageURL: profileImageURL,
-      postID: postID,
-      eventID: eventID,
-      commentID: commentID,
-      username: username,
+      activityType: activityType,
+      objectID: objectID,
+      ownerType: ownerType,
+      ownerID: ownerID,
+      titleSubject: titleSubject,
+      bodySubject: bodySubject,
       timeStamp: timeStamp,
-      isOrg: isOrg,
+      imageURL: imageURL,
+      profileID: profileID,
+      profileType: profileType,
       serverTimeStamp: serverTimeStamp,
     );
   }
@@ -51,16 +51,16 @@ const $ActivityDTO = _$ActivityDTOTearOff();
 mixin _$ActivityDTO {
   @JsonKey(ignore: true)
   String get activityID;
-  String get type;
-  String get userID;
-  String get orgID;
-  String get profileImageURL;
-  String get postID;
-  String get eventID;
-  String get commentID;
-  String get username;
+  String get activityType;
+  String get objectID;
+  String get ownerType;
+  String get ownerID;
+  String get titleSubject;
+  String get bodySubject;
   dynamic get timeStamp;
-  bool get isOrg;
+  String get imageURL;
+  String get profileID;
+  String get profileType;
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
 
@@ -74,16 +74,16 @@ abstract class $ActivityDTOCopyWith<$Res> {
       _$ActivityDTOCopyWithImpl<$Res>;
   $Res call(
       {@JsonKey(ignore: true) String activityID,
-      String type,
-      String userID,
-      String orgID,
-      String profileImageURL,
-      String postID,
-      String eventID,
-      String commentID,
-      String username,
+      String activityType,
+      String objectID,
+      String ownerType,
+      String ownerID,
+      String titleSubject,
+      String bodySubject,
       dynamic timeStamp,
-      bool isOrg,
+      String imageURL,
+      String profileID,
+      String profileType,
       @ServerTimestampConverter() FieldValue serverTimeStamp});
 }
 
@@ -97,33 +97,37 @@ class _$ActivityDTOCopyWithImpl<$Res> implements $ActivityDTOCopyWith<$Res> {
   @override
   $Res call({
     Object activityID = freezed,
-    Object type = freezed,
-    Object userID = freezed,
-    Object orgID = freezed,
-    Object profileImageURL = freezed,
-    Object postID = freezed,
-    Object eventID = freezed,
-    Object commentID = freezed,
-    Object username = freezed,
+    Object activityType = freezed,
+    Object objectID = freezed,
+    Object ownerType = freezed,
+    Object ownerID = freezed,
+    Object titleSubject = freezed,
+    Object bodySubject = freezed,
     Object timeStamp = freezed,
-    Object isOrg = freezed,
+    Object imageURL = freezed,
+    Object profileID = freezed,
+    Object profileType = freezed,
     Object serverTimeStamp = freezed,
   }) {
     return _then(_value.copyWith(
       activityID:
           activityID == freezed ? _value.activityID : activityID as String,
-      type: type == freezed ? _value.type : type as String,
-      userID: userID == freezed ? _value.userID : userID as String,
-      orgID: orgID == freezed ? _value.orgID : orgID as String,
-      profileImageURL: profileImageURL == freezed
-          ? _value.profileImageURL
-          : profileImageURL as String,
-      postID: postID == freezed ? _value.postID : postID as String,
-      eventID: eventID == freezed ? _value.eventID : eventID as String,
-      commentID: commentID == freezed ? _value.commentID : commentID as String,
-      username: username == freezed ? _value.username : username as String,
+      activityType: activityType == freezed
+          ? _value.activityType
+          : activityType as String,
+      objectID: objectID == freezed ? _value.objectID : objectID as String,
+      ownerType: ownerType == freezed ? _value.ownerType : ownerType as String,
+      ownerID: ownerID == freezed ? _value.ownerID : ownerID as String,
+      titleSubject: titleSubject == freezed
+          ? _value.titleSubject
+          : titleSubject as String,
+      bodySubject:
+          bodySubject == freezed ? _value.bodySubject : bodySubject as String,
       timeStamp: timeStamp == freezed ? _value.timeStamp : timeStamp as dynamic,
-      isOrg: isOrg == freezed ? _value.isOrg : isOrg as bool,
+      imageURL: imageURL == freezed ? _value.imageURL : imageURL as String,
+      profileID: profileID == freezed ? _value.profileID : profileID as String,
+      profileType:
+          profileType == freezed ? _value.profileType : profileType as String,
       serverTimeStamp: serverTimeStamp == freezed
           ? _value.serverTimeStamp
           : serverTimeStamp as FieldValue,
@@ -139,16 +143,16 @@ abstract class _$ActivityDTOCopyWith<$Res>
   @override
   $Res call(
       {@JsonKey(ignore: true) String activityID,
-      String type,
-      String userID,
-      String orgID,
-      String profileImageURL,
-      String postID,
-      String eventID,
-      String commentID,
-      String username,
+      String activityType,
+      String objectID,
+      String ownerType,
+      String ownerID,
+      String titleSubject,
+      String bodySubject,
       dynamic timeStamp,
-      bool isOrg,
+      String imageURL,
+      String profileID,
+      String profileType,
       @ServerTimestampConverter() FieldValue serverTimeStamp});
 }
 
@@ -164,33 +168,37 @@ class __$ActivityDTOCopyWithImpl<$Res> extends _$ActivityDTOCopyWithImpl<$Res>
   @override
   $Res call({
     Object activityID = freezed,
-    Object type = freezed,
-    Object userID = freezed,
-    Object orgID = freezed,
-    Object profileImageURL = freezed,
-    Object postID = freezed,
-    Object eventID = freezed,
-    Object commentID = freezed,
-    Object username = freezed,
+    Object activityType = freezed,
+    Object objectID = freezed,
+    Object ownerType = freezed,
+    Object ownerID = freezed,
+    Object titleSubject = freezed,
+    Object bodySubject = freezed,
     Object timeStamp = freezed,
-    Object isOrg = freezed,
+    Object imageURL = freezed,
+    Object profileID = freezed,
+    Object profileType = freezed,
     Object serverTimeStamp = freezed,
   }) {
     return _then(_ActivityDTO(
       activityID:
           activityID == freezed ? _value.activityID : activityID as String,
-      type: type == freezed ? _value.type : type as String,
-      userID: userID == freezed ? _value.userID : userID as String,
-      orgID: orgID == freezed ? _value.orgID : orgID as String,
-      profileImageURL: profileImageURL == freezed
-          ? _value.profileImageURL
-          : profileImageURL as String,
-      postID: postID == freezed ? _value.postID : postID as String,
-      eventID: eventID == freezed ? _value.eventID : eventID as String,
-      commentID: commentID == freezed ? _value.commentID : commentID as String,
-      username: username == freezed ? _value.username : username as String,
+      activityType: activityType == freezed
+          ? _value.activityType
+          : activityType as String,
+      objectID: objectID == freezed ? _value.objectID : objectID as String,
+      ownerType: ownerType == freezed ? _value.ownerType : ownerType as String,
+      ownerID: ownerID == freezed ? _value.ownerID : ownerID as String,
+      titleSubject: titleSubject == freezed
+          ? _value.titleSubject
+          : titleSubject as String,
+      bodySubject:
+          bodySubject == freezed ? _value.bodySubject : bodySubject as String,
       timeStamp: timeStamp == freezed ? _value.timeStamp : timeStamp as dynamic,
-      isOrg: isOrg == freezed ? _value.isOrg : isOrg as bool,
+      imageURL: imageURL == freezed ? _value.imageURL : imageURL as String,
+      profileID: profileID == freezed ? _value.profileID : profileID as String,
+      profileType:
+          profileType == freezed ? _value.profileType : profileType as String,
       serverTimeStamp: serverTimeStamp == freezed
           ? _value.serverTimeStamp
           : serverTimeStamp as FieldValue,
@@ -202,27 +210,27 @@ class __$ActivityDTOCopyWithImpl<$Res> extends _$ActivityDTOCopyWithImpl<$Res>
 class _$_ActivityDTO implements _ActivityDTO {
   _$_ActivityDTO(
       {@JsonKey(ignore: true) this.activityID,
-      @required this.type,
-      @required this.userID,
-      @required this.orgID,
-      @required this.profileImageURL,
-      @required this.postID,
-      @required this.eventID,
-      @required this.commentID,
-      @required this.username,
+      @required this.activityType,
+      @required this.objectID,
+      @required this.ownerType,
+      @required this.ownerID,
+      @required this.titleSubject,
+      @required this.bodySubject,
       @required this.timeStamp,
-      @required this.isOrg,
+      @required this.imageURL,
+      @required this.profileID,
+      @required this.profileType,
       @required @ServerTimestampConverter() this.serverTimeStamp})
-      : assert(type != null),
-        assert(userID != null),
-        assert(orgID != null),
-        assert(profileImageURL != null),
-        assert(postID != null),
-        assert(eventID != null),
-        assert(commentID != null),
-        assert(username != null),
+      : assert(activityType != null),
+        assert(objectID != null),
+        assert(ownerType != null),
+        assert(ownerID != null),
+        assert(titleSubject != null),
+        assert(bodySubject != null),
         assert(timeStamp != null),
-        assert(isOrg != null),
+        assert(imageURL != null),
+        assert(profileID != null),
+        assert(profileType != null),
         assert(serverTimeStamp != null);
 
   factory _$_ActivityDTO.fromJson(Map<String, dynamic> json) =>
@@ -232,32 +240,32 @@ class _$_ActivityDTO implements _ActivityDTO {
   @JsonKey(ignore: true)
   final String activityID;
   @override
-  final String type;
+  final String activityType;
   @override
-  final String userID;
+  final String objectID;
   @override
-  final String orgID;
+  final String ownerType;
   @override
-  final String profileImageURL;
+  final String ownerID;
   @override
-  final String postID;
+  final String titleSubject;
   @override
-  final String eventID;
-  @override
-  final String commentID;
-  @override
-  final String username;
+  final String bodySubject;
   @override
   final dynamic timeStamp;
   @override
-  final bool isOrg;
+  final String imageURL;
+  @override
+  final String profileID;
+  @override
+  final String profileType;
   @override
   @ServerTimestampConverter()
   final FieldValue serverTimeStamp;
 
   @override
   String toString() {
-    return 'ActivityDTO(activityID: $activityID, type: $type, userID: $userID, orgID: $orgID, profileImageURL: $profileImageURL, postID: $postID, eventID: $eventID, commentID: $commentID, username: $username, timeStamp: $timeStamp, isOrg: $isOrg, serverTimeStamp: $serverTimeStamp)';
+    return 'ActivityDTO(activityID: $activityID, activityType: $activityType, objectID: $objectID, ownerType: $ownerType, ownerID: $ownerID, titleSubject: $titleSubject, bodySubject: $bodySubject, timeStamp: $timeStamp, imageURL: $imageURL, profileID: $profileID, profileType: $profileType, serverTimeStamp: $serverTimeStamp)';
   }
 
   @override
@@ -267,31 +275,36 @@ class _$_ActivityDTO implements _ActivityDTO {
             (identical(other.activityID, activityID) ||
                 const DeepCollectionEquality()
                     .equals(other.activityID, activityID)) &&
-            (identical(other.type, type) ||
-                const DeepCollectionEquality().equals(other.type, type)) &&
-            (identical(other.userID, userID) ||
-                const DeepCollectionEquality().equals(other.userID, userID)) &&
-            (identical(other.orgID, orgID) ||
-                const DeepCollectionEquality().equals(other.orgID, orgID)) &&
-            (identical(other.profileImageURL, profileImageURL) ||
+            (identical(other.activityType, activityType) ||
                 const DeepCollectionEquality()
-                    .equals(other.profileImageURL, profileImageURL)) &&
-            (identical(other.postID, postID) ||
-                const DeepCollectionEquality().equals(other.postID, postID)) &&
-            (identical(other.eventID, eventID) ||
+                    .equals(other.activityType, activityType)) &&
+            (identical(other.objectID, objectID) ||
                 const DeepCollectionEquality()
-                    .equals(other.eventID, eventID)) &&
-            (identical(other.commentID, commentID) ||
+                    .equals(other.objectID, objectID)) &&
+            (identical(other.ownerType, ownerType) ||
                 const DeepCollectionEquality()
-                    .equals(other.commentID, commentID)) &&
-            (identical(other.username, username) ||
+                    .equals(other.ownerType, ownerType)) &&
+            (identical(other.ownerID, ownerID) ||
                 const DeepCollectionEquality()
-                    .equals(other.username, username)) &&
+                    .equals(other.ownerID, ownerID)) &&
+            (identical(other.titleSubject, titleSubject) ||
+                const DeepCollectionEquality()
+                    .equals(other.titleSubject, titleSubject)) &&
+            (identical(other.bodySubject, bodySubject) ||
+                const DeepCollectionEquality()
+                    .equals(other.bodySubject, bodySubject)) &&
             (identical(other.timeStamp, timeStamp) ||
                 const DeepCollectionEquality()
                     .equals(other.timeStamp, timeStamp)) &&
-            (identical(other.isOrg, isOrg) ||
-                const DeepCollectionEquality().equals(other.isOrg, isOrg)) &&
+            (identical(other.imageURL, imageURL) ||
+                const DeepCollectionEquality()
+                    .equals(other.imageURL, imageURL)) &&
+            (identical(other.profileID, profileID) ||
+                const DeepCollectionEquality()
+                    .equals(other.profileID, profileID)) &&
+            (identical(other.profileType, profileType) ||
+                const DeepCollectionEquality()
+                    .equals(other.profileType, profileType)) &&
             (identical(other.serverTimeStamp, serverTimeStamp) ||
                 const DeepCollectionEquality()
                     .equals(other.serverTimeStamp, serverTimeStamp)));
@@ -301,16 +314,16 @@ class _$_ActivityDTO implements _ActivityDTO {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(activityID) ^
-      const DeepCollectionEquality().hash(type) ^
-      const DeepCollectionEquality().hash(userID) ^
-      const DeepCollectionEquality().hash(orgID) ^
-      const DeepCollectionEquality().hash(profileImageURL) ^
-      const DeepCollectionEquality().hash(postID) ^
-      const DeepCollectionEquality().hash(eventID) ^
-      const DeepCollectionEquality().hash(commentID) ^
-      const DeepCollectionEquality().hash(username) ^
+      const DeepCollectionEquality().hash(activityType) ^
+      const DeepCollectionEquality().hash(objectID) ^
+      const DeepCollectionEquality().hash(ownerType) ^
+      const DeepCollectionEquality().hash(ownerID) ^
+      const DeepCollectionEquality().hash(titleSubject) ^
+      const DeepCollectionEquality().hash(bodySubject) ^
       const DeepCollectionEquality().hash(timeStamp) ^
-      const DeepCollectionEquality().hash(isOrg) ^
+      const DeepCollectionEquality().hash(imageURL) ^
+      const DeepCollectionEquality().hash(profileID) ^
+      const DeepCollectionEquality().hash(profileType) ^
       const DeepCollectionEquality().hash(serverTimeStamp);
 
   @override
@@ -326,16 +339,16 @@ class _$_ActivityDTO implements _ActivityDTO {
 abstract class _ActivityDTO implements ActivityDTO {
   factory _ActivityDTO(
           {@JsonKey(ignore: true) String activityID,
-          @required String type,
-          @required String userID,
-          @required String orgID,
-          @required String profileImageURL,
-          @required String postID,
-          @required String eventID,
-          @required String commentID,
-          @required String username,
+          @required String activityType,
+          @required String objectID,
+          @required String ownerType,
+          @required String ownerID,
+          @required String titleSubject,
+          @required String bodySubject,
           @required dynamic timeStamp,
-          @required bool isOrg,
+          @required String imageURL,
+          @required String profileID,
+          @required String profileType,
           @required @ServerTimestampConverter() FieldValue serverTimeStamp}) =
       _$_ActivityDTO;
 
@@ -346,25 +359,25 @@ abstract class _ActivityDTO implements ActivityDTO {
   @JsonKey(ignore: true)
   String get activityID;
   @override
-  String get type;
+  String get activityType;
   @override
-  String get userID;
+  String get objectID;
   @override
-  String get orgID;
+  String get ownerType;
   @override
-  String get profileImageURL;
+  String get ownerID;
   @override
-  String get postID;
+  String get titleSubject;
   @override
-  String get eventID;
-  @override
-  String get commentID;
-  @override
-  String get username;
+  String get bodySubject;
   @override
   dynamic get timeStamp;
   @override
-  bool get isOrg;
+  String get imageURL;
+  @override
+  String get profileID;
+  @override
+  String get profileType;
   @override
   @ServerTimestampConverter()
   FieldValue get serverTimeStamp;
