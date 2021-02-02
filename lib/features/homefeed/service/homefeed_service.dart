@@ -61,7 +61,7 @@ class HomeFeedService implements IHomeFeedService {
   @override
   Stream<Either<PostFailure, KtList<Post>>> watchPostFeed() async* {
     final currentUserID = await _firestore.currentUserID();
-    yield* _postsController.stream;
+    //yield* _postsController.stream;
     yield* feedsRef
         .doc(currentUserID)
         .collection('userFeed')

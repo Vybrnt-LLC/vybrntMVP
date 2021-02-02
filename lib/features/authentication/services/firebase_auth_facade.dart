@@ -54,6 +54,7 @@ class FirebaseAuthFacade implements IAuthFacade {
         email: emailAddress.getOrCrash(),
       ));
       await usersRef.doc(result.user.uid).set(userDTO.toJson());
+      await addVybrntToFollowList(result.user.uid);
       await addFirstPost(result.user);
 
       return right(unit);
@@ -143,6 +144,7 @@ class FirebaseAuthFacade implements IAuthFacade {
             userID: UniqueId.fromUniqueString(result.user.uid),
           ));
           await usersRef.doc(result.user.uid).set(userDTO.toJson());
+          await addVybrntToFollowList(result.user.uid);
           await addFirstPost(result.user);
         } else {
           isRegistering = false;
@@ -198,6 +200,7 @@ class FirebaseAuthFacade implements IAuthFacade {
           userID: UniqueId.fromUniqueString(result.user.uid),
         ));
         await usersRef.doc(result.user.uid).set(userDTO.toJson());
+        await addVybrntToFollowList(result.user.uid);
         await addFirstPost(result.user);
       } else {
         isRegistering = false;
@@ -231,4 +234,21 @@ class FirebaseAuthFacade implements IAuthFacade {
   Future<void> signOut() async {
     return Future.wait([_googleSignIn.signOut(), _firebaseAuth.signOut()]);
   }
+}
+
+Future addVybrntToFollowList(String currentUserID) async {
+  final orgID = 'cec10340-090e-11eb-a5dc-1d0e34e32b97';
+  followingRef.doc(currentUserID).collection('orgFollowing').doc(orgID).set({
+    'abbv': 'Vybrnt',
+    'name': 'Vybrnt',
+    'profileImageUrl':
+        'https://firebasestorage.googleapis.com/v0/b/vybrnt-production-release.appspot.com/o/images%2Forgs%2ForgProfile_c320f73c-3634-4c35-b47f-9e289ae6750c.jpg?alt=media&token=78ade707-7cb2-4d28-86e5-6c3dff579c21',
+    'isToggled': true,
+  });
+  // Add current user to user's followers collection
+  followersRef
+      .doc(orgID)
+      .collection('orgFollowers')
+      .doc(currentUserID)
+      .set({'isToggled': true, 'notify': true});
 }

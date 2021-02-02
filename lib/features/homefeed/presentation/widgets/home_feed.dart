@@ -245,28 +245,27 @@ class _HomeFeedState extends State<HomeFeed> {
                                   openContainer: openContainer,
                                   width: 250,
                                   child: BlocProvider<PostActorBloc>(
-                                      create: (context) =>
-                                          getIt<PostActorBloc>()
-                                            ..add(PostActorEvent.getData(
-                                                state.posts[index],
-                                                currentUserID: currentUserID,
-                                                senderID: state
-                                                    .posts[index].senderID
-                                                    .getOrCrash())),
-                                      child: CreationAwareListItem(
-                                        itemCreated: () {
-                                          if (index % 20 == 0) {
-                                            context.bloc<HomePostsBloc>().add(
-                                                HomePostsEvent.requestMoreData(
-                                                    currentUserID));
-                                          }
-                                        },
-                                        child: Container(
-                                            child: PostCard(
-                                          //user: _profileUser,
-                                          post: state.posts[index],
-                                        )),
-                                      )),
+                                    create: (context) => getIt<PostActorBloc>()
+                                      ..add(PostActorEvent.getData(
+                                          state.posts[index],
+                                          currentUserID: currentUserID,
+                                          senderID: state.posts[index].senderID
+                                              .getOrCrash())),
+                                    // child: CreationAwareListItem(
+                                    //   itemCreated: () {
+                                    //     if (index % 20 == 0) {
+                                    //       context.bloc<HomePostsBloc>().add(
+                                    //           HomePostsEvent.requestMoreData(
+                                    //               currentUserID));
+                                    //     }
+                                    //   },
+                                    child: Container(
+                                        child: PostCard(
+                                      //user: _profileUser,
+                                      post: state.posts[index],
+                                    )),
+                                    // )
+                                  ),
                                 );
                               },
                             );

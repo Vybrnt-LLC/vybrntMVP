@@ -32,7 +32,8 @@ class HomePostsBloc extends Bloc<HomePostsEvent, HomePostsState> {
       yield const HomePostsState.loadInProgress();
       await _postStreamSubscription?.cancel();
       _postStreamSubscription = _homeFeedService
-          .watchPostFeedPaginated(e.currentUserID)
+          .watchPostFeed()
+          //.watchPostFeedPaginated(e.currentUserID)
           .listen((post) => add(HomePostsEvent.postsReceived(post)));
     }, postsReceived: (e) async* {
       yield e.failureOrNotes.fold(
@@ -48,7 +49,7 @@ class HomePostsBloc extends Bloc<HomePostsEvent, HomePostsState> {
   @override
   Future<void> close() async {
     await _postStreamSubscription.cancel();
-    _homeFeedService.resetPostList();
+    //_homeFeedService.resetPostList();
     return super.close();
   }
 }

@@ -70,19 +70,15 @@ class PostRepository implements IPostRepository {
   @override
   Future<Either<PostFailure, Unit>> delete(Post post) async {
     try {
-      if (post.orgID.getOrCrash().isEmpty) {
-        await postsRef
-            .doc(post.senderID.getOrCrash())
-            .collection("userPosts")
-            .doc(post.postID.getOrCrash())
-            .delete();
-      } else {
-        await postsRef
-            .doc(post.senderID.getOrCrash())
-            .collection("orgPosts")
-            .doc(post.postID.getOrCrash())
-            .delete();
-      }
+      final ownerType = _getOwnerType(post);
+      final ownerID = _getOwnerID(post);
+
+      await postsRef
+          .doc(ownerID)
+          .collection(OwnerTypeHelper.stringOf(ownerType) + "Posts")
+          .doc(post.postID.getOrCrash())
+          .delete();
+
       Unit success;
       await likesRef.doc(post.postID.getOrCrash()).delete();
       await repostsRef.doc(post.postID.getOrCrash()).delete();
@@ -551,4 +547,22 @@ class PostRepository implements IPostRepository {
 
     return PostDTO.fromFirestore(postDoc).toDomain();
   }
+}
+
+String _getOwnerID(Post post) {
+  String ownerID = post.repostID.getOrCrash().isNotEmpty
+      ? post.repostID.getOrCrash()
+      : post.orgID.getOrCrash().isNotEmpty
+          ? post.orgID.getOrCrash()
+          : post.senderID.getOrCrash();
+  return ownerID;
+}
+
+OwnerType _getOwnerType(Post post) {
+  OwnerType ownerType = post.repostID.getOrCrash().isNotEmpty
+      ? OwnerType.USER
+      : post.orgID.getOrCrash().isEmpty
+          ? OwnerType.USER
+          : OwnerType.ORG;
+  return ownerType;
 }

@@ -228,10 +228,8 @@ class ActivityService implements IActivityService {
         newActivity.activityID.getOrCrash(), activityDTO, ownerType, ownerID);
   }
 
-  //TODO: Creates a post when an event is created... but i would have to figure out a way to navigate to that event...
   //Would have to add an post type enum, a default value for when one is loaded in, and an eventID field in post.
-//TODO: Fix pagination and post
-//TODO: delete the old activities
+
   @override
   Future addEventToActivityFeed(Event event) async {
     // final currentUserID = await _firestore.currentUserID();

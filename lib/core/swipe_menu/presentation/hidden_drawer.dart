@@ -76,7 +76,7 @@ class HiddenDrawer extends StatelessWidget {
               child: BookmarkScreen())),
       ScreenHiddenDrawer(
           ItemHiddenMenu(
-            name: "References",
+            name: "Links",
             colorLineSelected: Colors.orange,
             baseStyle:
                 TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 25.0),

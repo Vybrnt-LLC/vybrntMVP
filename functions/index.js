@@ -663,8 +663,6 @@ exports.onUpdateOrgEvent = functions.firestore
         });
     });
 
-    //TODO: Update activity Cloud Functions
-    //TODO: Fix Paginations
+
     //TODO: Fix Android Google Login
-    
     

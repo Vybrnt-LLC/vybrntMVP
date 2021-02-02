@@ -29,7 +29,7 @@ dependencies:
     git:
       url: https://github.com/knaeckeKami/plugins.git
       path: packages/image_picker/image_picker
-  adobe_xd: ^0.1.4
+  adobe_xd: ^1.0.0+1
   animated_splash: ^1.0.0
   animated_splash_screen: ^1.0.1
   animated_text_kit: ^2.5.4
@@ -41,7 +41,7 @@ dependencies:
   auto_size_text: ^2.1.0
   bloc: ^6.0.3
   bordered_text: ^1.0.0
-  cached_network_image: ^2.0.0-rc
+  cached_network_image: ^2.5.0
   cloud_firestore: ^0.14.0+2
   cupertino_icons: ^0.1.2
   dartz: ^0.9.1
@@ -107,6 +107,7 @@ dependencies:
   truncate: ^2.1.2
   url_launcher: ^5.4.10
   uuid: ^2.0.4
+  webview_flutter: ^1.0.7
 
 dev_dependencies:
   flutter_test:

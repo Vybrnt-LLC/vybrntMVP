@@ -4,9 +4,12 @@ import 'package:bordered_text/bordered_text.dart';
 import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
@@ -366,6 +369,12 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                         floating: true,
                         expandedHeight: 60.0,
                         actions: <Widget>[
+                          IconButton(
+                            onPressed: () => launch(
+                                'https://www.notion.so/Updates-698903a6bafe4d32ba91ea7073461705'),
+                            icon: FaIcon(FontAwesomeIcons.bullhorn,
+                                color: Colors.white, size: 20),
+                          ),
                           IconButton(
                               icon: Icon(Icons.message),
                               onPressed: () =>
