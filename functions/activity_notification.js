@@ -1,5 +1,5 @@
 const functions = require('firebase-functions');
-const  admin = require('./admin')
+const { db, admin } = require('./admin')
 
 
 const onCreateActivityFeedItem = functions.firestore
@@ -8,7 +8,8 @@ const onCreateActivityFeedItem = functions.firestore
 
     // 1) Get user connected to the feed
     const userID = context.params.userID;
-    const userRef = admin.firestore().collection('users').doc(userID);
+    const activityID = context.params.activityID;
+    const userRef = db.collection('users').doc(userID);
     const doc = await userRef.get();
     
 
