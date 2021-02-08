@@ -446,7 +446,15 @@ class PostRepository implements IPostRepository {
           .doc(newComment.commentID.getOrCrash())
           .set(commentDTO.toJson());
 
-      await _activityService.addCommentToActivityFeed(post, newComment);
+      final ownersOfComments = await commentsRef
+          .doc(post.postID.getOrCrash())
+          .collection('postComments')
+          .snapshots()
+          .map((snapshots) =>
+              snapshots.docs.map((doc) => doc['senderID']).toSet().toList())
+          .first;
+      await _activityService.addCommentToActivityFeed(
+          post, newComment, ownersOfComments);
 
       return right(unit);
     } on FirebaseException catch (e) {

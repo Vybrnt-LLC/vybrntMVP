@@ -14,7 +14,8 @@ abstract class IActivityService {
   //Future removeLikeFromActivityFeed(Post post);
   Future addRepostToActivityFeed(Post post, String newRepostID);
   //Future removeRepostFromActivityFeed(Post post, String repostID);
-  Future addCommentToActivityFeed(Post post, Comment comment);
+  Future addCommentToActivityFeed(
+      Post post, Comment comment, List<String> ownersOfComments);
   //Future removeCommentFromActivityFeed(Post post, Comment comment);
   Future addPostToActivityFeed(Post post);
   Future addEventToActivityFeed(Event event);
