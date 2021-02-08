@@ -143,32 +143,43 @@ class ActivityService implements IActivityService {
   // }
 
   @override
-  Future addCommentToActivityFeed(Post post, Comment comment) async {
+  Future addCommentToActivityFeed(
+      Post post, Comment comment, List<String> ownersOfComments) async {
     final currentUserID = await _firestore.currentUserID();
+
+    final currentUserDoc = await usersRef.doc(currentUserID).get();
+    String name = await currentUserDoc.get('profileName');
+    name = name.isEmpty ? 'An Anonymous User' : name;
+    final ownerType = _getOwnerType(post);
+    final ownerID = _getOwnerID(post);
+    final bodySubject = comment.commentBody.getOrCrash();
+
+    Activity newActivity = Activity.empty();
+    final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
+      activityType: ActivityType.COMMENT,
+      objectID: post.postID.getOrCrash(),
+      ownerType: ownerType,
+      ownerID: ownerID,
+      titleSubject: name,
+      bodySubject: bodySubject,
+      imageURL: currentUserDoc.get('profileImageUrl'),
+      profileID: currentUserID,
+      profileType: OwnerType.USER,
+    ));
     bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-
     if (isNotPostOwner) {
-      final currentUserDoc = await usersRef.doc(currentUserID).get();
-      String name = await currentUserDoc.get('profileName');
-      name = name.isEmpty ? 'An Anonymous User' : name;
-      final ownerType = _getOwnerType(post);
-      final ownerID = _getOwnerID(post);
-      final bodySubject = comment.commentBody.getOrCrash();
-
-      Activity newActivity = Activity.empty();
-      final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-        activityType: ActivityType.COMMENT,
-        objectID: post.postID.getOrCrash(),
-        ownerType: ownerType,
-        ownerID: ownerID,
-        titleSubject: name,
-        bodySubject: bodySubject,
-        imageURL: currentUserDoc.get('profileImageUrl'),
-        profileID: currentUserID,
-        profileType: OwnerType.USER,
-      ));
-
       _sendActivityDTO(activityDTO, newActivity, post);
+    }
+
+    for (int i = 0; i < ownersOfComments.length; i++) {
+      if (ownersOfComments[i] != currentUserID &&
+          ownersOfComments[i] != post.senderID.getOrCrash()) {
+        activitiesRef
+            .doc(ownersOfComments[i])
+            .collection('userActivityFeed')
+            .doc(newActivity.activityID.getOrCrash())
+            .set(activityDTO.toJson());
+      }
     }
   }
 
