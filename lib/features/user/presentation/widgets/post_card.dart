@@ -41,7 +41,7 @@ class PostCard extends StatelessWidget {
     return BlocBuilder<PostActorBloc, PostActorState>(
         builder: (context, state) {
       final shareLink = state.shareLink;
-      final name = state.org.orgID.getOrCrash().isNotEmpty
+      final name = post.orgID.getOrCrash().isNotEmpty
           ? state.org.name
           : state.senderUser.profileName;
 
@@ -456,112 +456,106 @@ class PostCard extends StatelessWidget {
               //This final row contains the like button, the comment button, the share button, and the bookmark
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    // GestureDetector(
-                    //   onTap: () => TabNavigatorProvider.of(context)
-                    //       .pushLikesList(context, userIDList: state.likes),
-                    //   child: Text(
-                    //       state.likes.size > 0
-                    //           ? state.likes.size.toString()
-                    //           : "",
-                    //       style: TextStyle(color: color, fontSize: 14)),
-                    // ),
-                    LikeButton(
-                      onTap: (isLiked) async {
-                        context.bloc<PostActorBloc>().add(
-                            PostActorEvent.toggleLikePost(post, currentUserID));
+                LikeButton(
+                  onTap: (isLiked) async {
+                    context.bloc<PostActorBloc>().add(
+                        PostActorEvent.toggleLikePost(post, currentUserID));
 
-                        return state.isLiked;
-                      },
-                      size: 30,
-                      circleColor: CircleColor(
-                          start: Color(0xff00ddff), end: Color(0xff0099cc)),
-                      bubblesColor: BubblesColor(
-                        dotPrimaryColor: Color(0xff33b5e5),
-                        dotSecondaryColor: Color(0xff0099cc),
-                      ),
-                      likeBuilder: (bool isLiked) {
-                        return Icon(Icons.thumb_up,
-                            color: state.isLiked ? color : Colors.black);
-                      },
-                      likeCount: state.likes.size,
-                      countBuilder: (int count, bool isLiked, String text) {
-                        var color =
-                            isLiked ? Colors.deepPurpleAccent : Colors.grey;
-                        Widget result;
-                        if (count == 0) {
-                          result = Text(
-                            "",
-                            style: TextStyle(color: color),
-                          );
-                        } else
-                          result = GestureDetector(
-                            onTap: () =>
-                                TabNavigatorProvider.of(context) != null
-                                    ? TabNavigatorProvider.of(context)
-                                        .pushLikesList(context,
-                                            userIDList: state.likes)
-                                    : getIt<NavigationService>().navigateTo(
-                                        Routes.userList,
-                                        arguments: UserListScreenArguments(
-                                            userIDList: state.likes,
-                                            title: 'Likes')),
-                            child: Text(
-                              text,
-                              style: TextStyle(color: color),
-                            ),
-                          );
-                        return result;
-                      },
-                    ),
-                    // IconButton(
-                    //     icon: Icon(Icons.thumb_up,
-                    //         color: state.isLiked ? color : Colors.black),
-                    //     onPressed: () {
-                    //       context.bloc<PostActorBloc>().add(
-                    //           PostActorEvent.toggleLikePost(
-                    //               post, currentUserID));
-                    //     }),
-                  ],
+                    return !isLiked;
+                  },
+                  size: 30,
+                  circleColor: CircleColor(
+                      start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                  bubblesColor: BubblesColor(
+                    dotPrimaryColor: Color(0xff33b5e5),
+                    dotSecondaryColor: Color(0xff0099cc),
+                  ),
+                  likeBuilder: (bool isLiked) {
+                    return Icon(Icons.thumb_up,
+                        color: state.isLiked ? color : Colors.black);
+                  },
+                  likeCount: state.likes.size,
+                  countBuilder: (int count, bool isLiked, String text) {
+                    //var color = isLiked ? Colors.deepPurpleAccent : Colors.grey;
+                    Widget result;
+                    if (count == 0) {
+                      result = Text(
+                        "",
+                        style: TextStyle(color: color),
+                      );
+                    } else
+                      result = GestureDetector(
+                        onTap: () => TabNavigatorProvider.of(context) != null
+                            ? TabNavigatorProvider.of(context)
+                                .pushLikesList(context, userIDList: state.likes)
+                            : getIt<NavigationService>().navigateTo(
+                                Routes.userList,
+                                arguments: UserListScreenArguments(
+                                    userIDList: state.likes, title: 'Likes')),
+                        child: Text(
+                          text,
+                          style: TextStyle(color: color),
+                        ),
+                      );
+                    return result;
+                  },
                 ),
                 Row(mainAxisAlignment: MainAxisAlignment.start, children: [
+                  Icon(
+                    Icons.mode_comment,
+                  ),
+                  SizedBox(width: 10),
                   Text(
                       state.comments.size > 0
                           ? state.comments.size.toString()
                           : "",
                       style: TextStyle(color: color, fontSize: 14)),
-                  SizedBox(width: 10),
-                  Icon(
-                    Icons.mode_comment,
-                  ),
                 ]),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    GestureDetector(
-                      onTap: () => TabNavigatorProvider.of(context) != null
-                          ? TabNavigatorProvider.of(context).pushRepostList(
-                              context,
-                              userIDList: state.reposts)
-                          : getIt<NavigationService>().navigateTo(
-                              Routes.userList,
-                              arguments: UserListScreenArguments(
-                                  userIDList: state.reposts, title: 'Reposts')),
-                      child: Text(
-                          state.reposts.size > 0
-                              ? state.reposts.size.toString()
-                              : "",
-                          style: TextStyle(color: color, fontSize: 14)),
-                    ),
-                    IconButton(
-                        icon: Icon(Icons.loop,
-                            color: state.isReposted ? color : Colors.black),
-                        onPressed: () => context.bloc<PostActorBloc>().add(
-                            PostActorEvent.toggleRepostPost(
-                                post, currentUserID))),
-                  ],
+                LikeButton(
+                  onTap: (isReposted) async {
+                    context.bloc<PostActorBloc>().add(
+                        PostActorEvent.toggleRepostPost(post, currentUserID));
+
+                    return !isReposted;
+                  },
+                  size: 30,
+                  circleColor: CircleColor(
+                      start: Color(0xff00ddff), end: Color(0xff0099cc)),
+                  bubblesColor: BubblesColor(
+                    dotPrimaryColor: Color(0xff33b5e5),
+                    dotSecondaryColor: Color(0xff0099cc),
+                  ),
+                  likeBuilder: (bool isReposted) {
+                    return Icon(Icons.loop,
+                        color: state.isReposted ? color : Colors.black);
+                  },
+                  likeCount: state.reposts.size,
+                  countBuilder: (int count, bool isReposted, String text) {
+                    //var color = isLiked ? Colors.deepPurpleAccent : Colors.grey;
+                    Widget result;
+                    if (count == 0) {
+                      result = Text(
+                        "",
+                        style: TextStyle(color: color),
+                      );
+                    } else
+                      result = GestureDetector(
+                        onTap: () => TabNavigatorProvider.of(context) != null
+                            ? TabNavigatorProvider.of(context).pushRepostList(
+                                context,
+                                userIDList: state.reposts)
+                            : getIt<NavigationService>().navigateTo(
+                                Routes.userList,
+                                arguments: UserListScreenArguments(
+                                    userIDList: state.reposts,
+                                    title: 'Reposts')),
+                        child: Text(
+                          text,
+                          style: TextStyle(color: color),
+                        ),
+                      );
+                    return result;
+                  },
                 ),
                 IconButton(
                     icon: FaIcon(FontAwesomeIcons.share, color: Colors.black),

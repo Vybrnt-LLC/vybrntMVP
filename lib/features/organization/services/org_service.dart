@@ -167,13 +167,14 @@ class OrgService implements IOrgService {
       'name': org.name,
       'profileImageUrl': org.profileImageUrl,
       'isToggled': true,
+      'notify': true
     });
     // Add current user to user's followers collection
     followersRef
         .doc(orgID)
         .collection('orgFollowers')
         .doc(currentUserID)
-        .set({'isToggled': true, 'notify': false});
+        .set({'isToggled': true, 'notify': true});
 
     await _activityService.addFollowOrgToActivityFeed(orgID);
   }
