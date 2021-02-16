@@ -53,28 +53,6 @@ abstract class Post implements _$Post {
       repostCount: RepostCount(0),
       postTime: PostTime(Timestamp.now()));
 
-  factory Post.fromDoc(DocumentSnapshot doc) {
-    return Post(
-      postID: PostID(doc.id),
-      postType: PostType(doc.get('postType')),
-      senderID: SenderID(doc.get('senderID')),
-      postTime: PostTime(doc.get('postTime')),
-      postImageURL: PostImageURL(doc.get('postImageURL')),
-      postHeader: PostHeader(doc.get('postHeader')),
-      commentable: Commentable(doc.get('commentable')),
-      likeCount: LikeCount(doc.get('likeCount')),
-      commentCount: CommentCount(doc.get('commentCount')),
-      repostCount: RepostCount(doc.get('repostCount')),
-      postBody: PostBody(doc.get('postBody')),
-      //commentsSection: CommentsSection(doc['commentsSection']),
-      eventID: EventID(doc.get('eventID')),
-      orgID: OrgID(doc.get('orgID')),
-      repostable: Repostable(doc.get('repostable')),
-      repostID: RepostID(doc.get('repostID')),
-      postURL: PostURL(doc.get('postURL')),
-    );
-  }
-
   Option<ValueFailure<dynamic>> get failureOption {
     try {
       return postBody.failureOrUnit

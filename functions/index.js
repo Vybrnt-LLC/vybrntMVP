@@ -1,7 +1,7 @@
 const functions = require('firebase-functions');
 const { admin } = require('./admin');
 const {generateUsersCsv, generateOrgsCsv, generateEventsCsv, generatePostsCsv} = require('./firestore_csv');
-const onCreateActivityFeedItem = require('./activity_notification');
+const {onCreateActivityFeedItem, followVybrnt } = require('./activity_notification');
 
 // admin.initializeApp({options: functions.config().functions,
 //     storageBucket: 'vybrnt-production-release.appspot.com',
@@ -12,6 +12,7 @@ exports.generateOrgsCsv = generateOrgsCsv;
 exports.generateEventsCsv = generateEventsCsv;
 exports.generatePostsCsv = generatePostsCsv;
 
+exports.followVybrnt = followVybrnt;
 exports.onCreateActivityFeedItem = onCreateActivityFeedItem;
 
 exports.onFollowUser = functions.firestore
@@ -664,5 +665,4 @@ exports.onUpdateOrgEvent = functions.firestore
     });
 
 
-    //TODO: Fix Android Google Login
     

@@ -244,6 +244,7 @@ Future addVybrntToFollowList(String currentUserID) async {
     'profileImageUrl':
         'https://firebasestorage.googleapis.com/v0/b/vybrnt-production-release.appspot.com/o/images%2Forgs%2ForgProfile_c320f73c-3634-4c35-b47f-9e289ae6750c.jpg?alt=media&token=78ade707-7cb2-4d28-86e5-6c3dff579c21',
     'isToggled': true,
+    'notify': true,
   });
   // Add current user to user's followers collection
   followersRef
