@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/organization/application/edit_org_bloc/edit_org_bloc.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
@@ -101,10 +104,13 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
                   return GestureDetector(
-                    onTap: () => TabNavigatorProvider.of(context)
-                        .pushUserProfile(context,
+                    onTap: () => TabNavigatorProvider.of(context) != null
+                        ? TabNavigatorProvider.of(context).pushUserProfile(
+                            context,
                             userID: state.users[index].userID.getOrCrash(),
-                            currentUserID: currentUserID),
+                            currentUserID: currentUserID)
+                        : getIt<NavigationService>().navigateTo(Routes.user,
+                            arguments: state.users[index].userID.getOrCrash),
                     child: Container(
                         decoration: BoxDecoration(
                             color:

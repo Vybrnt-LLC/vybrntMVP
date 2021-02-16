@@ -4,7 +4,7 @@ part of 'auth_bloc.dart';
 abstract class AuthEvent with _$AuthEvent {
   const factory AuthEvent.authCheckRequested() = AuthCheckRequested;
   const factory AuthEvent.signedOut() = SignedOut;
-  const factory AuthEvent.initializePushNotifications() =
+  const factory AuthEvent.initializePushNotifications(String env) =
       InitializePushNotifications;
   const factory AuthEvent.setAnalyticsUserID(String currentUserID) =
       SetAnalyticsUserID;

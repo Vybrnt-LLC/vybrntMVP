@@ -5,11 +5,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/widgets/event_detail_image.dart';
@@ -73,9 +77,13 @@ class _BuildUserState extends State<BuildUser> {
             child: FlatButton(
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15)),
-              onPressed: () => TabNavigatorProvider.of(context)
-                  .pushEditUserProfile(context,
-                      user: user), //widget.onPushEdit(user),
+              onPressed: () => TabNavigatorProvider.of(context) != null
+                  ? TabNavigatorProvider.of(context)
+                      .pushEditUserProfile(context, user: user)
+                  : getIt<NavigationService>().navigateTo(
+                      Routes.editUserProfile,
+                      arguments: EditUserProfileScreenArguments(
+                          user: user)), //widget.onPushEdit(user),
               color: stringToColor(widget.user.secondaryColor),
               textColor: Colors.white,
               child: Text(
@@ -176,6 +184,10 @@ class _BuildUserState extends State<BuildUser> {
     final currentUserID =
         Provider.of<UserData>(context, listen: false).currentUserID;
     return BlocBuilder<UserBloc, UserState>(builder: (context, state) {
+      final shareLink = state.shareLink;
+      final profileName = widget.user.profileName;
+      final String shareMessage =
+          'Check out $profileName\'s profile on Vybrnt! \n$shareLink';
       return Scaffold(
           backgroundColor: Colors.white,
           floatingActionButton: BlocProvider(
@@ -192,6 +204,16 @@ class _BuildUserState extends State<BuildUser> {
                   return <Widget>[
                     SliverAppBar(
                       actions: [
+                        IconButton(
+                            icon: FaIcon(FontAwesomeIcons.share,
+                                color: Colors.white),
+                            onPressed: () {
+                              final RenderBox box = context.findRenderObject();
+                              Share.share(shareMessage,
+                                  sharePositionOrigin:
+                                      box.localToGlobal(Offset.zero) &
+                                          box.size);
+                            }),
                         FocusedMenuHolder(
                           menuWidth: MediaQuery.of(context).size.width * 0.50,
                           blurSize: 5.0,
@@ -241,14 +263,24 @@ class _BuildUserState extends State<BuildUser> {
                             FocusedMenuItem(
                                 title: Text("Report"),
                                 trailingIcon: Icon(Icons.flag),
-                                onPressed: () =>
-                                    TabNavigatorProvider.of(context).pushReport(
-                                        context,
-                                        contentID: '',
-                                        contentType: '',
-                                        ownerID:
-                                            widget.user.userID.getOrCrash(),
-                                        ownerType: 'user')),
+                                onPressed: () => TabNavigatorProvider.of(
+                                            context) !=
+                                        null
+                                    ? TabNavigatorProvider.of(context)
+                                        .pushReport(context,
+                                            contentID: '',
+                                            contentType: '',
+                                            ownerID:
+                                                widget.user.userID.getOrCrash(),
+                                            ownerType: 'user')
+                                    : getIt<NavigationService>().navigateTo(
+                                        Routes.report,
+                                        arguments: ReportScreenArguments(
+                                            contentID: '',
+                                            contentType: '',
+                                            ownerID:
+                                                widget.user.userID.getOrCrash(),
+                                            ownerType: 'user'))),
                           ],
                           onPressed: () {},
                           child: Padding(

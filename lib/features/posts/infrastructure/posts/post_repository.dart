@@ -11,6 +11,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
 import 'package:vybrnt_mvp/features/activity/repository/activity_dtos.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
@@ -31,8 +32,9 @@ import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 @LazySingleton(as: IPostRepository)
 class PostRepository implements IPostRepository {
   final FirebaseFirestore _firestore;
+  final IActivityService _activityService;
 
-  PostRepository(this._firestore);
+  PostRepository(this._firestore, this._activityService);
 
   @override
   Stream<Either<PostFailure, KtList<Post>>> watchAll(
@@ -68,19 +70,15 @@ class PostRepository implements IPostRepository {
   @override
   Future<Either<PostFailure, Unit>> delete(Post post) async {
     try {
-      if (post.orgID.getOrCrash().isEmpty) {
-        await postsRef
-            .doc(post.senderID.getOrCrash())
-            .collection("userPosts")
-            .doc(post.postID.getOrCrash())
-            .delete();
-      } else {
-        await postsRef
-            .doc(post.senderID.getOrCrash())
-            .collection("orgPosts")
-            .doc(post.postID.getOrCrash())
-            .delete();
-      }
+      final ownerType = _getOwnerType(post);
+      final ownerID = _getOwnerID(post);
+
+      await postsRef
+          .doc(ownerID)
+          .collection(OwnerTypeHelper.stringOf(ownerType) + "Posts")
+          .doc(post.postID.getOrCrash())
+          .delete();
+
       Unit success;
       await likesRef.doc(post.postID.getOrCrash()).delete();
       await repostsRef.doc(post.postID.getOrCrash()).delete();
@@ -241,7 +239,7 @@ class PostRepository implements IPostRepository {
           .collection('postLikes')
           .doc(currentUserID)
           .set({});
-      await addLikeToActivityFeed(post);
+      await _activityService.addLikeToActivityFeed(post);
       return right(success);
     } catch (e) {
       return left(PostFailure.unexpected());
@@ -259,7 +257,7 @@ class PostRepository implements IPostRepository {
           .doc(currentUserID)
           .delete();
 
-      removeLikeFromActivityFeed(post);
+      // removeLikeFromActivityFeed(post);
 
       return right(success);
     } catch (e) {
@@ -285,7 +283,7 @@ class PostRepository implements IPostRepository {
           PostDTO.fromDomain(post.copyWith(repostID: RepostID(currentUserID)))
               .toJson());
 
-      await addRepostToActivityFeed(post, newRepostID);
+      await _activityService.addRepostToActivityFeed(post, newRepostID);
 
       return right(success);
     } catch (e) {
@@ -356,7 +354,7 @@ class PostRepository implements IPostRepository {
           .doc(repostID)
           .delete();
 
-      await removeRepostFromActivityFeed(post, repostID);
+      //await removeRepostFromActivityFeed(post, repostID);
 
       return right(success);
     } catch (e) {
@@ -448,7 +446,15 @@ class PostRepository implements IPostRepository {
           .doc(newComment.commentID.getOrCrash())
           .set(commentDTO.toJson());
 
-      await addCommentToActivityFeed(post, newComment);
+      final ownersOfComments = await commentsRef
+          .doc(post.postID.getOrCrash())
+          .collection('postComments')
+          .snapshots()
+          .map((snapshots) =>
+              snapshots.docs.map((doc) => doc['senderID']).toSet().toList())
+          .first;
+      await _activityService.addCommentToActivityFeed(
+          post, newComment, ownersOfComments);
 
       return right(unit);
     } on FirebaseException catch (e) {
@@ -471,7 +477,7 @@ class PostRepository implements IPostRepository {
           .doc(comment.commentID.getOrCrash())
           .delete();
 
-      await removeCommentFromActivityFeed(post, comment);
+      //await removeCommentFromActivityFeed(post, comment);
       return right(unit);
     } on FirebaseException catch (e) {
       // These error codes and messages aren't in the documentation AFAIK, experiment in the debugger to find out about them.
@@ -526,10 +532,9 @@ class PostRepository implements IPostRepository {
               .doc(newPostID)
               .set(postDTO.toJson());
         }
-
-        await addPostToActivityFeed(post);
       }
-
+      await _activityService
+          .addPostToActivityFeed(post.copyWith(postID: PostID(newPostID)));
       return right(unit);
     } on FirebaseException catch (e) {
       // These error codes and messages aren't in the documentation AFAIK, experiment in the debugger to find out about them.
@@ -541,185 +546,6 @@ class PostRepository implements IPostRepository {
     }
   }
 
-  Future addLikeToActivityFeed(Post post) async {
-    final currentUserID = await _firestore.currentUserID();
-    final currentUserDoc = await usersRef.doc(currentUserID).get();
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-
-    String type = post.orgID.getOrCrash().isEmpty ? 'User' : 'Org';
-
-    if (isNotPostOwner) {
-      Activity newLikeActivity = Activity.empty();
-      final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-          username: currentUserDoc.get('profileName'),
-          userID: currentUserID,
-          orgID: post.orgID.getOrCrash(),
-          type: 'like' + type,
-          profileImageURL: currentUserDoc.get('profileImageUrl'),
-          postID: post.postID.getOrCrash(),
-          isOrg: post.orgID.getOrCrash().isNotEmpty));
-
-      activitiesRef
-          .doc(post.senderID.getOrCrash())
-          .collection('userActivityFeed')
-          .doc(post.postID.getOrCrash())
-          .set(activityDTO.toJson());
-    }
-  }
-
-  Future removeLikeFromActivityFeed(Post post) async {
-    final currentUserID = await _firestore.currentUserID();
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-    if (isNotPostOwner) {
-      activitiesRef
-          .doc(post.senderID.getOrCrash())
-          .collection('userActivityFeed')
-          .doc(post.postID.getOrCrash())
-          .get()
-          .then((value) {
-        if (value.exists) {
-          value.reference.delete();
-        }
-      });
-    }
-  }
-
-  Future addRepostToActivityFeed(Post post, String newRepostID) async {
-    final currentUserID = await _firestore.currentUserID();
-    final currentUserDoc = await usersRef.doc(currentUserID).get();
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-    String type = post.orgID.getOrCrash().isEmpty ? 'User' : 'Org';
-
-    if (isNotPostOwner) {
-      Activity newLikeActivity = Activity.empty();
-      final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-          username: currentUserDoc.get('profileName'),
-          userID: currentUserID,
-          orgID: post.orgID.getOrCrash(),
-          type: 'repost' + type,
-          profileImageURL: currentUserDoc.get('profileImageUrl'),
-          postID: post.postID.getOrCrash(),
-          isOrg: post.orgID.getOrCrash().isNotEmpty));
-
-      activitiesRef
-          .doc(post.senderID.getOrCrash())
-          .collection('userActivityFeed')
-          .doc(newRepostID)
-          .set(activityDTO.toJson());
-    }
-  }
-
-  Future removeRepostFromActivityFeed(Post post, String repostID) async {
-    final currentUserID = await _firestore.currentUserID();
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-    if (isNotPostOwner) {
-      activitiesRef
-          .doc(post.senderID.getOrCrash())
-          .collection('userActivityFeed')
-          .doc(repostID)
-          .get()
-          .then((value) {
-        if (value.exists) {
-          value.reference.delete();
-        }
-      });
-    }
-  }
-
-  Future addCommentToActivityFeed(Post post, Comment comment) async {
-    final currentUserID = await _firestore.currentUserID();
-    final currentUserDoc = await usersRef.doc(currentUserID).get();
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-    String type = post.orgID.getOrCrash().isEmpty ? 'User' : 'Org';
-
-    if (isNotPostOwner) {
-      Activity newLikeActivity = Activity.empty();
-      final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-          username: currentUserDoc.get('profileName'),
-          userID: comment.senderID.getOrCrash(),
-          orgID: post.orgID.getOrCrash(),
-          type: 'comment' + type,
-          profileImageURL: currentUserDoc.get('profileImageUrl'),
-          postID: post.postID.getOrCrash(),
-          commentID: comment.commentID.getOrCrash(),
-          isOrg: post.orgID.getOrCrash().isNotEmpty));
-
-      activitiesRef
-          .doc(post.senderID.getOrCrash())
-          .collection('userActivityFeed')
-          .doc(comment.commentID.getOrCrash())
-          .set(activityDTO.toJson());
-    }
-  }
-
-  Future removeCommentFromActivityFeed(Post post, Comment comment) async {
-    final currentUserID = await _firestore.currentUserID();
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-    if (isNotPostOwner) {
-      activitiesRef
-          .doc(post.senderID.getOrCrash())
-          .collection('userActivityFeed')
-          .doc(comment.commentID.getOrCrash())
-          .get()
-          .then((value) {
-        if (value.exists) {
-          value.reference.delete();
-        }
-      });
-    }
-  }
-
-  Future addPostToActivityFeed(Post post) async {
-    final currentUserID = await _firestore.currentUserID();
-
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
-    DocumentSnapshot doc;
-
-    if (isNotPostOwner) {
-      if (post.orgID.getOrCrash().isNotEmpty) {
-        doc = await organizationsRef.doc(post.orgID.getOrCrash()).get();
-      } else {
-        doc = await usersRef.doc(post.senderID.getOrCrash()).get();
-      }
-      Activity newLikeActivity = Activity.empty();
-      final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-          username: post.orgID.getOrCrash().isNotEmpty
-              ? doc.get('profileName')
-              : doc.get('name'),
-          userID: post.senderID.getOrCrash(),
-          orgID: post.orgID.getOrCrash(),
-          type: 'post',
-          profileImageURL: doc.get('profileImageUrl'),
-          postID: post.postID.getOrCrash(),
-          isOrg: post.orgID.getOrCrash().isNotEmpty));
-
-      final notifyFollowers = post.orgID.getOrCrash().isNotEmpty
-          ? await getNotifyFollowers(post.orgID.getOrCrash(), 'org')
-          : await getNotifyFollowers(post.senderID.getOrCrash(), 'user');
-
-      for (int i = 0; i < notifyFollowers.length; i++) {
-        activitiesRef
-            .doc(notifyFollowers[i])
-            .collection('userActivityFeed')
-            .doc(activityDTO.activityID)
-            .set(activityDTO.toJson());
-      }
-    }
-  }
-
-  Future<List<String>> getNotifyFollowers(String id, String type) async {
-    List<String> notifyFollowersIDs = [];
-    await followersRef
-        .doc(id)
-        .collection(type + 'Followers')
-        .where('notify', isEqualTo: true)
-        .get()
-        .then((value) => value.docs.forEach((element) {
-              notifyFollowersIDs.add(element.id);
-            }));
-    return notifyFollowersIDs;
-  }
-
   @override
   Future<Post> getPost({String postID, String type, String typeID}) async {
     DocumentSnapshot postDoc;
@@ -729,4 +555,22 @@ class PostRepository implements IPostRepository {
 
     return PostDTO.fromFirestore(postDoc).toDomain();
   }
+}
+
+String _getOwnerID(Post post) {
+  String ownerID = post.repostID.getOrCrash().isNotEmpty
+      ? post.repostID.getOrCrash()
+      : post.orgID.getOrCrash().isNotEmpty
+          ? post.orgID.getOrCrash()
+          : post.senderID.getOrCrash();
+  return ownerID;
+}
+
+OwnerType _getOwnerType(Post post) {
+  OwnerType ownerType = post.repostID.getOrCrash().isNotEmpty
+      ? OwnerType.USER
+      : post.orgID.getOrCrash().isEmpty
+          ? OwnerType.USER
+          : OwnerType.ORG;
+  return ownerType;
 }

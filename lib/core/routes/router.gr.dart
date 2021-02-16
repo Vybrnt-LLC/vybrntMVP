@@ -9,6 +9,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:kt_dart/kt.dart';
 
 import '../../features/authentication/presentation/screens/sign_in_page.dart';
 import '../../features/authentication/presentation/widgets/tags.dart';
@@ -20,9 +21,16 @@ import '../../features/calendar/presentation/screens/event_screen.dart';
 import '../../features/calendar/presentation/widgets/event_detail_image.dart';
 import '../../features/messaging/presentation/screens/chat_screen.dart';
 import '../../features/messaging/presentation/screens/messaging_screen.dart';
+import '../../features/organization/domain/models/organization.dart';
+import '../../features/organization/presentation/screens/edit_organization_page_screen.dart';
 import '../../features/organization/presentation/screens/org_screen.dart';
+import '../../features/organization/presentation/screens/user_list_screen.dart';
 import '../../features/posts/presentation/posts/post_detail/post_screen.dart';
+import '../../features/user/domain/models/user.dart';
+import '../../features/user/presentation/screens/edit_user_profile_screen.dart';
+import '../../features/user/presentation/screens/org_list_screen.dart';
 import '../../features/user/presentation/screens/user_screen.dart';
+import '../report/report_page.dart';
 
 class Routes {
   static const String signInPage = '/sign-in-page';
@@ -37,6 +45,12 @@ class Routes {
   static const String postDetail = '/post-screen';
   static const String user = '/user-screen';
   static const String org = '/org-screen';
+  static const String editUserProfile = '/edit-user-profile-screen';
+  static const String userList = '/user-list-screen';
+  static const String orgList = '/org-list-screen';
+  static const String editOrganizationPageScreen =
+      '/edit-organization-page-screen';
+  static const String report = '/report-screen';
   static const all = <String>{
     signInPage,
     wrapper,
@@ -50,6 +64,11 @@ class Routes {
     postDetail,
     user,
     org,
+    editUserProfile,
+    userList,
+    orgList,
+    editOrganizationPageScreen,
+    report,
   };
 }
 
@@ -69,6 +88,12 @@ class Router extends RouterBase {
     RouteDef(Routes.postDetail, page: PostScreen),
     RouteDef(Routes.user, page: UserScreen),
     RouteDef(Routes.org, page: OrgScreen),
+    RouteDef(Routes.editUserProfile, page: EditUserProfileScreen),
+    RouteDef(Routes.userList, page: UserListScreen),
+    RouteDef(Routes.orgList, page: OrgListScreen),
+    RouteDef(Routes.editOrganizationPageScreen,
+        page: EditOrganizationPageScreen),
+    RouteDef(Routes.report, page: ReportScreen),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
@@ -162,9 +187,7 @@ class Router extends RouterBase {
       );
     },
     PostScreen: (data) {
-      final args = data.getArgs<PostScreenArguments>(
-        orElse: () => PostScreenArguments(),
-      );
+      final args = data.getArgs<PostScreenArguments>(nullOk: false);
       return MaterialPageRoute<dynamic>(
         builder: (context) => PostScreen(
           key: args.key,
@@ -197,6 +220,74 @@ class Router extends RouterBase {
         builder: (context) => OrgScreen(
           key: args.key,
           orgID: args.orgID,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    EditUserProfileScreen: (data) {
+      final args = data.getArgs<EditUserProfileScreenArguments>(
+        orElse: () => EditUserProfileScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EditUserProfileScreen(user: args.user),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    UserListScreen: (data) {
+      final args = data.getArgs<UserListScreenArguments>(
+        orElse: () => UserListScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => UserListScreen(
+          key: args.key,
+          userIDList: args.userIDList,
+          title: args.title,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    OrgListScreen: (data) {
+      final args = data.getArgs<OrgListScreenArguments>(
+        orElse: () => OrgListScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OrgListScreen(
+          key: args.key,
+          onPush: args.onPush,
+          orgIDList: args.orgIDList,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    EditOrganizationPageScreen: (data) {
+      final args = data.getArgs<EditOrganizationPageScreenArguments>(
+        orElse: () => EditOrganizationPageScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => EditOrganizationPageScreen(
+          org: args.org,
+          name: args.name,
+        ),
+        settings: data,
+        fullscreenDialog: true,
+      );
+    },
+    ReportScreen: (data) {
+      final args = data.getArgs<ReportScreenArguments>(
+        orElse: () => ReportScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ReportScreen(
+          key: args.key,
+          currentUserID: args.currentUserID,
+          contentID: args.contentID,
+          contentType: args.contentType,
+          ownerID: args.ownerID,
+          ownerType: args.ownerType,
         ),
         settings: data,
         fullscreenDialog: true,
@@ -258,7 +349,11 @@ class PostScreenArguments {
   final String postID;
   final String type;
   final String typeID;
-  PostScreenArguments({this.key, this.postID, this.type, this.typeID});
+  PostScreenArguments(
+      {this.key,
+      @required this.postID,
+      @required this.type,
+      @required this.typeID});
 }
 
 /// UserScreen arguments holder class
@@ -273,4 +368,50 @@ class OrgScreenArguments {
   final Key key;
   final String orgID;
   OrgScreenArguments({this.key, this.orgID});
+}
+
+/// EditUserProfileScreen arguments holder class
+class EditUserProfileScreenArguments {
+  final User user;
+  EditUserProfileScreenArguments({this.user});
+}
+
+/// UserListScreen arguments holder class
+class UserListScreenArguments {
+  final Key key;
+  final KtList<String> userIDList;
+  final String title;
+  UserListScreenArguments({this.key, this.userIDList, this.title});
+}
+
+/// OrgListScreen arguments holder class
+class OrgListScreenArguments {
+  final Key key;
+  final void Function(String) onPush;
+  final KtList<String> orgIDList;
+  OrgListScreenArguments({this.key, this.onPush, this.orgIDList});
+}
+
+/// EditOrganizationPageScreen arguments holder class
+class EditOrganizationPageScreenArguments {
+  final Organization org;
+  final String name;
+  EditOrganizationPageScreenArguments({this.org, this.name});
+}
+
+/// ReportScreen arguments holder class
+class ReportScreenArguments {
+  final Key key;
+  final String currentUserID;
+  final String contentID;
+  final String contentType;
+  final String ownerID;
+  final String ownerType;
+  ReportScreenArguments(
+      {this.key,
+      this.currentUserID = '',
+      this.contentID = '',
+      this.contentType = '',
+      this.ownerID = '',
+      this.ownerType = ''});
 }

@@ -7,14 +7,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/shape/gf_avatar_shape.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
-
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 
 import 'package:vybrnt_mvp/features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
@@ -49,12 +53,28 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
         child: BlocBuilder<EventDetailBloc, EventDetailState>(
           //bloc: BlocProvider.of<EventDetailBloc>(context),
           builder: (BuildContext context, state) {
+            final shareLink = state.shareLink;
+            final name = state.org.orgID.getOrCrash().isNotEmpty
+                ? state.org.name
+                : state.user.profileName;
+            final eventName = widget.event.eventName;
+            final String shareMessage =
+                'Check out $name\'s event: $eventName on Vybrnt! \n$shareLink';
             return NestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
                     actions: <Widget>[
+                      IconButton(
+                          icon: FaIcon(FontAwesomeIcons.share,
+                              color: Colors.white),
+                          onPressed: () {
+                            final RenderBox box = context.findRenderObject();
+                            Share.share(shareMessage,
+                                sharePositionOrigin:
+                                    box.localToGlobal(Offset.zero) & box.size);
+                          }),
                       currentUserID == widget.event.senderID
                           ? FocusedMenuHolder(
                               menuWidth:
@@ -76,21 +96,31 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                 FocusedMenuItem(
                                     title: Text("Report"),
                                     trailingIcon: Icon(Icons.flag),
-                                    onPressed: () => TabNavigatorProvider.of(
-                                            context)
-                                        .pushReport(
-                                            context,
-                                            currentUserID: currentUserID,
-                                            contentID: widget.event.eventID
-                                                .getOrCrash(),
-                                            contentType: 'event',
-                                            ownerID: widget.event.orgID.isEmpty
-                                                ? widget.event.senderID
-                                                : widget.event.orgID,
-                                            ownerType:
-                                                widget.event.orgID.isEmpty
-                                                    ? 'user'
-                                                    : 'org')),
+                                    onPressed: () => TabNavigatorProvider.of(context) != null
+                                        ? TabNavigatorProvider.of(context)
+                                            .pushReport(context,
+                                                currentUserID: currentUserID,
+                                                contentID: widget.event.eventID
+                                                    .getOrCrash(),
+                                                contentType: 'event',
+                                                ownerID: widget.event.orgID.isEmpty
+                                                    ? widget.event.senderID
+                                                    : widget.event.orgID,
+                                                ownerType:
+                                                    widget.event.orgID.isEmpty
+                                                        ? 'user'
+                                                        : 'org')
+                                        : getIt<NavigationService>().navigateTo(
+                                            Routes.report,
+                                            arguments: ReportScreenArguments(
+                                                currentUserID: currentUserID,
+                                                contentID: widget.event.eventID
+                                                    .getOrCrash(),
+                                                contentType: 'event',
+                                                ownerID: widget.event.orgID.isEmpty
+                                                    ? widget.event.senderID
+                                                    : widget.event.orgID,
+                                                ownerType: widget.event.orgID.isEmpty ? 'user' : 'org'))),
                                 FocusedMenuItem(
                                   title: Text(
                                     "Delete",
@@ -129,21 +159,31 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                 FocusedMenuItem(
                                     title: Text("Report"),
                                     trailingIcon: Icon(Icons.flag),
-                                    onPressed: () => TabNavigatorProvider.of(
-                                            context)
-                                        .pushReport(
-                                            context,
-                                            currentUserID: currentUserID,
-                                            contentID: widget.event.eventID
-                                                .getOrCrash(),
-                                            contentType: 'event',
-                                            ownerID: widget.event.orgID.isEmpty
-                                                ? widget.event.senderID
-                                                : widget.event.orgID,
-                                            ownerType:
-                                                widget.event.orgID.isEmpty
-                                                    ? 'user'
-                                                    : 'org')),
+                                    onPressed: () => TabNavigatorProvider.of(context) != null
+                                        ? TabNavigatorProvider.of(context)
+                                            .pushReport(context,
+                                                currentUserID: currentUserID,
+                                                contentID: widget.event.eventID
+                                                    .getOrCrash(),
+                                                contentType: 'event',
+                                                ownerID: widget.event.orgID.isEmpty
+                                                    ? widget.event.senderID
+                                                    : widget.event.orgID,
+                                                ownerType:
+                                                    widget.event.orgID.isEmpty
+                                                        ? 'user'
+                                                        : 'org')
+                                        : getIt<NavigationService>().navigateTo(
+                                            Routes.report,
+                                            arguments: ReportScreenArguments(
+                                                currentUserID: currentUserID,
+                                                contentID: widget.event.eventID
+                                                    .getOrCrash(),
+                                                contentType: 'event',
+                                                ownerID: widget.event.orgID.isEmpty
+                                                    ? widget.event.senderID
+                                                    : widget.event.orgID,
+                                                ownerType: widget.event.orgID.isEmpty ? 'user' : 'org'))),
                               ],
                               onPressed: () {},
                               child: Icon(
@@ -330,9 +370,17 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         children: [
                           widget.event.isOrg
                               ? GestureDetector(
-                                  onTap: () => TabNavigatorProvider.of(context)
-                                      .pushOrgPage(context,
-                                          orgID: widget.event.orgID),
+                                  onTap: () =>
+                                      TabNavigatorProvider.of(context) != null
+                                          ? TabNavigatorProvider.of(context)
+                                              .pushOrgPage(context,
+                                                  orgID: widget.event.orgID)
+                                          : getIt<NavigationService>()
+                                              .navigateTo(Routes.org,
+                                                  arguments:
+                                                      OrgScreenArguments(
+                                                          orgID: widget
+                                                              .event.orgID)),
                                   child: GFAvatar(
                                     borderRadius: BorderRadius.circular(5),
                                     shape: GFAvatarShape.square,
@@ -346,9 +394,17 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                   ),
                                 )
                               : GestureDetector(
-                                  onTap: () => TabNavigatorProvider.of(context)
-                                      .pushUserProfile(context,
-                                          userID: widget.event.senderID),
+                                  onTap: () =>
+                                      TabNavigatorProvider.of(context) != null
+                                          ? TabNavigatorProvider.of(context)
+                                              .pushUserProfile(context,
+                                                  userID: widget.event.senderID)
+                                          : getIt<NavigationService>()
+                                              .navigateTo(Routes.user,
+                                                  arguments:
+                                                      UserScreenArguments(
+                                                          userID: widget
+                                                              .event.senderID)),
                                   child: CircleAvatar(
                                     radius: 20,
                                     backgroundImage: state
@@ -373,10 +429,16 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                               : Container(
                                   width: 300,
                                   child: GestureDetector(
-                                    onTap: () =>
-                                        TabNavigatorProvider.of(context)
+                                    onTap: () => TabNavigatorProvider.of(
+                                                context) !=
+                                            null
+                                        ? TabNavigatorProvider.of(context)
                                             .pushUserProfile(context,
-                                                userID: widget.event.senderID),
+                                                userID: widget.event.senderID)
+                                        : getIt<NavigationService>().navigateTo(
+                                            Routes.user,
+                                            arguments: UserScreenArguments(
+                                                userID: widget.event.senderID)),
                                     child: Text(
                                       state.user.profileName,
                                       style: TextStyle(

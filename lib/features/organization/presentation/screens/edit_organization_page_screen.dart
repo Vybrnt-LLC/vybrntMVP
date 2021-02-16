@@ -43,83 +43,72 @@ class _EditOrganizationPageScreenState extends State<EditOrganizationPageScreen>
 
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      length: 4,
-      child: BlocBuilder<EditOrgBloc, EditOrgState>(builder: (context, state) {
-        return Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: Colors.white,
-          // appBar: AppBar(
-          //   bottom: TabBar(
-          //     controller: _controller,
-          //     tabs: [
-          //       Tab(icon: Icon(Icons.person), text: 'About'),
-          //       Tab(icon: Icon(Icons.group), text: 'Colors'),
-          //       Tab(icon: Icon(Icons.person), text: 'Eboard'),
-          //       Tab(icon: Icon(Icons.group), text: 'FAQ'),
-          //     ],
-          //   ),
-          //   backgroundColor: Colors.black,
-          //   centerTitle: true,
-          //   title: Text(
-          //     'Edit Profile',
-          //     style: TextStyle(color: Colors.white),
-          //   ),
-          // ),
-          body: NestedScrollView(
-            controller: _scrollViewController,
-            headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
-              return <Widget>[
-                SliverAppBar(
-                  centerTitle: true,
-                  backgroundColor: Colors.black,
-                  title: Text('Edit Profile'),
-                  pinned: true,
-                  floating: true,
-                  actions: <Widget>[
-                    IconButton(
-                        icon: Icon(Icons.check),
-                        onPressed: () {
-                          context
-                              .bloc<EditOrgBloc>()
-                              .add(EditOrgEvent.saveOrg());
-                          Scaffold.of(context).showSnackBar(snackBar);
-                        }),
-                  ],
-                  forceElevated: boxIsScrolled,
-                  bottom: TabBar(
+    return BlocProvider<EditOrgBloc>(
+        create: (context) =>
+            getIt<EditOrgBloc>()..add(EditOrgEvent.getData(widget.org)),
+        child: DefaultTabController(
+          length: 4,
+          child:
+              BlocBuilder<EditOrgBloc, EditOrgState>(builder: (context, state) {
+            return Scaffold(
+              resizeToAvoidBottomInset: false,
+              backgroundColor: Colors.white,
+              body: NestedScrollView(
+                controller: _scrollViewController,
+                headerSliverBuilder:
+                    (BuildContext context, bool boxIsScrolled) {
+                  return <Widget>[
+                    SliverAppBar(
+                      centerTitle: true,
+                      backgroundColor: Colors.black,
+                      title: Text('Edit Profile'),
+                      pinned: true,
+                      floating: true,
+                      actions: <Widget>[
+                        IconButton(
+                            icon: Icon(Icons.check),
+                            onPressed: () {
+                              context
+                                  .bloc<EditOrgBloc>()
+                                  .add(EditOrgEvent.saveOrg());
+                              Scaffold.of(context).showSnackBar(snackBar);
+                            }),
+                      ],
+                      forceElevated: boxIsScrolled,
+                      bottom: TabBar(
+                        controller: _controller,
+                        tabs: [
+                          Tab(icon: Icon(Icons.info), text: 'About'),
+                          Tab(icon: Icon(Icons.color_lens), text: 'Colors'),
+                          Tab(icon: Icon(Icons.group_work), text: 'Admin'),
+                          Tab(icon: Icon(Icons.question_answer), text: 'FAQ'),
+                        ],
+                      ),
+                    ),
+                  ];
+                },
+                body: TabBarView(
+                    // key: PageStorageKey<String>(widget.name),
                     controller: _controller,
-                    tabs: [
-                      Tab(icon: Icon(Icons.info), text: 'About'),
-                      Tab(icon: Icon(Icons.color_lens), text: 'Colors'),
-                      Tab(icon: Icon(Icons.group_work), text: 'Admin'),
-                      Tab(icon: Icon(Icons.question_answer), text: 'FAQ'),
-                    ],
-                  ),
-                ),
-              ];
-            },
-            body: TabBarView(
-                // key: PageStorageKey<String>(widget.name),
-                controller: _controller,
-                children: [
-                  EditOrgDetails(
-                      key: PageStorageKey('orgDetails'),
-                      state: state,
-                      org: widget.org),
-                  EditOrgColorsTab(
-                      key: PageStorageKey('orgColors'), state: state),
-                  BlocProvider<EditOrgBloc>(
-                      create: (context) => getIt<EditOrgBloc>()
-                        ..add(EditOrgEvent.getSearch(''))
-                        ..add(EditOrgEvent.getData(state.org)),
-                      child: EditOrgEboardTab(
-                          key: PageStorageKey('orgEboard'), state: state)),
-                  EditOrgFAQTab(key: PageStorageKey('orgFAQ'), state: state),
-                ]),
-          ),
-        );
-      }),
-    );
+                    children: [
+                      EditOrgDetails(
+                          key: PageStorageKey('orgDetails'),
+                          state: state,
+                          org: widget.org),
+                      EditOrgColorsTab(
+                          key: PageStorageKey('orgColors'), state: state),
+                      BlocProvider<EditOrgBloc>(
+                          create: (context) => getIt<EditOrgBloc>()
+                            ..add(EditOrgEvent.getSearch(''))
+                            ..add(EditOrgEvent.getData(state.org)),
+                          child: EditOrgEboardTab(
+                              key: PageStorageKey('orgEboard'), state: state)),
+                      EditOrgFAQTab(
+                          key: PageStorageKey('orgFAQ'), state: state),
+                    ]),
+              ),
+            );
+          }),
+        ));
   }
 }

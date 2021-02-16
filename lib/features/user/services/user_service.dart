@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
 import 'package:vybrnt_mvp/features/activity/repository/activity_dtos.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
@@ -29,11 +30,10 @@ import 'package:vybrnt_mvp/features/user/services/user_list_dtos.dart';
 
 @LazySingleton(as: IUserService)
 class UserService implements IUserService {
-  FirebaseFirestore firestore;
+  final FirebaseFirestore firestore;
+  final IActivityService _activityService;
 
-  UserService({
-    this.firestore,
-  });
+  UserService(this.firestore, this._activityService);
 
   @override
   Future<OrgList> getOrgList(String orgID) async {
@@ -119,7 +119,7 @@ class UserService implements IUserService {
         .doc(currentUserID)
         .set({'notify': false});
 
-    await addFollowToActivityFeed(userID);
+    await _activityService.addFollowUserToActivityFeed(userID);
   }
 
   @override
@@ -148,7 +148,7 @@ class UserService implements IUserService {
       }
     });
 
-    await removeFollowFromActivityFeed(userID);
+    //await removeFollowFromActivityFeed(userID);
   }
 
   @override
@@ -342,37 +342,18 @@ class UserService implements IUserService {
     return compressedImageFile;
   }
 
-  Future addFollowToActivityFeed(String userID) async {
-    final currentUserID = await firestore.currentUserID();
-    final currentUserDoc = await usersRef.doc(currentUserID).get();
-
-    Activity newLikeActivity = Activity.empty();
-    final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-      username: currentUserDoc.get('profileName'),
-      userID: currentUserID,
-      type: 'followUser',
-      profileImageURL: currentUserDoc.get('profileImageUrl'),
-    ));
-
-    activitiesRef
-        .doc(userID)
-        .collection('userActivityFeed')
-        .doc(userID)
-        .set(activityDTO.toJson());
-  }
-
-  Future removeFollowFromActivityFeed(String userID) async {
-    activitiesRef
-        .doc(userID)
-        .collection('userActivityFeed')
-        .doc(userID)
-        .get()
-        .then((value) {
-      if (value.exists) {
-        value.reference.delete();
-      }
-    });
-  }
+  // Future removeFollowFromActivityFeed(String userID) async {
+  //   activitiesRef
+  //       .doc(userID)
+  //       .collection('userActivityFeed')
+  //       .doc(userID)
+  //       .get()
+  //       .then((value) {
+  //     if (value.exists) {
+  //       value.reference.delete();
+  //     }
+  //   });
+  // }
 
   @override
   Future<bool> isBlocked(String userID) async {

@@ -1107,13 +1107,15 @@ class _$EventDetailStateTearOff {
       @required Organization org,
       @required User user,
       @required bool isRSVPed,
-      @required Event event}) {
+      @required Event event,
+      @required String shareLink}) {
     return _EventDetailState(
       rsvpList: rsvpList,
       org: org,
       user: user,
       isRSVPed: isRSVPed,
       event: event,
+      shareLink: shareLink,
     );
   }
 }
@@ -1127,6 +1129,7 @@ mixin _$EventDetailState {
   User get user;
   bool get isRSVPed;
   Event get event;
+  String get shareLink;
 
   $EventDetailStateCopyWith<EventDetailState> get copyWith;
 }
@@ -1140,7 +1143,8 @@ abstract class $EventDetailStateCopyWith<$Res> {
       Organization org,
       User user,
       bool isRSVPed,
-      Event event});
+      Event event,
+      String shareLink});
 
   $OrganizationCopyWith<$Res> get org;
   $UserCopyWith<$Res> get user;
@@ -1162,6 +1166,7 @@ class _$EventDetailStateCopyWithImpl<$Res>
     Object user = freezed,
     Object isRSVPed = freezed,
     Object event = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_value.copyWith(
       rsvpList:
@@ -1170,6 +1175,7 @@ class _$EventDetailStateCopyWithImpl<$Res>
       user: user == freezed ? _value.user : user as User,
       isRSVPed: isRSVPed == freezed ? _value.isRSVPed : isRSVPed as bool,
       event: event == freezed ? _value.event : event as Event,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 
@@ -1215,7 +1221,8 @@ abstract class _$EventDetailStateCopyWith<$Res>
       Organization org,
       User user,
       bool isRSVPed,
-      Event event});
+      Event event,
+      String shareLink});
 
   @override
   $OrganizationCopyWith<$Res> get org;
@@ -1242,6 +1249,7 @@ class __$EventDetailStateCopyWithImpl<$Res>
     Object user = freezed,
     Object isRSVPed = freezed,
     Object event = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_EventDetailState(
       rsvpList:
@@ -1250,6 +1258,7 @@ class __$EventDetailStateCopyWithImpl<$Res>
       user: user == freezed ? _value.user : user as User,
       isRSVPed: isRSVPed == freezed ? _value.isRSVPed : isRSVPed as bool,
       event: event == freezed ? _value.event : event as Event,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 }
@@ -1260,12 +1269,14 @@ class _$_EventDetailState implements _EventDetailState {
       @required this.org,
       @required this.user,
       @required this.isRSVPed,
-      @required this.event})
+      @required this.event,
+      @required this.shareLink})
       : assert(rsvpList != null),
         assert(org != null),
         assert(user != null),
         assert(isRSVPed != null),
-        assert(event != null);
+        assert(event != null),
+        assert(shareLink != null);
 
   @override
   final KtList<UserList> rsvpList;
@@ -1277,10 +1288,12 @@ class _$_EventDetailState implements _EventDetailState {
   final bool isRSVPed;
   @override
   final Event event;
+  @override
+  final String shareLink;
 
   @override
   String toString() {
-    return 'EventDetailState(rsvpList: $rsvpList, org: $org, user: $user, isRSVPed: $isRSVPed, event: $event)';
+    return 'EventDetailState(rsvpList: $rsvpList, org: $org, user: $user, isRSVPed: $isRSVPed, event: $event, shareLink: $shareLink)';
   }
 
   @override
@@ -1298,7 +1311,10 @@ class _$_EventDetailState implements _EventDetailState {
                 const DeepCollectionEquality()
                     .equals(other.isRSVPed, isRSVPed)) &&
             (identical(other.event, event) ||
-                const DeepCollectionEquality().equals(other.event, event)));
+                const DeepCollectionEquality().equals(other.event, event)) &&
+            (identical(other.shareLink, shareLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.shareLink, shareLink)));
   }
 
   @override
@@ -1308,7 +1324,8 @@ class _$_EventDetailState implements _EventDetailState {
       const DeepCollectionEquality().hash(org) ^
       const DeepCollectionEquality().hash(user) ^
       const DeepCollectionEquality().hash(isRSVPed) ^
-      const DeepCollectionEquality().hash(event);
+      const DeepCollectionEquality().hash(event) ^
+      const DeepCollectionEquality().hash(shareLink);
 
   @override
   _$EventDetailStateCopyWith<_EventDetailState> get copyWith =>
@@ -1321,7 +1338,8 @@ abstract class _EventDetailState implements EventDetailState {
       @required Organization org,
       @required User user,
       @required bool isRSVPed,
-      @required Event event}) = _$_EventDetailState;
+      @required Event event,
+      @required String shareLink}) = _$_EventDetailState;
 
   @override
   KtList<UserList> get rsvpList;
@@ -1333,6 +1351,8 @@ abstract class _EventDetailState implements EventDetailState {
   bool get isRSVPed;
   @override
   Event get event;
+  @override
+  String get shareLink;
   @override
   _$EventDetailStateCopyWith<_EventDetailState> get copyWith;
 }

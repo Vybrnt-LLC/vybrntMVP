@@ -6,12 +6,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_statusbarcolor/flutter_statusbarcolor.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/shape/gf_avatar_shape.dart';
 
 import 'package:provider/provider.dart';
+import 'package:share/share.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
+import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/widgets/event_detail_image.dart';
@@ -171,6 +175,10 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
         Provider.of<UserData>(context, listen: false).currentUserID;
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
     return BlocBuilder<OrgBloc, OrgState>(builder: (context, state) {
+      final shareLink = state.shareLink;
+      final name = widget.org.name;
+      final String shareMessage =
+          'Check out $name\'s profile on Vybrnt! \n$shareLink';
       return Scaffold(
         floatingActionButton: state.isAdmin
             ? BlocProvider(
@@ -191,6 +199,15 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                 return <Widget>[
                   SliverAppBar(
                     actions: [
+                      IconButton(
+                          icon: FaIcon(FontAwesomeIcons.share,
+                              color: Colors.white),
+                          onPressed: () {
+                            final RenderBox box = context.findRenderObject();
+                            Share.share(shareMessage,
+                                sharePositionOrigin:
+                                    box.localToGlobal(Offset.zero) & box.size);
+                          }),
                       FocusedMenuHolder(
                         menuWidth: MediaQuery.of(context).size.width * 0.50,
                         blurSize: 5.0,
@@ -210,13 +227,26 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                           FocusedMenuItem(
                               title: Text("Report"),
                               trailingIcon: Icon(Icons.flag),
-                              onPressed: () => TabNavigatorProvider.of(context)
-                                  .pushReport(context,
-                                      currentUserID: currentUserID,
-                                      contentID: '',
-                                      contentType: '',
-                                      ownerID: widget.org.orgID.getOrCrash(),
-                                      ownerType: 'org')),
+                              onPressed: () =>
+                                  TabNavigatorProvider.of(context) != null
+                                      ? TabNavigatorProvider.of(context)
+                                          .pushReport(
+                                              context,
+                                              currentUserID: currentUserID,
+                                              contentID: '',
+                                              contentType: '',
+                                              ownerID:
+                                                  widget.org.orgID.getOrCrash(),
+                                              ownerType: 'org')
+                                      : getIt<NavigationService>().navigateTo(
+                                          Routes.report,
+                                          arguments: ReportScreenArguments(
+                                              currentUserID: currentUserID,
+                                              contentID: '',
+                                              contentType: '',
+                                              ownerID:
+                                                  widget.org.orgID.getOrCrash(),
+                                              ownerType: 'org'))),
                         ],
                         onPressed: () {},
                         child: Padding(
@@ -374,10 +404,17 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                                     shape: RoundedRectangleBorder(
                                         borderRadius:
                                             BorderRadius.circular(15)),
-                                    onPressed: () =>
-                                        TabNavigatorProvider.of(context)
+                                    onPressed: () => TabNavigatorProvider.of(
+                                                context) !=
+                                            null
+                                        ? TabNavigatorProvider.of(context)
                                             .pushEditOrgPage(context,
-                                                org: widget.org),
+                                                org: widget.org)
+                                        : getIt<NavigationService>().navigateTo(
+                                            Routes.editOrganizationPageScreen,
+                                            arguments:
+                                                EditOrganizationPageScreenArguments(
+                                                    org: widget.org)),
                                     color: stringToColor(
                                         widget.org.secondaryColor),
                                     textColor: Colors.white,

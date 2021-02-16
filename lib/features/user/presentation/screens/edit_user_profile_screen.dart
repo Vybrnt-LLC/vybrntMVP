@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:vybrnt_mvp/core/injection.dart';
+import 'package:vybrnt_mvp/features/user/application/edit_user_bloc/edit_user_bloc.dart';
 
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/edit_org_colors_tab.dart';
@@ -34,36 +37,40 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen>
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.white,
-      body: NestedScrollView(
-        controller: _scrollViewController,
-        headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
-          return <Widget>[
-            SliverAppBar(
-              centerTitle: true,
-              backgroundColor: Colors.black,
-              title: Text('Edit Profile'),
-              pinned: true,
-              floating: true,
-              forceElevated: boxIsScrolled,
-              bottom: TabBar(
-                controller: _controller,
-                tabs: [
-                  Tab(icon: Icon(Icons.info), text: 'About'),
-                  Tab(icon: Icon(Icons.color_lens), text: 'Colors'),
-                ],
+    return BlocProvider<EditUserBloc>(
+      create: (context) =>
+          getIt<EditUserBloc>()..add(EditUserEvent.getData(widget.user)),
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: NestedScrollView(
+          controller: _scrollViewController,
+          headerSliverBuilder: (BuildContext context, bool boxIsScrolled) {
+            return <Widget>[
+              SliverAppBar(
+                centerTitle: true,
+                backgroundColor: Colors.black,
+                title: Text('Edit Profile'),
+                pinned: true,
+                floating: true,
+                forceElevated: boxIsScrolled,
+                bottom: TabBar(
+                  controller: _controller,
+                  tabs: [
+                    Tab(icon: Icon(Icons.info), text: 'About'),
+                    Tab(icon: Icon(Icons.color_lens), text: 'Colors'),
+                  ],
+                ),
               ),
-            ),
-          ];
-        },
-        body: TabBarView(
-            // key: PageStorageKey<String>(widget.name),
-            controller: _controller,
-            children: [
-              EditUserDetails(user: widget.user),
-              EditUserColorsTab(user: widget.user),
-            ]),
+            ];
+          },
+          body: TabBarView(
+              // key: PageStorageKey<String>(widget.name),
+              controller: _controller,
+              children: [
+                EditUserDetails(user: widget.user),
+                EditUserColorsTab(user: widget.user),
+              ]),
+        ),
       ),
     );
   }

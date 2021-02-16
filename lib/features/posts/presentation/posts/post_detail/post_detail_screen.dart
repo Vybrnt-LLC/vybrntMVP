@@ -148,8 +148,9 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                                   state.comments[index])),
                             child: Padding(
                               padding: const EdgeInsets.all(4.0),
-                              child:
-                                  CommentTile(comment: state.comments[index]),
+                              child: CommentTile(
+                                  comment: state.comments[index],
+                                  post: widget.post),
                             ));
                       },
                       childCount: state.comments.size,

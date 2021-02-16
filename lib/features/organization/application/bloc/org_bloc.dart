@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:meta/meta.dart';
+import 'package:vybrnt_mvp/core/routes/i_dynamic_link_serivce.dart';
 import 'package:vybrnt_mvp/features/organization/domain/i_org_service.dart';
 
 part 'org_bloc.freezed.dart';
@@ -14,8 +15,10 @@ part 'org_state.dart';
 @injectable
 class OrgBloc extends Bloc<OrgEvent, OrgState> {
   final IOrgService _orgService;
+  final IDynamicLinkService _dynamicLinkService;
 
-  OrgBloc(this._orgService) : super(OrgState.initial());
+  OrgBloc(this._orgService, this._dynamicLinkService)
+      : super(OrgState.initial());
 
   StreamSubscription<KtList<String>> _adminsStreamSubscription;
   StreamSubscription<KtList<String>> _membersStreamSubscription;
@@ -30,13 +33,15 @@ class OrgBloc extends Bloc<OrgEvent, OrgState> {
       final postCount = await _orgService.postCount(e.orgID);
       final photoCount = await _orgService.photoCount(e.orgID);
       final isBlocking = await _orgService.isBlocking(e.orgID);
+      final shareLink = await _dynamicLinkService.createOrgLink(e.orgID);
 
       yield state.copyWith(
           isFollowing: isFollowing,
           isNotified: isNotified,
           postCount: postCount,
           photoCount: photoCount,
-          isBlocking: isBlocking);
+          isBlocking: isBlocking,
+          shareLink: shareLink);
       await _adminsStreamSubscription?.cancel();
       _adminsStreamSubscription = _orgService.admins(e.orgID).listen(
           (admins) => add(OrgEvent.adminsReceived(admins, e.currentUserID)));

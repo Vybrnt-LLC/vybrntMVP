@@ -3020,7 +3020,8 @@ class _$PostActorStateTearOff {
       @required KtList<String> likes,
       @required KtList<String> reposts,
       @required KtList<Comment> comments,
-      @required KtList<String> bookmarkedPosts}) {
+      @required KtList<String> bookmarkedPosts,
+      @required String shareLink}) {
     return _PostActorState(
       org: org,
       post: post,
@@ -3035,6 +3036,7 @@ class _$PostActorStateTearOff {
       reposts: reposts,
       comments: comments,
       bookmarkedPosts: bookmarkedPosts,
+      shareLink: shareLink,
     );
   }
 }
@@ -3056,6 +3058,7 @@ mixin _$PostActorState {
   KtList<String> get reposts;
   KtList<Comment> get comments;
   KtList<String> get bookmarkedPosts;
+  String get shareLink;
 
   $PostActorStateCopyWith<PostActorState> get copyWith;
 }
@@ -3077,7 +3080,8 @@ abstract class $PostActorStateCopyWith<$Res> {
       KtList<String> likes,
       KtList<String> reposts,
       KtList<Comment> comments,
-      KtList<String> bookmarkedPosts});
+      KtList<String> bookmarkedPosts,
+      String shareLink});
 
   $OrganizationCopyWith<$Res> get org;
   $PostCopyWith<$Res> get post;
@@ -3109,6 +3113,7 @@ class _$PostActorStateCopyWithImpl<$Res>
     Object reposts = freezed,
     Object comments = freezed,
     Object bookmarkedPosts = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_value.copyWith(
       org: org == freezed ? _value.org : org as Organization,
@@ -3133,6 +3138,7 @@ class _$PostActorStateCopyWithImpl<$Res>
       bookmarkedPosts: bookmarkedPosts == freezed
           ? _value.bookmarkedPosts
           : bookmarkedPosts as KtList<String>,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 
@@ -3206,7 +3212,8 @@ abstract class _$PostActorStateCopyWith<$Res>
       KtList<String> likes,
       KtList<String> reposts,
       KtList<Comment> comments,
-      KtList<String> bookmarkedPosts});
+      KtList<String> bookmarkedPosts,
+      String shareLink});
 
   @override
   $OrganizationCopyWith<$Res> get org;
@@ -3245,6 +3252,7 @@ class __$PostActorStateCopyWithImpl<$Res>
     Object reposts = freezed,
     Object comments = freezed,
     Object bookmarkedPosts = freezed,
+    Object shareLink = freezed,
   }) {
     return _then(_PostActorState(
       org: org == freezed ? _value.org : org as Organization,
@@ -3269,6 +3277,7 @@ class __$PostActorStateCopyWithImpl<$Res>
       bookmarkedPosts: bookmarkedPosts == freezed
           ? _value.bookmarkedPosts
           : bookmarkedPosts as KtList<String>,
+      shareLink: shareLink == freezed ? _value.shareLink : shareLink as String,
     ));
   }
 }
@@ -3287,7 +3296,8 @@ class _$_PostActorState implements _PostActorState {
       @required this.likes,
       @required this.reposts,
       @required this.comments,
-      @required this.bookmarkedPosts})
+      @required this.bookmarkedPosts,
+      @required this.shareLink})
       : assert(org != null),
         assert(post != null),
         assert(senderUser != null),
@@ -3300,7 +3310,8 @@ class _$_PostActorState implements _PostActorState {
         assert(likes != null),
         assert(reposts != null),
         assert(comments != null),
-        assert(bookmarkedPosts != null);
+        assert(bookmarkedPosts != null),
+        assert(shareLink != null);
 
   @override
   final Organization org;
@@ -3328,10 +3339,12 @@ class _$_PostActorState implements _PostActorState {
   final KtList<Comment> comments;
   @override
   final KtList<String> bookmarkedPosts;
+  @override
+  final String shareLink;
 
   @override
   String toString() {
-    return 'PostActorState(org: $org, post: $post, senderUser: $senderUser, reposterUser: $reposterUser, isCurrentUsersPost: $isCurrentUsersPost, isLiked: $isLiked, isReposted: $isReposted, isBookmarked: $isBookmarked, comment: $comment, likes: $likes, reposts: $reposts, comments: $comments, bookmarkedPosts: $bookmarkedPosts)';
+    return 'PostActorState(org: $org, post: $post, senderUser: $senderUser, reposterUser: $reposterUser, isCurrentUsersPost: $isCurrentUsersPost, isLiked: $isLiked, isReposted: $isReposted, isBookmarked: $isBookmarked, comment: $comment, likes: $likes, reposts: $reposts, comments: $comments, bookmarkedPosts: $bookmarkedPosts, shareLink: $shareLink)';
   }
 
   @override
@@ -3373,7 +3386,10 @@ class _$_PostActorState implements _PostActorState {
                     .equals(other.comments, comments)) &&
             (identical(other.bookmarkedPosts, bookmarkedPosts) ||
                 const DeepCollectionEquality()
-                    .equals(other.bookmarkedPosts, bookmarkedPosts)));
+                    .equals(other.bookmarkedPosts, bookmarkedPosts)) &&
+            (identical(other.shareLink, shareLink) ||
+                const DeepCollectionEquality()
+                    .equals(other.shareLink, shareLink)));
   }
 
   @override
@@ -3391,7 +3407,8 @@ class _$_PostActorState implements _PostActorState {
       const DeepCollectionEquality().hash(likes) ^
       const DeepCollectionEquality().hash(reposts) ^
       const DeepCollectionEquality().hash(comments) ^
-      const DeepCollectionEquality().hash(bookmarkedPosts);
+      const DeepCollectionEquality().hash(bookmarkedPosts) ^
+      const DeepCollectionEquality().hash(shareLink);
 
   @override
   _$PostActorStateCopyWith<_PostActorState> get copyWith =>
@@ -3412,7 +3429,8 @@ abstract class _PostActorState implements PostActorState {
       @required KtList<String> likes,
       @required KtList<String> reposts,
       @required KtList<Comment> comments,
-      @required KtList<String> bookmarkedPosts}) = _$_PostActorState;
+      @required KtList<String> bookmarkedPosts,
+      @required String shareLink}) = _$_PostActorState;
 
   @override
   Organization get org;
@@ -3440,6 +3458,8 @@ abstract class _PostActorState implements PostActorState {
   KtList<Comment> get comments;
   @override
   KtList<String> get bookmarkedPosts;
+  @override
+  String get shareLink;
   @override
   _$PostActorStateCopyWith<_PostActorState> get copyWith;
 }

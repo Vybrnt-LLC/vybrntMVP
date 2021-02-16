@@ -12,7 +12,6 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-import '../features/activity/application/actor/activity_actor_bloc.dart';
 import '../features/activity/application/bloc/activity_bloc.dart';
 import '../features/activity/repository/activity_service.dart';
 import '../features/activity/repository/analytics_service.dart';
@@ -25,6 +24,7 @@ import '../features/homefeed/application/category_posts/category_posts_bloc.dart
 import '../features/posts/application/comment_actor/comment_actor_bloc.dart';
 import '../features/calendar/application/create_event_bloc/create_event_bloc.dart';
 import '../features/posts/application/create_post/create_post_form_bloc.dart';
+import 'routes/dynamic_link_service.dart';
 import '../features/organization/application/edit_org_bloc/edit_org_bloc.dart';
 import '../features/user/application/edit_user_bloc/edit_user_bloc.dart';
 import '../features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
@@ -42,6 +42,7 @@ import '../features/activity/domain/i_activity_service.dart';
 import '../features/activity/domain/i_analytics_service.dart';
 import '../features/authentication/domain/i_auth_facade.dart';
 import '../features/calendar/domain/i_calendar_service.dart';
+import 'routes/i_dynamic_link_serivce.dart';
 import '../features/calendar/domain/i_event_detail_service.dart';
 import '../features/homefeed/domain/i_homefeed_service.dart';
 import 'routes/i_navigation_service.dart';
@@ -93,38 +94,31 @@ GetIt $initGetIt(
   gh.lazySingleton<IAuthFacade>(
       () => FirebaseAuthFacade(get<FirebaseAuth>(), get<GoogleSignIn>()));
   gh.lazySingleton<ICalendarService>(
-      () => CalendarService(get<FirebaseFirestore>()));
-  gh.lazySingleton<IEventDetailService>(() => EventDetailService());
+      () => CalendarService(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.lazySingleton<IHomeFeedService>(
       () => HomeFeedService(get<FirebaseFirestore>()));
   gh.lazySingleton<INavigationService>(() => NavigationService());
   gh.lazySingleton<IOrgService>(
-      () => OrgService(firestore: get<FirebaseFirestore>()));
+      () => OrgService(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.lazySingleton<IPostRepository>(
-      () => PostRepository(get<FirebaseFirestore>()));
+      () => PostRepository(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.lazySingleton<IUserService>(
-      () => UserService(firestore: get<FirebaseFirestore>()));
+      () => UserService(get<FirebaseFirestore>(), get<IActivityService>()));
   gh.factory<NavbarBloc>(() => NavbarBloc(get<AnalyticsService>()));
   gh.lazySingleton<NavigationService>(
       () => firebaseInjectableModule.navigationService);
-  gh.factory<OrgBloc>(() => OrgBloc(get<IOrgService>()));
   gh.factory<OrgCalendarBloc>(
       () => OrgCalendarBloc(get<ICalendarService>(), get<IOrgService>()));
   gh.factory<OrgWatcherBloc>(() => OrgWatcherBloc(get<IOrgService>()));
-  gh.factory<PostActorBloc>(
-      () => PostActorBloc(get<IPostRepository>(), get<IAnalyticsService>()));
   gh.factory<PostNotificationBloc>(
       () => PostNotificationBloc(get<IPostRepository>()));
   gh.factory<PostWatcherBloc>(() => PostWatcherBloc(get<IPostRepository>()));
   gh.factory<SearchBloc>(() => SearchBloc(get<IOrgService>()));
   gh.factory<SignInFormBloc>(
       () => SignInFormBloc(get<IAuthFacade>(), get<IAnalyticsService>()));
-  gh.factory<UserBloc>(() => UserBloc(get<IUserService>()));
   gh.factory<UserEventListBloc>(() => UserEventListBloc(get<IUserService>()));
   gh.factory<UserListBloc>(() => UserListBloc(get<IOrgService>()));
   gh.factory<UserWatcherBloc>(() => UserWatcherBloc(get<IUserService>()));
-  gh.factory<ActivityActorBloc>(
-      () => ActivityActorBloc(get<IActivityService>()));
   gh.factory<ActivityBloc>(() => ActivityBloc(get<IActivityService>()));
   gh.factory<BookmarkWatcherBloc>(() =>
       BookmarkWatcherBloc(get<IPostRepository>(), get<IAnalyticsService>()));
@@ -134,12 +128,6 @@ GetIt $initGetIt(
   gh.factory<CategoryPostsBloc>(() =>
       CategoryPostsBloc(get<IHomeFeedService>(), get<IAnalyticsService>()));
   gh.factory<CommentActorBloc>(() => CommentActorBloc(get<IPostRepository>()));
-  gh.factory<CreateEventBloc>(() => CreateEventBloc(
-        get<ICalendarService>(),
-        get<IEventDetailService>(),
-        get<IOrgService>(),
-        get<IAnalyticsService>(),
-      ));
   gh.factory<CreatePostFormBloc>(() => CreatePostFormBloc(
         get<IPostRepository>(),
         get<IOrgService>(),
@@ -147,29 +135,50 @@ GetIt $initGetIt(
       ));
   gh.factory<EditOrgBloc>(() => EditOrgBloc(get<IOrgService>()));
   gh.factory<EditUserBloc>(() => EditUserBloc(get<IUserService>()));
-  gh.factory<EventDetailBloc>(() => EventDetailBloc(
-        get<IEventDetailService>(),
-        get<IOrgService>(),
-        get<IAnalyticsService>(),
-      ));
   gh.factory<EventListBloc>(() => EventListBloc(get<IOrgService>()));
-  gh.factory<EventNotificationBloc>(
-      () => EventNotificationBloc(get<IEventDetailService>()));
-  gh.factory<EventTileBloc>(() => EventTileBloc(get<IEventDetailService>()));
   gh.factory<FabBloc>(() => FabBloc(get<IAnalyticsService>()));
   gh.factory<HomeEventsBloc>(() => HomeEventsBloc(get<IHomeFeedService>()));
   gh.factory<HomePostsBloc>(() => HomePostsBloc(get<IHomeFeedService>()));
+  gh.lazySingleton<IDynamicLinkService>(
+      () => DynamicLinkService(get<INavigationService>()));
   gh.lazySingleton<IPushNotificationService>(() => PushNotificationService(
         firebaseMessaging: get<FirebaseMessaging>(),
         navigationService: get<NavigationService>(),
         firestore: get<FirebaseFirestore>(),
       ));
+  gh.factory<OrgBloc>(
+      () => OrgBloc(get<IOrgService>(), get<IDynamicLinkService>()));
+  gh.factory<PostActorBloc>(() => PostActorBloc(
+        get<IPostRepository>(),
+        get<IAnalyticsService>(),
+        get<IDynamicLinkService>(),
+      ));
+  gh.factory<UserBloc>(
+      () => UserBloc(get<IUserService>(), get<IDynamicLinkService>()));
   gh.factory<AuthBloc>(() => AuthBloc(
         get<IAuthFacade>(),
         get<IPushNotificationService>(),
         get<IAnalyticsService>(),
         get<INavigationService>(),
+        get<IDynamicLinkService>(),
       ));
+  gh.lazySingleton<IEventDetailService>(() => EventDetailService(
+      get<FirebaseFirestore>(), get<IPushNotificationService>()));
+  gh.factory<CreateEventBloc>(() => CreateEventBloc(
+        get<ICalendarService>(),
+        get<IEventDetailService>(),
+        get<IOrgService>(),
+        get<IAnalyticsService>(),
+      ));
+  gh.factory<EventDetailBloc>(() => EventDetailBloc(
+        get<IEventDetailService>(),
+        get<IOrgService>(),
+        get<IAnalyticsService>(),
+        get<IDynamicLinkService>(),
+      ));
+  gh.factory<EventNotificationBloc>(
+      () => EventNotificationBloc(get<IEventDetailService>()));
+  gh.factory<EventTileBloc>(() => EventTileBloc(get<IEventDetailService>()));
   return get;
 }
 

@@ -20,6 +20,7 @@
     "firebase-functions": "^3.11.0",
     "fs-extra": "^4.0.2",
     "json2csv": "^5.0.5",
+    "uuid": "^8.3.2",
     "uuidv4": "^6.2.5"
   },
   "devDependencies": {

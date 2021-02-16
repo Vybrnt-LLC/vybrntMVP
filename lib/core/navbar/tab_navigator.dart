@@ -15,6 +15,7 @@ import 'package:vybrnt_mvp/features/calendar/application/org_bloc/org_calendar_b
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/screens/calendar_month_screen.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/screens/event_detail_screen.dart';
+import 'package:vybrnt_mvp/features/calendar/presentation/screens/event_screen.dart';
 import 'package:vybrnt_mvp/features/organization/application/edit_org_bloc/edit_org_bloc.dart';
 import 'package:vybrnt_mvp/features/organization/application/org_watcher_bloc/org_watcher_bloc.dart';
 import 'package:vybrnt_mvp/features/organization/application/user_list_bloc/user_list_bloc.dart';
@@ -25,6 +26,7 @@ import 'package:vybrnt_mvp/features/organization/presentation/screens/user_list_
 import 'package:vybrnt_mvp/features/posts/application/post_actor/post_actor_bloc.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/post.dart';
 import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_detail_screen.dart';
+import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_screen.dart';
 import 'package:vybrnt_mvp/features/search/application/bloc/search_bloc.dart';
 import 'package:vybrnt_mvp/features/search/presentation/screens/search_screen.dart';
 import 'package:vybrnt_mvp/features/user/application/edit_user_bloc/edit_user_bloc.dart';
@@ -237,6 +239,32 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
                 routeBuilders[TabNavigatorRoutes.postDetail](context)));
   }
 
+  void pushPost(BuildContext context,
+      {String postID, String typeID, String type}) {
+    var routeBuilders =
+        _routeBuilders(context, postID: postID, typeID: typeID, type: type);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.postDetail),
+            builder: (context) =>
+                routeBuilders[TabNavigatorRoutes.postDetail](context)));
+  }
+
+  void pushEvent(BuildContext context,
+      {String eventID, String typeID, String type}) {
+    var routeBuilders =
+        _routeBuilders(context, eventID: eventID, typeID: typeID, type: type);
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            settings: RouteSettings(name: TabNavigatorRoutes.eventDetail),
+            builder: (context) =>
+                routeBuilders[TabNavigatorRoutes.eventDetail](context)));
+  }
+
   void pushEventDetail(BuildContext context, {Event event}) {
     var routeBuilders = _routeBuilders(context, event: event);
 
@@ -250,6 +278,10 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
 
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
       {User user,
+      String type,
+      String eventID,
+      String typeID,
+      String postID,
       String contentID,
       String contentType,
       String ownerID,
@@ -264,470 +296,151 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
       KtList<String> orgIDList}) {
     final currentUserID =
         Provider.of<UserData>(context, listen: false).currentUserID;
+    Map<String, WidgetBuilder> routeHomeWidgets,
+        routeCalendarWidgets,
+        routeSearchWidgets,
+        routeActivityWidgets,
+        routeUserWidgets;
+
+    routeHomeWidgets = routeCalendarWidgets =
+        routeSearchWidgets = routeActivityWidgets = routeUserWidgets = {
+      // TabNavigatorRoutes.root: (context) => HomeFeedScreen(
+      //       key: homeKey,
+      //       currentUserID: currentUserID,
+      //     ),
+      TabNavigatorRoutes.userProfile: (context) =>
+          BlocProvider<UserWatcherBloc>(
+            create: (context) => getIt<UserWatcherBloc>()
+              ..add(UserWatcherEvent.getData(
+                  currentUserID: currentUserID, userID: userID)),
+            child: UserProfileScreen(
+              key: PageStorageKey(userID),
+              userID: userID,
+            ),
+          ),
+      TabNavigatorRoutes.editUserProfile: (context) =>
+          EditUserProfileScreen(user: user),
+      TabNavigatorRoutes.followingList: (context) =>
+          UserListScreen(userIDList: userIDList, title: 'Following'),
+      TabNavigatorRoutes.followerList: (context) =>
+          UserListScreen(userIDList: userIDList, title: 'Followers'),
+      TabNavigatorRoutes.orgList: (context) => OrgListScreen(
+            orgIDList: orgIDList,
+            onPush: (orgID) => pushOrgPage(
+              context,
+              orgID: orgID,
+            ),
+          ),
+      TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
+            create: (context) => getIt<OrgWatcherBloc>()
+              ..add(OrgWatcherEvent.getData(
+                  orgID: orgID, currentUserID: currentUserID)),
+            child: OrganizationPageScreen(
+              key: PageStorageKey(orgID),
+              orgID: orgID,
+            ),
+          ),
+      TabNavigatorRoutes.editOrgPage: (context) =>
+          EditOrganizationPageScreen(org: org),
+      TabNavigatorRoutes.userList: (context) =>
+          UserListScreen(userIDList: userIDList, title: 'Members'),
+      TabNavigatorRoutes.likes: (context) =>
+          UserListScreen(userIDList: userIDList, title: 'Likes'),
+      TabNavigatorRoutes.reposts: (context) =>
+          UserListScreen(userIDList: userIDList, title: 'Reposts'),
+      TabNavigatorRoutes.report: (context) => ReportScreen(
+            contentID: contentID,
+            contentType: contentType,
+            ownerID: ownerID,
+            ownerType: ownerType,
+            currentUserID: userID,
+          ),
+      TabNavigatorRoutes.postDetail: (context) => PostScreen(
+            postID: postID,
+            typeID: typeID,
+            type: type,
+          ),
+      TabNavigatorRoutes.eventDetail: (context) =>
+          EventScreen(eventID: eventID, typeID: typeID, type: type)
+    };
+
+    final homeRoot = {
+      TabNavigatorRoutes.root: (context) => HomeFeedScreen(
+            key: homeKey,
+            currentUserID: currentUserID,
+          )
+    };
+
+    final calendarRoot = {
+      TabNavigatorRoutes.root: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider<OrgCalendarBloc>(
+                create: (context) => getIt<OrgCalendarBloc>()
+                  ..add(OrgCalendarEvent.getData(currentUserID)),
+              ),
+              BlocProvider<CalendarBloc>(
+                create: (context) => getIt<CalendarBloc>()
+                  ..add(CalendarEvent.getData(currentUserID)),
+              ),
+            ],
+            child: CalendarMonthScreen(key: calendarKey),
+          ),
+    };
+
+    final searchRoot = {
+      TabNavigatorRoutes.root: (context) => BlocProvider<SearchBloc>(
+          create: (context) =>
+              getIt<SearchBloc>()..add(SearchEvent.getSearch('')),
+          child: SearchScreen(key: searchKey)),
+    };
+
+    final activityRoot = {
+      TabNavigatorRoutes.root: (context) => BlocProvider<ActivityBloc>(
+            create: (context) =>
+                getIt<ActivityBloc>()..add(ActivityEvent.getData()),
+            child: ActivityScreen(
+              key: notificationKey,
+              currentUserID:
+                  Provider.of<UserData>(context, listen: false).currentUserID,
+            ),
+          ),
+    };
+    final userRoot = {
+      TabNavigatorRoutes.root: (context) => BlocProvider<UserWatcherBloc>(
+            create: (context) => getIt<UserWatcherBloc>()
+              ..add(UserWatcherEvent.getData(
+                  currentUserID: currentUserID, userID: currentUserID)),
+            child: UserProfileScreen(
+              key: userKey,
+              menuButton: true,
+              userID:
+                  Provider.of<UserData>(context, listen: false).currentUserID,
+            ),
+          )
+    };
     switch (tabItemm) {
       case TabItem1.homefeed:
-        return {
-          TabNavigatorRoutes.root: (context) => HomeFeedScreen(
-                key: homeKey,
-                currentUserID: currentUserID,
-              ),
-          TabNavigatorRoutes.userProfile: (context) =>
-              BlocProvider<UserWatcherBloc>(
-                create: (context) => getIt<UserWatcherBloc>()
-                  ..add(UserWatcherEvent.getData(
-                      currentUserID: currentUserID, userID: userID)),
-                child: UserProfileScreen(
-                  key: PageStorageKey(userID),
-                  userID: userID,
-                ),
-              ),
-          TabNavigatorRoutes.editUserProfile: (context) =>
-              BlocProvider<EditUserBloc>(
-                  create: (context) =>
-                      getIt<EditUserBloc>()..add(EditUserEvent.getData(user)),
-                  child: EditUserProfileScreen(user: user)),
-          TabNavigatorRoutes.followingList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Following'),
-              ),
-          TabNavigatorRoutes.followerList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Followers'),
-              ),
-          TabNavigatorRoutes.orgList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getOrgData(orgIDList)),
-                child: OrgListScreen(
-                  orgIDList: orgIDList,
-                  onPush: (orgID) => pushOrgPage(
-                    context,
-                    orgID: orgID,
-                  ),
-                ),
-              ),
-          TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
-                create: (context) => getIt<OrgWatcherBloc>()
-                  ..add(OrgWatcherEvent.getData(
-                      orgID: orgID, currentUserID: currentUserID)),
-                child: OrganizationPageScreen(
-                  key: PageStorageKey(orgID),
-                  orgID: orgID,
-                ),
-              ),
-          TabNavigatorRoutes.editOrgPage: (context) =>
-              BlocProvider<EditOrgBloc>(
-                  create: (context) =>
-                      getIt<EditOrgBloc>()..add(EditOrgEvent.getData(org)),
-                  child: EditOrganizationPageScreen(org: org)),
-          TabNavigatorRoutes.userList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Members'),
-              ),
-          TabNavigatorRoutes.likes: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Likes'),
-              ),
-          TabNavigatorRoutes.reposts: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Reposts'),
-              ),
-          TabNavigatorRoutes.report: (context) => ReportScreen(
-                contentID: contentID,
-                contentType: contentType,
-                ownerID: ownerID,
-                ownerType: ownerType,
-                currentUserID: userID,
-              )
-        };
-        break;
+        routeHomeWidgets.addAll(homeRoot);
+        return routeHomeWidgets;
+
       case TabItem1.calendar:
-        return {
-          TabNavigatorRoutes.root: (context) => MultiBlocProvider(
-                providers: [
-                  BlocProvider<OrgCalendarBloc>(
-                    create: (context) => getIt<OrgCalendarBloc>()
-                      ..add(OrgCalendarEvent.getData(currentUserID)),
-                  ),
-                  BlocProvider<CalendarBloc>(
-                    create: (context) => getIt<CalendarBloc>()
-                      ..add(CalendarEvent.getData(currentUserID)),
-                  ),
-                ],
-                child: CalendarMonthScreen(key: calendarKey),
-              ),
-          TabNavigatorRoutes.userProfile: (context) =>
-              BlocProvider<UserWatcherBloc>(
-                create: (context) => getIt<UserWatcherBloc>()
-                  ..add(UserWatcherEvent.getData(
-                      currentUserID: currentUserID, userID: userID)),
-                child: UserProfileScreen(
-                  key: PageStorageKey(userID),
-                  userID: userID,
-                ),
-              ),
-          TabNavigatorRoutes.editUserProfile: (context) =>
-              BlocProvider<EditUserBloc>(
-                  create: (context) =>
-                      getIt<EditUserBloc>()..add(EditUserEvent.getData(user)),
-                  child: EditUserProfileScreen(user: user)),
-          TabNavigatorRoutes.followingList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Following'),
-              ),
-          TabNavigatorRoutes.followerList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Followers'),
-              ),
-          TabNavigatorRoutes.orgList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getOrgData(orgIDList)),
-                child: OrgListScreen(
-                  orgIDList: orgIDList,
-                  onPush: (orgID) => pushOrgPage(
-                    context,
-                    orgID: orgID,
-                  ),
-                ),
-              ),
-          TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
-                create: (context) => getIt<OrgWatcherBloc>()
-                  ..add(OrgWatcherEvent.getData(
-                      orgID: orgID, currentUserID: currentUserID)),
-                child: OrganizationPageScreen(
-                  key: PageStorageKey(orgID),
-                  orgID: orgID,
-                ),
-              ),
-          TabNavigatorRoutes.editOrgPage: (context) =>
-              BlocProvider<EditOrgBloc>(
-                  create: (context) =>
-                      getIt<EditOrgBloc>()..add(EditOrgEvent.getData(org)),
-                  child: EditOrganizationPageScreen(org: org)),
-          TabNavigatorRoutes.userList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Members'),
-              ),
-          TabNavigatorRoutes.likes: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Likes'),
-              ),
-          TabNavigatorRoutes.reposts: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Reposts'),
-              ),
-          TabNavigatorRoutes.report: (context) => ReportScreen(
-                contentID: contentID,
-                contentType: contentType,
-                ownerID: ownerID,
-                ownerType: ownerType,
-                currentUserID: userID,
-              )
-        };
-        break;
+        routeCalendarWidgets.addAll(calendarRoot);
+        return routeCalendarWidgets;
+
       case TabItem1.userprofile:
-        return {
-          TabNavigatorRoutes.root: (context) => BlocProvider<UserWatcherBloc>(
-                create: (context) => getIt<UserWatcherBloc>()
-                  ..add(UserWatcherEvent.getData(
-                      currentUserID: currentUserID, userID: currentUserID)),
-                child: UserProfileScreen(
-                  key: userKey,
-                  menuButton: true,
-                  userID: Provider.of<UserData>(context, listen: false)
-                      .currentUserID,
-                ),
-              ),
-          TabNavigatorRoutes.userProfile: (context) =>
-              BlocProvider<UserWatcherBloc>(
-                create: (context) => getIt<UserWatcherBloc>()
-                  ..add(UserWatcherEvent.getData(
-                      currentUserID: currentUserID, userID: userID)),
-                child: UserProfileScreen(
-                  key: PageStorageKey(userID),
-                  userID: userID,
-                ),
-              ),
-          TabNavigatorRoutes.editUserProfile: (context) =>
-              BlocProvider<EditUserBloc>(
-                  create: (context) =>
-                      getIt<EditUserBloc>()..add(EditUserEvent.getData(user)),
-                  child: EditUserProfileScreen(user: user)),
-          TabNavigatorRoutes.followingList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Following'),
-              ),
-          TabNavigatorRoutes.followerList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Followers'),
-              ),
-          TabNavigatorRoutes.orgList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getOrgData(orgIDList)),
-                child: OrgListScreen(
-                  orgIDList: orgIDList,
-                  onPush: (orgID) => pushOrgPage(
-                    context,
-                    orgID: orgID,
-                  ),
-                ),
-              ),
-          TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
-                create: (context) => getIt<OrgWatcherBloc>()
-                  ..add(OrgWatcherEvent.getData(
-                      orgID: orgID, currentUserID: currentUserID)),
-                child: OrganizationPageScreen(
-                  key: PageStorageKey(orgID),
-                  orgID: orgID,
-                ),
-              ),
-          TabNavigatorRoutes.editOrgPage: (context) =>
-              BlocProvider<EditOrgBloc>(
-                  create: (context) =>
-                      getIt<EditOrgBloc>()..add(EditOrgEvent.getData(org)),
-                  child: EditOrganizationPageScreen(org: org)),
-          TabNavigatorRoutes.userList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Members'),
-              ),
-          TabNavigatorRoutes.likes: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Likes'),
-              ),
-          TabNavigatorRoutes.reposts: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Reposts'),
-              ),
-          TabNavigatorRoutes.report: (context) => ReportScreen(
-                contentID: contentID,
-                contentType: contentType,
-                ownerID: ownerID,
-                ownerType: ownerType,
-                currentUserID: userID,
-              )
-        };
-        break;
+        routeUserWidgets.addAll(userRoot);
+        return routeUserWidgets;
+
       case TabItem1.search:
-        return {
-          TabNavigatorRoutes.root: (context) => BlocProvider<SearchBloc>(
-              create: (context) =>
-                  getIt<SearchBloc>()..add(SearchEvent.getSearch('')),
-              child: SearchScreen(key: searchKey)),
-          TabNavigatorRoutes.userProfile: (context) =>
-              BlocProvider<UserWatcherBloc>(
-                create: (context) => getIt<UserWatcherBloc>()
-                  ..add(UserWatcherEvent.getData(
-                      currentUserID: currentUserID, userID: userID)),
-                child: UserProfileScreen(
-                  key: PageStorageKey(userID),
-                  userID: userID,
-                ),
-              ),
-          TabNavigatorRoutes.editUserProfile: (context) =>
-              BlocProvider<EditUserBloc>(
-                  create: (context) =>
-                      getIt<EditUserBloc>()..add(EditUserEvent.getData(user)),
-                  child: EditUserProfileScreen(user: user)),
-          TabNavigatorRoutes.followingList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Following'),
-              ),
-          TabNavigatorRoutes.followerList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Followers'),
-              ),
-          TabNavigatorRoutes.orgList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getOrgData(orgIDList)),
-                child: OrgListScreen(
-                  orgIDList: orgIDList,
-                  onPush: (orgID) => pushOrgPage(
-                    context,
-                    orgID: orgID,
-                  ),
-                ),
-              ),
-          TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
-                create: (context) => getIt<OrgWatcherBloc>()
-                  ..add(OrgWatcherEvent.getData(
-                      orgID: orgID, currentUserID: currentUserID)),
-                child: OrganizationPageScreen(
-                  key: PageStorageKey(orgID),
-                  orgID: orgID,
-                ),
-              ),
-          TabNavigatorRoutes.editOrgPage: (context) =>
-              BlocProvider<EditOrgBloc>(
-                  create: (context) =>
-                      getIt<EditOrgBloc>()..add(EditOrgEvent.getData(org)),
-                  child: EditOrganizationPageScreen(org: org)),
-          TabNavigatorRoutes.userList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Members'),
-              ),
-          TabNavigatorRoutes.likes: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Likes'),
-              ),
-          TabNavigatorRoutes.reposts: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Reposts'),
-              ),
-          TabNavigatorRoutes.report: (context) => ReportScreen(
-                contentID: contentID,
-                contentType: contentType,
-                ownerID: ownerID,
-                ownerType: ownerType,
-                currentUserID: userID,
-              )
-        };
+        routeSearchWidgets.addAll(searchRoot);
+        return routeSearchWidgets;
       case TabItem1.activity:
-        return {
-          TabNavigatorRoutes.root: (context) => BlocProvider<ActivityBloc>(
-                create: (context) =>
-                    getIt<ActivityBloc>()..add(ActivityEvent.getData()),
-                child: ActivityScreen(
-                  key: notificationKey,
-                  currentUserID: Provider.of<UserData>(context, listen: false)
-                      .currentUserID,
-                ),
-              ),
-          TabNavigatorRoutes.userProfile: (context) =>
-              BlocProvider<UserWatcherBloc>(
-                create: (context) => getIt<UserWatcherBloc>()
-                  ..add(UserWatcherEvent.getData(
-                      currentUserID: currentUserID, userID: userID)),
-                child: UserProfileScreen(
-                  key: PageStorageKey(userID),
-                  userID: userID,
-                ),
-              ),
-          TabNavigatorRoutes.postDetail: (context) =>
-              BlocProvider<PostActorBloc>(
-                  create: (context) => getIt<PostActorBloc>()
-                    ..add(PostActorEvent.getData(
-                      post,
-                      senderID: post.senderID.getOrCrash(),
-                      currentUserID: currentUserID,
-                      orgID: post.orgID.getOrCrash(),
-                    )),
-                  child: PostDetailScreen(
-                    post: post,
-                    color: Colors.black,
-                  )),
-          TabNavigatorRoutes.eventDetail: (context) =>
-              BlocProvider<EventDetailBloc>(
-                  create: (context) => getIt<EventDetailBloc>()
-                    ..add(EventDetailEvent.getData(
-                        senderID: event.senderID,
-                        currentUserID: currentUserID,
-                        orgID: event.orgID,
-                        eventID: event.eventID.getOrCrash(),
-                        isOrg: event.isOrg)),
-                  child: EventDetailScreen(event: event)),
-          TabNavigatorRoutes.editUserProfile: (context) =>
-              BlocProvider<EditUserBloc>(
-                  create: (context) =>
-                      getIt<EditUserBloc>()..add(EditUserEvent.getData(user)),
-                  child: EditUserProfileScreen(user: user)),
-          TabNavigatorRoutes.followingList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Following'),
-              ),
-          TabNavigatorRoutes.followerList: (context) =>
-              BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child:
-                    UserListScreen(userIDList: userIDList, title: 'Followers'),
-              ),
-          TabNavigatorRoutes.orgList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getOrgData(orgIDList)),
-                child: OrgListScreen(
-                  orgIDList: orgIDList,
-                  onPush: (orgID) => pushOrgPage(
-                    context,
-                    orgID: orgID,
-                  ),
-                ),
-              ),
-          TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
-                create: (context) => getIt<OrgWatcherBloc>()
-                  ..add(OrgWatcherEvent.getData(
-                      orgID: orgID, currentUserID: currentUserID)),
-                child: OrganizationPageScreen(
-                  key: PageStorageKey(orgID),
-                  orgID: orgID,
-                ),
-              ),
-          TabNavigatorRoutes.editOrgPage: (context) =>
-              BlocProvider<EditOrgBloc>(
-                  create: (context) =>
-                      getIt<EditOrgBloc>()..add(EditOrgEvent.getData(org)),
-                  child: EditOrganizationPageScreen(org: org)),
-          TabNavigatorRoutes.userList: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Members'),
-              ),
-          TabNavigatorRoutes.likes: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Likes'),
-              ),
-          TabNavigatorRoutes.reposts: (context) => BlocProvider<UserListBloc>(
-                create: (context) => getIt<UserListBloc>()
-                  ..add(UserListEvent.getUserData(userIDList)),
-                child: UserListScreen(userIDList: userIDList, title: 'Reposts'),
-              ),
-          TabNavigatorRoutes.report: (context) => ReportScreen(
-                contentID: contentID,
-                contentType: contentType,
-                ownerID: ownerID,
-                ownerType: ownerType,
-                currentUserID: userID,
-              )
-        };
-        break;
+        routeActivityWidgets.addAll(activityRoot);
+        return routeActivityWidgets;
+
+      default:
+        routeHomeWidgets.addAll(homeRoot);
+        return routeHomeWidgets;
     }
   }
 

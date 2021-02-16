@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
+import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
 import 'package:vybrnt_mvp/features/activity/repository/activity_dtos.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
@@ -34,11 +35,10 @@ import 'org_list_dtos.dart';
 
 @LazySingleton(as: IOrgService)
 class OrgService implements IOrgService {
-  FirebaseFirestore firestore;
+  final FirebaseFirestore firestore;
+  final IActivityService _activityService;
 
-  OrgService({
-    this.firestore,
-  });
+  OrgService(this.firestore, this._activityService);
 
   @override
   Future<OrgList> getOrgList(String orgID) async {
@@ -167,15 +167,16 @@ class OrgService implements IOrgService {
       'name': org.name,
       'profileImageUrl': org.profileImageUrl,
       'isToggled': true,
+      'notify': true
     });
     // Add current user to user's followers collection
     followersRef
         .doc(orgID)
         .collection('orgFollowers')
         .doc(currentUserID)
-        .set({'isToggled': true, 'notify': false});
+        .set({'isToggled': true, 'notify': true});
 
-    await addFollowToActivityFeed(orgID);
+    await _activityService.addFollowOrgToActivityFeed(orgID);
   }
 
   @override
@@ -433,7 +434,8 @@ class OrgService implements IOrgService {
       'isToggled': true,
     });
 
-    await addAdminAccessToActivityFeed(eMember.userID.getOrCrash(), orgID);
+    await _activityService.addAdminAccessToActivityFeed(
+        eMember.userID.getOrCrash(), orgID);
   }
 
   @override
@@ -544,50 +546,6 @@ class OrgService implements IOrgService {
               eboardIDs.add(element.id);
             }));
     return eboardIDs;
-  }
-
-  Future addFollowToActivityFeed(String orgID) async {
-    final currentUserID = await firestore.currentUserID();
-    final currentUserDoc = await usersRef.doc(currentUserID).get();
-
-    Activity newLikeActivity = Activity.empty();
-    final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-      username: currentUserDoc.get('profileName'),
-      userID: currentUserID,
-      orgID: orgID,
-      type: 'followOrg',
-      profileImageURL: currentUserDoc.get('profileImageUrl'),
-    ));
-    final eboard = await getEboard(orgID);
-
-    for (int i = 0; i < eboard.length; i++) {
-      activitiesRef
-          .doc(eboard[i])
-          .collection('userActivityFeed')
-          .doc(activityDTO.activityID)
-          .set(activityDTO.toJson());
-    }
-  }
-
-  Future addAdminAccessToActivityFeed(String userID, String orgID) async {
-    final currentUserID = await firestore.currentUserID();
-    final currentUserDoc = await usersRef.doc(currentUserID).get();
-
-    Activity newLikeActivity = Activity.empty();
-    final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-      username: currentUserDoc.get('profileName'),
-      userID: currentUserID,
-      orgID: orgID,
-      type: 'admin',
-      isOrg: true,
-      profileImageURL: currentUserDoc.get('profileImageUrl'),
-    ));
-
-    activitiesRef
-        .doc(userID)
-        .collection('userActivityFeed')
-        .doc(activityDTO.activityID)
-        .set(activityDTO.toJson());
   }
 
   @override

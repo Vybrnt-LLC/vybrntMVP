@@ -12,7 +12,11 @@ class PostScreen extends StatelessWidget {
   final String type;
   final String typeID;
 
-  const PostScreen({Key key, this.postID, this.type, this.typeID})
+  const PostScreen(
+      {Key key,
+      @required this.postID,
+      @required this.type,
+      @required this.typeID})
       : super(key: key);
   @override
   Widget build(BuildContext context) {

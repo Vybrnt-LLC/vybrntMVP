@@ -52,7 +52,7 @@ class BetaScreen extends StatelessWidget {
             onPressed: () {
               SimpleHiddenDrawerController.of(context).toggle();
             }),
-        title: Text('REFERENCES',
+        title: Text('LINKS',
             style: GoogleFonts.getFont('Barlow Condensed',
                 fontWeight: FontWeight.bold,
                 fontStyle: FontStyle.italic,
