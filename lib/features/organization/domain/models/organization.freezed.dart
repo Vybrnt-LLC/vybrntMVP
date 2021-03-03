@@ -30,7 +30,8 @@ class _$OrganizationTearOff {
       @required String twitterURL,
       @required String facebookURL,
       @required String instagramURL,
-      @required String websiteURL}) {
+      @required String websiteURL,
+      @required Map<UniqueId, Channel> channels}) {
     return _Organization(
       orgID: orgID,
       abbv: abbv,
@@ -50,6 +51,7 @@ class _$OrganizationTearOff {
       facebookURL: facebookURL,
       instagramURL: instagramURL,
       websiteURL: websiteURL,
+      channels: channels,
     );
   }
 }
@@ -76,6 +78,7 @@ mixin _$Organization {
   String get facebookURL;
   String get instagramURL;
   String get websiteURL;
+  Map<UniqueId, Channel> get channels;
 
   $OrganizationCopyWith<Organization> get copyWith;
 }
@@ -102,7 +105,8 @@ abstract class $OrganizationCopyWith<$Res> {
       String twitterURL,
       String facebookURL,
       String instagramURL,
-      String websiteURL});
+      String websiteURL,
+      Map<UniqueId, Channel> channels});
 }
 
 class _$OrganizationCopyWithImpl<$Res> implements $OrganizationCopyWith<$Res> {
@@ -132,6 +136,7 @@ class _$OrganizationCopyWithImpl<$Res> implements $OrganizationCopyWith<$Res> {
     Object facebookURL = freezed,
     Object instagramURL = freezed,
     Object websiteURL = freezed,
+    Object channels = freezed,
   }) {
     return _then(_value.copyWith(
       orgID: orgID == freezed ? _value.orgID : orgID as UniqueId,
@@ -171,6 +176,9 @@ class _$OrganizationCopyWithImpl<$Res> implements $OrganizationCopyWith<$Res> {
           : instagramURL as String,
       websiteURL:
           websiteURL == freezed ? _value.websiteURL : websiteURL as String,
+      channels: channels == freezed
+          ? _value.channels
+          : channels as Map<UniqueId, Channel>,
     ));
   }
 }
@@ -199,7 +207,8 @@ abstract class _$OrganizationCopyWith<$Res>
       String twitterURL,
       String facebookURL,
       String instagramURL,
-      String websiteURL});
+      String websiteURL,
+      Map<UniqueId, Channel> channels});
 }
 
 class __$OrganizationCopyWithImpl<$Res> extends _$OrganizationCopyWithImpl<$Res>
@@ -231,6 +240,7 @@ class __$OrganizationCopyWithImpl<$Res> extends _$OrganizationCopyWithImpl<$Res>
     Object facebookURL = freezed,
     Object instagramURL = freezed,
     Object websiteURL = freezed,
+    Object channels = freezed,
   }) {
     return _then(_Organization(
       orgID: orgID == freezed ? _value.orgID : orgID as UniqueId,
@@ -270,6 +280,9 @@ class __$OrganizationCopyWithImpl<$Res> extends _$OrganizationCopyWithImpl<$Res>
           : instagramURL as String,
       websiteURL:
           websiteURL == freezed ? _value.websiteURL : websiteURL as String,
+      channels: channels == freezed
+          ? _value.channels
+          : channels as Map<UniqueId, Channel>,
     ));
   }
 }
@@ -293,7 +306,8 @@ class _$_Organization with DiagnosticableTreeMixin implements _Organization {
       @required this.twitterURL,
       @required this.facebookURL,
       @required this.instagramURL,
-      @required this.websiteURL})
+      @required this.websiteURL,
+      @required this.channels})
       : assert(orgID != null),
         assert(abbv != null),
         assert(name != null),
@@ -311,7 +325,8 @@ class _$_Organization with DiagnosticableTreeMixin implements _Organization {
         assert(twitterURL != null),
         assert(facebookURL != null),
         assert(instagramURL != null),
-        assert(websiteURL != null);
+        assert(websiteURL != null),
+        assert(channels != null);
 
   @override
   final UniqueId orgID;
@@ -349,10 +364,12 @@ class _$_Organization with DiagnosticableTreeMixin implements _Organization {
   final String instagramURL;
   @override
   final String websiteURL;
+  @override
+  final Map<UniqueId, Channel> channels;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Organization(orgID: $orgID, abbv: $abbv, name: $name, bannerImageUrl: $bannerImageUrl, missionStatement: $missionStatement, profileImageUrl: $profileImageUrl, officeLocation: $officeLocation, email: $email, primaryColor: $primaryColor, secondaryColor: $secondaryColor, orgName: $orgName, verified: $verified, adminTitle: $adminTitle, linkedInURL: $linkedInURL, twitterURL: $twitterURL, facebookURL: $facebookURL, instagramURL: $instagramURL, websiteURL: $websiteURL)';
+    return 'Organization(orgID: $orgID, abbv: $abbv, name: $name, bannerImageUrl: $bannerImageUrl, missionStatement: $missionStatement, profileImageUrl: $profileImageUrl, officeLocation: $officeLocation, email: $email, primaryColor: $primaryColor, secondaryColor: $secondaryColor, orgName: $orgName, verified: $verified, adminTitle: $adminTitle, linkedInURL: $linkedInURL, twitterURL: $twitterURL, facebookURL: $facebookURL, instagramURL: $instagramURL, websiteURL: $websiteURL, channels: $channels)';
   }
 
   @override
@@ -377,7 +394,8 @@ class _$_Organization with DiagnosticableTreeMixin implements _Organization {
       ..add(DiagnosticsProperty('twitterURL', twitterURL))
       ..add(DiagnosticsProperty('facebookURL', facebookURL))
       ..add(DiagnosticsProperty('instagramURL', instagramURL))
-      ..add(DiagnosticsProperty('websiteURL', websiteURL));
+      ..add(DiagnosticsProperty('websiteURL', websiteURL))
+      ..add(DiagnosticsProperty('channels', channels));
   }
 
   @override
@@ -433,7 +451,10 @@ class _$_Organization with DiagnosticableTreeMixin implements _Organization {
                     .equals(other.instagramURL, instagramURL)) &&
             (identical(other.websiteURL, websiteURL) ||
                 const DeepCollectionEquality()
-                    .equals(other.websiteURL, websiteURL)));
+                    .equals(other.websiteURL, websiteURL)) &&
+            (identical(other.channels, channels) ||
+                const DeepCollectionEquality()
+                    .equals(other.channels, channels)));
   }
 
   @override
@@ -456,7 +477,8 @@ class _$_Organization with DiagnosticableTreeMixin implements _Organization {
       const DeepCollectionEquality().hash(twitterURL) ^
       const DeepCollectionEquality().hash(facebookURL) ^
       const DeepCollectionEquality().hash(instagramURL) ^
-      const DeepCollectionEquality().hash(websiteURL);
+      const DeepCollectionEquality().hash(websiteURL) ^
+      const DeepCollectionEquality().hash(channels);
 
   @override
   _$OrganizationCopyWith<_Organization> get copyWith =>
@@ -482,7 +504,8 @@ abstract class _Organization implements Organization {
       @required String twitterURL,
       @required String facebookURL,
       @required String instagramURL,
-      @required String websiteURL}) = _$_Organization;
+      @required String websiteURL,
+      @required Map<UniqueId, Channel> channels}) = _$_Organization;
 
   @override
   UniqueId get orgID;
@@ -520,6 +543,8 @@ abstract class _Organization implements Organization {
   String get instagramURL;
   @override
   String get websiteURL;
+  @override
+  Map<UniqueId, Channel> get channels;
   @override
   _$OrganizationCopyWith<_Organization> get copyWith;
 }

@@ -22,7 +22,8 @@ class _$UserTearOff {
       @required String major,
       @required String email,
       @required String primaryColor,
-      @required String secondaryColor}) {
+      @required String secondaryColor,
+      @required Map<UniqueId, List<UniqueId>> unreadUpdates}) {
     return _User(
       userID: userID,
       userName: userName,
@@ -34,6 +35,7 @@ class _$UserTearOff {
       email: email,
       primaryColor: primaryColor,
       secondaryColor: secondaryColor,
+      unreadUpdates: unreadUpdates,
     );
   }
 }
@@ -52,6 +54,7 @@ mixin _$User {
   String get email;
   String get primaryColor;
   String get secondaryColor;
+  Map<UniqueId, List<UniqueId>> get unreadUpdates;
 
   $UserCopyWith<User> get copyWith;
 }
@@ -69,7 +72,8 @@ abstract class $UserCopyWith<$Res> {
       String major,
       String email,
       String primaryColor,
-      String secondaryColor});
+      String secondaryColor,
+      Map<UniqueId, List<UniqueId>> unreadUpdates});
 }
 
 class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
@@ -91,6 +95,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
     Object email = freezed,
     Object primaryColor = freezed,
     Object secondaryColor = freezed,
+    Object unreadUpdates = freezed,
   }) {
     return _then(_value.copyWith(
       userID: userID == freezed ? _value.userID : userID as UniqueId,
@@ -112,6 +117,9 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
       secondaryColor: secondaryColor == freezed
           ? _value.secondaryColor
           : secondaryColor as String,
+      unreadUpdates: unreadUpdates == freezed
+          ? _value.unreadUpdates
+          : unreadUpdates as Map<UniqueId, List<UniqueId>>,
     ));
   }
 }
@@ -130,7 +138,8 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
       String major,
       String email,
       String primaryColor,
-      String secondaryColor});
+      String secondaryColor,
+      Map<UniqueId, List<UniqueId>> unreadUpdates});
 }
 
 class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
@@ -153,6 +162,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
     Object email = freezed,
     Object primaryColor = freezed,
     Object secondaryColor = freezed,
+    Object unreadUpdates = freezed,
   }) {
     return _then(_User(
       userID: userID == freezed ? _value.userID : userID as UniqueId,
@@ -174,6 +184,9 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
       secondaryColor: secondaryColor == freezed
           ? _value.secondaryColor
           : secondaryColor as String,
+      unreadUpdates: unreadUpdates == freezed
+          ? _value.unreadUpdates
+          : unreadUpdates as Map<UniqueId, List<UniqueId>>,
     ));
   }
 }
@@ -189,7 +202,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       @required this.major,
       @required this.email,
       @required this.primaryColor,
-      @required this.secondaryColor})
+      @required this.secondaryColor,
+      @required this.unreadUpdates})
       : assert(userID != null),
         assert(userName != null),
         assert(profileName != null),
@@ -199,7 +213,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
         assert(major != null),
         assert(email != null),
         assert(primaryColor != null),
-        assert(secondaryColor != null);
+        assert(secondaryColor != null),
+        assert(unreadUpdates != null);
 
   @override
   final UniqueId userID;
@@ -221,10 +236,12 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   final String primaryColor;
   @override
   final String secondaryColor;
+  @override
+  final Map<UniqueId, List<UniqueId>> unreadUpdates;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'User(userID: $userID, userName: $userName, profileName: $profileName, bannerImageUrl: $bannerImageUrl, profileImageUrl: $profileImageUrl, bio: $bio, major: $major, email: $email, primaryColor: $primaryColor, secondaryColor: $secondaryColor)';
+    return 'User(userID: $userID, userName: $userName, profileName: $profileName, bannerImageUrl: $bannerImageUrl, profileImageUrl: $profileImageUrl, bio: $bio, major: $major, email: $email, primaryColor: $primaryColor, secondaryColor: $secondaryColor, unreadUpdates: $unreadUpdates)';
   }
 
   @override
@@ -241,7 +258,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       ..add(DiagnosticsProperty('major', major))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('primaryColor', primaryColor))
-      ..add(DiagnosticsProperty('secondaryColor', secondaryColor));
+      ..add(DiagnosticsProperty('secondaryColor', secondaryColor))
+      ..add(DiagnosticsProperty('unreadUpdates', unreadUpdates));
   }
 
   @override
@@ -273,7 +291,10 @@ class _$_User with DiagnosticableTreeMixin implements _User {
                     .equals(other.primaryColor, primaryColor)) &&
             (identical(other.secondaryColor, secondaryColor) ||
                 const DeepCollectionEquality()
-                    .equals(other.secondaryColor, secondaryColor)));
+                    .equals(other.secondaryColor, secondaryColor)) &&
+            (identical(other.unreadUpdates, unreadUpdates) ||
+                const DeepCollectionEquality()
+                    .equals(other.unreadUpdates, unreadUpdates)));
   }
 
   @override
@@ -288,7 +309,8 @@ class _$_User with DiagnosticableTreeMixin implements _User {
       const DeepCollectionEquality().hash(major) ^
       const DeepCollectionEquality().hash(email) ^
       const DeepCollectionEquality().hash(primaryColor) ^
-      const DeepCollectionEquality().hash(secondaryColor);
+      const DeepCollectionEquality().hash(secondaryColor) ^
+      const DeepCollectionEquality().hash(unreadUpdates);
 
   @override
   _$UserCopyWith<_User> get copyWith =>
@@ -306,7 +328,8 @@ abstract class _User implements User {
       @required String major,
       @required String email,
       @required String primaryColor,
-      @required String secondaryColor}) = _$_User;
+      @required String secondaryColor,
+      @required Map<UniqueId, List<UniqueId>> unreadUpdates}) = _$_User;
 
   @override
   UniqueId get userID;
@@ -328,6 +351,8 @@ abstract class _User implements User {
   String get primaryColor;
   @override
   String get secondaryColor;
+  @override
+  Map<UniqueId, List<UniqueId>> get unreadUpdates;
   @override
   _$UserCopyWith<_User> get copyWith;
 }

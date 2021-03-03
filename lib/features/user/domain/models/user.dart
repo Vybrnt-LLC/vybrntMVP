@@ -19,6 +19,7 @@ abstract class User with _$User {
     @required String email,
     @required String primaryColor,
     @required String secondaryColor,
+    @required Map <UniqueId, List<UniqueId>> unreadUpdates,
   }) = _User;
 
   factory User.empty() => User(
@@ -32,6 +33,7 @@ abstract class User with _$User {
         major: '',
         primaryColor: 'ff2196f3',
         secondaryColor: 'ff001000',
+        unreadUpdates: Map(),
       );
 }
 

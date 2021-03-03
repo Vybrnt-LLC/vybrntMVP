@@ -36,5 +36,6 @@ abstract class Message with _$Message {
       timeStamp: DateTime.now(),
       messageType: '',
       // Add reactions
+      reactions: Map(),
       );   
 }

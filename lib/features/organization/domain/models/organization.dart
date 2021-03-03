@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:vybrnt_mvp/core/auth/failures.dart';
 import 'package:vybrnt_mvp/core/auth/value_objects.dart';
+import 'package:vybrnt_mvp/features/messaging/domain/channel.dart';
 
 part 'organization.freezed.dart';
 
@@ -27,6 +28,7 @@ abstract class Organization with _$Organization {
     @required String facebookURL,
     @required String instagramURL,
     @required String websiteURL,
+    @required Map<UniqueId, Channel> channels,
   }) = _Organization;
 
   factory Organization.empty() => Organization(
@@ -47,7 +49,8 @@ abstract class Organization with _$Organization {
       twitterURL: '',
       facebookURL: '',
       instagramURL: '',
-      websiteURL: '');
+      websiteURL: '',
+      channels: Map());
 }
 
 extension OrganizationX on Organization {
