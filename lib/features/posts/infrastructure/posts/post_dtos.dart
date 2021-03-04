@@ -26,7 +26,7 @@ abstract class PostDTO implements _$PostDTO {
     @required bool repostable,
     @required int repostCount,
     //Placeholder -> Time on the server
-    @required @TimestampConverter() Timestamp postTime,
+    @required @TimestampConverter() DateTime postTime,
     @required @ServerTimestampConverter() FieldValue serverTimestamp,
   }) = _PostDTO;
 
@@ -76,16 +76,16 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
   Object toJson(FieldValue fieldValue) => fieldValue;
 }
 
-class TimestampConverter implements JsonConverter<Timestamp, int> {
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
   const TimestampConverter();
 
   @override
-  Timestamp fromJson(int value) {
-    return Timestamp.fromMicrosecondsSinceEpoch(value);
+  DateTime fromJson(Timestamp date) {
+    return date.toDate();
   }
 
   @override
-  int toJson(Timestamp value) => value.microsecondsSinceEpoch;
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }
 
 extension PostDTOX on PostDTO {

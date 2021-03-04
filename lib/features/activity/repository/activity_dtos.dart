@@ -18,16 +18,16 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
   Object toJson(FieldValue fieldValue) => fieldValue;
 }
 
-class TimestampConverter implements JsonConverter<Timestamp, int> {
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
   const TimestampConverter();
 
   @override
-  Timestamp fromJson(int value) {
-    return Timestamp.fromMicrosecondsSinceEpoch(value);
+  DateTime fromJson(Timestamp date) {
+    return date.toDate();
   }
 
   @override
-  int toJson(Timestamp value) => value.microsecondsSinceEpoch;
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }
 
 @freezed
@@ -40,7 +40,7 @@ abstract class ActivityDTO with _$ActivityDTO {
     @required String ownerID,
     @required String titleSubject,
     @required String bodySubject,
-    @required @TimestampConverter() Timestamp timeStamp,
+    @required @TimestampConverter() DateTime timeStamp,
     @required String imageURL,
     @required String profileID,
     @required String profileType,
@@ -63,7 +63,7 @@ abstract class ActivityDTO with _$ActivityDTO {
       bodySubject: activity.bodySubject,
       profileID: activity.profileID,
       profileType: OwnerTypeHelper.stringOf(activity.profileType),
-      timeStamp: Timestamp.fromDate(activity.timeStamp),
+      timeStamp: activity.timeStamp,
       serverTimeStamp: FieldValue.serverTimestamp(),
     );
   }
@@ -85,7 +85,7 @@ extension ActivityDTOX on ActivityDTO {
       bodySubject: bodySubject,
       profileID: profileID,
       profileType: OwnerTypeHelper.valueOf(profileType),
-      timeStamp: timeStamp.toDate(),
+      timeStamp: timeStamp,
     );
   }
 }

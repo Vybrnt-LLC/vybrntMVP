@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -78,7 +79,7 @@ class HomeFeedService implements IHomeFeedService {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const PostFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const PostFailure.unexpected());
       }
     });

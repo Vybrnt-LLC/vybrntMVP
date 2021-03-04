@@ -299,7 +299,7 @@ class PushNotificationService implements IPushNotificationService {
     final activityJSON = jsonDecode(activityString) as Map<String, dynamic>;
     final activity = ActivityDTO.fromJson(activityJSON)
         .copyWith(
-            activityID: UniqueId().getOrCrash(), timeStamp: Timestamp.now())
+            activityID: UniqueId().getOrCrash(), timeStamp: DateTime.now())
         .toDomain();
     return activity;
   }

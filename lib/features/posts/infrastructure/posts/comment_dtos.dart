@@ -20,16 +20,16 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
   Object toJson(FieldValue fieldValue) => fieldValue;
 }
 
-class TimestampConverter implements JsonConverter<Timestamp, int> {
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
   const TimestampConverter();
 
   @override
-  Timestamp fromJson(int value) {
-    return Timestamp.fromMicrosecondsSinceEpoch(value);
+  DateTime fromJson(Timestamp date) {
+    return date.toDate();
   }
 
   @override
-  int toJson(Timestamp value) => value.microsecondsSinceEpoch;
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }
 
 @freezed
@@ -38,7 +38,7 @@ abstract class CommentDTO implements _$CommentDTO {
     @JsonKey(ignore: true) String commentID,
     @required String commentBody,
     @required String senderID,
-    @required @TimestampConverter() Timestamp commentDate,
+    @required @TimestampConverter() DateTime commentDate,
   }) = _CommentDTO;
 
   factory CommentDTO.fromFirestore(DocumentSnapshot doc) {

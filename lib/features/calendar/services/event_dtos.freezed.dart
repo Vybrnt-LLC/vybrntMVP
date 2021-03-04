@@ -19,9 +19,9 @@ class _$EventDtoTearOff {
       {@JsonKey(ignore: true) String eventID,
       @required String senderID,
       @required String eventName,
-      @required @TimestampConverter() Timestamp startTime,
-      @required @TimestampConverter() Timestamp endTime,
-      @required @TimestampConverter() Timestamp timeStamp,
+      @required @TimestampConverter() DateTime startTime,
+      @required @TimestampConverter() DateTime endTime,
+      @required @TimestampConverter() DateTime timeStamp,
       @required String eventCaption,
       @required String eventUrl,
       @required String eventLocation,
@@ -56,11 +56,11 @@ mixin _$EventDto {
   String get senderID;
   String get eventName;
   @TimestampConverter()
-  Timestamp get startTime;
+  DateTime get startTime;
   @TimestampConverter()
-  Timestamp get endTime;
+  DateTime get endTime;
   @TimestampConverter()
-  Timestamp get timeStamp;
+  DateTime get timeStamp;
   String get eventCaption;
   String get eventUrl;
   String get eventLocation;
@@ -81,9 +81,9 @@ abstract class $EventDtoCopyWith<$Res> {
       {@JsonKey(ignore: true) String eventID,
       String senderID,
       String eventName,
-      @TimestampConverter() Timestamp startTime,
-      @TimestampConverter() Timestamp endTime,
-      @TimestampConverter() Timestamp timeStamp,
+      @TimestampConverter() DateTime startTime,
+      @TimestampConverter() DateTime endTime,
+      @TimestampConverter() DateTime timeStamp,
       String eventCaption,
       String eventUrl,
       String eventLocation,
@@ -121,10 +121,10 @@ class _$EventDtoCopyWithImpl<$Res> implements $EventDtoCopyWith<$Res> {
       senderID: senderID == freezed ? _value.senderID : senderID as String,
       eventName: eventName == freezed ? _value.eventName : eventName as String,
       startTime:
-          startTime == freezed ? _value.startTime : startTime as Timestamp,
-      endTime: endTime == freezed ? _value.endTime : endTime as Timestamp,
+          startTime == freezed ? _value.startTime : startTime as DateTime,
+      endTime: endTime == freezed ? _value.endTime : endTime as DateTime,
       timeStamp:
-          timeStamp == freezed ? _value.timeStamp : timeStamp as Timestamp,
+          timeStamp == freezed ? _value.timeStamp : timeStamp as DateTime,
       eventCaption: eventCaption == freezed
           ? _value.eventCaption
           : eventCaption as String,
@@ -152,9 +152,9 @@ abstract class _$EventDtoCopyWith<$Res> implements $EventDtoCopyWith<$Res> {
       {@JsonKey(ignore: true) String eventID,
       String senderID,
       String eventName,
-      @TimestampConverter() Timestamp startTime,
-      @TimestampConverter() Timestamp endTime,
-      @TimestampConverter() Timestamp timeStamp,
+      @TimestampConverter() DateTime startTime,
+      @TimestampConverter() DateTime endTime,
+      @TimestampConverter() DateTime timeStamp,
       String eventCaption,
       String eventUrl,
       String eventLocation,
@@ -193,10 +193,10 @@ class __$EventDtoCopyWithImpl<$Res> extends _$EventDtoCopyWithImpl<$Res>
       senderID: senderID == freezed ? _value.senderID : senderID as String,
       eventName: eventName == freezed ? _value.eventName : eventName as String,
       startTime:
-          startTime == freezed ? _value.startTime : startTime as Timestamp,
-      endTime: endTime == freezed ? _value.endTime : endTime as Timestamp,
+          startTime == freezed ? _value.startTime : startTime as DateTime,
+      endTime: endTime == freezed ? _value.endTime : endTime as DateTime,
       timeStamp:
-          timeStamp == freezed ? _value.timeStamp : timeStamp as Timestamp,
+          timeStamp == freezed ? _value.timeStamp : timeStamp as DateTime,
       eventCaption: eventCaption == freezed
           ? _value.eventCaption
           : eventCaption as String,
@@ -255,13 +255,13 @@ class _$_EventDto with DiagnosticableTreeMixin implements _EventDto {
   final String eventName;
   @override
   @TimestampConverter()
-  final Timestamp startTime;
+  final DateTime startTime;
   @override
   @TimestampConverter()
-  final Timestamp endTime;
+  final DateTime endTime;
   @override
   @TimestampConverter()
-  final Timestamp timeStamp;
+  final DateTime timeStamp;
   @override
   final String eventCaption;
   @override
@@ -378,9 +378,9 @@ abstract class _EventDto implements EventDto {
           {@JsonKey(ignore: true) String eventID,
           @required String senderID,
           @required String eventName,
-          @required @TimestampConverter() Timestamp startTime,
-          @required @TimestampConverter() Timestamp endTime,
-          @required @TimestampConverter() Timestamp timeStamp,
+          @required @TimestampConverter() DateTime startTime,
+          @required @TimestampConverter() DateTime endTime,
+          @required @TimestampConverter() DateTime timeStamp,
           @required String eventCaption,
           @required String eventUrl,
           @required String eventLocation,
@@ -401,13 +401,13 @@ abstract class _EventDto implements EventDto {
   String get eventName;
   @override
   @TimestampConverter()
-  Timestamp get startTime;
+  DateTime get startTime;
   @override
   @TimestampConverter()
-  Timestamp get endTime;
+  DateTime get endTime;
   @override
   @TimestampConverter()
-  Timestamp get timeStamp;
+  DateTime get timeStamp;
   @override
   String get eventCaption;
   @override

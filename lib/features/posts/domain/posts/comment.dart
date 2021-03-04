@@ -21,7 +21,7 @@ abstract class Comment implements _$Comment {
       commentID: CommentID(""),
       senderID: SenderID("current signed-in user id"),
       commentBody: CommentBody(""),
-      commentDate: CommentDate(Timestamp.now()));
+      commentDate: CommentDate(DateTime.now()));
 
   Option<ValueFailure<dynamic>> get failureOption {
     return commentBody.value.fold((f) => some(f), (_) => none());

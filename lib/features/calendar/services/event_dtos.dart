@@ -13,9 +13,9 @@ abstract class EventDto with _$EventDto {
     @JsonKey(ignore: true) String eventID,
     @required String senderID,
     @required String eventName,
-    @required @TimestampConverter() Timestamp startTime,
-    @required @TimestampConverter() Timestamp endTime,
-    @required @TimestampConverter() Timestamp timeStamp,
+    @required @TimestampConverter() DateTime startTime,
+    @required @TimestampConverter() DateTime endTime,
+    @required @TimestampConverter() DateTime timeStamp,
     @required String eventCaption,
     @required String eventUrl,
     @required String eventLocation,
@@ -30,14 +30,14 @@ abstract class EventDto with _$EventDto {
       eventID: event.eventID.getOrCrash(),
       senderID: event.senderID,
       eventCaption: event.eventCaption,
-      startTime: Timestamp.fromDate(event.startTime),
-      endTime: Timestamp.fromDate(event.endTime),
+      startTime: event.startTime,
+      endTime: event.endTime,
       eventName: event.eventName,
       isOrg: event.isOrg,
       orgID: event.orgID,
       eventImageUrl: event.eventImageUrl,
       eventUrl: event.eventUrl,
-      timeStamp: Timestamp.fromDate(event.timeStamp),
+      timeStamp: event.timeStamp,
       eventLocation: event.eventLocation,
       serverTimeStamp: FieldValue.serverTimestamp(),
     );
@@ -65,16 +65,16 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
   Object toJson(FieldValue fieldValue) => fieldValue;
 }
 
-class TimestampConverter implements JsonConverter<Timestamp, int> {
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
   const TimestampConverter();
 
   @override
-  Timestamp fromJson(int value) {
-    return Timestamp.fromMicrosecondsSinceEpoch(value);
+  DateTime fromJson(Timestamp date) {
+    return date.toDate();
   }
 
   @override
-  int toJson(Timestamp value) => value.microsecondsSinceEpoch;
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
 }
 
 extension EventDtoX on EventDto {
@@ -82,15 +82,15 @@ extension EventDtoX on EventDto {
     return Event(
         eventID: UniqueId.fromUniqueString(eventID),
         senderID: senderID,
-        endTime: endTime.toDate(),
+        endTime: endTime,
         eventImageUrl: eventImageUrl,
         eventLocation: eventLocation,
         eventCaption: eventCaption,
         eventName: eventName,
         eventUrl: eventUrl,
         orgID: orgID,
-        startTime: startTime.toDate(),
-        timeStamp: timeStamp.toDate(),
+        startTime: startTime,
+        timeStamp: timeStamp,
         isOrg: isOrg);
   }
 }

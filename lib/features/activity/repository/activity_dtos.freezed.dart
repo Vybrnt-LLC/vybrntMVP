@@ -23,7 +23,7 @@ class _$ActivityDTOTearOff {
       @required String ownerID,
       @required String titleSubject,
       @required String bodySubject,
-      @required @TimestampConverter() Timestamp timeStamp,
+      @required @TimestampConverter() DateTime timeStamp,
       @required String imageURL,
       @required String profileID,
       @required String profileType,
@@ -58,7 +58,7 @@ mixin _$ActivityDTO {
   String get titleSubject;
   String get bodySubject;
   @TimestampConverter()
-  Timestamp get timeStamp;
+  DateTime get timeStamp;
   String get imageURL;
   String get profileID;
   String get profileType;
@@ -81,7 +81,7 @@ abstract class $ActivityDTOCopyWith<$Res> {
       String ownerID,
       String titleSubject,
       String bodySubject,
-      @TimestampConverter() Timestamp timeStamp,
+      @TimestampConverter() DateTime timeStamp,
       String imageURL,
       String profileID,
       String profileType,
@@ -125,7 +125,7 @@ class _$ActivityDTOCopyWithImpl<$Res> implements $ActivityDTOCopyWith<$Res> {
       bodySubject:
           bodySubject == freezed ? _value.bodySubject : bodySubject as String,
       timeStamp:
-          timeStamp == freezed ? _value.timeStamp : timeStamp as Timestamp,
+          timeStamp == freezed ? _value.timeStamp : timeStamp as DateTime,
       imageURL: imageURL == freezed ? _value.imageURL : imageURL as String,
       profileID: profileID == freezed ? _value.profileID : profileID as String,
       profileType:
@@ -151,7 +151,7 @@ abstract class _$ActivityDTOCopyWith<$Res>
       String ownerID,
       String titleSubject,
       String bodySubject,
-      @TimestampConverter() Timestamp timeStamp,
+      @TimestampConverter() DateTime timeStamp,
       String imageURL,
       String profileID,
       String profileType,
@@ -197,7 +197,7 @@ class __$ActivityDTOCopyWithImpl<$Res> extends _$ActivityDTOCopyWithImpl<$Res>
       bodySubject:
           bodySubject == freezed ? _value.bodySubject : bodySubject as String,
       timeStamp:
-          timeStamp == freezed ? _value.timeStamp : timeStamp as Timestamp,
+          timeStamp == freezed ? _value.timeStamp : timeStamp as DateTime,
       imageURL: imageURL == freezed ? _value.imageURL : imageURL as String,
       profileID: profileID == freezed ? _value.profileID : profileID as String,
       profileType:
@@ -256,7 +256,7 @@ class _$_ActivityDTO implements _ActivityDTO {
   final String bodySubject;
   @override
   @TimestampConverter()
-  final Timestamp timeStamp;
+  final DateTime timeStamp;
   @override
   final String imageURL;
   @override
@@ -349,7 +349,7 @@ abstract class _ActivityDTO implements ActivityDTO {
           @required String ownerID,
           @required String titleSubject,
           @required String bodySubject,
-          @required @TimestampConverter() Timestamp timeStamp,
+          @required @TimestampConverter() DateTime timeStamp,
           @required String imageURL,
           @required String profileID,
           @required String profileType,
@@ -376,7 +376,7 @@ abstract class _ActivityDTO implements ActivityDTO {
   String get bodySubject;
   @override
   @TimestampConverter()
-  Timestamp get timeStamp;
+  DateTime get timeStamp;
   @override
   String get imageURL;
   @override

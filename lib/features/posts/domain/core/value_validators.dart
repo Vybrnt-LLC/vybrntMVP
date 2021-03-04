@@ -235,11 +235,11 @@ Either<ValueFailure<KtMutableList>, KtMutableList> validateCommentsSection(
 PostTimestamp  - 
  */
 
-Either<ValueFailure<Timestamp>, Timestamp> validateTime(Timestamp input) {
+Either<ValueFailure<DateTime>, DateTime> validateTime(DateTime input) {
   //
-  if (input.toDate().isBefore(DateTime.now())) {
+  if (input.isBefore(DateTime.now())) {
     return right(input);
   } else {
-    return left(ValueFailure.invalidTimestamp(failedValue: input));
+    return left(ValueFailure.invalidDateTime(failedValue: input));
   }
 }

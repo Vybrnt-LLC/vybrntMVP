@@ -445,8 +445,6 @@ abstract class _$LoadSuccessCopyWith<$Res> {
           _LoadSuccess value, $Res Function(_LoadSuccess) then) =
       __$LoadSuccessCopyWithImpl<$Res>;
   $Res call({Post post});
-
-  $PostCopyWith<$Res> get post;
 }
 
 class __$LoadSuccessCopyWithImpl<$Res>
@@ -466,16 +464,6 @@ class __$LoadSuccessCopyWithImpl<$Res>
     return _then(_LoadSuccess(
       post == freezed ? _value.post : post as Post,
     ));
-  }
-
-  @override
-  $PostCopyWith<$Res> get post {
-    if (_value.post == null) {
-      return null;
-    }
-    return $PostCopyWith<$Res>(_value.post, (value) {
-      return _then(_value.copyWith(post: value));
-    });
   }
 }
 

@@ -54,13 +54,9 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
 
     final _selectedDay = DateTime.now();
 
-    // _eventsMap = {
-    //   _selectedDay.subtract(const Duration(days: 30)): [
-    //     'Event A0',
-    //     'Event B0',
-    //     'Event C0'
-    //   ],
-    // };
+    _eventsMap = {
+      _selectedDay.subtract(const Duration(days: 30)): [Event.empty()],
+    };
 //_setupEvents();
 
     _selectedEvents = _eventsMap[_selectedDay] ?? [];

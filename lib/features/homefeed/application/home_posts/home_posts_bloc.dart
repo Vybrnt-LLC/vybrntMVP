@@ -20,7 +20,7 @@ part 'home_posts_bloc.freezed.dart';
 class HomePostsBloc extends Bloc<HomePostsEvent, HomePostsState> {
   final IHomeFeedService _homeFeedService;
 
-  HomePostsBloc(this._homeFeedService) : super(HomePostsState.initial());
+  HomePostsBloc(this._homeFeedService) : super(const HomePostsState.initial());
 
   StreamSubscription<Either<PostFailure, KtList<Post>>> _postStreamSubscription;
 

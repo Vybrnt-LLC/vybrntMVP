@@ -22,7 +22,8 @@ _$_PostDTO _$_$_PostDTOFromJson(Map<String, dynamic> json) {
     commentCount: json['commentCount'] as int,
     repostable: json['repostable'] as bool,
     repostCount: json['repostCount'] as int,
-    postTime: const TimestampConverter().fromJson(json['postTime'] as int),
+    postTime:
+        const TimestampConverter().fromJson(json['postTime'] as Timestamp),
     serverTimestamp:
         const ServerTimestampConverter().fromJson(json['serverTimestamp']),
   );

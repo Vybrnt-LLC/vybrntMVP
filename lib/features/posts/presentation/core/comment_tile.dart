@@ -73,7 +73,7 @@ class CommentTile extends StatelessWidget {
               Text(comment.commentBody.getOrCrash()),
               const SizedBox(height: 6.0),
               Text(
-                timeago.format(comment.commentDate.getOrCrash().toDate()),
+                timeago.format(comment.commentDate.getOrCrash()),
               ),
             ],
           ),

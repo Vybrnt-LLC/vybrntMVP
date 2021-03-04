@@ -210,8 +210,7 @@ class PostCard extends StatelessWidget {
                             const SizedBox(width: 5)
                           else
                             const SizedBox.shrink(),
-                          Text(timeago
-                              .format(post.postTime.getOrCrash().toDate())),
+                          Text(timeago.format(post.postTime.getOrCrash())),
                         ],
                       ),
                     ],

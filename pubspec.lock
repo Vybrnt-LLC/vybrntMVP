@@ -723,7 +723,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d931297d54cc5faa285a9a219fcbd7d1092a4606
+      resolved-ref: c3e125f482c82e575c5782076a21481fab7c0966
       url: "https://github.com/Vybrnt-LLC/hidden_drawer_menu"
     source: git
     version: "2.0.1"

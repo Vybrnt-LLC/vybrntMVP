@@ -14,7 +14,7 @@ class EditOrgFAQTab extends StatefulWidget {
 
 class _EditOrgFAQTabState extends State<EditOrgFAQTab> {
   final _formKey = GlobalKey<FormState>();
-  final snackBar = SnackBar(content: Text('Submitted!'));
+  final snackBar = const SnackBar(content: Text('Submitted!'));
 
   @override
   Widget build(BuildContext context) {
@@ -25,21 +25,20 @@ class _EditOrgFAQTabState extends State<EditOrgFAQTab> {
         child: CustomScrollView(
           key: PageStorageKey<String>(widget.name),
           slivers: <Widget>[
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
                 child: Text('Add a new Frequently Asked Question')),
             SliverToBoxAdapter(
               child: TextFormField(
-                style: TextStyle(fontSize: 18.0),
-                decoration: InputDecoration(
+                style: const TextStyle(fontSize: 18.0),
+                decoration: const InputDecoration(
                   icon: Icon(
                     Icons.person,
                     size: 30.0,
                   ),
                   labelText: 'Question',
                 ),
-                validator: (input) => input.trim().length < 1
-                    ? 'Please enter a valid name'
-                    : null,
+                validator: (input) =>
+                    input.trim().isEmpty ? 'Please enter a valid name' : null,
                 onChanged: (input) => context
                     .bloc<EditOrgBloc>()
                     .add(EditOrgEvent.questionChanged(input)),
@@ -48,8 +47,8 @@ class _EditOrgFAQTabState extends State<EditOrgFAQTab> {
             //SizedBox(height: 20),
             SliverToBoxAdapter(
               child: TextFormField(
-                style: TextStyle(fontSize: 18.0),
-                decoration: InputDecoration(
+                style: const TextStyle(fontSize: 18.0),
+                decoration: const InputDecoration(
                   icon: Icon(
                     Icons.book,
                     size: 30.0,

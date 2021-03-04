@@ -10,9 +10,11 @@ _$_EventDto _$_$_EventDtoFromJson(Map<String, dynamic> json) {
   return _$_EventDto(
     senderID: json['senderID'] as String,
     eventName: json['eventName'] as String,
-    startTime: const TimestampConverter().fromJson(json['startTime'] as int),
-    endTime: const TimestampConverter().fromJson(json['endTime'] as int),
-    timeStamp: const TimestampConverter().fromJson(json['timeStamp'] as int),
+    startTime:
+        const TimestampConverter().fromJson(json['startTime'] as Timestamp),
+    endTime: const TimestampConverter().fromJson(json['endTime'] as Timestamp),
+    timeStamp:
+        const TimestampConverter().fromJson(json['timeStamp'] as Timestamp),
     eventCaption: json['eventCaption'] as String,
     eventUrl: json['eventUrl'] as String,
     eventLocation: json['eventLocation'] as String,

@@ -231,31 +231,31 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                             icon: const Icon(Socicon.instagram),
                             onPressed: () => launch(widget.org.instagramURL))
                       else
-                        null,
+                        const SizedBox.shrink(),
                       if (widget.org.twitterURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Socicon.twitter),
                             onPressed: () => launch(widget.org.twitterURL))
                       else
-                        null,
+                        const SizedBox.shrink(),
                       if (widget.org.facebookURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Socicon.facebook),
                             onPressed: () => launch(widget.org.facebookURL))
                       else
-                        null,
+                        const SizedBox.shrink(),
                       if (widget.org.linkedInURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Socicon.linkedin),
                             onPressed: () => launch(widget.org.linkedInURL))
                       else
-                        null,
+                        const SizedBox.shrink(),
                       if (widget.org.websiteURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Icons.web),
                             onPressed: () => launch(widget.org.websiteURL))
                       else
-                        null,
+                        const SizedBox.shrink(),
                     ],
                   )
                 ],

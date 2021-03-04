@@ -31,7 +31,7 @@ class _$PostDTOTearOff {
       @required int commentCount,
       @required bool repostable,
       @required int repostCount,
-      @required @TimestampConverter() Timestamp postTime,
+      @required @TimestampConverter() DateTime postTime,
       @required @ServerTimestampConverter() FieldValue serverTimestamp}) {
     return _PostDTO(
       postID: postID,
@@ -76,7 +76,7 @@ mixin _$PostDTO {
   bool get repostable;
   int get repostCount;
   @TimestampConverter()
-  Timestamp get postTime;
+  DateTime get postTime;
   @ServerTimestampConverter()
   FieldValue get serverTimestamp;
 
@@ -103,7 +103,7 @@ abstract class $PostDTOCopyWith<$Res> {
       int commentCount,
       bool repostable,
       int repostCount,
-      @TimestampConverter() Timestamp postTime,
+      @TimestampConverter() DateTime postTime,
       @ServerTimestampConverter() FieldValue serverTimestamp});
 }
 
@@ -157,7 +157,7 @@ class _$PostDTOCopyWithImpl<$Res> implements $PostDTOCopyWith<$Res> {
           repostable == freezed ? _value.repostable : repostable as bool,
       repostCount:
           repostCount == freezed ? _value.repostCount : repostCount as int,
-      postTime: postTime == freezed ? _value.postTime : postTime as Timestamp,
+      postTime: postTime == freezed ? _value.postTime : postTime as DateTime,
       serverTimestamp: serverTimestamp == freezed
           ? _value.serverTimestamp
           : serverTimestamp as FieldValue,
@@ -185,7 +185,7 @@ abstract class _$PostDTOCopyWith<$Res> implements $PostDTOCopyWith<$Res> {
       int commentCount,
       bool repostable,
       int repostCount,
-      @TimestampConverter() Timestamp postTime,
+      @TimestampConverter() DateTime postTime,
       @ServerTimestampConverter() FieldValue serverTimestamp});
 }
 
@@ -240,7 +240,7 @@ class __$PostDTOCopyWithImpl<$Res> extends _$PostDTOCopyWithImpl<$Res>
           repostable == freezed ? _value.repostable : repostable as bool,
       repostCount:
           repostCount == freezed ? _value.repostCount : repostCount as int,
-      postTime: postTime == freezed ? _value.postTime : postTime as Timestamp,
+      postTime: postTime == freezed ? _value.postTime : postTime as DateTime,
       serverTimestamp: serverTimestamp == freezed
           ? _value.serverTimestamp
           : serverTimestamp as FieldValue,
@@ -321,7 +321,7 @@ class _$_PostDTO implements _PostDTO {
   final int repostCount;
   @override
   @TimestampConverter()
-  final Timestamp postTime;
+  final DateTime postTime;
   @override
   @ServerTimestampConverter()
   final FieldValue serverTimestamp;
@@ -434,7 +434,7 @@ abstract class _PostDTO implements PostDTO {
           @required int commentCount,
           @required bool repostable,
           @required int repostCount,
-          @required @TimestampConverter() Timestamp postTime,
+          @required @TimestampConverter() DateTime postTime,
           @required @ServerTimestampConverter() FieldValue serverTimestamp}) =
       _$_PostDTO;
 
@@ -473,7 +473,7 @@ abstract class _PostDTO implements PostDTO {
   int get repostCount;
   @override
   @TimestampConverter()
-  Timestamp get postTime;
+  DateTime get postTime;
   @override
   @ServerTimestampConverter()
   FieldValue get serverTimestamp;

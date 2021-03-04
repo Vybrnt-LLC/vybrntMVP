@@ -277,7 +277,7 @@ class OrgService implements IOrgService {
   @override
   Stream<Either<EventFailure, KtList<Event>>> watchOrgEvents(
       {String orgID, bool isOrg}) async* {
-    final type = isOrg ? OwnerType.org : OwnerType.org;
+    final type = isOrg ? OwnerType.org : OwnerType.user;
     yield* eventsRef
         .doc(orgID)
         .collection('${OwnerTypeHelper.stringOf(type)}Events')

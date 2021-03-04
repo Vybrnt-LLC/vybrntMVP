@@ -11,7 +11,7 @@ _$_CommentDTO _$_$_CommentDTOFromJson(Map<String, dynamic> json) {
     commentBody: json['commentBody'] as String,
     senderID: json['senderID'] as String,
     commentDate:
-        const TimestampConverter().fromJson(json['commentDate'] as int),
+        const TimestampConverter().fromJson(json['commentDate'] as Timestamp),
   );
 }
 
