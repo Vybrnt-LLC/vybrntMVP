@@ -43,11 +43,8 @@ class PushNotificationService implements IPushNotificationService {
           AndroidInitializationSettings('vybrnt');
       final IOSInitializationSettings initializationSettingsIOS =
           IOSInitializationSettings(
-              requestAlertPermission: false,
-              requestBadgePermission: false,
-              requestSoundPermission: false,
               onDidReceiveLocalNotification: onDidReceiveLocalNotification);
-      final MacOSInitializationSettings initializationSettingsMacOS =
+      const MacOSInitializationSettings initializationSettingsMacOS =
           MacOSInitializationSettings();
       final InitializationSettings initializationSettings =
           InitializationSettings(
@@ -57,12 +54,12 @@ class PushNotificationService implements IPushNotificationService {
       await flutterLocalNotificationsPlugin.initialize(initializationSettings,
           onSelectNotification: selectNotification);
 
-      String currentUserID = await firestore.currentUserID();
+      final String currentUserID = await firestore.currentUserID();
 
-      if (Platform.isIOS) getiOSPermission();
+      if (Platform.isIOS) await getiOSPermission();
 
       firebaseMessaging.getToken().then((token) {
-        print("Firebase Messaging Token: $token\n");
+        debugPrint("Firebase Messaging Token: $token\n");
         //if (Platform.isAndroid) {
         usersRef
             .doc(currentUserID)
@@ -72,7 +69,7 @@ class PushNotificationService implements IPushNotificationService {
 
       firebaseMessaging.configure(
         onLaunch: (Map<String, dynamic> message) async {
-          print("on launch: $message\n");
+          debugPrint("on launch: $message\n");
           final activity = _convertMessageToActivity(message);
           serializeAndNavigate(activity);
           // final String recipientID = message['data']['recipient'];
@@ -84,7 +81,7 @@ class PushNotificationService implements IPushNotificationService {
         },
         onBackgroundMessage: myBackgroundMessageHandler,
         onResume: (Map<String, dynamic> message) async {
-          print("on resume: $message\n");
+          debugPrint("on resume: $message\n");
           final activity = _convertMessageToActivity(message);
           serializeAndNavigate(activity);
           // final String recipientID = message['data']['recipient'];
@@ -95,9 +92,9 @@ class PushNotificationService implements IPushNotificationService {
           // }
         },
         onMessage: (Map<String, dynamic> message) async {
-          print("on message: $message\n");
+          debugPrint("on message: $message\n");
           //final String recipientID = message['data']['recipient'];
-          final String body = message['notification']['body'];
+          final body = message['notification']['body'].toString();
           final activity = _convertMessageToActivity(message);
           _showInAppNotification(body, activity);
           // serializeAndNavigate(message);
@@ -120,17 +117,17 @@ class PushNotificationService implements IPushNotificationService {
     final eventName = event.eventName;
     final startTime = DateFormat.jm().format(event.startTime);
     final notificationTime =
-        event.startTime.subtract(new Duration(minutes: 15));
+        event.startTime.subtract(const Duration(minutes: 15));
     final payload =
         'https://vybrnt.com/eventStart?type=$type&typeID=$typeID&eventID=$eventID';
     DocumentSnapshot doc;
     String creatorName;
     if (event.isOrg) {
       doc = await organizationsRef.doc(event.orgID).get();
-      creatorName = doc.get('name');
+      creatorName = doc.get('name').toString();
     } else {
       doc = await usersRef.doc(event.senderID).get();
-      creatorName = doc.get('profileName');
+      creatorName = doc.get('profileName').toString();
     }
     await flutterLocalNotificationsPlugin.zonedSchedule(
         0,
@@ -157,21 +154,21 @@ class PushNotificationService implements IPushNotificationService {
       int id, String title, String body, String payload) async {
     // display a dialog with the notification details, tap ok to go to another page
     final payloadUri = Uri.parse(payload);
-    var type = payloadUri.queryParameters['type'];
-    var typeID = payloadUri.queryParameters['typeID'];
-    var eventID = payloadUri.queryParameters['eventID'];
+    final type = payloadUri.queryParameters['type'];
+    final typeID = payloadUri.queryParameters['typeID'];
+    final eventID = payloadUri.queryParameters['eventID'];
     showSimpleNotification(
       ListTile(
-          leading: Icon(
+          leading: const Icon(
             Icons.info_outline,
             color: Colors.white,
           ),
-          title: Text(title, style: TextStyle(color: Colors.white)),
-          subtitle: Text(body, style: TextStyle(color: Colors.white)),
+          title: Text(title, style: const TextStyle(color: Colors.white)),
+          subtitle: Text(body, style: const TextStyle(color: Colors.white)),
           onTap: () => navigationService.navigateTo(Routes.eventDetail,
               arguments: EventScreenArguments(
                   eventID: eventID, type: type, typeID: typeID))),
-      duration: Duration(seconds: 5),
+      duration: const Duration(seconds: 5),
     );
   }
 
@@ -180,10 +177,10 @@ class PushNotificationService implements IPushNotificationService {
       debugPrint('notification payload: $payload');
     }
     final payloadUri = Uri.parse(payload);
-    var type = payloadUri.queryParameters['type'];
-    var typeID = payloadUri.queryParameters['typeID'];
-    var eventID = payloadUri.queryParameters['eventID'];
-    Future.delayed(Duration(seconds: 3), () async {
+    final type = payloadUri.queryParameters['type'];
+    final typeID = payloadUri.queryParameters['typeID'];
+    final eventID = payloadUri.queryParameters['eventID'];
+    Future.delayed(const Duration(seconds: 3), () async {
       await navigationService.navigateTo(Routes.eventDetail,
           arguments: EventScreenArguments(
               eventID: eventID, type: type, typeID: typeID));
@@ -196,13 +193,12 @@ class PushNotificationService implements IPushNotificationService {
     serializeAndNavigate(activity);
   }
 
-  getiOSPermission() async {
-    firebaseMessaging.requestNotificationPermissions(
-        IosNotificationSettings(alert: true, badge: true, sound: true));
+  Future<void> getiOSPermission() async {
+    firebaseMessaging.requestNotificationPermissions();
     firebaseMessaging.onIosSettingsRegistered.listen((settings) {
-      print("Settings registered: $settings");
+      debugPrint("Settings registered: $settings");
     });
-    final bool result = await flutterLocalNotificationsPlugin
+    await flutterLocalNotificationsPlugin
         .resolvePlatformSpecificImplementation<
             MacOSFlutterLocalNotificationsPlugin>()
         ?.requestPermissions(
@@ -215,7 +211,7 @@ class PushNotificationService implements IPushNotificationService {
   @override
   Future<dynamic> serializeAndNavigate(Activity activity) {
     switch (activity.activityType) {
-      case ActivityType.LIKE:
+      case ActivityType.like:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
@@ -224,7 +220,7 @@ class PushNotificationService implements IPushNotificationService {
                   typeID: activity.ownerID));
         }
         break;
-      case ActivityType.REPOST:
+      case ActivityType.repost:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
@@ -233,7 +229,7 @@ class PushNotificationService implements IPushNotificationService {
                   typeID: activity.ownerID));
         }
         break;
-      case ActivityType.COMMENT:
+      case ActivityType.comment:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
@@ -242,13 +238,13 @@ class PushNotificationService implements IPushNotificationService {
                   typeID: activity.ownerID));
         }
         break;
-      case ActivityType.FOLLOW:
+      case ActivityType.follow:
         {
           return navigationService.navigateTo(Routes.user,
               arguments: UserScreenArguments(userID: activity.objectID));
         }
         break;
-      case ActivityType.POST:
+      case ActivityType.post:
         {
           return navigationService.navigateTo(Routes.postDetail,
               arguments: PostScreenArguments(
@@ -257,7 +253,7 @@ class PushNotificationService implements IPushNotificationService {
                   typeID: activity.ownerID));
         }
         break;
-      case ActivityType.EVENT:
+      case ActivityType.event:
         {
           return navigationService.navigateTo(Routes.eventDetail,
               arguments: EventScreenArguments(
@@ -266,38 +262,41 @@ class PushNotificationService implements IPushNotificationService {
                   typeID: activity.ownerID));
         }
         break;
-      case ActivityType.ADMIN:
+      case ActivityType.admin:
         {
           return navigationService.navigateTo(Routes.org,
               arguments: OrgScreenArguments(orgID: activity.objectID));
         }
         break;
+      default:
+        return navigationService.navigateTo(Routes.user,
+            arguments: UserScreenArguments(userID: activity.objectID));
     }
   }
 
   void _showInAppNotification(String body, Activity activity) {
     showSimpleNotification(
       ListTile(
-          leading: Icon(
+          leading: const Icon(
             Icons.info_outline,
             color: Colors.white,
           ),
-          title: Text(body, style: TextStyle(color: Colors.white)),
+          title: Text(body, style: const TextStyle(color: Colors.white)),
           onTap: () => serializeAndNavigate(activity)),
-      duration: Duration(seconds: 5),
+      duration: const Duration(seconds: 5),
     );
   }
 
   Activity _convertMessageToActivity(Map<String, dynamic> message) {
     String activityString;
     if (Platform.isAndroid) {
-      activityString = message['data']['activity'];
+      activityString = message['data']['activity'].toString();
     }
     if (Platform.isIOS) {
-      activityString = message['activity'];
+      activityString = message['activity'].toString();
     }
 
-    dynamic activityJSON = jsonDecode(activityString);
+    final activityJSON = jsonDecode(activityString) as Map<String, dynamic>;
     final activity = ActivityDTO.fromJson(activityJSON)
         .copyWith(
             activityID: UniqueId().getOrCrash(), timeStamp: Timestamp.now())
