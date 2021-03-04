@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bordered_text/bordered_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,7 +13,6 @@ import 'package:provider/provider.dart';
 import 'package:share/share.dart';
 import 'package:simple_url_preview/simple_url_preview.dart';
 import 'package:vybrnt_mvp/core/routes/router.gr.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
@@ -59,7 +56,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 : state.user.profileName;
             final eventName = widget.event.eventName;
             final String shareMessage =
-                'Check out $name\'s event: $eventName on Vybrnt! \n$shareLink';
+                "Check out $name's event: $eventName on Vybrnt! \n$shareLink";
             return NestedScrollView(
               headerSliverBuilder:
                   (BuildContext context, bool innerBoxIsScrolled) {
@@ -67,134 +64,138 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                   SliverAppBar(
                     actions: <Widget>[
                       IconButton(
-                          icon: FaIcon(FontAwesomeIcons.share,
+                          icon: const FaIcon(FontAwesomeIcons.share,
                               color: Colors.white),
                           onPressed: () {
-                            final RenderBox box = context.findRenderObject();
+                            final RenderBox box =
+                                context.findRenderObject() as RenderBox;
                             Share.share(shareMessage,
                                 sharePositionOrigin:
                                     box.localToGlobal(Offset.zero) & box.size);
                           }),
-                      currentUserID == widget.event.senderID
-                          ? FocusedMenuHolder(
-                              menuWidth:
-                                  MediaQuery.of(context).size.width * 0.50,
-                              blurSize: 5.0,
-                              menuItemExtent: 45,
-                              menuBoxDecoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.0))),
-                              duration: Duration(milliseconds: 100),
-                              animateMenuItems: true,
-                              blurBackgroundColor: Colors.black54,
-                              menuOffset:
-                                  10.0, // Offset value to show menuItem from the selected item
-                              bottomOffsetHeight:
-                                  80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
-                              menuItems: <FocusedMenuItem>[
-                                FocusedMenuItem(
-                                    title: Text("Report"),
-                                    trailingIcon: Icon(Icons.flag),
-                                    onPressed: () => TabNavigatorProvider.of(context) != null
-                                        ? TabNavigatorProvider.of(context)
-                                            .pushReport(context,
-                                                currentUserID: currentUserID,
-                                                contentID: widget.event.eventID
-                                                    .getOrCrash(),
-                                                contentType: 'event',
-                                                ownerID: widget.event.orgID.isEmpty
-                                                    ? widget.event.senderID
-                                                    : widget.event.orgID,
-                                                ownerType:
-                                                    widget.event.orgID.isEmpty
-                                                        ? 'user'
-                                                        : 'org')
-                                        : getIt<NavigationService>().navigateTo(
-                                            Routes.report,
-                                            arguments: ReportScreenArguments(
-                                                currentUserID: currentUserID,
-                                                contentID: widget.event.eventID
-                                                    .getOrCrash(),
-                                                contentType: 'event',
-                                                ownerID: widget.event.orgID.isEmpty
-                                                    ? widget.event.senderID
-                                                    : widget.event.orgID,
-                                                ownerType: widget.event.orgID.isEmpty ? 'user' : 'org'))),
-                                FocusedMenuItem(
-                                  title: Text(
-                                    "Delete",
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                  trailingIcon: Icon(Icons.delete),
-                                  onPressed: () => context
-                                      .bloc<EventDetailBloc>()
-                                      .add(EventDetailEvent.deleteEvent(
-                                          widget.event)),
-                                )
-                              ],
-                              onPressed: () {},
-                              child: Icon(
-                                Icons.more_vert,
-                                color: Colors.white,
+                      if (currentUserID == widget.event.senderID)
+                        FocusedMenuHolder(
+                          menuWidth: MediaQuery.of(context).size.width * 0.50,
+                          blurSize: 5.0,
+                          menuItemExtent: 45,
+                          menuBoxDecoration: const BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          duration: const Duration(milliseconds: 100),
+                          animateMenuItems: true,
+                          blurBackgroundColor: Colors.black54,
+                          menuOffset:
+                              10.0, // Offset value to show menuItem from the selected item
+                          bottomOffsetHeight:
+                              80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
+                          menuItems: <FocusedMenuItem>[
+                            FocusedMenuItem(
+                                title: const Text("Report"),
+                                trailingIcon: const Icon(Icons.flag),
+                                onPressed: () => TabNavigatorProvider.of(context) != null
+                                    ? TabNavigatorProvider.of(context).pushReport(
+                                        context,
+                                        currentUserID: currentUserID,
+                                        contentID:
+                                            widget.event.eventID.getOrCrash(),
+                                        contentType: 'event',
+                                        ownerID: widget.event.orgID.isEmpty
+                                            ? widget.event.senderID
+                                            : widget.event.orgID,
+                                        ownerType: widget.event.orgID.isEmpty
+                                            ? 'user'
+                                            : 'org')
+                                    : getIt<NavigationService>().navigateTo(
+                                        Routes.report,
+                                        arguments: ReportScreenArguments(
+                                            currentUserID: currentUserID,
+                                            contentID: widget.event.eventID
+                                                .getOrCrash(),
+                                            contentType: 'event',
+                                            ownerID: widget.event.orgID.isEmpty
+                                                ? widget.event.senderID
+                                                : widget.event.orgID,
+                                            ownerType:
+                                                widget.event.orgID.isEmpty
+                                                    ? 'user'
+                                                    : 'org'))),
+                            FocusedMenuItem(
+                              title: const Text(
+                                "Delete",
+                                style: TextStyle(color: Colors.red),
                               ),
+                              trailingIcon: const Icon(Icons.delete),
+                              onPressed: () => context
+                                  .bloc<EventDetailBloc>()
+                                  .add(EventDetailEvent.deleteEvent(
+                                      widget.event)),
                             )
-                          : FocusedMenuHolder(
-                              menuWidth:
-                                  MediaQuery.of(context).size.width * 0.50,
-                              blurSize: 5.0,
-                              menuItemExtent: 45,
-                              menuBoxDecoration: BoxDecoration(
-                                  color: Colors.grey,
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.0))),
-                              duration: Duration(milliseconds: 100),
-                              animateMenuItems: true,
-                              blurBackgroundColor: Colors.black54,
-                              menuOffset:
-                                  10.0, // Offset value to show menuItem from the selected item
-                              bottomOffsetHeight:
-                                  80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
-                              menuItems: <FocusedMenuItem>[
-                                FocusedMenuItem(
-                                    title: Text("Report"),
-                                    trailingIcon: Icon(Icons.flag),
-                                    onPressed: () => TabNavigatorProvider.of(context) != null
-                                        ? TabNavigatorProvider.of(context)
-                                            .pushReport(context,
-                                                currentUserID: currentUserID,
-                                                contentID: widget.event.eventID
-                                                    .getOrCrash(),
-                                                contentType: 'event',
-                                                ownerID: widget.event.orgID.isEmpty
-                                                    ? widget.event.senderID
-                                                    : widget.event.orgID,
-                                                ownerType:
-                                                    widget.event.orgID.isEmpty
-                                                        ? 'user'
-                                                        : 'org')
-                                        : getIt<NavigationService>().navigateTo(
-                                            Routes.report,
-                                            arguments: ReportScreenArguments(
-                                                currentUserID: currentUserID,
-                                                contentID: widget.event.eventID
-                                                    .getOrCrash(),
-                                                contentType: 'event',
-                                                ownerID: widget.event.orgID.isEmpty
-                                                    ? widget.event.senderID
-                                                    : widget.event.orgID,
-                                                ownerType: widget.event.orgID.isEmpty ? 'user' : 'org'))),
-                              ],
-                              onPressed: () {},
-                              child: Icon(
-                                Icons.more_vert,
-                                color: Colors.white,
-                              ),
-                            ),
+                          ],
+                          onPressed: () {},
+                          child: const Icon(
+                            Icons.more_vert,
+                            color: Colors.white,
+                          ),
+                        )
+                      else
+                        FocusedMenuHolder(
+                          menuWidth: MediaQuery.of(context).size.width * 0.50,
+                          blurSize: 5.0,
+                          menuItemExtent: 45,
+                          menuBoxDecoration: const BoxDecoration(
+                              color: Colors.grey,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(15.0))),
+                          duration: const Duration(milliseconds: 100),
+                          animateMenuItems: true,
+                          blurBackgroundColor: Colors.black54,
+                          menuOffset:
+                              10.0, // Offset value to show menuItem from the selected item
+                          bottomOffsetHeight:
+                              80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
+                          menuItems: <FocusedMenuItem>[
+                            FocusedMenuItem(
+                                title: const Text("Report"),
+                                trailingIcon: const Icon(Icons.flag),
+                                onPressed: () => TabNavigatorProvider.of(context) != null
+                                    ? TabNavigatorProvider.of(context).pushReport(
+                                        context,
+                                        currentUserID: currentUserID,
+                                        contentID:
+                                            widget.event.eventID.getOrCrash(),
+                                        contentType: 'event',
+                                        ownerID: widget.event.orgID.isEmpty
+                                            ? widget.event.senderID
+                                            : widget.event.orgID,
+                                        ownerType: widget.event.orgID.isEmpty
+                                            ? 'user'
+                                            : 'org')
+                                    : getIt<NavigationService>().navigateTo(
+                                        Routes.report,
+                                        arguments: ReportScreenArguments(
+                                            currentUserID: currentUserID,
+                                            contentID: widget.event.eventID
+                                                .getOrCrash(),
+                                            contentType: 'event',
+                                            ownerID: widget.event.orgID.isEmpty
+                                                ? widget.event.senderID
+                                                : widget.event.orgID,
+                                            ownerType:
+                                                widget.event.orgID.isEmpty
+                                                    ? 'user'
+                                                    : 'org'))),
+                          ],
+                          onPressed: () {},
+                          child: const Icon(
+                            Icons.more_vert,
+                            color: Colors.white,
+                          ),
+                        ),
                     ],
                     backgroundColor: Colors.pink[400],
                     leading: IconButton(
-                        icon: Icon(Icons.arrow_back_ios),
+                        icon: const Icon(Icons.arrow_back_ios),
                         onPressed: () => Navigator.pop(context)),
                     expandedHeight: 250.0,
                     floating: true,
@@ -209,7 +210,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             strokeColor: Colors.black,
                             strokeWidth: 1.0,
                             child: Text(widget.event.eventName,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   color: Colors.white,
                                   fontSize: 15.0,
                                 )),
@@ -218,7 +219,7 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         background: Material(
                           child: InkWell(
                             onTap: () {
-                              var nav = Navigator.of(context);
+                              final nav = Navigator.of(context);
                               nav.push<void>(_createRoute(
                                   context, widget.event.eventImageUrl));
                             },
@@ -237,14 +238,13 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                 ];
               },
               body: Container(
-                padding: EdgeInsets.fromLTRB(35, 20, 35, 0),
+                padding: const EdgeInsets.fromLTRB(35, 20, 35, 0),
                 child: Column(
-                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: <Widget>[
-                      SizedBox(height: 10),
+                      const SizedBox(height: 10),
                       Row(
-                        children: [
+                        children: const [
                           Icon(Icons.access_time),
                           SizedBox(width: 15),
                           Text(
@@ -254,184 +254,169 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                           ),
                         ],
                       ),
-                      SizedBox(height: 5),
+                      const SizedBox(height: 5),
                       Row(
                         children: [
-                          SizedBox(width: 40),
+                          const SizedBox(width: 40),
                           Text(DateFormat.yMMMEd()
                               .add_jm()
                               .format(widget.event.startTime)),
-                          Text(' - '),
+                          const Text(' - '),
                           Text(DateFormat.jm().format(widget.event.endTime))
                         ],
                       ),
-                      SizedBox(height: 20),
-                      widget.event.eventCaption.isNotEmpty
-                          ? Row(
-                              children: [
-                                Icon(Icons.info_outline),
-                                SizedBox(width: 15),
-                                Text(
-                                  'Details',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )
-                          : SizedBox.shrink(),
-                      SizedBox(height: 5),
-                      widget.event.eventCaption.isNotEmpty
-                          ? Row(
-                              children: [
-                                SizedBox(width: 40),
-                                SizedBox(
-                                    width: 300,
-                                    child: Text(widget.event.eventCaption)),
-                              ],
-                            )
-                          : SizedBox.shrink(),
-                      widget.event.eventCaption.isNotEmpty
-                          ? SizedBox(height: 20)
-                          : SizedBox.shrink(),
-                      widget.event.eventLocation.isNotEmpty
-                          ? Row(
-                              children: [
-                                Icon(Icons.location_searching),
-                                SizedBox(width: 15),
-                                Text(
-                                  'Location',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )
-                          : SizedBox.shrink(),
-                      SizedBox(height: 5),
-                      widget.event.eventLocation.isNotEmpty
-                          ? Row(
-                              children: [
-                                SizedBox(width: 40),
-                                SizedBox(
-                                    width: 300,
-                                    child: Text(widget.event.eventLocation)),
-                              ],
-                            )
-                          : SizedBox.shrink(),
-                      widget.event.eventLocation.isNotEmpty
-                          ? SizedBox(height: 20)
-                          : SizedBox.shrink(),
-                      widget.event.eventUrl.isNotEmpty
-                          ? Row(
-                              children: [
-                                Icon(Icons.web),
-                                SizedBox(width: 15),
-                                Text(
-                                  'URL',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                              ],
-                            )
-                          : SizedBox.shrink(),
-                      SizedBox(height: 5),
-                      widget.event.eventUrl.isNotEmpty
-                          ? SimpleUrlPreview(
-                              url: widget.event.eventUrl,
-                              textColor: Colors.white,
-                              titleLines: 2,
-                              descriptionLines: 2,
-                            )
-                          // Row(
-                          //     children: [
-                          //       SizedBox(width: 40),
-                          //       SizedBox(
-                          //           width: 300,
-                          //           child: InkWell(
-                          //             child: Text(
-                          //               widget.event.eventUrl,
-                          //               style: TextStyle(
-                          //                 color: Colors.blue,
-                          //                 decoration: TextDecoration.underline,
-                          //               ),
-                          //             ),
-                          //             onTap: () =>
-                          //                 launch(widget.event.eventUrl),
-                          //           )),
-                          //     ],
-                          //   )
-                          : SizedBox.shrink(),
-                      widget.event.eventUrl.isNotEmpty
-                          ? SizedBox(height: 20)
-                          : SizedBox.shrink(),
+                      const SizedBox(height: 20),
+                      if (widget.event.eventCaption.isNotEmpty)
+                        Row(
+                          children: const [
+                            Icon(Icons.info_outline),
+                            SizedBox(width: 15),
+                            Text(
+                              'Details',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      const SizedBox(height: 5),
+                      if (widget.event.eventCaption.isNotEmpty)
+                        Row(
+                          children: [
+                            const SizedBox(width: 40),
+                            SizedBox(
+                                width: 300,
+                                child: Text(widget.event.eventCaption)),
+                          ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      if (widget.event.eventCaption.isNotEmpty)
+                        const SizedBox(height: 20)
+                      else
+                        const SizedBox.shrink(),
+                      if (widget.event.eventLocation.isNotEmpty)
+                        Row(
+                          children: const [
+                            Icon(Icons.location_searching),
+                            SizedBox(width: 15),
+                            Text(
+                              'Location',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      const SizedBox(height: 5),
+                      if (widget.event.eventLocation.isNotEmpty)
+                        Row(
+                          children: [
+                            const SizedBox(width: 40),
+                            SizedBox(
+                                width: 300,
+                                child: Text(widget.event.eventLocation)),
+                          ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      if (widget.event.eventLocation.isNotEmpty)
+                        const SizedBox(height: 20)
+                      else
+                        const SizedBox.shrink(),
+                      if (widget.event.eventUrl.isNotEmpty)
+                        Row(
+                          children: const [
+                            Icon(Icons.web),
+                            SizedBox(width: 15),
+                            Text(
+                              'URL',
+                              style: TextStyle(
+                                  fontSize: 16, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      const SizedBox(height: 5),
+                      if (widget.event.eventUrl.isNotEmpty)
+                        SimpleUrlPreview(
+                          url: widget.event.eventUrl,
+                          textColor: Colors.white,
+                          descriptionLines: 2,
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      if (widget.event.eventUrl.isNotEmpty)
+                        const SizedBox(height: 20)
+                      else
+                        const SizedBox.shrink(),
                       Row(
                         children: [
-                          widget.event.isOrg
-                              ? GestureDetector(
-                                  onTap: () =>
-                                      TabNavigatorProvider.of(context) != null
-                                          ? TabNavigatorProvider.of(context)
-                                              .pushOrgPage(context,
-                                                  orgID: widget.event.orgID)
-                                          : getIt<NavigationService>()
-                                              .navigateTo(Routes.org,
-                                                  arguments:
-                                                      OrgScreenArguments(
-                                                          orgID: widget
-                                                              .event.orgID)),
-                                  child: GFAvatar(
-                                    borderRadius: BorderRadius.circular(5),
-                                    shape: GFAvatarShape.square,
-                                    size: 20.0,
-                                    backgroundImage: state
-                                            .org.profileImageUrl.isEmpty
-                                        ? AssetImage(
+                          if (widget.event.isOrg)
+                            GestureDetector(
+                              onTap: () =>
+                                  TabNavigatorProvider.of(context) != null
+                                      ? TabNavigatorProvider.of(context)
+                                          .pushOrgPage(context,
+                                              orgID: widget.event.orgID)
+                                      : getIt<NavigationService>().navigateTo(
+                                          Routes.org,
+                                          arguments: OrgScreenArguments(
+                                              orgID: widget.event.orgID)),
+                              child: GFAvatar(
+                                borderRadius: BorderRadius.circular(5),
+                                shape: GFAvatarShape.square,
+                                size: 20.0,
+                                backgroundImage: state
+                                        .org.profileImageUrl.isEmpty
+                                    ? Image.asset(
                                             'assets/images/user_placeholder.png')
-                                        : CachedNetworkImageProvider(
-                                            state.org.profileImageUrl),
-                                  ),
-                                )
-                              : GestureDetector(
-                                  onTap: () =>
-                                      TabNavigatorProvider.of(context) != null
-                                          ? TabNavigatorProvider.of(context)
-                                              .pushUserProfile(context,
-                                                  userID: widget.event.senderID)
-                                          : getIt<NavigationService>()
-                                              .navigateTo(Routes.user,
-                                                  arguments:
-                                                      UserScreenArguments(
-                                                          userID: widget
-                                                              .event.senderID)),
-                                  child: CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage: state
-                                            .user.profileImageUrl.isEmpty
-                                        ? AssetImage(
+                                        .image
+                                    : CachedNetworkImageProvider(
+                                        state.org.profileImageUrl),
+                              ),
+                            )
+                          else
+                            GestureDetector(
+                              onTap: () =>
+                                  TabNavigatorProvider.of(context) != null
+                                      ? TabNavigatorProvider.of(context)
+                                          .pushUserProfile(context,
+                                              userID: widget.event.senderID)
+                                      : getIt<NavigationService>().navigateTo(
+                                          Routes.user,
+                                          arguments: UserScreenArguments(
+                                              userID: widget.event.senderID)),
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundImage: state
+                                        .user.profileImageUrl.isEmpty
+                                    ? Image.asset(
                                             'assets/images/user_placeholder.png')
-                                        : CachedNetworkImageProvider(
-                                            state.user.profileImageUrl),
-                                  ),
-                                ),
-                          SizedBox(width: 10),
-                          widget.event.isOrg
-                              ? Container(
-                                  width: 300,
-                                  child: Text(
-                                    state.org.name,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                )
-                              : Container(
-                                  width: 300,
-                                  child: GestureDetector(
-                                    onTap: () => TabNavigatorProvider.of(
-                                                context) !=
-                                            null
+                                        .image
+                                    : CachedNetworkImageProvider(
+                                        state.user.profileImageUrl),
+                              ),
+                            ),
+                          const SizedBox(width: 10),
+                          if (widget.event.isOrg)
+                            Container(
+                              width: 300,
+                              child: Text(
+                                state.org.name,
+                                style: const TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.bold),
+                              ),
+                            )
+                          else
+                            Container(
+                              width: 300,
+                              child: GestureDetector(
+                                onTap: () =>
+                                    TabNavigatorProvider.of(context) != null
                                         ? TabNavigatorProvider.of(context)
                                             .pushUserProfile(context,
                                                 userID: widget.event.senderID)
@@ -439,29 +424,30 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                                             Routes.user,
                                             arguments: UserScreenArguments(
                                                 userID: widget.event.senderID)),
-                                    child: Text(
-                                      state.user.profileName,
-                                      style: TextStyle(
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold),
-                                    ),
-                                  ),
+                                child: Text(
+                                  state.user.profileName,
+                                  style: const TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.bold),
                                 ),
+                              ),
+                            ),
                         ],
                       ),
-                      SizedBox(height: 5),
-                      widget.event.isOrg
-                          ? Row(
-                              children: [
-                                SizedBox(width: 40),
-                                SizedBox(
-                                    width: 300,
-                                    child: Text(
-                                        'Created by: ${state.user.profileName}')),
-                              ],
-                            )
-                          : SizedBox.shrink(),
-                      SizedBox(
+                      const SizedBox(height: 5),
+                      if (widget.event.isOrg)
+                        Row(
+                          children: [
+                            const SizedBox(width: 40),
+                            SizedBox(
+                                width: 300,
+                                child: Text(
+                                    'Created by: ${state.user.profileName}')),
+                          ],
+                        )
+                      else
+                        const SizedBox.shrink(),
+                      const SizedBox(
                         height: 20,
                       ),
                       FlatButton(
@@ -471,25 +457,25 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                             : context
                                 .bloc<EventDetailBloc>()
                                 .add(EventDetailEvent.addToRSVP(widget.event)),
+                        color: state.isRSVPed ? Colors.green : Colors.blue,
                         child: state.isRSVPed
-                            ? Text(
+                            ? const Text(
                                 'BET',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16),
                               )
-                            : Text('GOING?',
+                            : const Text('GOING?',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 16)),
-                        color: state.isRSVPed ? Colors.green : Colors.blue,
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       Row(
                         children: [
-                          Icon(Icons.details),
-                          SizedBox(width: 15),
+                          const Icon(Icons.details),
+                          const SizedBox(width: 15),
                           Text(
                             'VIP List (${state.rsvpList.size})',
-                            style: TextStyle(
+                            style: const TextStyle(
                                 fontSize: 16, fontWeight: FontWeight.bold),
                           ),
                         ],
@@ -498,17 +484,17 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                         child: ListView(
                           children: state.rsvpList
                               .asList()
-                              .map((user) => Container(
-                                  child: ListTile(
-                                      title: Text(user.profileName),
-                                      leading: CircleAvatar(
-                                        backgroundImage: user
-                                                .profileImageUrl.isEmpty
-                                            ? AssetImage(
+                              .map((user) => ListTile(
+                                  title: Text(user.profileName),
+                                  leading: CircleAvatar(
+                                    backgroundImage: user
+                                            .profileImageUrl.isEmpty
+                                        ? Image.asset(
                                                 'assets/images/user_placeholder.png')
-                                            : CachedNetworkImageProvider(
-                                                user.profileImageUrl),
-                                      ))))
+                                            .image
+                                        : CachedNetworkImageProvider(
+                                            user.profileImageUrl),
+                                  )))
                               .toList(),
                         ),
                       )
@@ -553,59 +539,55 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
     );
   }
 
-  _showDeleteEventDialog() {
-    return Platform.isIOS ? _iosBottomSheet() : _androidDialog();
-  }
+  // _iosBottomSheet() {
+  //   showCupertinoModalPopup(
+  //       context: context,
+  //       builder: (context) {
+  //         return CupertinoActionSheet(
+  //           title: const Text('Delete Event?'),
+  //           actions: <Widget>[
+  //             CupertinoActionSheetAction(
+  //                 onPressed: () => context
+  //                     .bloc<EventDetailBloc>()
+  //                     .add(EventDetailEvent.deleteEvent(widget.event)),
+  //                 child: const Text('Yes, Get it Outta Here')),
+  //           ],
+  //           cancelButton: CupertinoActionSheetAction(
+  //             onPressed: () => Navigator.pop(context),
+  //             child: const Text('Cancel'),
+  //           ),
+  //         );
+  //       });
+  // }
 
-  _iosBottomSheet() {
-    showCupertinoModalPopup(
-        context: context,
-        builder: (context) {
-          return CupertinoActionSheet(
-            title: Text('Delete Event?'),
-            actions: <Widget>[
-              CupertinoActionSheetAction(
-                  child: Text('Yes, Get it Outta Here'),
-                  onPressed: () => context
-                      .bloc<EventDetailBloc>()
-                      .add(EventDetailEvent.deleteEvent(widget.event))),
-            ],
-            cancelButton: CupertinoActionSheetAction(
-              child: Text('Cancel'),
-              onPressed: () => Navigator.pop(context),
-            ),
-          );
-        });
-  }
-
-  _androidDialog() {
-    showDialog(
-        context: context,
-        builder: (context) {
-          return SimpleDialog(
-            title: Text('Are you sure?'),
-            children: <Widget>[
-              SimpleDialogOption(
-                child: Text(
-                  'Yes, Get it Outta Here',
-                  style: TextStyle(color: Colors.redAccent),
-                ),
-                onPressed: () => widget.isAdmin
-                    ? context
-                        .bloc<EventDetailBloc>()
-                        .add(EventDetailEvent.deleteEvent(widget.event))
-                    : print('cant'),
-              ),
-              SimpleDialogOption(
-                child: Text(
-                  'Cancel',
-                ),
-                onPressed: () => Navigator.pop(context),
-              ),
-            ],
-          );
-        });
-  }
+  // _androidDialog() {
+  //   showDialog(
+  //       context: context,
+  //       builder: (context) {
+  //         return SimpleDialog(
+  //           title: Text('Are you sure?'),
+  //           children: <Widget>[
+  //             SimpleDialogOption(
+  //               child: Text(
+  //                 'Yes, Get it Outta Here',
+  //                 style: TextStyle(color: Colors.redAccent),
+  //               ),
+  //               onPressed: () => widget.isAdmin
+  //                   ? context
+  //                       .bloc<EventDetailBloc>()
+  //                       .add(EventDetailEvent.deleteEvent(widget.event))
+  //                   : print('cant'),
+  //             ),
+  //             SimpleDialogOption(
+  //               child: Text(
+  //                 'Cancel',
+  //               ),
+  //               onPressed: () => Navigator.pop(context),
+  //             ),
+  //           ],
+  //         );
+  //       });
+  // }
 }
 
 Route _createRoute(BuildContext parentContext, String image) {
@@ -614,7 +596,7 @@ Route _createRoute(BuildContext parentContext, String image) {
       return EventDetailImage(image);
     },
     transitionsBuilder: (context, animation, secondaryAnimation, child) {
-      var rectAnimation = _createTween(parentContext)
+      final rectAnimation = _createTween(parentContext)
           .chain(CurveTween(curve: Curves.ease))
           .animate(animation);
 
@@ -628,10 +610,10 @@ Route _createRoute(BuildContext parentContext, String image) {
 }
 
 Tween<RelativeRect> _createTween(BuildContext context) {
-  var windowSize = MediaQuery.of(context).size;
-  var box = context.findRenderObject() as RenderBox;
-  var rect = box.localToGlobal(Offset.zero) & box.size;
-  var relativeRect = RelativeRect.fromSize(rect, windowSize);
+  final windowSize = MediaQuery.of(context).size;
+  final box = context.findRenderObject() as RenderBox;
+  final rect = box.localToGlobal(Offset.zero) & box.size;
+  final relativeRect = RelativeRect.fromSize(rect, windowSize);
 
   return RelativeRectTween(
     begin: relativeRect,

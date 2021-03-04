@@ -13,9 +13,9 @@ abstract class EventDto with _$EventDto {
     @JsonKey(ignore: true) String eventID,
     @required String senderID,
     @required String eventName,
-    @required dynamic startTime,
-    @required dynamic endTime,
-    @required dynamic timeStamp,
+    @required @TimestampConverter() Timestamp startTime,
+    @required @TimestampConverter() Timestamp endTime,
+    @required @TimestampConverter() Timestamp timeStamp,
     @required String eventCaption,
     @required String eventUrl,
     @required String eventLocation,
@@ -30,14 +30,14 @@ abstract class EventDto with _$EventDto {
       eventID: event.eventID.getOrCrash(),
       senderID: event.senderID,
       eventCaption: event.eventCaption,
-      startTime: event.startTime,
-      endTime: event.endTime,
+      startTime: Timestamp.fromDate(event.startTime),
+      endTime: Timestamp.fromDate(event.endTime),
       eventName: event.eventName,
       isOrg: event.isOrg,
       orgID: event.orgID,
       eventImageUrl: event.eventImageUrl,
       eventUrl: event.eventUrl,
-      timeStamp: event.timeStamp,
+      timeStamp: Timestamp.fromDate(event.timeStamp),
       eventLocation: event.eventLocation,
       serverTimeStamp: FieldValue.serverTimestamp(),
     );
@@ -63,6 +63,18 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
 
   @override
   Object toJson(FieldValue fieldValue) => fieldValue;
+}
+
+class TimestampConverter implements JsonConverter<Timestamp, int> {
+  const TimestampConverter();
+
+  @override
+  Timestamp fromJson(int value) {
+    return Timestamp.fromMicrosecondsSinceEpoch(value);
+  }
+
+  @override
+  int toJson(Timestamp value) => value.microsecondsSinceEpoch;
 }
 
 extension EventDtoX on EventDto {

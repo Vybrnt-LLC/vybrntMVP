@@ -19,7 +19,7 @@ class _$CommentDTOTearOff {
       {@JsonKey(ignore: true) String commentID,
       @required String commentBody,
       @required String senderID,
-      @required dynamic commentDate}) {
+      @required @TimestampConverter() Timestamp commentDate}) {
     return _CommentDTO(
       commentID: commentID,
       commentBody: commentBody,
@@ -37,7 +37,8 @@ mixin _$CommentDTO {
   String get commentID;
   String get commentBody;
   String get senderID;
-  dynamic get commentDate;
+  @TimestampConverter()
+  Timestamp get commentDate;
 
   Map<String, dynamic> toJson();
   $CommentDTOCopyWith<CommentDTO> get copyWith;
@@ -51,7 +52,7 @@ abstract class $CommentDTOCopyWith<$Res> {
       {@JsonKey(ignore: true) String commentID,
       String commentBody,
       String senderID,
-      dynamic commentDate});
+      @TimestampConverter() Timestamp commentDate});
 }
 
 class _$CommentDTOCopyWithImpl<$Res> implements $CommentDTOCopyWith<$Res> {
@@ -73,8 +74,9 @@ class _$CommentDTOCopyWithImpl<$Res> implements $CommentDTOCopyWith<$Res> {
       commentBody:
           commentBody == freezed ? _value.commentBody : commentBody as String,
       senderID: senderID == freezed ? _value.senderID : senderID as String,
-      commentDate:
-          commentDate == freezed ? _value.commentDate : commentDate as dynamic,
+      commentDate: commentDate == freezed
+          ? _value.commentDate
+          : commentDate as Timestamp,
     ));
   }
 }
@@ -88,7 +90,7 @@ abstract class _$CommentDTOCopyWith<$Res> implements $CommentDTOCopyWith<$Res> {
       {@JsonKey(ignore: true) String commentID,
       String commentBody,
       String senderID,
-      dynamic commentDate});
+      @TimestampConverter() Timestamp commentDate});
 }
 
 class __$CommentDTOCopyWithImpl<$Res> extends _$CommentDTOCopyWithImpl<$Res>
@@ -112,23 +114,23 @@ class __$CommentDTOCopyWithImpl<$Res> extends _$CommentDTOCopyWithImpl<$Res>
       commentBody:
           commentBody == freezed ? _value.commentBody : commentBody as String,
       senderID: senderID == freezed ? _value.senderID : senderID as String,
-      commentDate:
-          commentDate == freezed ? _value.commentDate : commentDate as dynamic,
+      commentDate: commentDate == freezed
+          ? _value.commentDate
+          : commentDate as Timestamp,
     ));
   }
 }
 
 @JsonSerializable()
-class _$_CommentDTO extends _CommentDTO {
+class _$_CommentDTO implements _CommentDTO {
   const _$_CommentDTO(
       {@JsonKey(ignore: true) this.commentID,
       @required this.commentBody,
       @required this.senderID,
-      @required this.commentDate})
+      @required @TimestampConverter() this.commentDate})
       : assert(commentBody != null),
         assert(senderID != null),
-        assert(commentDate != null),
-        super._();
+        assert(commentDate != null);
 
   factory _$_CommentDTO.fromJson(Map<String, dynamic> json) =>
       _$_$_CommentDTOFromJson(json);
@@ -141,7 +143,8 @@ class _$_CommentDTO extends _CommentDTO {
   @override
   final String senderID;
   @override
-  final dynamic commentDate;
+  @TimestampConverter()
+  final Timestamp commentDate;
 
   @override
   String toString() {
@@ -184,13 +187,12 @@ class _$_CommentDTO extends _CommentDTO {
   }
 }
 
-abstract class _CommentDTO extends CommentDTO {
-  const _CommentDTO._() : super._();
+abstract class _CommentDTO implements CommentDTO {
   const factory _CommentDTO(
       {@JsonKey(ignore: true) String commentID,
       @required String commentBody,
       @required String senderID,
-      @required dynamic commentDate}) = _$_CommentDTO;
+      @required @TimestampConverter() Timestamp commentDate}) = _$_CommentDTO;
 
   factory _CommentDTO.fromJson(Map<String, dynamic> json) =
       _$_CommentDTO.fromJson;
@@ -203,7 +205,8 @@ abstract class _CommentDTO extends CommentDTO {
   @override
   String get senderID;
   @override
-  dynamic get commentDate;
+  @TimestampConverter()
+  Timestamp get commentDate;
   @override
   _$CommentDTOCopyWith<_CommentDTO> get copyWith;
 }

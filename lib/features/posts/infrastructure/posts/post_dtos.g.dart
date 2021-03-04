@@ -22,7 +22,7 @@ _$_PostDTO _$_$_PostDTOFromJson(Map<String, dynamic> json) {
     commentCount: json['commentCount'] as int,
     repostable: json['repostable'] as bool,
     repostCount: json['repostCount'] as int,
-    postTime: json['postTime'],
+    postTime: const TimestampConverter().fromJson(json['postTime'] as int),
     serverTimestamp:
         const ServerTimestampConverter().fromJson(json['serverTimestamp']),
   );
@@ -44,7 +44,7 @@ Map<String, dynamic> _$_$_PostDTOToJson(_$_PostDTO instance) =>
       'commentCount': instance.commentCount,
       'repostable': instance.repostable,
       'repostCount': instance.repostCount,
-      'postTime': instance.postTime,
+      'postTime': const TimestampConverter().toJson(instance.postTime),
       'serverTimestamp':
           const ServerTimestampConverter().toJson(instance.serverTimestamp),
     };

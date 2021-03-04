@@ -37,7 +37,7 @@ class CategoryFeed extends StatefulWidget {
 }
 
 class _CategoryFeedState extends State<CategoryFeed> {
-  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+  final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController _scrollController;
 
@@ -70,7 +70,7 @@ class _CategoryFeedState extends State<CategoryFeed> {
                     child: CircularProgressIndicator(),
                   ),
               loadFailure: (state) {
-                return Icon(
+                return const Icon(
                     Icons.error_outline); // return CriticalFailureDisplay(
                 //   failure: state.eventFailure,
                 // );
@@ -86,68 +86,64 @@ class _CategoryFeedState extends State<CategoryFeed> {
                     controller: _scrollController,
                     key: PageStorageKey<String>(widget.name),
                     slivers: <Widget>[
-                      SliverToBoxAdapter(
+                      const SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 2),
+                          padding: EdgeInsets.fromLTRB(10, 10, 0, 2),
                           child: Text(
                             'Campus Events',
                             style: TextStyle(fontSize: 18),
                           ),
                         ),
                       ),
-                      SliverPersistentHeader(
-                          pinned: false,
-                          delegate: SliverHomeEventDelegate(
-                            eventList: BlocBuilder<CategoryEventsBloc,
-                                CategoryEventsState>(builder: (context, state) {
-                              return state.map(
-                                initial: (_) => Container(),
-                                loadInProgress: (_) => const Center(
-                                  child: CircularProgressIndicator(),
+                      SliverPersistentHeader(delegate: SliverHomeEventDelegate(
+                        eventList: BlocBuilder<CategoryEventsBloc,
+                            CategoryEventsState>(builder: (context, state) {
+                          return state.map(
+                            initial: (_) => Container(),
+                            loadInProgress: (_) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            loadFailure: (state) {
+                              return const Icon(Icons
+                                  .error_outline); // return CriticalFailureDisplay(
+                              //   failure: state.eventFailure,
+                              // );
+                            },
+                            loadSuccess: (state) {
+                              return ListView.builder(
+                                padding: const EdgeInsets.all(5.0),
+                                physics: const ClampingScrollPhysics(),
+                                shrinkWrap: true,
+                                scrollDirection: Axis.horizontal,
+                                itemCount: state.events.size,
+                                itemBuilder:
+                                    (BuildContext context, int index) =>
+                                        Padding(
+                                  key: ObjectKey(state.events[index]),
+                                  padding: const EdgeInsets.all(8),
+                                  child: _OpenContainerWrapper(
+                                      event: state.events[index],
+                                      transitionType: _transitionType,
+                                      closedBuilder: (BuildContext _,
+                                          VoidCallback openContainer) {
+                                        return _InkWellOverlay(
+                                          openContainer: openContainer,
+                                          width: 250,
+                                          child: EventCard(
+                                              key: ObjectKey(
+                                                  state.events[index]),
+                                              event: state.events[index]),
+                                        );
+                                      }),
                                 ),
-                                loadFailure: (state) {
-                                  return Icon(Icons
-                                      .error_outline); // return CriticalFailureDisplay(
-                                  //   failure: state.eventFailure,
-                                  // );
-                                },
-                                loadSuccess: (state) {
-                                  return Container(
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.all(5.0),
-                                      physics: ClampingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: state.events.size,
-                                      itemBuilder:
-                                          (BuildContext context, int index) =>
-                                              Padding(
-                                        key: ObjectKey(state.events[index]),
-                                        padding: EdgeInsets.all(8),
-                                        child: _OpenContainerWrapper(
-                                            event: state.events[index],
-                                            transitionType: _transitionType,
-                                            closedBuilder: (BuildContext _,
-                                                VoidCallback openContainer) {
-                                              return _InkWellOverlay(
-                                                openContainer: openContainer,
-                                                width: 250,
-                                                child: EventCard(
-                                                    key: ObjectKey(
-                                                        state.events[index]),
-                                                    event: state.events[index]),
-                                              );
-                                            }),
-                                      ),
-                                    ),
-                                  );
-                                },
                               );
-                            }),
-                          )),
-                      SliverToBoxAdapter(
+                            },
+                          );
+                        }),
+                      )),
+                      const SliverToBoxAdapter(
                         child: Padding(
-                          padding: const EdgeInsets.fromLTRB(10, 2, 0, 2),
+                          padding: EdgeInsets.fromLTRB(10, 2, 0, 2),
                           child: Text(
                             'Post Feed',
                             style: TextStyle(fontSize: 18),
@@ -178,16 +174,13 @@ class _CategoryFeedState extends State<CategoryFeed> {
                                                 senderID: state
                                                     .posts[index].senderID
                                                     .getOrCrash())),
-                                      child: Container(
-                                          child: PostCard(
-                                              key:
-                                                  ObjectKey(state.posts[index]),
-                                              //user: _profileUser,
-                                              post: state.posts[index],
-                                              color: HomeCategories
-                                                  .predefinedColors[
-                                                      widget.index]
-                                                  .color))),
+                                      child: PostCard(
+                                          key: ObjectKey(state.posts[index]),
+                                          //user: _profileUser,
+                                          post: state.posts[index],
+                                          color: HomeCategories
+                                              .predefinedColors[widget.index]
+                                              .color)),
                                 );
                               },
                             );
@@ -211,7 +204,7 @@ class _OpenContainerWrapper extends StatelessWidget {
     this.event,
   });
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Event event;
@@ -250,7 +243,7 @@ class _OpenContainerPostWrapper extends StatelessWidget {
     this.index,
   }) : super(key: key);
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Post post;

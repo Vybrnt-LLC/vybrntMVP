@@ -25,71 +25,73 @@ class CreatePhotoScreen extends StatefulWidget {
 
 class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
   File _image;
-  TextEditingController _descriptionController = TextEditingController();
+  final TextEditingController _descriptionController = TextEditingController();
   String _description = '';
   bool _isLoading = false;
   //final picker = ImagePicker();
-  final errorSnackBar = SnackBar(content: Text('Need to add an image'));
-  final savedSnackBar = SnackBar(content: Text('Saved!'));
-  _showSelectImageDialog() {
+  final errorSnackBar = const SnackBar(content: Text('Need to add an image'));
+  final savedSnackBar = const SnackBar(content: Text('Saved!'));
+  Future<Widget> _showSelectImageDialog() {
     return Platform.isIOS ? _iosBottomSheet() : _androidDialog();
   }
 
-  _iosBottomSheet() {
-    showCupertinoModalPopup(
+  Future<Widget> _iosBottomSheet() {
+    return showCupertinoModalPopup(
         context: context,
         builder: (BuildContext context) {
           return CupertinoActionSheet(
-            title: Text('Add Photo'),
+            title: const Text('Add Photo'),
             actions: <Widget>[
               CupertinoActionSheetAction(
-                child: Text('Take Photo'),
                 onPressed: () {
                   _handleImage(ImageSource.camera);
                   Navigator.of(context).pop();
                 },
+                child: const Text('Take Photo'),
               ),
               CupertinoActionSheetAction(
-                child: Text('Choose From Gallery'),
                 onPressed: () {
                   _handleImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
+                child: const Text('Choose From Gallery'),
               ),
             ],
             cancelButton: CupertinoActionSheetAction(
-              child: Text('Cancel'),
               onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
             ),
           );
         });
   }
 
-  _androidDialog() {
-    showDialog(
+  Future<Widget> _androidDialog() {
+    return showDialog(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: Text('Add Photo'),
+            title: const Text('Add Photo'),
             children: <Widget>[
               SimpleDialogOption(
-                  child: Text('Take Photo'),
-                  onPressed: () {
-                    _handleImage(ImageSource.camera);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () {
+                  _handleImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Take Photo'),
+              ),
               SimpleDialogOption(
-                  child: Text('Choose From Gallery'),
-                  onPressed: () {
-                    _handleImage(ImageSource.gallery);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () {
+                  _handleImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Choose From Gallery'),
+              ),
               SimpleDialogOption(
-                child: Text(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
                   'Cancel',
                   style: TextStyle(color: Colors.redAccent),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
               ),
             ],
           );
@@ -104,14 +106,14 @@ class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
     // } catch (e) {
     //   print(e);
     // }
-    FilePickerResult result =
+    final FilePickerResult result =
         await FilePicker.platform.pickFiles(type: FileType.image);
 
     if (result != null) {
-      File file = File(result.files.single.path);
+      final File file = File(result.files.single.path);
 
       if (file != null) {
-        File imageFile = await _cropImage(file);
+        final File imageFile = await _cropImage(file);
         setState(() {
           _image = imageFile;
         });
@@ -119,10 +121,10 @@ class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
     }
   }
 
-  _cropImage(File imageFile) async {
-    File croppedImage = await ImageCropper.cropImage(
+  Future<File> _cropImage(File imageFile) async {
+    final File croppedImage = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
-      aspectRatio: CropAspectRatio(
+      aspectRatio: const CropAspectRatio(
         ratioX: 1.0,
         ratioY: 1.0,
       ),
@@ -130,7 +132,7 @@ class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
     return croppedImage;
   }
 
-  _submit() async {
+  Future<void> _submit() async {
     if (!_isLoading) {
       setState(() {
         _isLoading = true;
@@ -141,7 +143,7 @@ class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
       if (_image != null) {
         imageUrl = await StorageService.uploadPhoto(_image);
       }
-      Photo photo = Photo(
+      final Photo photo = Photo(
         imageUrl: imageUrl,
         description: _description,
         likes: {},
@@ -175,10 +177,10 @@ class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.blue,
-          title: Text('Add a Photo'),
+          title: const Text('Add a Photo'),
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.add),
+                icon: const Icon(Icons.add),
                 onPressed: _image == null
                     ? () => Scaffold.of(context).showSnackBar(errorSnackBar)
                     : _submit)
@@ -191,14 +193,16 @@ class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
               height: height,
               child: Column(
                 children: <Widget>[
-                  _isLoading
-                      ? Padding(
-                          padding: EdgeInsets.only(bottom: 10.0),
-                          child: LinearProgressIndicator(
-                              backgroundColor: Colors.blue[200],
-                              valueColor: AlwaysStoppedAnimation(Colors.blue)),
-                        )
-                      : SizedBox.shrink(),
+                  if (_isLoading)
+                    Padding(
+                      padding: const EdgeInsets.only(bottom: 10.0),
+                      child: LinearProgressIndicator(
+                          backgroundColor: Colors.blue[200],
+                          valueColor:
+                              const AlwaysStoppedAnimation(Colors.blue)),
+                    )
+                  else
+                    const SizedBox.shrink(),
                   GestureDetector(
                       onTap: _showSelectImageDialog,
                       child: Container(
@@ -206,7 +210,7 @@ class _CreatePhotoScreenState extends State<CreatePhotoScreen> {
                           width: width,
                           color: Colors.grey[400],
                           child: _image == null
-                              ? Icon(
+                              ? const Icon(
                                   Icons.add_a_photo,
                                   size: 100,
                                   color: Colors.white70,

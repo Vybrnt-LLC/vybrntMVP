@@ -27,11 +27,11 @@ class _DropDownMenuState extends State<DropDownMenu> {
         //currentUser = state.admins[(state.admins.asList().length-1)];
         return Container(
             height: 70,
-            child: new DropdownButton<OrgList>(
+            child: DropdownButton<OrgList>(
               iconSize: 50,
               value: currentUser,
-              hint: Padding(
-                padding: const EdgeInsets.all(8.0),
+              hint: const Padding(
+                padding: EdgeInsets.all(8.0),
                 child: Text('Please Select User or Community'),
               ),
               selectedItemBuilder: (BuildContext context) {
@@ -42,8 +42,9 @@ class _DropDownMenuState extends State<DropDownMenu> {
                         ? CircleAvatar(
                             radius: 20,
                             backgroundImage: value.profileImageUrl.isEmpty
-                                ? AssetImage(
-                                    'assets/images/user_placeholder.png')
+                                ? Image.asset(
+                                        'assets/images/user_placeholder.png')
+                                    .image
                                 : CachedNetworkImageProvider(
                                     value.profileImageUrl),
                           )
@@ -53,8 +54,9 @@ class _DropDownMenuState extends State<DropDownMenu> {
                             shape: GFAvatarShape.square,
                             size: 30.0,
                             backgroundImage: value.profileImageUrl.isEmpty
-                                ? AssetImage(
-                                    'assets/images/user_placeholder.png')
+                                ? Image.asset(
+                                        'assets/images/user_placeholder.png')
+                                    .image
                                 : CachedNetworkImageProvider(
                                     value.profileImageUrl),
                           ),
@@ -64,7 +66,7 @@ class _DropDownMenuState extends State<DropDownMenu> {
               //isDense: true,
               isExpanded: true,
               items: state.admins.asList().map((OrgList value) {
-                return new DropdownMenuItem<OrgList>(
+                return DropdownMenuItem<OrgList>(
                   value: value,
                   child: ListTile(
                     title: Text(value.name),
@@ -72,8 +74,9 @@ class _DropDownMenuState extends State<DropDownMenu> {
                         ? CircleAvatar(
                             radius: 20,
                             backgroundImage: value.profileImageUrl.isEmpty
-                                ? AssetImage(
-                                    'assets/images/user_placeholder.png')
+                                ? Image.asset(
+                                        'assets/images/user_placeholder.png')
+                                    .image
                                 : CachedNetworkImageProvider(
                                     value.profileImageUrl),
                           )
@@ -83,8 +86,9 @@ class _DropDownMenuState extends State<DropDownMenu> {
                             shape: GFAvatarShape.square,
                             size: 30.0,
                             backgroundImage: value.profileImageUrl.isEmpty
-                                ? AssetImage(
-                                    'assets/images/user_placeholder.png')
+                                ? Image.asset(
+                                        'assets/images/user_placeholder.png')
+                                    .image
                                 : CachedNetworkImageProvider(
                                     value.profileImageUrl),
                           ),

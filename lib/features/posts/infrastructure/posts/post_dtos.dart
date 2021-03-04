@@ -8,8 +8,6 @@ part 'post_dtos.g.dart';
 
 @freezed
 abstract class PostDTO implements _$PostDTO {
-  const PostDTO._();
-
   const factory PostDTO({
     @JsonKey(ignore: true) String postID,
     @required String senderID,
@@ -28,34 +26,9 @@ abstract class PostDTO implements _$PostDTO {
     @required bool repostable,
     @required int repostCount,
     //Placeholder -> Time on the server
-    @required dynamic postTime,
+    @required @TimestampConverter() Timestamp postTime,
     @required @ServerTimestampConverter() FieldValue serverTimestamp,
   }) = _PostDTO;
-
-  Post toDomain() {
-    return Post(
-      postID: PostID(postID),
-      senderID: SenderID(senderID),
-      orgID: OrgID(orgID),
-      eventID: EventID(eventID),
-      repostID: RepostID(repostID),
-      postType: PostType(postType),
-      postHeader: PostHeader(postHeader),
-      postBody: PostBody(postBody),
-      postImageURL: PostImageURL(postImageURL),
-      postURL: PostURL(postURL),
-      likeCount: LikeCount(likeCount),
-      commentable: Commentable(commentable),
-      //commentsSection: CommentsSection(commentsSection
-      // .map((dto) => dto.toDomain())
-      // .toImmutableList()
-      // .toMutableList()),
-      commentCount: CommentCount(commentCount),
-      repostable: Repostable(repostable),
-      postTime: PostTime(postTime),
-      repostCount: RepostCount(repostCount),
-    );
-  }
 
   factory PostDTO.fromDomain(Post post) {
     return PostDTO(
@@ -101,4 +74,43 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
 
   @override
   Object toJson(FieldValue fieldValue) => fieldValue;
+}
+
+class TimestampConverter implements JsonConverter<Timestamp, int> {
+  const TimestampConverter();
+
+  @override
+  Timestamp fromJson(int value) {
+    return Timestamp.fromMicrosecondsSinceEpoch(value);
+  }
+
+  @override
+  int toJson(Timestamp value) => value.microsecondsSinceEpoch;
+}
+
+extension PostDTOX on PostDTO {
+  Post toDomain() {
+    return Post(
+      postID: PostID(postID),
+      senderID: SenderID(senderID),
+      orgID: OrgID(orgID),
+      eventID: EventID(eventID),
+      repostID: RepostID(repostID),
+      postType: PostType(postType),
+      postHeader: PostHeader(postHeader),
+      postBody: PostBody(postBody),
+      postImageURL: PostImageURL(postImageURL),
+      postURL: PostURL(postURL),
+      likeCount: LikeCount(likeCount),
+      commentable: Commentable(commentable),
+      //commentsSection: CommentsSection(commentsSection
+      // .map((dto) => dto.toDomain())
+      // .toImmutableList()
+      // .toMutableList()),
+      commentCount: CommentCount(commentCount),
+      repostable: Repostable(repostable),
+      postTime: PostTime(postTime),
+      repostCount: RepostCount(repostCount),
+    );
+  }
 }

@@ -11,9 +11,7 @@ import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
-import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
-import 'package:vybrnt_mvp/features/activity/repository/activity_dtos.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/i_calendar_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
@@ -98,7 +96,7 @@ class CalendarService implements ICalendarService {
 
   @override
   Future<bool> isOrgToggled(String currentUserID, String orgID) async {
-    DocumentSnapshot toggleOrgDoc = await calendarOrgsRef
+    final DocumentSnapshot toggleOrgDoc = await calendarOrgsRef
         .doc(currentUserID)
         .collection('toggleOrgs')
         .doc(orgID)
@@ -106,23 +104,26 @@ class CalendarService implements ICalendarService {
     return toggleOrgDoc.exists;
   }
 
+  @override
   Future<String> uploadEventImage(File imageFile) async {
-    String eventImageId = Uuid().v4();
-    File image = await compressImage(eventImageId, imageFile);
-    StorageUploadTask uploadTask = storageRef
+    final String eventImageId = Uuid().v4();
+    final File image = await compressImage(eventImageId, imageFile);
+    final StorageUploadTask uploadTask = storageRef
         .child('images/events/event_$eventImageId.jpg')
         .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
+    final StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    final downloadUrl = await storageSnap.ref.getDownloadURL();
+    return downloadUrl.toString();
   }
 
+  @override
   Future<File> compressImage(String eventImageId, File image) async {
     final tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
-    File compressedImageFile = await FlutterImageCompress.compressAndGetFile(
-        image.absolute.path, '$path/img_$eventImageId.jpg',
-        quality: 70);
+    final File compressedImageFile =
+        await FlutterImageCompress.compressAndGetFile(
+            image.absolute.path, '$path/img_$eventImageId.jpg',
+            quality: 70);
     return compressedImageFile;
   }
 
@@ -264,11 +265,4 @@ class CalendarService implements ICalendarService {
       }
     }
   }
-
-  @override
-  Future<Either<EventFailure, Unit>> update(
-      {Event event, List<String> categories, String orgID}) {}
-
-  @override
-  Future<Either<EventFailure, Unit>> delete(Event event) {}
 }

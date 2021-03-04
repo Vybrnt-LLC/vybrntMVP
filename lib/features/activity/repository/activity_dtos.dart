@@ -18,6 +18,18 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
   Object toJson(FieldValue fieldValue) => fieldValue;
 }
 
+class TimestampConverter implements JsonConverter<Timestamp, int> {
+  const TimestampConverter();
+
+  @override
+  Timestamp fromJson(int value) {
+    return Timestamp.fromMicrosecondsSinceEpoch(value);
+  }
+
+  @override
+  int toJson(Timestamp value) => value.microsecondsSinceEpoch;
+}
+
 @freezed
 abstract class ActivityDTO with _$ActivityDTO {
   factory ActivityDTO({
@@ -28,7 +40,7 @@ abstract class ActivityDTO with _$ActivityDTO {
     @required String ownerID,
     @required String titleSubject,
     @required String bodySubject,
-    @required dynamic timeStamp,
+    @required @TimestampConverter() Timestamp timeStamp,
     @required String imageURL,
     @required String profileID,
     @required String profileType,
@@ -51,7 +63,7 @@ abstract class ActivityDTO with _$ActivityDTO {
       bodySubject: activity.bodySubject,
       profileID: activity.profileID,
       profileType: OwnerTypeHelper.stringOf(activity.profileType),
-      timeStamp: activity.timeStamp,
+      timeStamp: Timestamp.fromDate(activity.timeStamp),
       serverTimeStamp: FieldValue.serverTimestamp(),
     );
   }

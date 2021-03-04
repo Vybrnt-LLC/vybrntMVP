@@ -1,26 +1,28 @@
 import 'package:dartz/dartz.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebaseAuth;
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:injectable/injectable.dart';
 import 'package:meta/meta.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
+
 import 'package:vybrnt_mvp/core/auth/value_objects.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/auth_failure.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/i_auth_facade.dart';
-import 'package:vybrnt_mvp/features/authentication/domain/models/value_objects.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_auth.dart';
+import 'package:vybrnt_mvp/features/authentication/domain/models/value_objects.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/post.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/value_objects.dart';
 import 'package:vybrnt_mvp/features/posts/infrastructure/posts/post_dtos.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/user/services/user_dtos.dart';
+
 import './firebase_user_mapper.dart';
 
 @LazySingleton(as: IAuthFacade)
 class FirebaseAuthFacade implements IAuthFacade {
-  final firebaseAuth.FirebaseAuth _firebaseAuth;
+  final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
   bool isRegistering = false;
 
@@ -45,9 +47,10 @@ class FirebaseAuthFacade implements IAuthFacade {
     final emailAddressStr = emailAddress.getOrCrash();
     final passwordStr = password.getOrCrash();
     try {
-      dynamic result = await _firebaseAuth.createUserWithEmailAndPassword(
+      final result = await _firebaseAuth.createUserWithEmailAndPassword(
           email: emailAddressStr, password: passwordStr);
       //FirebaseUser signedInUser = result.user;
+      // ignore: prefer_final_locals
       User newUser = User.empty();
       final userDTO = UserDto.fromDomain(newUser.copyWith(
         userID: UniqueId.fromUniqueString(result.user.uid),
@@ -58,19 +61,20 @@ class FirebaseAuthFacade implements IAuthFacade {
       await addFirstPost(result.user);
 
       return right(unit);
-    } on firebaseAuth.FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_EMAIL_ALREADY_IN_USE') {
         return left(const AuthFailure.emailAlreadyInUse());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const AuthFailure.serverError());
       }
     }
   }
 
-  Future addFirstPost(firebaseAuth.User signedInUser) async {
+  Future addFirstPost(firebase_auth.User signedInUser) async {
+    // ignore: prefer_final_locals
     Post startingPost = Post.empty();
-    String newPostID =
+    final String newPostID =
         feedsRef.doc(signedInUser.uid).collection('userFeed').doc().id;
     try {
       final postDTO = PostDTO.fromDomain(startingPost.copyWith(
@@ -103,7 +107,7 @@ class FirebaseAuthFacade implements IAuthFacade {
           email: emailAddressStr, password: passwordStr);
 
       return right(unit);
-    } on firebaseAuth.FirebaseAuthException catch (e) {
+    } on firebase_auth.FirebaseAuthException catch (e) {
       if (e.code == 'ERROR_WRONG_PASSWORD' ||
           e.code == 'ERROR_USER_NOT_FOUND') {
         return left(const AuthFailure.invalidEmailAndPasswordCombination());
@@ -121,24 +125,25 @@ class FirebaseAuthFacade implements IAuthFacade {
       try {
         googleUser = await _googleSignIn.signIn();
       } catch (error) {
-        print(error);
+        debugPrint(error.toString());
       }
       if (googleUser == null) {
         return left(const AuthFailure.cancelledByUser());
       }
       final googleAuthentication = await googleUser.authentication;
 
-      final authCredential = firebaseAuth.GoogleAuthProvider.credential(
+      final authCredential = firebase_auth.GoogleAuthProvider.credential(
           idToken: googleAuthentication.idToken,
           accessToken: googleAuthentication.accessToken);
 
-      dynamic result = await _firebaseAuth.signInWithCredential(authCredential);
+      final result = await _firebaseAuth.signInWithCredential(authCredential);
 
       return _firebaseAuth.signInWithCredential(authCredential).then((r) async {
-        bool userExists =
+        final userExists =
             await usersRef.doc(result.user.uid).get().then((doc) => doc.exists);
         if (!userExists) {
           isRegistering = true;
+          // ignore: prefer_final_locals
           User newUser = User.empty();
           final userDTO = UserDto.fromDomain(newUser.copyWith(
             userID: UniqueId.fromUniqueString(result.user.uid),
@@ -152,11 +157,12 @@ class FirebaseAuthFacade implements IAuthFacade {
 
         return right(unit);
       });
-    } on firebaseAuth.FirebaseAuthException catch (_) {
+    } on firebase_auth.FirebaseAuthException catch (_) {
       return left(const AuthFailure.serverError());
     }
   }
 
+  @override
   Future<Either<AuthFailure, Unit>> signInWithApple() async {
     try {
       final appleCredential = await SignInWithApple.getAppleIDCredential(
@@ -178,23 +184,24 @@ class FirebaseAuthFacade implements IAuthFacade {
         return left(const AuthFailure.cancelledByUser());
       }
 
-      final firebaseAuth.AuthCredential credential =
-          firebaseAuth.OAuthProvider('apple.com').credential(
+      final firebase_auth.AuthCredential credential =
+          firebase_auth.OAuthProvider('apple.com').credential(
         accessToken: appleCredential.authorizationCode,
         idToken: appleCredential.identityToken,
       );
-      dynamic result;
+      firebase_auth.UserCredential result;
 
       try {
         result = await _firebaseAuth.signInWithCredential(credential);
       } catch (e) {
-        print(e.toString());
+        debugPrint(e.toString());
       }
 
-      bool userExists =
+      final userExists =
           await usersRef.doc(result.user.uid).get().then((doc) => doc.exists);
       if (!userExists) {
         isRegistering = true;
+        // ignore: prefer_final_locals
         User newUser = User.empty();
         final userDTO = UserDto.fromDomain(newUser.copyWith(
           userID: UniqueId.fromUniqueString(result.user.uid),
@@ -225,7 +232,7 @@ class FirebaseAuthFacade implements IAuthFacade {
       // }
 
       //   return right(unit);
-    } on firebaseAuth.FirebaseAuthException catch (_) {
+    } on firebase_auth.FirebaseAuthException catch (_) {
       return left(const AuthFailure.serverError());
     }
   }
@@ -237,7 +244,7 @@ class FirebaseAuthFacade implements IAuthFacade {
 }
 
 Future addVybrntToFollowList(String currentUserID) async {
-  final orgID = 'cec10340-090e-11eb-a5dc-1d0e34e32b97';
+  const orgID = 'cec10340-090e-11eb-a5dc-1d0e34e32b97';
   followingRef.doc(currentUserID).collection('orgFollowing').doc(orgID).set({
     'abbv': 'Vybrnt',
     'name': 'Vybrnt',

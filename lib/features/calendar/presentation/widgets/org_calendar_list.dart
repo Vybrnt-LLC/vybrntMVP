@@ -49,14 +49,14 @@ class OrgCalendarList extends StatelessWidget {
                   shape: GFAvatarShape.square,
                   size: 20.0,
                   backgroundImage: updatedOrg.profileImageUrl.isEmpty
-                      ? AssetImage('assets/images/user_placeholder.png')
+                      ? Image.asset('assets/images/user_placeholder.png').image
                       : CachedNetworkImageProvider(updatedOrg.profileImageUrl),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 5),
-          Text(updatedOrg.abbv, style: TextStyle(fontSize: 14.0))
+          const SizedBox(height: 5),
+          Text(updatedOrg.abbv, style: const TextStyle(fontSize: 14.0))
         ],
       ),
     );

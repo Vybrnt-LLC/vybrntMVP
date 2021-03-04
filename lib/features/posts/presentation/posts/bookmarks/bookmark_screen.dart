@@ -17,13 +17,14 @@ class BookmarkScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final currentUserID = Provider.of<UserData>(context).currentUserID;
-    ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+    const ContainerTransitionType _transitionType =
+        ContainerTransitionType.fade;
     return Scaffold(
       appBar: AppBar(
         centerTitle: true,
         backgroundColor: Colors.black,
         leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               SimpleHiddenDrawerController.of(context).toggle();
             }),
@@ -45,7 +46,7 @@ class BookmarkScreen extends StatelessWidget {
             loadInProgress: (_) =>
                 const Center(child: CircularProgressIndicator()),
             loadFailure: (state) {
-              return CircularProgressIndicator();
+              return const CircularProgressIndicator();
             },
             loadSuccess: (state) {
               return ListView.builder(
@@ -68,12 +69,11 @@ class BookmarkScreen extends StatelessWidget {
                                       currentUserID: currentUserID,
                                       senderID: state.posts[index].senderID
                                           .getOrCrash())),
-                                child: Container(
-                                    child: PostCard(
+                                child: PostCard(
 
-                                        //user: _profileUser,
-                                        post: state.posts[index],
-                                        color: Colors.black))),
+                                    //user: _profileUser,
+                                    post: state.posts[index],
+                                    color: Colors.black)),
                           );
                         });
                   });
@@ -93,7 +93,7 @@ class _OpenContainerPostWrapper extends StatelessWidget {
     this.color,
   }) : super(key: key);
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Post post;

@@ -29,7 +29,7 @@ class PostDetailScreen extends StatefulWidget {
 class _PostDetailScreenState extends State<PostDetailScreen> {
   final TextEditingController _commentController = TextEditingController();
   bool _isCommenting = false;
-  _buildCommentTF() {
+  Widget _buildCommentTF() {
     final currentUserID = Provider.of<UserData>(context).currentUserID;
     return IconTheme(
       data: IconThemeData(
@@ -38,31 +38,30 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
             : Theme.of(context).disabledColor,
       ),
       child: Container(
-        margin: EdgeInsets.symmetric(horizontal: 8.0),
+        margin: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
           children: <Widget>[
-            SizedBox(width: 10.0),
+            const SizedBox(width: 10.0),
             Expanded(
               child: TextField(
                 controller: _commentController,
                 textCapitalization: TextCapitalization.sentences,
                 onChanged: (comment) {
                   setState(() {
-                    _isCommenting = comment.length > 0;
+                    _isCommenting = comment.isNotEmpty;
                   });
                   context
                       .bloc<PostActorBloc>()
                       .add(PostActorEvent.commentBodyChanged(comment));
                 },
-                decoration:
-                    InputDecoration.collapsed(hintText: 'Write a comment...'),
+                decoration: const InputDecoration.collapsed(
+                    hintText: 'Write a comment...'),
               ),
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 4.0),
+              margin: const EdgeInsets.symmetric(horizontal: 4.0),
               child: IconButton(
-                icon: Icon(Icons.send),
+                icon: const Icon(Icons.send),
                 onPressed: () {
                   if (_isCommenting) {
                     context.bloc<PostActorBloc>().add(
@@ -106,15 +105,16 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                     flexibleSpace: FlexibleSpaceBar(
                         centerTitle: true,
                         title: BorderedText(
-                            child: Text(
-                              'Post',
-                              style: GoogleFonts.getFont('Barlow Condensed',
-                                  fontWeight: FontWeight.bold,
-                                  fontStyle: FontStyle.italic,
-                                  fontSize: 30),
-                            ),
-                            strokeColor: widget.color,
-                            strokeWidth: 1.0),
+                          strokeColor: widget.color,
+                          strokeWidth: 1.0,
+                          child: Text(
+                            'Post',
+                            style: GoogleFonts.getFont('Barlow Condensed',
+                                fontWeight: FontWeight.bold,
+                                fontStyle: FontStyle.italic,
+                                fontSize: 30),
+                          ),
+                        ),
                         background: Image.asset(
                           widget.backgroundImage,
                           fit: BoxFit.fitWidth,
@@ -128,12 +128,11 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                             ..add(PostActorEvent.getData(widget.post,
                                 currentUserID: currentUserID,
                                 senderID: widget.post.senderID.getOrCrash())),
-                          child: Container(
-                              child: PostCard(
-                                  //user: _profileUser,
-                                  post: widget.post,
-                                  color: widget.color)))),
-                  SliverToBoxAdapter(child: Divider(height: 1.0)),
+                          child: PostCard(
+                              //user: _profileUser,
+                              post: widget.post,
+                              color: widget.color))),
+                  const SliverToBoxAdapter(child: Divider(height: 1.0)),
                   SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (BuildContext context, int index) {
@@ -141,7 +140,7 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
                         // In this example, we just number each list item.
                         context
                             .bloc<PostActorBloc>()
-                            .add(PostActorEvent.setCurrentScreen());
+                            .add(const PostActorEvent.setCurrentScreen());
                         return BlocProvider<CommentActorBloc>(
                             create: (context) => getIt<CommentActorBloc>()
                               ..add(CommentActorEvent.getData(

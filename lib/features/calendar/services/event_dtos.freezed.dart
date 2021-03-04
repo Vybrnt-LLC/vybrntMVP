@@ -19,9 +19,9 @@ class _$EventDtoTearOff {
       {@JsonKey(ignore: true) String eventID,
       @required String senderID,
       @required String eventName,
-      @required dynamic startTime,
-      @required dynamic endTime,
-      @required dynamic timeStamp,
+      @required @TimestampConverter() Timestamp startTime,
+      @required @TimestampConverter() Timestamp endTime,
+      @required @TimestampConverter() Timestamp timeStamp,
       @required String eventCaption,
       @required String eventUrl,
       @required String eventLocation,
@@ -55,9 +55,12 @@ mixin _$EventDto {
   String get eventID;
   String get senderID;
   String get eventName;
-  dynamic get startTime;
-  dynamic get endTime;
-  dynamic get timeStamp;
+  @TimestampConverter()
+  Timestamp get startTime;
+  @TimestampConverter()
+  Timestamp get endTime;
+  @TimestampConverter()
+  Timestamp get timeStamp;
   String get eventCaption;
   String get eventUrl;
   String get eventLocation;
@@ -78,9 +81,9 @@ abstract class $EventDtoCopyWith<$Res> {
       {@JsonKey(ignore: true) String eventID,
       String senderID,
       String eventName,
-      dynamic startTime,
-      dynamic endTime,
-      dynamic timeStamp,
+      @TimestampConverter() Timestamp startTime,
+      @TimestampConverter() Timestamp endTime,
+      @TimestampConverter() Timestamp timeStamp,
       String eventCaption,
       String eventUrl,
       String eventLocation,
@@ -117,9 +120,11 @@ class _$EventDtoCopyWithImpl<$Res> implements $EventDtoCopyWith<$Res> {
       eventID: eventID == freezed ? _value.eventID : eventID as String,
       senderID: senderID == freezed ? _value.senderID : senderID as String,
       eventName: eventName == freezed ? _value.eventName : eventName as String,
-      startTime: startTime == freezed ? _value.startTime : startTime as dynamic,
-      endTime: endTime == freezed ? _value.endTime : endTime as dynamic,
-      timeStamp: timeStamp == freezed ? _value.timeStamp : timeStamp as dynamic,
+      startTime:
+          startTime == freezed ? _value.startTime : startTime as Timestamp,
+      endTime: endTime == freezed ? _value.endTime : endTime as Timestamp,
+      timeStamp:
+          timeStamp == freezed ? _value.timeStamp : timeStamp as Timestamp,
       eventCaption: eventCaption == freezed
           ? _value.eventCaption
           : eventCaption as String,
@@ -147,9 +152,9 @@ abstract class _$EventDtoCopyWith<$Res> implements $EventDtoCopyWith<$Res> {
       {@JsonKey(ignore: true) String eventID,
       String senderID,
       String eventName,
-      dynamic startTime,
-      dynamic endTime,
-      dynamic timeStamp,
+      @TimestampConverter() Timestamp startTime,
+      @TimestampConverter() Timestamp endTime,
+      @TimestampConverter() Timestamp timeStamp,
       String eventCaption,
       String eventUrl,
       String eventLocation,
@@ -187,9 +192,11 @@ class __$EventDtoCopyWithImpl<$Res> extends _$EventDtoCopyWithImpl<$Res>
       eventID: eventID == freezed ? _value.eventID : eventID as String,
       senderID: senderID == freezed ? _value.senderID : senderID as String,
       eventName: eventName == freezed ? _value.eventName : eventName as String,
-      startTime: startTime == freezed ? _value.startTime : startTime as dynamic,
-      endTime: endTime == freezed ? _value.endTime : endTime as dynamic,
-      timeStamp: timeStamp == freezed ? _value.timeStamp : timeStamp as dynamic,
+      startTime:
+          startTime == freezed ? _value.startTime : startTime as Timestamp,
+      endTime: endTime == freezed ? _value.endTime : endTime as Timestamp,
+      timeStamp:
+          timeStamp == freezed ? _value.timeStamp : timeStamp as Timestamp,
       eventCaption: eventCaption == freezed
           ? _value.eventCaption
           : eventCaption as String,
@@ -215,9 +222,9 @@ class _$_EventDto with DiagnosticableTreeMixin implements _EventDto {
       {@JsonKey(ignore: true) this.eventID,
       @required this.senderID,
       @required this.eventName,
-      @required this.startTime,
-      @required this.endTime,
-      @required this.timeStamp,
+      @required @TimestampConverter() this.startTime,
+      @required @TimestampConverter() this.endTime,
+      @required @TimestampConverter() this.timeStamp,
       @required this.eventCaption,
       @required this.eventUrl,
       @required this.eventLocation,
@@ -247,11 +254,14 @@ class _$_EventDto with DiagnosticableTreeMixin implements _EventDto {
   @override
   final String eventName;
   @override
-  final dynamic startTime;
+  @TimestampConverter()
+  final Timestamp startTime;
   @override
-  final dynamic endTime;
+  @TimestampConverter()
+  final Timestamp endTime;
   @override
-  final dynamic timeStamp;
+  @TimestampConverter()
+  final Timestamp timeStamp;
   @override
   final String eventCaption;
   @override
@@ -368,9 +378,9 @@ abstract class _EventDto implements EventDto {
           {@JsonKey(ignore: true) String eventID,
           @required String senderID,
           @required String eventName,
-          @required dynamic startTime,
-          @required dynamic endTime,
-          @required dynamic timeStamp,
+          @required @TimestampConverter() Timestamp startTime,
+          @required @TimestampConverter() Timestamp endTime,
+          @required @TimestampConverter() Timestamp timeStamp,
           @required String eventCaption,
           @required String eventUrl,
           @required String eventLocation,
@@ -390,11 +400,14 @@ abstract class _EventDto implements EventDto {
   @override
   String get eventName;
   @override
-  dynamic get startTime;
+  @TimestampConverter()
+  Timestamp get startTime;
   @override
-  dynamic get endTime;
+  @TimestampConverter()
+  Timestamp get endTime;
   @override
-  dynamic get timeStamp;
+  @TimestampConverter()
+  Timestamp get timeStamp;
   @override
   String get eventCaption;
   @override

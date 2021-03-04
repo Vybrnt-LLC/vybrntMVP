@@ -196,3 +196,5 @@ const followVybrnt = functions.region('us-east4').pubsub
 
 
 module.exports = {onCreateActivityFeedItem, followVybrnt };
+
+//TODO: Change destination of new activity objects

@@ -21,7 +21,7 @@ import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
 import 'package:vybrnt_mvp/features/user/presentation/widgets/create_fab.dart';
 
 class CalendarMonthScreen extends StatefulWidget {
-  CalendarMonthScreen({
+  const CalendarMonthScreen({
     Key key,
   }) : super(key: key);
 
@@ -31,17 +31,17 @@ class CalendarMonthScreen extends StatefulWidget {
 
 class _CalendarMonthScreenState extends State<CalendarMonthScreen>
     with TickerProviderStateMixin {
-  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+  final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   CalendarController _calendarController;
-  Map<DateTime, List> _eventsMap;
+  Map<DateTime, List<Event>> _eventsMap;
   AnimationController _animationController;
-  List _selectedEvents;
+  List<Event> _selectedEvents;
 
   final Map<DateTime, List> _holidays = {
-    DateTime(2019, 1, 1): ['New Year\'s Day'],
+    DateTime(2019): ["New Year's Day"],
     DateTime(2019, 1, 6): ['Epiphany'],
-    DateTime(2019, 2, 14): ['Valentine\'s Day'],
+    DateTime(2019, 2, 14): ["Valentine's Day"],
     DateTime(2019, 4, 21): ['Easter Sunday'],
     DateTime(2019, 4, 22): ['Easter Monday'],
   };
@@ -54,16 +54,16 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
 
     final _selectedDay = DateTime.now();
 
-    _eventsMap = {
-      _selectedDay.subtract(Duration(days: 30)): [
-        'Event A0',
-        'Event B0',
-        'Event C0'
-      ],
-    };
+    // _eventsMap = {
+    //   _selectedDay.subtract(const Duration(days: 30)): [
+    //     'Event A0',
+    //     'Event B0',
+    //     'Event C0'
+    //   ],
+    // };
 //_setupEvents();
 
-    _selectedEvents = _eventsMap[_selectedDay] ?? []; // i made a change here
+    _selectedEvents = _eventsMap[_selectedDay] ?? [];
     _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
@@ -78,8 +78,8 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
     super.dispose();
   }
 
-  void _onDaySelected(DateTime day, List events) {
-    print('CALLBACK: _onDaySelected');
+  void _onDaySelected(DateTime day, List<Event> events) {
+    debugPrint('CALLBACK: _onDaySelected');
     setState(() {
       _selectedEvents = events;
     });
@@ -87,7 +87,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
 
   void _onVisibleDaysChanged(
       DateTime first, DateTime last, CalendarFormat format) {
-    print('CALLBACK: _onVisibleDaysChanged');
+    debugPrint('CALLBACK: _onVisibleDaysChanged');
   }
 
   List<Event> events1 = [];
@@ -120,8 +120,10 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
         loadSuccess: (state) {
           final events = state.events;
           _eventsMap.clear();
-          List<Event> eventList = new List();
-          List<DateTime> dates = new List();
+          // ignore: prefer_final_locals
+          List<Event> eventList = [];
+          // ignore: prefer_final_locals
+          List<DateTime> dates = [];
           for (int i = 0; i < events.size; i++) {
             final eventDate = events[i].startTime.subtract(Duration(
                 hours: events[i].startTime.hour,
@@ -134,7 +136,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
           }
           for (int i = 0; i < dates.length; i++) {
             for (int j = 0; j < events.size; j++) {
-              DateTime eventDate = events[j].startTime.subtract(Duration(
+              final DateTime eventDate = events[j].startTime.subtract(Duration(
                   hours: events[j].startTime.hour,
                   minutes: events[j].startTime.minute,
                   seconds: events[j].startTime.second,
@@ -155,27 +157,23 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
             //events: _events,
             events: _eventsMap,
             holidays: _holidays,
-            initialCalendarFormat: CalendarFormat.month,
-            formatAnimation: FormatAnimation.slide,
-            startingDayOfWeek: StartingDayOfWeek.sunday,
-            availableGestures: AvailableGestures.all,
             availableCalendarFormats: const {
               CalendarFormat.month: '',
               //CalendarFormat.week: '',
             },
             calendarStyle: CalendarStyle(
               outsideDaysVisible: false,
-              weekendStyle: TextStyle().copyWith(color: Colors.blue[800]),
-              holidayStyle: TextStyle().copyWith(color: Colors.blue[800]),
+              weekendStyle: const TextStyle().copyWith(color: Colors.blue[800]),
+              holidayStyle: const TextStyle().copyWith(color: Colors.blue[800]),
             ),
             daysOfWeekStyle: DaysOfWeekStyle(
-              weekendStyle: TextStyle().copyWith(color: Colors.blue[600]),
+              weekendStyle: const TextStyle().copyWith(color: Colors.blue[600]),
             ),
             headerStyle: HeaderStyle(
               centerHeaderTitle: true,
               //formatButtonVisible: false,
-              formatButtonTextStyle:
-                  TextStyle().copyWith(color: Colors.white, fontSize: 15.0),
+              formatButtonTextStyle: const TextStyle()
+                  .copyWith(color: Colors.white, fontSize: 15.0),
               formatButtonDecoration: BoxDecoration(
                 color: Colors.deepOrange[400],
                 borderRadius: BorderRadius.circular(16.0),
@@ -194,7 +192,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
                     height: 100,
                     child: Text(
                       '${date.day}',
-                      style: TextStyle().copyWith(fontSize: 16.0),
+                      style: const TextStyle().copyWith(fontSize: 16.0),
                     ),
                   ),
                 );
@@ -208,7 +206,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
                   height: 100,
                   child: Text(
                     '${date.day}',
-                    style: TextStyle().copyWith(fontSize: 16.0),
+                    style: const TextStyle().copyWith(fontSize: 16.0),
                   ),
                 );
               },
@@ -239,14 +237,15 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
               },
             ),
             onDaySelected: (date, events) {
-              _onDaySelected(date, events);
+              _onDaySelected(date, events as List<Event>);
               _animationController.forward(from: 0.0);
             },
             onVisibleDaysChanged: _onVisibleDaysChanged,
           );
         },
         loadFailure: (state) {
-          return Icon(Icons.error_outline); // return CriticalFailureDisplay(
+          return const Icon(
+              Icons.error_outline); // return CriticalFailureDisplay(
           //   failure: state.eventFailure,
           // );
         },
@@ -258,7 +257,6 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
     return AnimatedContainer(
       duration: const Duration(milliseconds: 300),
       decoration: BoxDecoration(
-        shape: BoxShape.rectangle,
         color: _calendarController.isSelected(date)
             ? Colors.brown[500]
             : _calendarController.isToday(date)
@@ -267,16 +265,16 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
       ),
       width: 16.0,
       height: 16.0,
-      child:
-          Center(child: Icon(MdiIcons.square, size: 10.0, color: Colors.white)
-              // child: Text(
-              //   '${events.length}',
-              //   style: TextStyle().copyWith(
-              //     color: Colors.white,
-              //     fontSize: 12.0,
-              //   ),
-              // ),
-              ),
+      child: const Center(
+          child: Icon(MdiIcons.square, size: 10.0, color: Colors.white)
+          // child: Text(
+          //   '${events.length}',
+          //   style: TextStyle().copyWith(
+          //     color: Colors.white,
+          //     fontSize: 12.0,
+          //   ),
+          // ),
+          ),
     );
   }
 
@@ -302,7 +300,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
           loadSuccess: (state) {
             return ListView.builder(
               scrollDirection: Axis.horizontal,
-              padding: EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(5.0),
               itemBuilder: (context, index) {
                 // if (org.failureOption.isSome()) {
                 //   return Icon(Icons.error);//ErrorNoteCard(note: note);
@@ -316,7 +314,8 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
             );
           },
           loadFailure: (state) {
-            return Icon(Icons.error_outline); // return CriticalFailureDisplay(
+            return const Icon(
+                Icons.error_outline); // return CriticalFailureDisplay(
             //   failure: state.eventFailure,
             // );
           },
@@ -345,12 +344,12 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
       key: scaffoldKey,
       appBar: AppBar(
         backgroundColor: Colors.black,
-        actions: <Widget>[
+        actions: const [
           IconButton(icon: Icon(Icons.notifications), onPressed: null),
         ],
         centerTitle: true,
         leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               SimpleHiddenDrawerController.of(context).toggle();
             }),
@@ -367,22 +366,20 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
       ),
       backgroundColor: Colors.white,
       body: SafeArea(
-        child: Container(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomScrollView(
-              slivers: <Widget>[
-                SliverToBoxAdapter(child: _topOrgList()),
-                SliverToBoxAdapter(child: _buildTableCalendarWithBuilders()),
-                SliverToBoxAdapter(child: const SizedBox(height: 8.0)),
-                SliverToBoxAdapter(
-                    child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text('Events', style: TextStyle(fontSize: 18)),
-                )),
-                _buildEventListSliver(),
-              ],
-            ),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: CustomScrollView(
+            slivers: <Widget>[
+              SliverToBoxAdapter(child: _topOrgList()),
+              SliverToBoxAdapter(child: _buildTableCalendarWithBuilders()),
+              const SliverToBoxAdapter(child: SizedBox(height: 8.0)),
+              const SliverToBoxAdapter(
+                  child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: Text('Events', style: TextStyle(fontSize: 18)),
+              )),
+              _buildEventListSliver(),
+            ],
           ),
         ),
       ),
@@ -417,7 +414,7 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
             closedElevation: 0.0,
             closedBuilder: (BuildContext _, VoidCallback openContainer) {
               return Padding(
-                padding: EdgeInsets.all(3),
+                padding: const EdgeInsets.all(3),
                 child: Container(
                   decoration: BoxDecoration(
                       color: Colors.white,

@@ -24,13 +24,14 @@ class EventCard extends StatelessWidget {
                   image: DecorationImage(
                     fit: BoxFit.fitWidth,
                     image: event.eventImageUrl.isEmpty
-                        ? ExactAssetImage('assets/images/user_placeholder.png')
+                        ? Image.asset('assets/images/user_placeholder.png')
+                            .image
                         : CachedNetworkImageProvider(
                             event.eventImageUrl,
                           ),
                   ),
                   border: Border.all(width: 2.0, color: Colors.white),
-                  boxShadow: [BoxShadow(blurRadius: 4, color: Colors.black)],
+                  boxShadow: const [BoxShadow(blurRadius: 4)],
                   borderRadius: BorderRadius.circular(10.0)),
               width: 250,
               //color: Colors.black38,
@@ -38,7 +39,6 @@ class EventCard extends StatelessWidget {
           ),
         ),
         Flexible(
-          flex: 1,
           child: Text(
             event.eventName,
             style: Theme.of(context)
@@ -48,7 +48,6 @@ class EventCard extends StatelessWidget {
           ),
         ),
         Flexible(
-          flex: 1,
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

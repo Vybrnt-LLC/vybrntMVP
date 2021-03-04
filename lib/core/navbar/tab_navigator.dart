@@ -326,10 +326,6 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
           UserListScreen(userIDList: userIDList, title: 'Followers'),
       TabNavigatorRoutes.orgList: (context) => OrgListScreen(
             orgIDList: orgIDList,
-            onPush: (orgID) => pushOrgPage(
-              context,
-              orgID: orgID,
-            ),
           ),
       TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
             create: (context) => getIt<OrgWatcherBloc>()
