@@ -32,7 +32,7 @@ class BetaScreen extends StatelessWidget {
       ListTile(
         onTap: () => launch(url),
         title: Text(title,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.w500,
               fontSize: 20,
             )),
@@ -48,15 +48,12 @@ class BetaScreen extends StatelessWidget {
         centerTitle: true,
         backgroundColor: Colors.black,
         leading: IconButton(
-            icon: Icon(Icons.menu),
+            icon: const Icon(Icons.menu),
             onPressed: () {
               SimpleHiddenDrawerController.of(context).toggle();
             }),
         title: Text('LINKS',
-            style: GoogleFonts.getFont('Barlow Condensed',
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-                fontSize: 30)
+            style: Theme.of(context).appBarTheme.textTheme.headline1
             // Center(
             //   child: Image.asset('assets/vybrnt_title_clear.png',
             //       width: 200, fit: BoxFit.cover),

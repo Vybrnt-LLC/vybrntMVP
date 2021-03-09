@@ -219,6 +219,7 @@ abstract class _$DeleteCommentCopyWith<$Res>
   @override
   $Res call({Post post, Comment comment});
 
+  $PostCopyWith<$Res> get post;
   @override
   $CommentCopyWith<$Res> get comment;
 }
@@ -242,6 +243,16 @@ class __$DeleteCommentCopyWithImpl<$Res>
       post == freezed ? _value.post : post as Post,
       comment == freezed ? _value.comment : comment as Comment,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 

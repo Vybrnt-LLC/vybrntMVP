@@ -350,10 +350,11 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
               SimpleHiddenDrawerController.of(context).toggle();
             }),
         title: Text('COMMUNITY CALENDAR',
-            style: GoogleFonts.getFont('Barlow Condensed',
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-                fontSize: 30)
+            style: Theme.of(context)
+                .appBarTheme
+                .textTheme
+                .headline1
+                .copyWith(fontSize: 24.0)
             // Center(
             //   child: Image.asset('assets/vybrnt_title_clear.png',
             //       width: 200, fit: BoxFit.cover),
@@ -369,10 +370,11 @@ class _CalendarMonthScreenState extends State<CalendarMonthScreen>
               SliverToBoxAdapter(child: _topOrgList()),
               SliverToBoxAdapter(child: _buildTableCalendarWithBuilders()),
               const SliverToBoxAdapter(child: SizedBox(height: 8.0)),
-              const SliverToBoxAdapter(
+              SliverToBoxAdapter(
                   child: Padding(
-                padding: EdgeInsets.all(8.0),
-                child: Text('Events', style: TextStyle(fontSize: 18)),
+                padding: const EdgeInsets.all(8.0),
+                child: Text('Events',
+                    style: Theme.of(context).textTheme.subtitle1),
               )),
               _buildEventListSliver(),
             ],

@@ -63,7 +63,7 @@ class _SearchScreenState extends State<SearchScreen>
           child: GFAvatar(
             shape: GFAvatarShape.square,
             borderRadius: BorderRadius.circular(9),
-            radius: 15.0,
+            radius: 18.0,
             backgroundColor: Colors.white,
             backgroundImage: org.profileImageUrl.isEmpty
                 ? Image.asset('assets/images/user_placeholder.png').image
@@ -151,11 +151,7 @@ class _SearchScreenState extends State<SearchScreen>
                             }
                           }
                         },
-                        style: GoogleFonts.getFont('Barlow Condensed',
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            fontSize: 20,
-                            color: Colors.white),
+                        style: Theme.of(context).textTheme.subtitle1,
                         decoration: InputDecoration(
                             focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),

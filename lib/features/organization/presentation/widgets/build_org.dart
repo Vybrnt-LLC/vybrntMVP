@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -318,22 +319,16 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                                 alignment: Alignment.centerLeft,
                                 width: 150,
                                 height: 30,
-                                child: BorderedText(
-                                  strokeColor:
-                                      stringToColor(widget.org.primaryColor),
-                                  strokeWidth: 0.5,
-                                  child: Text(widget.org.name,
-                                      //textAlign: TextAlign.justify,
-                                      maxLines: 2,
-                                      //softWrap: false,
-                                      overflow: TextOverflow.fade,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        decorationThickness: 2.0,
-                                        color: Colors.white,
-                                        fontSize: _getTextSize(widget.org.name),
-                                      )),
-                                ),
+                                child: AutoSizeText(widget.org.name,
+                                    //textAlign: TextAlign.justify,
+                                    maxLines: 2,
+                                    //softWrap: false,
+                                    overflow: TextOverflow.fade,
+                                    style: Theme.of(context)
+                                        .appBarTheme
+                                        .textTheme
+                                        .headline1
+                                        .copyWith(fontSize: 24)),
                               ),
                             ],
                           ),

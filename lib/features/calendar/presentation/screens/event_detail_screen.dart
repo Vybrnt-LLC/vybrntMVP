@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
@@ -28,7 +29,7 @@ class EventDetailScreen extends StatefulWidget {
   final String name;
   final bool isAdmin;
 
-  EventDetailScreen({
+  const EventDetailScreen({
     Key key,
     this.event,
     this.name,
@@ -202,19 +203,18 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                     forceElevated: innerBoxIsScrolled,
                     pinned: true,
                     flexibleSpace: FlexibleSpaceBar(
-                        //centerTitle: true,
-                        //titlePadding: EdgeInsetsDirectional.only(start: 140, bottom: 16),
+                        centerTitle: true,
+                        titlePadding: const EdgeInsetsDirectional.only(
+                            start: 40, bottom: 12, end: 80),
                         title: Container(
                           width: 200,
-                          child: BorderedText(
-                            strokeColor: Colors.black,
-                            strokeWidth: 1.0,
-                            child: Text(widget.event.eventName,
-                                style: const TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15.0,
-                                )),
-                          ),
+                          height: 35,
+                          child: AutoSizeText(widget.event.eventName,
+                              maxLines: 2,
+                              style: Theme.of(context)
+                                  .appBarTheme
+                                  .textTheme
+                                  .headline1),
                         ),
                         background: Material(
                           child: InkWell(

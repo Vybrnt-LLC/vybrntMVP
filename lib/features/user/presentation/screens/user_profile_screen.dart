@@ -14,7 +14,7 @@ class UserProfileScreen extends StatefulWidget {
   final String userID;
   final bool menuButton;
 
-  UserProfileScreen({
+  const UserProfileScreen({
     Key key,
     this.userID,
     this.menuButton = false,
@@ -43,7 +43,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
           loadFailure: (state) {
             return Scaffold(
               appBar: AppBar(),
-              body: Center(child: CircularProgressIndicator()),
+              body: const Center(child: CircularProgressIndicator()),
             );
           },
           loadSuccess: (state) {

@@ -9,15 +9,15 @@ import 'package:vybrnt_mvp/core/shared/category.dart';
 
 class HomeCategories extends ValueObject<Category> {
   static List<Category> predefinedColors = [
-    Category(
+    const Category(
       color: Colors.black,
-      title: 'Home',
+      title: 'My Feed',
       documentName: 'Feed',
       titleImageUrl: 'assets/categories/home_title.png',
       patternImageUrl: 'assets/categories/home_pattern.jpg',
       circleImageUrl: 'assets/categories/home_pattern.jpg',
     ),
-    Category(
+    const Category(
       color: Color(0x80CB3838),
       title: 'Culture',
       documentName: 'Culture_Social',
@@ -25,7 +25,7 @@ class HomeCategories extends ValueObject<Category> {
       patternImageUrl: 'assets/categories/culture_pattern.png',
       circleImageUrl: 'assets/categories/culture_circle.png',
     ),
-    Category(
+    const Category(
       color: Colors.blueAccent,
       title: 'Opportunity',
       documentName: 'Opportunity',
@@ -33,7 +33,7 @@ class HomeCategories extends ValueObject<Category> {
       patternImageUrl: 'assets/categories/opportunity_pattern.png',
       circleImageUrl: 'assets/categories/opportunity_circle.png',
     ),
-    Category(
+    const Category(
       color: Colors.green,
       title: 'Cash Money',
       documentName: 'Cash_Money',
@@ -41,7 +41,7 @@ class HomeCategories extends ValueObject<Category> {
       patternImageUrl: 'assets/categories/cash_money_pattern.png',
       circleImageUrl: 'assets/categories/cash_money_circle.png',
     ),
-    Category(
+    const Category(
       color: Colors.purple,
       title: 'Wellness',
       documentName: 'Wellness',
@@ -49,7 +49,7 @@ class HomeCategories extends ValueObject<Category> {
       patternImageUrl: 'assets/categories/wellness_pattern.png',
       circleImageUrl: 'assets/categories/wellness_circle.png',
     ),
-    Category(
+    const Category(
       color: Colors.orange,
       title: 'Humanitarian',
       documentName: 'Community_Service',
@@ -57,7 +57,7 @@ class HomeCategories extends ValueObject<Category> {
       patternImageUrl: 'assets/categories/humanitarian_pattern.png',
       circleImageUrl: 'assets/categories/humanitarian_circle.png',
     ),
-    Category(
+    const Category(
       color: Colors.yellow,
       title: 'Academics',
       documentName: 'Academics',

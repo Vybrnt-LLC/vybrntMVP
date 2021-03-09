@@ -2395,6 +2395,8 @@ abstract class $CreatePostFormStateCopyWith<$Res> {
       bool isSaving,
       bool isEditing,
       Option<Either<PostFailure, Unit>> saveFailureOrSuccessOption});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class _$CreatePostFormStateCopyWithImpl<$Res>
@@ -2437,6 +2439,16 @@ class _$CreatePostFormStateCopyWithImpl<$Res>
           : saveFailureOrSuccessOption as Option<Either<PostFailure, Unit>>,
     ));
   }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
+  }
 }
 
 abstract class _$CreatePostFormStateCopyWith<$Res>
@@ -2455,6 +2467,9 @@ abstract class _$CreatePostFormStateCopyWith<$Res>
       bool isSaving,
       bool isEditing,
       Option<Either<PostFailure, Unit>> saveFailureOrSuccessOption});
+
+  @override
+  $PostCopyWith<$Res> get post;
 }
 
 class __$CreatePostFormStateCopyWithImpl<$Res>

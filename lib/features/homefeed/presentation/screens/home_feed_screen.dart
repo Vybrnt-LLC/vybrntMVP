@@ -73,7 +73,8 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
 
   Color appBarColor = Colors.black;
   double opacity = 0.5;
-  String appBarTitle = HomeCategories.predefinedColors[0].titleImageUrl;
+  String appBarPattern = HomeCategories.predefinedColors[0].patternImageUrl;
+  String appBarTitle = HomeCategories.predefinedColors[0].title;
 
   // // active button's foreground color
   // Color _foregroundOn = Colors.white;
@@ -236,7 +237,8 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
 
   void _changeAppBarTitle(int index) {
     setState(() {
-      appBarTitle = HomeCategories.predefinedColors[index].titleImageUrl;
+      appBarPattern = HomeCategories.predefinedColors[index].patternImageUrl;
+      appBarTitle = HomeCategories.predefinedColors[index].title;
     });
   }
 
@@ -349,6 +351,12 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                       (BuildContext context, bool innerBoxIsScrolled) {
                     return <Widget>[
                       SliverAppBar(
+                        centerTitle: true,
+                        title: Text(appBarTitle.toUpperCase(),
+                            style: Theme.of(context)
+                                .appBarTheme
+                                .textTheme
+                                .headline1),
                         floating: true,
                         expandedHeight: 60.0,
                         actions: <Widget>[
@@ -467,7 +475,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                             //centerTitle: true,
                             //titlePadding: EdgeInsetsDirectional.only(start: 140, bottom: 16),
                             background: Image.asset(
-                          appBarTitle,
+                          appBarPattern,
                           fit: BoxFit.fitWidth,
                         )),
                         // Image.asset('assets/vybrnt_title_clear.png',

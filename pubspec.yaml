@@ -124,7 +124,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/logo1.png"
+  image_path: "assets/logos/VYBrntfin-06.png"
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 # The following section is specific to Flutter.
@@ -142,6 +142,7 @@ flutter:
     - assets/fonts/
     - assets/categories/
     - assets/gifs/
+    - assets/logos/
     - config/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.
@@ -156,6 +157,15 @@ flutter:
     - family: Socicon
       fonts:
         - asset: assets/icons/Socicon.ttf
+    - family: Gilroy
+      fonts:
+        - asset: assets/fonts/gilroy-extrabold.otf
+          weight: 800
+    - family: Avenir
+      fonts:
+        - asset: assets/fonts/Avenir-Regular.ttf
+          weight: 300      
+
     # - family: Righteous
     #   fonts:
     #     - asset: assets/fonts/Righteous-Regular.tff

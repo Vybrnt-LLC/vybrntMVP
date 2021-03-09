@@ -33,8 +33,8 @@ class OrgCalendarList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(3.0),
             child: Container(
-              width: 80.0,
-              height: 80.0,
+              width: 75.0,
+              height: 75.0,
               decoration: org.isToggled
                   ? BoxDecoration(
                       color: Colors.deepOrange,
@@ -56,7 +56,7 @@ class OrgCalendarList extends StatelessWidget {
             ),
           ),
           const SizedBox(height: 5),
-          Text(updatedOrg.abbv, style: const TextStyle(fontSize: 14.0))
+          Text(updatedOrg.abbv, style: Theme.of(context).textTheme.bodyText2)
         ],
       ),
     );

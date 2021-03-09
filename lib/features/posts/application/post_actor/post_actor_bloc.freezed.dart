@@ -221,6 +221,8 @@ abstract class _$GetDataCopyWith<$Res> {
   factory _$GetDataCopyWith(_GetData value, $Res Function(_GetData) then) =
       __$GetDataCopyWithImpl<$Res>;
   $Res call({Post post, String senderID, String currentUserID, String orgID});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class __$GetDataCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
@@ -246,6 +248,16 @@ class __$GetDataCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
           : currentUserID as String,
       orgID: orgID == freezed ? _value.orgID : orgID as String,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
@@ -447,6 +459,8 @@ abstract class _$OpenedCopyWith<$Res> {
   factory _$OpenedCopyWith(_Opened value, $Res Function(_Opened) then) =
       __$OpenedCopyWithImpl<$Res>;
   $Res call({Post post, bool commenting});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class __$OpenedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
@@ -467,6 +481,16 @@ class __$OpenedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
       commenting:
           commenting == freezed ? _value.commenting : commenting as bool,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
@@ -653,6 +677,8 @@ abstract class _$DeleteCopyWith<$Res> {
   factory _$DeleteCopyWith(_Delete value, $Res Function(_Delete) then) =
       __$DeleteCopyWithImpl<$Res>;
   $Res call({Post post});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class __$DeleteCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
@@ -670,6 +696,16 @@ class __$DeleteCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
     return _then(_Delete(
       post == freezed ? _value.post : post as Post,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
@@ -1049,6 +1085,8 @@ abstract class _$SubmitCommentCopyWith<$Res> {
           _SubmitComment value, $Res Function(_SubmitComment) then) =
       __$SubmitCommentCopyWithImpl<$Res>;
   $Res call({String currentUserID, Post post});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class __$SubmitCommentCopyWithImpl<$Res>
@@ -1070,6 +1108,16 @@ class __$SubmitCommentCopyWithImpl<$Res>
       currentUserID == freezed ? _value.currentUserID : currentUserID as String,
       post == freezed ? _value.post : post as Post,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
@@ -2127,6 +2175,8 @@ abstract class _$LikedCopyWith<$Res> {
   factory _$LikedCopyWith(_Liked value, $Res Function(_Liked) then) =
       __$LikedCopyWithImpl<$Res>;
   $Res call({Post post, String currentUserID});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class __$LikedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
@@ -2146,6 +2196,16 @@ class __$LikedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
       post == freezed ? _value.post : post as Post,
       currentUserID == freezed ? _value.currentUserID : currentUserID as String,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
@@ -2334,6 +2394,8 @@ abstract class _$RepostedCopyWith<$Res> {
   factory _$RepostedCopyWith(_Reposted value, $Res Function(_Reposted) then) =
       __$RepostedCopyWithImpl<$Res>;
   $Res call({Post post, String currentUserID});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class __$RepostedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
@@ -2353,6 +2415,16 @@ class __$RepostedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
       post == freezed ? _value.post : post as Post,
       currentUserID == freezed ? _value.currentUserID : currentUserID as String,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
@@ -2542,6 +2614,8 @@ abstract class _$BookmarkedCopyWith<$Res> {
           _Bookmarked value, $Res Function(_Bookmarked) then) =
       __$BookmarkedCopyWithImpl<$Res>;
   $Res call({Post post, String currentUserID});
+
+  $PostCopyWith<$Res> get post;
 }
 
 class __$BookmarkedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
@@ -2562,6 +2636,16 @@ class __$BookmarkedCopyWithImpl<$Res> extends _$PostActorEventCopyWithImpl<$Res>
       post == freezed ? _value.post : post as Post,
       currentUserID == freezed ? _value.currentUserID : currentUserID as String,
     ));
+  }
+
+  @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
   }
 }
 
@@ -3000,6 +3084,7 @@ abstract class $PostActorStateCopyWith<$Res> {
       String shareLink});
 
   $OrganizationCopyWith<$Res> get org;
+  $PostCopyWith<$Res> get post;
   $UserCopyWith<$Res> get senderUser;
   $UserCopyWith<$Res> get reposterUser;
   $CommentCopyWith<$Res> get comment;
@@ -3068,6 +3153,16 @@ class _$PostActorStateCopyWithImpl<$Res>
   }
 
   @override
+  $PostCopyWith<$Res> get post {
+    if (_value.post == null) {
+      return null;
+    }
+    return $PostCopyWith<$Res>(_value.post, (value) {
+      return _then(_value.copyWith(post: value));
+    });
+  }
+
+  @override
   $UserCopyWith<$Res> get senderUser {
     if (_value.senderUser == null) {
       return null;
@@ -3122,6 +3217,8 @@ abstract class _$PostActorStateCopyWith<$Res>
 
   @override
   $OrganizationCopyWith<$Res> get org;
+  @override
+  $PostCopyWith<$Res> get post;
   @override
   $UserCopyWith<$Res> get senderUser;
   @override

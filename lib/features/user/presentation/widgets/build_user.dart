@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -298,7 +299,7 @@ class _BuildUserState extends State<BuildUser> {
                       flexibleSpace: FlexibleSpaceBar(
                           centerTitle: false,
                           titlePadding: const EdgeInsetsDirectional.only(
-                              start: 65, bottom: 16),
+                              start: 65, bottom: 12),
                           title: Container(
                             // decoration: BoxDecoration(
                             //   color: Colors.black,s
@@ -348,23 +349,18 @@ class _BuildUserState extends State<BuildUser> {
                                   alignment: Alignment.centerLeft,
                                   width: 150,
                                   height: 30,
-                                  child: BorderedText(
-                                    strokeColor:
-                                        stringToColor(widget.user.primaryColor),
-                                    strokeWidth: 0.5,
-                                    child: Text(widget.user.profileName,
-                                        maxLines: 2,
-                                        //softWrap: false,
-                                        overflow: TextOverflow.fade,
-                                        style: TextStyle(
-                                          fontWeight: FontWeight.bold,
-                                          decorationThickness: 2.0,
-                                          color: Colors.white,
-                                          fontSize: _getTextSize(
-                                              widget.user.profileName),
-                                        )),
+                                  child: AutoSizeText(
+                                    widget.user.profileName,
+                                    maxLines: 2,
+                                    //softWrap: false,
+                                    overflow: TextOverflow.fade,
+                                    style: Theme.of(context)
+                                        .appBarTheme
+                                        .textTheme
+                                        .headline1
+                                        .copyWith(fontSize: 24),
                                   ),
-                                ),
+                                )
                               ],
                             ),
                           ),

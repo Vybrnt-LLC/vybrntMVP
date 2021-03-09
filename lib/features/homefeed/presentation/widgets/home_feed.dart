@@ -10,7 +10,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
-import 'package:vybrnt_mvp/core/ui/creation_aware_list_item.dart';
 
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
@@ -128,12 +127,12 @@ class _HomeFeedState extends State<HomeFeed> {
                   child: CustomScrollView(
                     key: PageStorageKey<String>(widget.name),
                     slivers: <Widget>[
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 10, 0, 2),
+                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 2),
                           child: Text(
                             'Campus Events',
-                            style: TextStyle(fontSize: 18),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),
@@ -148,13 +147,10 @@ class _HomeFeedState extends State<HomeFeed> {
                                 mainAxisSize: MainAxisSize.min,
                                 children: <Widget>[
                                   const SizedBox(width: 20.0, height: 100.0),
-                                  Text(
-                                    "Find Your",
-                                    style: GoogleFonts.righteous(
-                                        textStyle: const TextStyle(
-                                      fontSize: 25.0,
-                                    )),
-                                  ),
+                                  Text("Find Your",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1),
                                   const SizedBox(width: 10.0, height: 100.0),
                                   RotateAnimatedTextKit(
                                       //duration: Duration(minutes: 1),
@@ -163,10 +159,9 @@ class _HomeFeedState extends State<HomeFeed> {
                                         "Vybe",
                                         "Opportunities"
                                       ],
-                                      textStyle: GoogleFonts.righteous(
-                                          textStyle: const TextStyle(
-                                        fontSize: 25.0,
-                                      ))),
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1),
                                 ],
                               )),
                             ),
@@ -208,12 +203,12 @@ class _HomeFeedState extends State<HomeFeed> {
                           );
                         }),
                       )),
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 2, 0, 2),
+                          padding: const EdgeInsets.fromLTRB(10, 2, 0, 2),
                           child: Text(
                             'Latest Posts',
-                            style: TextStyle(fontSize: 18),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),

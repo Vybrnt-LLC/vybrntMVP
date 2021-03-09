@@ -25,15 +25,16 @@ class Wrapper2 extends StatelessWidget {
           return ChangeNotifierProvider<TabNavigator>(
             create: (_) => TabNavigator(),
             child: AnimatedSplashScreen.withScreenFunction(
-              splash: 'assets/vybrnt_title_clear.png',
+              splash: 'assets/logos/vybrntecho.png',
               screenFunction: () async {
                 return WillPopScope(
                     onWillPop: () async {
                       return false;
                     },
-                    child: HiddenDrawer());
+                    child: const HiddenDrawer());
               },
               splashIconSize: 300.0,
+              duration: 2000,
               pageTransitionType: PageTransitionType.rightToLeft,
             ),
           );

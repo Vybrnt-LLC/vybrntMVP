@@ -99,22 +99,21 @@ class _PostDetailScreenState extends State<PostDetailScreen> {
               body: CustomScrollView(
                 slivers: [
                   SliverAppBar(
+                    centerTitle: true,
+                    title: BorderedText(
+                      strokeColor: widget.color,
+                      strokeWidth: 1.0,
+                      child: Text(
+                        'Post',
+                        style:
+                            Theme.of(context).appBarTheme.textTheme.headline1,
+                      ),
+                    ),
                     floating: true,
                     //expandedHeight: 60.0,
                     backgroundColor: widget.color,
                     flexibleSpace: FlexibleSpaceBar(
                         centerTitle: true,
-                        title: BorderedText(
-                          strokeColor: widget.color,
-                          strokeWidth: 1.0,
-                          child: Text(
-                            'Post',
-                            style: GoogleFonts.getFont('Barlow Condensed',
-                                fontWeight: FontWeight.bold,
-                                fontStyle: FontStyle.italic,
-                                fontSize: 30),
-                          ),
-                        ),
                         background: Image.asset(
                           widget.backgroundImage,
                           fit: BoxFit.fitWidth,

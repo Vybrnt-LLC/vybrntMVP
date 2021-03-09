@@ -29,10 +29,7 @@ class BookmarkScreen extends StatelessWidget {
               SimpleHiddenDrawerController.of(context).toggle();
             }),
         title: Text('SAVED POSTS',
-            style: GoogleFonts.getFont('Barlow Condensed',
-                fontWeight: FontWeight.bold,
-                fontStyle: FontStyle.italic,
-                fontSize: 30)
+            style: Theme.of(context).appBarTheme.textTheme.headline1
             // Center(
             //   child: Image.asset('assets/vybrnt_title_clear.png',
             //       width: 200, fit: BoxFit.cover),

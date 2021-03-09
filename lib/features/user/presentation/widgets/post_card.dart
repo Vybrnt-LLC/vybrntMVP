@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -150,7 +151,7 @@ class PostCard extends StatelessWidget {
                               Text(
                                 "Shared by ${state.reposterUser.profileName}" //insert user name here
                                 ,
-                                style: const TextStyle(fontSize: 12.0),
+                                style: Theme.of(context).textTheme.bodyText2,
                               ),
                             ],
                           ),
@@ -166,8 +167,9 @@ class PostCard extends StatelessWidget {
                                     Routes.org,
                                     arguments: OrgScreenArguments(
                                         orgID: state.org.orgID.getOrCrash())),
-                            child: Text(state.org.name,
-                                style: const TextStyle(fontSize: 20)))
+                            child: AutoSizeText(state.org.name,
+                                maxLines: 2,
+                                style: Theme.of(context).textTheme.subtitle1))
                       else
                         GestureDetector(
                           onTap: () => TabNavigatorProvider.of(context) != null
@@ -180,9 +182,11 @@ class PostCard extends StatelessWidget {
                                   arguments: UserScreenArguments(
                                       userID: state.senderUser.userID
                                           .getOrCrash())),
-                          child: Text(state.senderUser.profileName,
-                              style: const TextStyle(
-                                  fontSize: 20) //insert user name here
+                          child: AutoSizeText(state.senderUser.profileName,
+                              maxLines: 2,
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .subtitle1 //insert user name here
                               ),
                         ),
                       Row(
@@ -200,9 +204,12 @@ class PostCard extends StatelessWidget {
                                           arguments: UserScreenArguments(
                                               userID: state.senderUser.userID
                                                   .getOrCrash())),
-                              child: Text(state.senderUser
-                                      .profileName //insert user name here
-                                  ),
+                              child: Text(
+                                state.senderUser.profileName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyText2, //insert user name here
+                              ),
                             )
                           else
                             const SizedBox.shrink(),
@@ -210,7 +217,10 @@ class PostCard extends StatelessWidget {
                             const SizedBox(width: 5)
                           else
                             const SizedBox.shrink(),
-                          Text(timeago.format(post.postTime.getOrCrash())),
+                          Text(
+                            timeago.format(post.postTime.getOrCrash()),
+                            style: Theme.of(context).textTheme.bodyText2,
+                          ),
                         ],
                       ),
                     ],
@@ -369,15 +379,10 @@ class PostCard extends StatelessWidget {
                     Row(
                       children: [
                         Expanded(
-                          child: Text(
-                            post.postHeader.getOrCrash(),
-                            textAlign: TextAlign.start,
-                            maxLines: 2,
-                            style: const TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 18.0,
-                            ),
-                          ),
+                          child: Text(post.postHeader.getOrCrash(),
+                              textAlign: TextAlign.start,
+                              maxLines: 2,
+                              style: Theme.of(context).textTheme.subtitle1),
                         ),
                       ],
                     ), //This contains the header
@@ -420,10 +425,9 @@ class PostCard extends StatelessWidget {
                       height: 10,
                     ),
                     Text(post.postBody.getOrCrash(),
-                        style: const TextStyle(
-                          height: 1.3,
-                          fontSize: 18,
-                        ) //here is the post body
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodyText1 //here is the post body
                         ),
                     const SizedBox(height: 5),
                     if (post.postURL.getOrCrash().isNotEmpty)

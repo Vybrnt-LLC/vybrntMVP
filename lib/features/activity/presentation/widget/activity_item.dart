@@ -27,7 +27,7 @@ class ActivityItem extends StatelessWidget {
                 title: RichText(
                     //overflow: TextOverflow.ellipsis,
                     text: TextSpan(
-                  style: const TextStyle(fontSize: 14.0, color: Colors.black),
+                  style: Theme.of(context).textTheme.bodyText2,
                   children: _getActivityText(activity),
                 ))),
           )),

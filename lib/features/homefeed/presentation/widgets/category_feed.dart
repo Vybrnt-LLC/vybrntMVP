@@ -86,12 +86,12 @@ class _CategoryFeedState extends State<CategoryFeed> {
                     controller: _scrollController,
                     key: PageStorageKey<String>(widget.name),
                     slivers: <Widget>[
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 10, 0, 2),
+                          padding: const EdgeInsets.fromLTRB(10, 10, 0, 2),
                           child: Text(
                             'Campus Events',
-                            style: TextStyle(fontSize: 18),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),
@@ -141,12 +141,12 @@ class _CategoryFeedState extends State<CategoryFeed> {
                           );
                         }),
                       )),
-                      const SliverToBoxAdapter(
+                      SliverToBoxAdapter(
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(10, 2, 0, 2),
+                          padding: const EdgeInsets.fromLTRB(10, 2, 0, 2),
                           child: Text(
-                            'Post Feed',
-                            style: TextStyle(fontSize: 18),
+                            'Latests Posts',
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),
