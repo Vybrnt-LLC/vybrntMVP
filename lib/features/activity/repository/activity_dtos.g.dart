@@ -14,7 +14,8 @@ _$_ActivityDTO _$_$_ActivityDTOFromJson(Map<String, dynamic> json) {
     ownerID: json['ownerID'] as String,
     titleSubject: json['titleSubject'] as String,
     bodySubject: json['bodySubject'] as String,
-    timeStamp: json['timeStamp'],
+    timeStamp:
+        const TimestampConverter().fromJson(json['timeStamp'] as Timestamp),
     imageURL: json['imageURL'] as String,
     profileID: json['profileID'] as String,
     profileType: json['profileType'] as String,
@@ -31,7 +32,7 @@ Map<String, dynamic> _$_$_ActivityDTOToJson(_$_ActivityDTO instance) =>
       'ownerID': instance.ownerID,
       'titleSubject': instance.titleSubject,
       'bodySubject': instance.bodySubject,
-      'timeStamp': instance.timeStamp,
+      'timeStamp': const TimestampConverter().toJson(instance.timeStamp),
       'imageURL': instance.imageURL,
       'profileID': instance.profileID,
       'profileType': instance.profileType,

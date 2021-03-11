@@ -15,7 +15,8 @@ import 'package:vybrnt_mvp/features/posts/presentation/posts/create_posts/post_d
 class CreatePostScreen extends HookWidget {
   final Post editedPost;
 
-  CreatePostScreen({Key key, @required this.editedPost}) : super(key: key);
+  const CreatePostScreen({Key key, @required this.editedPost})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -126,18 +127,19 @@ class CreatePostScaffold extends StatelessWidget {
             title: BlocBuilder<CreatePostFormBloc, CreatePostFormState>(
               buildWhen: (p, c) => p.isEditing != c.isEditing,
               builder: (context, state) => Text(
-                state.isEditing ? 'Edit an event' : 'CREATE A POST',
-                style: GoogleFonts.getFont('Barlow Condensed',
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 28),
+                state.isEditing ? 'Edit an event' : 'New Post',
+                style: Theme.of(context)
+                    .appBarTheme
+                    .textTheme
+                    .headline1
+                    .copyWith(fontSize: 28),
               ),
             ),
             actions: <Widget>[
               Builder(
                 builder: (context) {
                   return IconButton(
-                    icon: Icon(Icons.check),
+                    icon: const Icon(Icons.check),
                     onPressed: () {
                       context
                           .bloc<CreatePostFormBloc>()

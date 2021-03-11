@@ -1,17 +1,13 @@
 import 'dart:ui';
 
 import 'package:bordered_text/bordered_text.dart';
-import 'package:flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
-import 'package:overlay_support/overlay_support.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
-
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/homefeed/application/category_events/category_events_bloc.dart';
 import 'package:vybrnt_mvp/features/homefeed/application/category_posts/category_posts_bloc.dart';
@@ -21,25 +17,15 @@ import 'package:vybrnt_mvp/features/homefeed/domain/models/home_categories.dart'
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/category_feed.dart';
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/home_feed.dart';
 import 'package:vybrnt_mvp/features/homefeed/presentation/widgets/sliver_home_app_bar.dart';
-
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/user/presentation/widgets/create_fab.dart';
 
 class HomeFeedScreen extends StatefulWidget {
-  static final String id = 'home_feed_screen';
-  final ValueChanged<int> onPush;
-  final ValueChanged<int> onPush1;
-  final ValueChanged<int> onPushSearch;
+  static const String id = 'home_feed_screen';
 
   final String currentUserID;
 
-  HomeFeedScreen(
-      {Key key,
-      this.onPush,
-      this.onPush1,
-      this.onPushSearch,
-      this.currentUserID})
-      : super(key: key);
+  const HomeFeedScreen({Key key, this.currentUserID}) : super(key: key);
 
   @override
   _HomeFeedScreenState createState() => _HomeFeedScreenState();
@@ -87,18 +73,19 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
 
   Color appBarColor = Colors.black;
   double opacity = 0.5;
-  String appBarTitle = HomeCategories.predefinedColors[0].titleImageUrl;
+  String appBarPattern = HomeCategories.predefinedColors[0].patternImageUrl;
+  String appBarTitle = HomeCategories.predefinedColors[0].title;
 
   // // active button's foreground color
   // Color _foregroundOn = Colors.white;
   // Color _foregroundOff = Colors.black;
 
   // active button's background color
-  Color _backgroundOn = Colors.blue;
-  Color _backgroundOff = Colors.grey[300];
+  final Color _backgroundOn = Colors.blue;
+  final Color _backgroundOff = Colors.grey[300];
 
   // scroll controller for the TabBar
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   final snackBar = SnackBar(
       content:
@@ -113,34 +100,34 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
               alignment: Alignment.bottomCenter,
               overflow: Overflow.visible,
               children: [
-        Container(
-          child: Image.asset(
-            "assets/images/sssad.png",
-            height: 225.0,
-            width: 225.0,
-            //       ),
-            //     ],
-            //   ),
-            //   SizedBox.shrink()
-            // ],
-          ),
+        Image.asset(
+          "assets/images/sssad.png",
+          height: 225.0,
+          width: 225.0,
+          //       ),
+          //     ],
+          //   ),
+          //   SizedBox.shrink()
+          // ],
         ),
-        BorderedText(strokeWidth: 1.0, child: Text('Coming Soon!'))
+        BorderedText(strokeWidth: 1.0, child: const Text('Coming Soon!'))
       ]));
 
   // this will save the keys for each Tab in the Tab Bar, so we can retrieve their position and size for the scroll controller
-  List _keys = [];
+  // ignore: prefer_final_fields
+  List<GlobalKey> _keys = [];
 
   // regist if the the button was tapped
   bool _buttonTap = false;
 
+  @override
   void initState() {
     super.initState();
     for (int index = 0;
         index < HomeCategories.predefinedColors.length;
         index++) {
       // create a GlobalKey for each Tab
-      _keys.add(new GlobalKey());
+      _keys.add(GlobalKey());
     }
     // this creates the controller with 6 tabs (in our case)
     _controller = TabController(
@@ -150,8 +137,8 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     // this will execute the function every time the _controller.index value changes
     _controller.addListener(_handleTabChange);
 
-    _animationControllerOff =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 75));
+    _animationControllerOff = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 75));
     // so the inactive buttons start in their "final" state (color)
     _animationControllerOff.value = 1.0;
     // _colorTweenBackgroundOff =
@@ -161,8 +148,8 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     //     ColorTween(begin: _foregroundOn, end: _foregroundOff)
     //         .animate(_animationControllerOff);
 
-    _animationControllerOn =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    _animationControllerOn = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
     // so the inactive buttons start in their "final" state (color)
     _animationControllerOn.value = 1.0;
     _colorTweenBackgroundOn =
@@ -183,7 +170,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
   }
 
   // runs during the switching tabs animation
-  _handleTabAnimation() {
+  void _handleTabAnimation() {
     // gets the value of the animation. For example, if one is between the 1st and the 2nd tab, this value will be 0.5
     _aniValue = _controller.animation.value;
 
@@ -198,7 +185,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
   }
 
   // runs when the displayed tab changes
-  _handleTabChange() {
+  void _handleTabChange() {
     // if a button was tapped, change the current index
     if (_buttonTap) _setCurrentIndex(_controller.index);
 
@@ -210,7 +197,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     _prevControllerIndex = _controller.index;
   }
 
-  _setCurrentIndex(int index) {
+  void _setCurrentIndex(int index) {
     // if we're actually changing the index
     if (index != _currentIndex) {
       setState(() {
@@ -228,37 +215,34 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     }
   }
 
-  _getButtonOpacity(int index) {
+  double _getButtonOpacity(int index) {
     // setState(() {
     //   appBarColor = HomeCategories.predefinedColors[index].color;
     // });
     return index == _currentIndex ? 1.0 : 0.4;
   }
 
-  _getButtonHightlight(int index) {
+  Color _getButtonHightlight(int index) {
     // setState(() {
     //   appBarColor = HomeCategories.predefinedColors[index].color;
     // });
     return index == _currentIndex ? Colors.amberAccent : Colors.transparent;
   }
 
-  _getButtonSize(int index) {
-    return index == _currentIndex ? 100.0 : 75.0;
-  }
-
-  _changeTabColor(int index) {
+  void _changeTabColor(int index) {
     setState(() {
       appBarColor = HomeCategories.predefinedColors[index].color;
     });
   }
 
-  _changeAppBarTitle(int index) {
+  void _changeAppBarTitle(int index) {
     setState(() {
-      appBarTitle = HomeCategories.predefinedColors[index].titleImageUrl;
+      appBarPattern = HomeCategories.predefinedColors[index].patternImageUrl;
+      appBarTitle = HomeCategories.predefinedColors[index].title;
     });
   }
 
-  _triggerAnimation() {
+  void _triggerAnimation() {
     // reset the animations so they're ready to go
     _animationControllerOn.reset();
     _animationControllerOff.reset();
@@ -270,12 +254,13 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     //_animationTabController.forward();
   }
 
-  _scrollTo(int index) {
+  void _scrollTo(int index) {
     // get the screen width. This is used to check if we have an element off screen
     double screenWidth = MediaQuery.of(context).size.width;
 
     // get the button we want to scroll to
-    RenderBox renderBox = _keys[index].currentContext.findRenderObject();
+    RenderBox renderBox =
+        _keys[index].currentContext.findRenderObject() as RenderBox;
     // get its size
     double size = renderBox.size.width;
     // and position
@@ -287,7 +272,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
     // if the button is to the left of the middle
     if (offset < 0) {
       // get the first button
-      renderBox = _keys[0].currentContext.findRenderObject();
+      renderBox = _keys[0].currentContext.findRenderObject() as RenderBox;
       // get the position of the first button of the TabBar
       position = renderBox.localToGlobal(Offset.zero).dx;
 
@@ -299,7 +284,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
       // get the last button
       renderBox = _keys[HomeCategories.predefinedColors.length - 1]
           .currentContext
-          .findRenderObject();
+          .findRenderObject() as RenderBox;
       // get its position
       position = renderBox.localToGlobal(Offset.zero).dx;
       // and size
@@ -316,7 +301,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
 
     // scroll the calculated ammount
     _scrollController.animateTo(offset + _scrollController.offset,
-        duration: new Duration(milliseconds: 150), curve: Curves.easeInOut);
+        duration: const Duration(milliseconds: 150), curve: Curves.easeInOut);
   }
 
   // _getBackgroundColor(int index) {
@@ -366,17 +351,23 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                       (BuildContext context, bool innerBoxIsScrolled) {
                     return <Widget>[
                       SliverAppBar(
+                        centerTitle: true,
+                        title: Text(appBarTitle.toUpperCase(),
+                            style: Theme.of(context)
+                                .appBarTheme
+                                .textTheme
+                                .headline1),
                         floating: true,
                         expandedHeight: 60.0,
                         actions: <Widget>[
                           IconButton(
                             onPressed: () => launch(
                                 'https://www.notion.so/Updates-698903a6bafe4d32ba91ea7073461705'),
-                            icon: FaIcon(FontAwesomeIcons.bullhorn,
+                            icon: const FaIcon(FontAwesomeIcons.bullhorn,
                                 color: Colors.white, size: 20),
                           ),
                           IconButton(
-                              icon: Icon(Icons.message),
+                              icon: const Icon(Icons.message),
                               onPressed: () =>
                                   // context
                                   //     .bloc<AuthBloc>()
@@ -484,7 +475,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                             //centerTitle: true,
                             //titlePadding: EdgeInsetsDirectional.only(start: 140, bottom: 16),
                             background: Image.asset(
-                          appBarTitle,
+                          appBarPattern,
                           fit: BoxFit.fitWidth,
                         )),
                         // Image.asset('assets/vybrnt_title_clear.png',
@@ -500,8 +491,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                               child: ListView.builder(
                                   shrinkWrap: true,
                                   // this gives the TabBar a bounce effect when scrolling farther than it's size
-                                  physics: BouncingScrollPhysics(),
-                                  addAutomaticKeepAlives: true,
+                                  physics: const BouncingScrollPhysics(),
                                   controller: _scrollController,
                                   // make the list horizontal
                                   scrollDirection: Axis.horizontal,
@@ -514,7 +504,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                       key: _keys[index],
                                       height: 25,
                                       child: ButtonTheme(
-                                          shape: RoundedRectangleBorder(
+                                          shape: const RoundedRectangleBorder(
                                             borderRadius: BorderRadius.only(
                                               bottomRight: Radius.circular(20),
                                               bottomLeft: Radius.circular(20),
@@ -560,7 +550,8 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                               height: _getTabHeight(index),
                                               //width: _getButtonSize(index),
                                               decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.only(
+                                                borderRadius:
+                                                    const BorderRadius.only(
                                                   bottomRight:
                                                       Radius.circular(10),
                                                   bottomLeft:
@@ -568,8 +559,7 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                                 ),
                                                 image: DecorationImage(
                                                     fit: BoxFit.fill,
-                                                    colorFilter: new ColorFilter
-                                                            .mode(
+                                                    colorFilter: ColorFilter.mode(
                                                         Colors.black.withOpacity(
                                                             _getButtonOpacity(
                                                                 index)),
@@ -581,12 +571,14 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                                             .patternImageUrl)),
                                               ),
                                               child: FlatButton(
+                                                //TODO: Deal with this button
                                                 // get the color of the button's background (dependent of its state)
                                                 // color: HomeCategories
                                                 //     .predefinedColors[index]
                                                 //     .color, //_getBackgroundColor(index),
                                                 // make the button a rectangle with round corners
-                                                shape: RoundedRectangleBorder(
+                                                shape:
+                                                    const RoundedRectangleBorder(
                                                   borderRadius:
                                                       BorderRadius.only(
                                                     bottomRight:
@@ -634,7 +626,6 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                     );
                                   })),
                         ),
-                        pinned: false,
                       ),
                     ];
                   },
@@ -650,11 +641,11 @@ class _HomeFeedScreenState extends State<HomeFeedScreen>
                                 ..add(HomePostsEvent.getData(currentUserID))),
                           BlocProvider<HomeEventsBloc>(
                             create: (context) => getIt<HomeEventsBloc>()
-                              ..add(HomeEventsEvent.getData()),
+                              ..add(const HomeEventsEvent.getData()),
                           )
                         ],
                         child: HomeFeed(
-                          key: PageStorageKey('homefeed'),
+                          key: const PageStorageKey('homefeed'),
                           userID: currentUserID,
                         ),
                       ),

@@ -18,7 +18,7 @@ part 'event_list_bloc.freezed.dart';
 class EventListBloc extends Bloc<EventListEvent, EventListState> {
   final IOrgService _orgService;
 
-  EventListBloc(this._orgService) : super(EventListState.initial());
+  EventListBloc(this._orgService) : super(const EventListState.initial());
 
   StreamSubscription<Either<EventFailure, KtList<Event>>>
       _eventStreamSubscription;
@@ -32,7 +32,7 @@ class EventListBloc extends Bloc<EventListEvent, EventListState> {
         yield const EventListState.loadInProgress();
         await _eventStreamSubscription?.cancel();
         _eventStreamSubscription = _orgService
-            .watchOrgEvents(e.orgID, e.isOrg)
+            .watchOrgEvents(orgID: e.orgID, isOrg: e.isOrg)
             .listen((event) => add(EventListEvent.eventsReceived(event)));
       },
       eventsReceived: (e) async* {

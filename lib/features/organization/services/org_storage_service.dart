@@ -1,85 +1,81 @@
+// import 'dart:io';
 
+// import 'package:firebase_storage/firebase_storage.dart';
+// import 'package:flutter_image_compress/flutter_image_compress.dart';
+// import 'package:path_provider/path_provider.dart';
+// import 'package:uuid/uuid.dart';
+// import 'package:vybrnt_mvp/core/shared/constants.dart';
 
-import 'dart:io';
+// class OrganizationStorageService {
 
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter_image_compress/flutter_image_compress.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:uuid/uuid.dart';
-import 'package:vybrnt_mvp/core/shared/constants.dart';
+//   static Future<String> uploadOrgProfileImage(
+//       String url, File imageFile) async {
+//     String photoId = Uuid().v4();
+//     final File image = await compressImage(photoId, imageFile);
 
-class OrganizationStorageService {
+//     if (url.isNotEmpty) {
+//       // Updating user Profile image
+//       final RegExp exp = RegExp(r'orgProfile_(.*).jpg');
+//       photoId = exp.firstMatch(url)[1];
+//     }
 
-  static Future<String> uploadOrgProfileImage(
-      String url, File imageFile) async {
-    String photoId = Uuid().v4();
-    File image = await compressImage(photoId, imageFile);
+//     StorageUploadTask uploadTask = storageRef
+//         .child('images/orgs/orgProfile_$photoId.jpg')
+//         .putFile(image);
+//     StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+//     String downloadUrl = await storageSnap.ref.getDownloadURL();
+//     return downloadUrl;
+//   }
 
-    if (url.isNotEmpty) {
-      // Updating user Profile image
-      RegExp exp = RegExp(r'orgProfile_(.*).jpg');
-      photoId = exp.firstMatch(url)[1];
-    }
+//   static Future<String> uploadOrgBannerImage(
+//       String url, File imageFile) async {
+//     String photoId = Uuid().v4();
+//     File image = await compressImage(photoId, imageFile);
 
-    StorageUploadTask uploadTask = storageRef
-        .child('images/orgs/orgProfile_$photoId.jpg')
-        .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
-  }
+//     if (url.isNotEmpty) {
+//       // Updating user Profile image
+//       RegExp exp = RegExp(r'orgBanner_(.*).jpg');
+//       photoId = exp.firstMatch(url)[1];
+//     }
 
-  static Future<String> uploadOrgBannerImage(
-      String url, File imageFile) async {
-    String photoId = Uuid().v4();
-    File image = await compressImage(photoId, imageFile);
+//     StorageUploadTask uploadTask = storageRef
+//         .child('images/orgs/orgBanner_$photoId.jpg')
+//         .putFile(image);
+//     StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+//     String downloadUrl = await storageSnap.ref.getDownloadURL();
+//     return downloadUrl;
+//   }
 
-    if (url.isNotEmpty) {
-      // Updating user Profile image
-      RegExp exp = RegExp(r'orgBanner_(.*).jpg');
-      photoId = exp.firstMatch(url)[1];
-    }
+//   static Future<File> compressImage(String photoId, File image) async {
+//     final tempDir = await getTemporaryDirectory();
+//     final path = tempDir.path;
+//     File compressedImageFile = await FlutterImageCompress.compressAndGetFile(
+//         image.absolute.path, '$path/img_$photoId.jpg',
+//         quality: 70);
+//     return compressedImageFile;
+//   }
 
-    StorageUploadTask uploadTask = storageRef
-        .child('images/orgs/orgBanner_$photoId.jpg')
-        .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
-  }
+//   static Future<String> uploadOrgPost(File imageFile) async {
+//     String photoId = Uuid().v4();
+//     File image = await compressImage(photoId, imageFile);
+//     StorageUploadTask uploadTask = storageRef
+//         .child('images/posts/post_$photoId.jpg')
+//         .putFile(image);
+//     StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+//     String downloadUrl = await storageSnap.ref.getDownloadURL();
+//     return downloadUrl;
 
-  static Future<File> compressImage(String photoId, File image) async {
-    final tempDir = await getTemporaryDirectory();
-    final path = tempDir.path;
-    File compressedImageFile = await FlutterImageCompress.compressAndGetFile(
-        image.absolute.path, '$path/img_$photoId.jpg',
-        quality: 70);
-    return compressedImageFile;
-  }
+//   }
 
-  static Future<String> uploadOrgPost(File imageFile) async {
-    String photoId = Uuid().v4();
-    File image = await compressImage(photoId, imageFile);
-    StorageUploadTask uploadTask = storageRef
-        .child('images/posts/post_$photoId.jpg')
-        .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
+//   static Future<String> uploadOrgPhoto(File imageFile) async {
+//     String photoId = Uuid().v4();
+//     File image = await compressImage(photoId, imageFile);
+//     StorageUploadTask uploadTask = storageRef
+//         .child('images/photos/photo_$photoId.jpg')
+//         .putFile(image);
+//     StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+//     String downloadUrl = await storageSnap.ref.getDownloadURL();
+//     return downloadUrl;
 
-
-  }
-
-  static Future<String> uploadOrgPhoto(File imageFile) async {
-    String photoId = Uuid().v4();
-    File image = await compressImage(photoId, imageFile);
-    StorageUploadTask uploadTask = storageRef
-        .child('images/photos/photo_$photoId.jpg')
-        .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
-
-
-  }
-}
+//   }
+// }

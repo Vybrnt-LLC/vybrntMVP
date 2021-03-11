@@ -1,19 +1,14 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:vybrnt_mvp/features/posts/domain/core/failures.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/value_objects.dart';
-import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
-
-import 'package:vybrnt_mvp/features/user/services/database_service.dart';
 
 part 'post.freezed.dart';
 
 @freezed
-abstract class Post implements _$Post {
-  const Post._();
-
+abstract class Post with _$Post {
   const factory Post({
     @required PostID postID,
     @required SenderID senderID,
@@ -51,30 +46,10 @@ abstract class Post implements _$Post {
       //commentsSection: CommentsSection(KtList<Comment>.empty().toMutableList()),
       repostable: Repostable(true),
       repostCount: RepostCount(0),
-      postTime: PostTime(Timestamp.now()));
+      postTime: PostTime(DateTime.now()));
+}
 
-  factory Post.fromDoc(DocumentSnapshot doc) {
-    return Post(
-      postID: PostID(doc.id),
-      postType: PostType(doc.get('postType')),
-      senderID: SenderID(doc.get('senderID')),
-      postTime: PostTime(doc.get('postTime')),
-      postImageURL: PostImageURL(doc.get('postImageURL')),
-      postHeader: PostHeader(doc.get('postHeader')),
-      commentable: Commentable(doc.get('commentable')),
-      likeCount: LikeCount(doc.get('likeCount')),
-      commentCount: CommentCount(doc.get('commentCount')),
-      repostCount: RepostCount(doc.get('repostCount')),
-      postBody: PostBody(doc.get('postBody')),
-      //commentsSection: CommentsSection(doc['commentsSection']),
-      eventID: EventID(doc.get('eventID')),
-      orgID: OrgID(doc.get('orgID')),
-      repostable: Repostable(doc.get('repostable')),
-      repostID: RepostID(doc.get('repostID')),
-      postURL: PostURL(doc.get('postURL')),
-    );
-  }
-
+extension PostX on Post {
   Option<ValueFailure<dynamic>> get failureOption {
     try {
       return postBody.failureOrUnit
@@ -90,16 +65,8 @@ abstract class Post implements _$Post {
       //     .fold(() => right(unit), (f) => left(f)))
       // .fold((f) => some(f), (_) => none());
     } catch (e) {
-      print(e.toString());
+      debugPrint(e.toString());
       return none();
     }
-  }
-
-  Future<Either<ValueFailure<User>, User>> getUser(String senderID) async {
-    User user = await DatabaseService.getUserWithID(senderID);
-    if (user.userName.isNotEmpty) {
-      return right(user);
-    }
-    return left(ValueFailure.invalidUser(failedValue: user));
   }
 }

@@ -13,9 +13,9 @@ abstract class EventDto with _$EventDto {
     @JsonKey(ignore: true) String eventID,
     @required String senderID,
     @required String eventName,
-    @required dynamic startTime,
-    @required dynamic endTime,
-    @required dynamic timeStamp,
+    @required @TimestampConverter() DateTime startTime,
+    @required @TimestampConverter() DateTime endTime,
+    @required @TimestampConverter() DateTime timeStamp,
     @required String eventCaption,
     @required String eventUrl,
     @required String eventLocation,
@@ -65,20 +65,32 @@ class ServerTimestampConverter implements JsonConverter<FieldValue, Object> {
   Object toJson(FieldValue fieldValue) => fieldValue;
 }
 
+class TimestampConverter implements JsonConverter<DateTime, Timestamp> {
+  const TimestampConverter();
+
+  @override
+  DateTime fromJson(Timestamp date) {
+    return date.toDate();
+  }
+
+  @override
+  Timestamp toJson(DateTime date) => Timestamp.fromDate(date);
+}
+
 extension EventDtoX on EventDto {
   Event toDomain() {
     return Event(
         eventID: UniqueId.fromUniqueString(eventID),
         senderID: senderID,
-        endTime: endTime.toDate(),
+        endTime: endTime,
         eventImageUrl: eventImageUrl,
         eventLocation: eventLocation,
         eventCaption: eventCaption,
         eventName: eventName,
         eventUrl: eventUrl,
         orgID: orgID,
-        startTime: startTime.toDate(),
-        timeStamp: timeStamp.toDate(),
+        startTime: startTime,
+        timeStamp: timeStamp,
         isOrg: isOrg);
   }
 }

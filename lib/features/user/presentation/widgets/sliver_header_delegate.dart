@@ -10,9 +10,9 @@ import '../../domain/models/user.dart';
 class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   final double expandedHeight;
   final User user;
-  final dynamic button1;
-  final dynamic button2;
-  final dynamic button3;
+  final Widget button1;
+  final Widget button2;
+  final Widget button3;
   final Color primaryColor;
   final KtList<String> following;
   final int photoCount;
@@ -34,9 +34,9 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    int followingCount = following.size;
-    int followersCount = followers.size;
-    int orgCount = orgList.size;
+    final int followingCount = following.size;
+    final int followersCount = followers.size;
+    final int orgCount = orgList.size;
     return Container(
       color: Colors.black, //primaryColor,//Color.fromRGBO(10, 172, 193, 1.0),
       child: Stack(
@@ -44,7 +44,7 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
         overflow: Overflow.visible,
         children: [
           Opacity(
-            opacity: (1 - shrinkOffset / expandedHeight),
+            opacity: 1 - shrinkOffset / expandedHeight,
             child: Container(
               color: primaryColor,
               child: Column(
@@ -66,9 +66,9 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                                       title: 'Followers')),
                           child: Column(children: [
                             Text('$followersCount',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 18)),
-                            Text('Followers',
+                            const Text('Followers',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18))
                           ]),
@@ -85,9 +85,9 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                                       title: 'Following')),
                           child: Column(children: [
                             Text('$followingCount',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 18)),
-                            Text('Following',
+                            const Text('Following',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18))
                           ]),
@@ -102,9 +102,9 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                                       orgIDList: orgList)),
                           child: Column(children: [
                             Text('$orgCount',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     color: Colors.white, fontSize: 18)),
-                            Text('Organizations',
+                            const Text('Organizations',
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 18))
                           ]),
@@ -112,7 +112,7 @@ class SliverHeaderDelegate extends SliverPersistentHeaderDelegate {
                       ],
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 15,
                   ),
                   Row(

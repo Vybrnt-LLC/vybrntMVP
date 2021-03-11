@@ -164,4 +164,37 @@ function getNotificationBody(activity) {
       }
 }
 
-module.exports = onCreateActivityFeedItem;
+const followVybrnt = functions.region('us-east4').pubsub
+  .topic("follow-vybrnt")
+  .onPublish(async message => {
+    const usersSnapshot = await db
+      .collection("users")
+      .get();
+
+    const users = usersSnapshot.docs.map(doc => doc.id);
+    const vybrntID = 'cec10340-090e-11eb-a5dc-1d0e34e32b97';
+    const orgFollowersSnapshot = await db.collection('followers').doc(vybrntID).collection('orgFollowers').get();
+    const orgFollowers = orgFollowersSnapshot.docs.map(doc => doc.id);
+    
+    var i;
+    for(i = 0; i < users.length; i++) {
+      if(!orgFollowers.includes(users[i])) {
+        db.collection('followers').doc(vybrntID).collection('orgFollowers').doc(users[i]).set({
+          isToggled: true,
+          notify: true,
+        });
+        db.collection('following').doc(users[i]).collection('orgFollowing').doc(vybrntID).set({
+          abbv: 'Vybrnt',
+          name: 'Vybrnt',
+          profileImageUrl: 'https://firebasestorage.googleapis.com/v0/b/vybrnt-production-release.appspot.com/o/images%2Forgs%2ForgProfile_c320f73c-3634-4c35-b47f-9e289ae6750c.jpg?alt=media&token=78ade707-7cb2-4d28-86e5-6c3dff579c21',
+          isToggled: true,
+          notify: true,
+        });
+      }
+    }
+  });
+
+
+module.exports = {onCreateActivityFeedItem, followVybrnt };
+
+//TODO: Change destination of new activity objects

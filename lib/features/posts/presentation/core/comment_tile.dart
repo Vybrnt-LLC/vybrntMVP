@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
@@ -29,23 +28,24 @@ class CommentTile extends StatelessWidget {
     return BlocBuilder<CommentActorBloc, CommentActorState>(
         builder: (context, state) {
       return Slidable(
-        actionPane: SlidableDrawerActionPane(),
+        actionPane: const SlidableDrawerActionPane(),
         actionExtentRatio: comment.senderID.getOrCrash() == currentUserID ||
                 post.senderID.getOrCrash() == currentUserID
             ? 0.25
             : 0,
         actions: <Widget>[
-          comment.senderID.getOrCrash() == currentUserID ||
-                  post.senderID.getOrCrash() == currentUserID
-              ? IconSlideAction(
-                  caption: 'Delete',
-                  color: Colors.red,
-                  icon: Icons.delete,
-                  onTap: () => context
-                      .bloc<CommentActorBloc>()
-                      .add(CommentActorEvent.deleteComment(post, comment)),
-                )
-              : null,
+          if (comment.senderID.getOrCrash() == currentUserID ||
+              post.senderID.getOrCrash() == currentUserID)
+            IconSlideAction(
+              caption: 'Delete',
+              color: Colors.red,
+              icon: Icons.delete,
+              onTap: () => context
+                  .bloc<CommentActorBloc>()
+                  .add(CommentActorEvent.deleteComment(post, comment)),
+            )
+          else
+            null,
         ],
         child: ListTile(
           leading: GestureDetector(
@@ -59,21 +59,21 @@ class CommentTile extends StatelessWidget {
               radius: 25.0,
               backgroundColor: Colors.grey,
               backgroundImage: state.senderUser.profileImageUrl.isEmpty
-                  ? AssetImage('assets/images/user_placeholder.png')
+                  ? Image.asset('assets/images/user_placeholder.png').image
                   : CachedNetworkImageProvider(
                       state.senderUser.profileImageUrl),
             ),
           ),
           title: state.senderUser.profileName.isNotEmpty
               ? Text(state.senderUser.profileName)
-              : Text('Anonymous User'),
+              : const Text('Anonymous User'),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
               Text(comment.commentBody.getOrCrash()),
-              SizedBox(height: 6.0),
+              const SizedBox(height: 6.0),
               Text(
-                timeago.format(comment.commentDate.getOrCrash().toDate()),
+                timeago.format(comment.commentDate.getOrCrash()),
               ),
             ],
           ),

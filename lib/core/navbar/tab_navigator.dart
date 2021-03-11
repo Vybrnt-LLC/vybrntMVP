@@ -5,31 +5,23 @@ import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/navbar/navbar_setup.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:vybrnt_mvp/core/report/report_page.dart';
-import 'package:vybrnt_mvp/core/swipe_menu/widgets/simple_hidden_drawer_bloc.dart';
 import 'package:vybrnt_mvp/features/activity/application/bloc/activity_bloc.dart';
 import 'package:vybrnt_mvp/features/activity/repository/analytics_service.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/application/bloc/calendar_bloc.dart';
-import 'package:vybrnt_mvp/features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
 import 'package:vybrnt_mvp/features/calendar/application/org_bloc/org_calendar_bloc.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/screens/calendar_month_screen.dart';
-import 'package:vybrnt_mvp/features/calendar/presentation/screens/event_detail_screen.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/screens/event_screen.dart';
-import 'package:vybrnt_mvp/features/organization/application/edit_org_bloc/edit_org_bloc.dart';
 import 'package:vybrnt_mvp/features/organization/application/org_watcher_bloc/org_watcher_bloc.dart';
-import 'package:vybrnt_mvp/features/organization/application/user_list_bloc/user_list_bloc.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 import 'package:vybrnt_mvp/features/organization/presentation/screens/edit_organization_page_screen.dart';
 import 'package:vybrnt_mvp/features/organization/presentation/screens/organization_page_screen.dart';
 import 'package:vybrnt_mvp/features/organization/presentation/screens/user_list_screen.dart';
-import 'package:vybrnt_mvp/features/posts/application/post_actor/post_actor_bloc.dart';
 import 'package:vybrnt_mvp/features/posts/domain/posts/post.dart';
-import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_detail_screen.dart';
 import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_screen.dart';
 import 'package:vybrnt_mvp/features/search/application/bloc/search_bloc.dart';
 import 'package:vybrnt_mvp/features/search/presentation/screens/search_screen.dart';
-import 'package:vybrnt_mvp/features/user/application/edit_user_bloc/edit_user_bloc.dart';
 import 'package:vybrnt_mvp/features/user/application/user_watcher_bloc/user_watcher_bloc.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/activity/presentation/activity_screen.dart';
@@ -59,52 +51,49 @@ class TabNavigatorRoutes {
 }
 
 class TabNavigator extends StatelessWidget with ChangeNotifier {
-  TabNavigator({
-    this.navigatorKey,
-    this.child,
-    //this.tabItem,
-    this.position,
-    this.bloc,
-    this.tabItemm,
-    this.user,
-  }); //
   final GlobalKey<NavigatorState> navigatorKey;
   //final TabItem tabItem;
   final TabItem1 tabItemm;
   final Widget child;
   final int position;
-  final SimpleHiddenDrawerBloc bloc;
   final User user;
-  final Key homeKey = PageStorageKey('homeKey');
-  final Key calendarKey = PageStorageKey('calendarKey');
-  final Key searchKey = PageStorageKey('searchKey');
-  final Key notificationKey = PageStorageKey('notificationKey');
-  final Key userKey = PageStorageKey('userKey');
+  final Key homeKey = const PageStorageKey('homeKey');
+  final Key calendarKey = const PageStorageKey('calendarKey');
+  final Key searchKey = const PageStorageKey('searchKey');
+  final Key notificationKey = const PageStorageKey('notificationKey');
+  final Key userKey = const PageStorageKey('userKey');
+
+  TabNavigator(
+      {Key key,
+      this.navigatorKey,
+      this.tabItemm,
+      this.position,
+      this.user,
+      this.child})
+      : super(key: key);
 
   //final String currentUserID;
 
-  void pushUserList(BuildContext context,
-      {int materialIndex: 500, KtList<String> userIDList}) {
-    var routeBuilders = _routeBuilders(context, userIDList: userIDList);
+  void pushUserList(BuildContext context, {KtList<String> userIDList}) {
+    final routeBuilders = _routeBuilders(context, userIDList: userIDList);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.userList),
+            settings: const RouteSettings(name: TabNavigatorRoutes.userList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.userList](context)));
   }
 
   void pushReport(
     BuildContext context, {
-    int materialIndex: 500,
     String contentID,
     String contentType,
     String ownerID,
     String ownerType,
     String currentUserID,
   }) {
-    var routeBuilders = _routeBuilders(
+    final routeBuilders = _routeBuilders(
       context,
       contentID: contentID,
       contentType: contentType,
@@ -116,109 +105,108 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.report),
+            settings: const RouteSettings(name: TabNavigatorRoutes.report),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.report](context)));
   }
 
   void pushLikesList(BuildContext context,
       {int materialIndex: 500, KtList<String> userIDList}) {
-    var routeBuilders = _routeBuilders(context, userIDList: userIDList);
+    final routeBuilders = _routeBuilders(context, userIDList: userIDList);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.likes),
+            settings: const RouteSettings(name: TabNavigatorRoutes.likes),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.likes](context)));
   }
 
   void pushRepostList(BuildContext context,
       {int materialIndex: 500, KtList<String> userIDList}) {
-    var routeBuilders = _routeBuilders(context, userIDList: userIDList);
+    final routeBuilders = _routeBuilders(context, userIDList: userIDList);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.reposts),
+            settings: const RouteSettings(name: TabNavigatorRoutes.reposts),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.reposts](context)));
   }
 
-  void pushFollowersList(BuildContext context,
-      {int materialIndex: 500, KtList<String> userIDList}) {
-    var routeBuilders = _routeBuilders(context, userIDList: userIDList);
+  void pushFollowersList(BuildContext context, {KtList<String> userIDList}) {
+    final routeBuilders = _routeBuilders(context, userIDList: userIDList);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.followerList),
+            settings:
+                const RouteSettings(name: TabNavigatorRoutes.followerList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.followerList](context)));
   }
 
-  void pushFollowingList(BuildContext context,
-      {int materialIndex: 500, KtList<String> userIDList}) {
-    var routeBuilders = _routeBuilders(context, userIDList: userIDList);
+  void pushFollowingList(BuildContext context, {KtList<String> userIDList}) {
+    final routeBuilders = _routeBuilders(context, userIDList: userIDList);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.followingList),
+            settings:
+                const RouteSettings(name: TabNavigatorRoutes.followingList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.followingList](context)));
   }
 
-  void pushOrgList(BuildContext context,
-      {int materialIndex: 500, KtList<String> orgIDList}) {
-    var routeBuilders = _routeBuilders(context, orgIDList: orgIDList);
+  void pushOrgList(BuildContext context, {KtList<String> orgIDList}) {
+    final routeBuilders = _routeBuilders(context, orgIDList: orgIDList);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.orgList),
+            settings: const RouteSettings(name: TabNavigatorRoutes.orgList),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.orgList](context)));
   }
 
-  void pushOrgPage(BuildContext context,
-      {int materialIndex: 500, String orgID}) {
-    var routeBuilders = _routeBuilders(context, orgID: orgID);
+  void pushOrgPage(BuildContext context, {String orgID}) {
+    final routeBuilders = _routeBuilders(context, orgID: orgID);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.orgPage),
+            settings: const RouteSettings(name: TabNavigatorRoutes.orgPage),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.orgPage](context)));
   }
 
   void pushUserProfile(BuildContext context,
       {String userID, String currentUserID}) {
-    var routeBuilders =
+    final routeBuilders =
         _routeBuilders(context, userID: userID, currentUserID: currentUserID);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.userProfile),
+            settings: const RouteSettings(name: TabNavigatorRoutes.userProfile),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.userProfile](context)));
   }
 
   void pushEditUserProfile(BuildContext context, {User user}) {
-    var routeBuilders = _routeBuilders(context, user: user);
+    final routeBuilders = _routeBuilders(context, user: user);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.editUserProfile),
+            settings:
+                const RouteSettings(name: TabNavigatorRoutes.editUserProfile),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.editUserProfile](context)));
   }
 
   void pushEditOrgPage(BuildContext context, {Organization org}) {
-    var routeBuilders = _routeBuilders(context, org: org);
+    final routeBuilders = _routeBuilders(context, org: org);
 
     Navigator.push(
         context,
@@ -229,49 +217,49 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
   }
 
   void pushPostDetail(BuildContext context, {Post post}) {
-    var routeBuilders = _routeBuilders(context, post: post);
+    final routeBuilders = _routeBuilders(context, post: post);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.postDetail),
+            settings: const RouteSettings(name: TabNavigatorRoutes.postDetail),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.postDetail](context)));
   }
 
   void pushPost(BuildContext context,
       {String postID, String typeID, String type}) {
-    var routeBuilders =
+    final routeBuilders =
         _routeBuilders(context, postID: postID, typeID: typeID, type: type);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.postDetail),
+            settings: const RouteSettings(name: TabNavigatorRoutes.postDetail),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.postDetail](context)));
   }
 
   void pushEvent(BuildContext context,
       {String eventID, String typeID, String type}) {
-    var routeBuilders =
+    final routeBuilders =
         _routeBuilders(context, eventID: eventID, typeID: typeID, type: type);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.eventDetail),
+            settings: const RouteSettings(name: TabNavigatorRoutes.eventDetail),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.eventDetail](context)));
   }
 
   void pushEventDetail(BuildContext context, {Event event}) {
-    var routeBuilders = _routeBuilders(context, event: event);
+    final routeBuilders = _routeBuilders(context, event: event);
 
     Navigator.push(
         context,
         MaterialPageRoute(
-            settings: RouteSettings(name: TabNavigatorRoutes.eventDetail),
+            settings: const RouteSettings(name: TabNavigatorRoutes.eventDetail),
             builder: (context) =>
                 routeBuilders[TabNavigatorRoutes.eventDetail](context)));
   }
@@ -326,10 +314,6 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
           UserListScreen(userIDList: userIDList, title: 'Followers'),
       TabNavigatorRoutes.orgList: (context) => OrgListScreen(
             orgIDList: orgIDList,
-            onPush: (orgID) => pushOrgPage(
-              context,
-              orgID: orgID,
-            ),
           ),
       TabNavigatorRoutes.orgPage: (context) => BlocProvider<OrgWatcherBloc>(
             create: (context) => getIt<OrgWatcherBloc>()
@@ -390,14 +374,15 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
     final searchRoot = {
       TabNavigatorRoutes.root: (context) => BlocProvider<SearchBloc>(
           create: (context) =>
-              getIt<SearchBloc>()..add(SearchEvent.getSearch('')),
+              getIt<SearchBloc>()..add(const SearchEvent.getSearch('')),
           child: SearchScreen(key: searchKey)),
     };
 
     final activityRoot = {
-      TabNavigatorRoutes.root: (context) => BlocProvider<ActivityBloc>(
+      TabNavigatorRoutes.root: (BuildContext context) =>
+          BlocProvider<ActivityBloc>(
             create: (context) =>
-                getIt<ActivityBloc>()..add(ActivityEvent.getData()),
+                getIt<ActivityBloc>()..add(const ActivityEvent.getData()),
             child: ActivityScreen(
               key: notificationKey,
               currentUserID:
@@ -406,7 +391,8 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
           ),
     };
     final userRoot = {
-      TabNavigatorRoutes.root: (context) => BlocProvider<UserWatcherBloc>(
+      TabNavigatorRoutes.root: (BuildContext context) =>
+          BlocProvider<UserWatcherBloc>(
             create: (context) => getIt<UserWatcherBloc>()
               ..add(UserWatcherEvent.getData(
                   currentUserID: currentUserID, userID: currentUserID)),
@@ -447,7 +433,7 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
   @override
   Widget build(BuildContext context) {
     final currentUserID = Provider.of<UserData>(context).currentUserID;
-    var routeBuilders =
+    final routeBuilders =
         _routeBuilders(context, currentUserID: currentUserID, user: user);
 
     return TabNavigatorProvider(

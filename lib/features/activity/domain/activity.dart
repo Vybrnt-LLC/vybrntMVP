@@ -26,27 +26,27 @@ abstract class Activity with _$Activity {
 
   factory Activity.empty() => Activity(
         activityID: UniqueId(),
-        activityType: ActivityType.LIKE,
+        activityType: ActivityType.like,
         objectID: '',
-        ownerType: OwnerType.USER,
+        ownerType: OwnerType.user,
         ownerID: '',
         titleSubject: '',
         bodySubject: '',
         imageURL: '',
         profileID: '',
-        profileType: OwnerType.USER,
+        profileType: OwnerType.user,
         timeStamp: DateTime.now(),
       );
 }
 
-enum OwnerType { USER, ORG }
+enum OwnerType { user, org }
 
 class OwnerTypeHelper {
   static String stringOf(OwnerType ownerType) {
     switch (ownerType) {
-      case OwnerType.USER:
+      case OwnerType.user:
         return 'user';
-      case OwnerType.ORG:
+      case OwnerType.org:
         return 'org';
       default:
         return 'user';
@@ -56,33 +56,33 @@ class OwnerTypeHelper {
   static OwnerType valueOf(String string) {
     switch (string) {
       case 'user':
-        return OwnerType.USER;
+        return OwnerType.user;
       case 'org':
-        return OwnerType.ORG;
+        return OwnerType.org;
       default:
-        return OwnerType.USER;
+        return OwnerType.user;
     }
   }
 }
 
-enum ActivityType { LIKE, REPOST, COMMENT, POST, EVENT, FOLLOW, ADMIN }
+enum ActivityType { like, repost, comment, post, event, follow, admin }
 
 class ActivityTypeHelper {
   static String stringOf(ActivityType activityType) {
     switch (activityType) {
-      case ActivityType.LIKE:
+      case ActivityType.like:
         return 'like';
-      case ActivityType.REPOST:
+      case ActivityType.repost:
         return 'repost';
-      case ActivityType.COMMENT:
+      case ActivityType.comment:
         return 'comment';
-      case ActivityType.POST:
+      case ActivityType.post:
         return 'post';
-      case ActivityType.EVENT:
+      case ActivityType.event:
         return 'event';
-      case ActivityType.FOLLOW:
+      case ActivityType.follow:
         return 'follow';
-      case ActivityType.ADMIN:
+      case ActivityType.admin:
         return 'admin';
       default:
         return 'like';
@@ -92,21 +92,21 @@ class ActivityTypeHelper {
   static ActivityType valueOf(String string) {
     switch (string) {
       case 'like':
-        return ActivityType.LIKE;
+        return ActivityType.like;
       case 'repost':
-        return ActivityType.REPOST;
+        return ActivityType.repost;
       case 'comment':
-        return ActivityType.COMMENT;
+        return ActivityType.comment;
       case 'post':
-        return ActivityType.POST;
+        return ActivityType.post;
       case 'event':
-        return ActivityType.EVENT;
+        return ActivityType.event;
       case 'follow':
-        return ActivityType.FOLLOW;
+        return ActivityType.follow;
       case 'admin':
-        return ActivityType.ADMIN;
+        return ActivityType.admin;
       default:
-        return ActivityType.LIKE;
+        return ActivityType.like;
     }
   }
 }

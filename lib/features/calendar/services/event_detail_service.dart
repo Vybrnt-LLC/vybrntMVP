@@ -231,6 +231,11 @@ class EventDetailService implements IEventDetailService {
         }
       });
     }
+    await communityEventsRef.doc(event.eventID.getOrCrash()).get().then((doc) {
+      if (doc.exists) {
+        doc.reference.delete();
+      }
+    });
   }
 
   @override

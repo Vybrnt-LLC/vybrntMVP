@@ -10,7 +10,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:vybrnt_mvp/core/injection.dart';
-import 'package:vybrnt_mvp/core/ui/creation_aware_list_item.dart';
 
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/calendar/application/event_detail_bloc/event_detail_bloc.dart';
@@ -36,7 +35,7 @@ class HomeFeed extends StatefulWidget {
 }
 
 class _HomeFeedState extends State<HomeFeed> {
-  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+  final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
@@ -59,67 +58,63 @@ class _HomeFeedState extends State<HomeFeed> {
                     onRefresh: () async => context
                         .bloc<HomePostsBloc>()
                         .add(HomePostsEvent.getData(currentUserID)),
-                    child: Container(
-                      child: Shimmer.fromColors(
-                        baseColor: Colors.grey[300],
-                        highlightColor: Colors.grey[100],
-                        //enabled: _enabled,
-                        child: ListView.builder(
-                          itemBuilder: (_, __) => Padding(
-                            padding: const EdgeInsets.all(12.0),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Container(
-                                  width: 48.0,
-                                  height: 48.0,
-                                  color: Colors.white,
+                    child: Shimmer.fromColors(
+                      baseColor: Colors.grey[300],
+                      highlightColor: Colors.grey[100],
+                      //enabled: _enabled,
+                      child: ListView.builder(
+                        itemBuilder: (_, __) => Padding(
+                          padding: const EdgeInsets.all(12.0),
+                          child: Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Container(
+                                width: 48.0,
+                                height: 48.0,
+                                color: Colors.white,
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.symmetric(horizontal: 8.0),
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Container(
+                                      width: double.infinity,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 2.0),
+                                    ),
+                                    Container(
+                                      width: double.infinity,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                    const Padding(
+                                      padding:
+                                          EdgeInsets.symmetric(vertical: 2.0),
+                                    ),
+                                    Container(
+                                      width: 40.0,
+                                      height: 8.0,
+                                      color: Colors.white,
+                                    ),
+                                  ],
                                 ),
-                                const Padding(
-                                  padding:
-                                      EdgeInsets.symmetric(horizontal: 8.0),
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: <Widget>[
-                                      Container(
-                                        width: double.infinity,
-                                        height: 8.0,
-                                        color: Colors.white,
-                                      ),
-                                      const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 2.0),
-                                      ),
-                                      Container(
-                                        width: double.infinity,
-                                        height: 8.0,
-                                        color: Colors.white,
-                                      ),
-                                      const Padding(
-                                        padding:
-                                            EdgeInsets.symmetric(vertical: 2.0),
-                                      ),
-                                      Container(
-                                        width: 40.0,
-                                        height: 8.0,
-                                        color: Colors.white,
-                                      ),
-                                    ],
-                                  ),
-                                )
-                              ],
-                            ),
+                              )
+                            ],
                           ),
-                          itemCount: 12,
                         ),
+                        itemCount: 12,
                       ),
                     ),
                   ),
               loadFailure: (state) {
-                return Icon(
+                return const Icon(
                     Icons.error_outline); // return CriticalFailureDisplay(
                 //   failure: state.eventFailure,
                 // );
@@ -137,95 +132,114 @@ class _HomeFeedState extends State<HomeFeed> {
                           padding: const EdgeInsets.fromLTRB(10, 10, 0, 2),
                           child: Text(
                             'Campus Events',
-                            style: TextStyle(fontSize: 18),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),
-                      SliverPersistentHeader(
-                          pinned: false,
-                          delegate: SliverHomeEventDelegate(
-                            eventList:
-                                BlocBuilder<HomeEventsBloc, HomeEventsState>(
-                                    builder: (context, state) {
-                              return state.map(
-                                initial: (_) => Container(
-                                  child: Padding(
-                                    padding: EdgeInsets.all(8.0),
-                                    child: Center(
-                                        child: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: <Widget>[
-                                        SizedBox(width: 20.0, height: 100.0),
-                                        Text(
-                                          "Find Your",
-                                          style: GoogleFonts.righteous(
-                                              textStyle: TextStyle(
-                                            fontSize: 25.0,
-                                          )),
-                                        ),
-                                        SizedBox(width: 10.0, height: 100.0),
-                                        RotateAnimatedTextKit(
-                                            //duration: Duration(minutes: 1),
-                                            text: [
-                                              "Home",
-                                              "Vybe",
-                                              "Opportunities"
-                                            ],
-                                            textStyle: GoogleFonts.righteous(
-                                                textStyle: TextStyle(
-                                              fontSize: 25.0,
-                                            )),
-                                            textAlign: TextAlign.start),
+                      SliverPersistentHeader(delegate: SliverHomeEventDelegate(
+                        eventList: BlocBuilder<HomeEventsBloc, HomeEventsState>(
+                            builder: (context, state) {
+                          return state.map(
+                            initial: (_) => Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Center(
+                                  child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: <Widget>[
+                                  const SizedBox(width: 20.0, height: 100.0),
+                                  Text("Find Your",
+                                      style: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1),
+                                  const SizedBox(width: 10.0, height: 100.0),
+                                  RotateAnimatedTextKit(
+                                      //duration: Duration(minutes: 1),
+                                      text: const [
+                                        "Home",
+                                        "Vybe",
+                                        "Opportunities"
                                       ],
-                                    )),
+                                      textStyle: Theme.of(context)
+                                          .textTheme
+                                          .subtitle1),
+                                ],
+                              )),
+                            ),
+                            loadInProgress: (_) =>
+                                const CircularProgressIndicator(),
+                            loadFailure: (state) {
+                              return const Icon(Icons
+                                  .error_outline); // return CriticalFailureDisplay(
+                              //   failure: state.eventFailure,
+                              // );
+                            },
+                            loadSuccess: (state) {
+                              if (state.events.isEmpty()) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const SizedBox(
+                                          width: 20.0, height: 100.0),
+                                      Text("Find Your",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1),
+                                      const SizedBox(
+                                          width: 10.0, height: 100.0),
+                                      RotateAnimatedTextKit(
+                                          repeatForever: true,
+                                          //duration: Duration(minutes: 1),
+                                          text: const [
+                                            "Home",
+                                            "Vybe",
+                                            "Opportunities"
+                                          ],
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1),
+                                    ],
+                                  )),
+                                );
+                              } else {
+                                return ListView.builder(
+                                  padding: const EdgeInsets.all(5.0),
+                                  physics: const ClampingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: state.events.size,
+                                  itemBuilder:
+                                      (BuildContext context, int index) =>
+                                          Padding(
+                                    key: ObjectKey(state.events[index]),
+                                    padding: const EdgeInsets.all(8),
+                                    child: _OpenContainerWrapper(
+                                        event: state.events[index],
+                                        transitionType: _transitionType,
+                                        closedBuilder: (BuildContext _,
+                                            VoidCallback openContainer) {
+                                          return _InkWellOverlay(
+                                            openContainer: openContainer,
+                                            width: 250,
+                                            child: EventCard(
+                                                event: state.events[index]),
+                                          );
+                                        }),
                                   ),
-                                ),
-                                loadInProgress: (_) =>
-                                    CircularProgressIndicator(),
-                                loadFailure: (state) {
-                                  return Icon(Icons
-                                      .error_outline); // return CriticalFailureDisplay(
-                                  //   failure: state.eventFailure,
-                                  // );
-                                },
-                                loadSuccess: (state) {
-                                  return Container(
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.all(5.0),
-                                      physics: ClampingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: state.events.size,
-                                      itemBuilder:
-                                          (BuildContext context, int index) =>
-                                              Padding(
-                                        key: ObjectKey(state.events[index]),
-                                        padding: EdgeInsets.all(8),
-                                        child: _OpenContainerWrapper(
-                                            event: state.events[index],
-                                            transitionType: _transitionType,
-                                            closedBuilder: (BuildContext _,
-                                                VoidCallback openContainer) {
-                                              return _InkWellOverlay(
-                                                openContainer: openContainer,
-                                                width: 250,
-                                                child: EventCard(
-                                                    event: state.events[index]),
-                                              );
-                                            }),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            }),
-                          )),
+                                );
+                              }
+                            },
+                          );
+                        }),
+                      )),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 2, 0, 2),
                           child: Text(
                             'Latest Posts',
-                            style: TextStyle(fontSize: 18),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),
@@ -259,11 +273,10 @@ class _HomeFeedState extends State<HomeFeed> {
                                     //               currentUserID));
                                     //     }
                                     //   },
-                                    child: Container(
-                                        child: PostCard(
+                                    child: PostCard(
                                       //user: _profileUser,
                                       post: state.posts[index],
-                                    )),
+                                    ),
                                     // )
                                   ),
                                 );
@@ -290,7 +303,7 @@ class _OpenContainerWrapper extends StatelessWidget {
     this.event,
   }) : super(key: key);
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Event event;
@@ -329,7 +342,7 @@ class _OpenContainerPostWrapper extends StatelessWidget {
     this.index,
   }) : super(key: key);
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Post post;

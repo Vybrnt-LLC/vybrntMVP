@@ -21,9 +21,6 @@ abstract class ICalendarService {
       List<String> categories,
       String orgID,
       String profileImageUrl});
-  Future<Either<EventFailure, Unit>> update(
-      {Event event, List<String> categories, String orgID});
-  Future<Either<EventFailure, Unit>> delete(Event event);
   Future<String> uploadEventImage(File imageFile);
   Future<File> compressImage(String eventImageId, File image);
 }

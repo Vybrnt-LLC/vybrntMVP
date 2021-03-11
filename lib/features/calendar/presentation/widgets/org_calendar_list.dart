@@ -33,8 +33,8 @@ class OrgCalendarList extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.all(3.0),
             child: Container(
-              width: 80.0,
-              height: 80.0,
+              width: 75.0,
+              height: 75.0,
               decoration: org.isToggled
                   ? BoxDecoration(
                       color: Colors.deepOrange,
@@ -49,14 +49,14 @@ class OrgCalendarList extends StatelessWidget {
                   shape: GFAvatarShape.square,
                   size: 20.0,
                   backgroundImage: updatedOrg.profileImageUrl.isEmpty
-                      ? AssetImage('assets/images/user_placeholder.png')
+                      ? Image.asset('assets/images/user_placeholder.png').image
                       : CachedNetworkImageProvider(updatedOrg.profileImageUrl),
                 ),
               ),
             ),
           ),
-          SizedBox(height: 5),
-          Text(updatedOrg.abbv, style: TextStyle(fontSize: 14.0))
+          const SizedBox(height: 5),
+          Text(updatedOrg.abbv, style: Theme.of(context).textTheme.bodyText2)
         ],
       ),
     );

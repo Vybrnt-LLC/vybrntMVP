@@ -23,12 +23,12 @@ class Photo {
   factory Photo.fromDoc(DocumentSnapshot doc) {
     return Photo(
       photoID: doc.id,
-      photoType: doc.get('photoType'),
-      senderID: doc.get('senderID'),
-      description: doc.get('description'),
+      photoType: doc.get('photoType') as PhotoType,
+      senderID: doc.get('senderID') as String,
+      description: doc.get('description') as String,
       likes: doc.get('likes'),
-      time: doc.get('time'),
-      imageUrl: doc.get('imageUrl'),
+      time: doc.get('time') as Timestamp,
+      imageUrl: doc.get('imageUrl') as String,
     );
   }
 }

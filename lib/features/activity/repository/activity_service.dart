@@ -1,20 +1,18 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
+import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:kt_dart/kt.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:truncate/truncate.dart';
+import 'package:rxdart/rxdart.dart';
+
 import '../../../core/auth/firestore_helpers.dart';
 import '../../../core/shared/constants.dart';
+import '../../calendar/domain/models/event.dart';
+import '../../posts/domain/posts/comment.dart';
+import '../../posts/domain/posts/post.dart';
 import '../domain/activity.dart';
 import '../domain/activity_failure.dart';
 import '../domain/i_activity_service.dart';
-import 'package:rxdart/rxdart.dart';
-import '../../calendar/domain/models/event.dart';
-import '../../calendar/services/event_dtos.dart';
-import '../../posts/domain/posts/comment.dart';
-import '../../posts/domain/posts/post.dart';
-import '../../posts/infrastructure/posts/post_dtos.dart';
-
 import 'activity_dtos.dart';
 
 @LazySingleton(as: IActivityService)
@@ -42,7 +40,7 @@ class ActivityService implements IActivityService {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const ActivityFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.message.toString());
         return left(const ActivityFailure.unexpected());
       }
     });
@@ -52,26 +50,28 @@ class ActivityService implements IActivityService {
   Future addLikeToActivityFeed(Post post) async {
     final currentUserID = await _firestore.currentUserID();
 
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
+    final isNotPostOwner = currentUserID != post.senderID.getOrCrash();
 
     if (isNotPostOwner) {
       final currentUserDoc = await usersRef.doc(currentUserID).get();
-      String name = await currentUserDoc.get('profileName');
-      name = name.isEmpty ? 'An Anonymous User' : name;
+      final name = await currentUserDoc.get('profileName');
+      final finalName = name == '' ? 'An Anonymous User' : name.toString();
       final ownerType = _getOwnerType(post);
       final ownerID = _getOwnerID(post);
+      final imageURL = currentUserDoc.get('profileImageUrl').toString();
 
+      // ignore: prefer_final_locals
       Activity newActivity = Activity.empty();
       final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-        activityType: ActivityType.LIKE,
+        activityType: ActivityType.like,
         objectID: post.postID.getOrCrash(),
         ownerType: ownerType,
         ownerID: ownerID,
-        titleSubject: name,
+        titleSubject: finalName,
         bodySubject: post.postHeader.getOrCrash(),
-        imageURL: currentUserDoc.get('profileImageUrl'),
+        imageURL: imageURL,
         profileID: currentUserID,
-        profileType: OwnerType.USER,
+        profileType: OwnerType.user,
       ));
 
       _sendActivityDTO(activityDTO, newActivity, post);
@@ -100,24 +100,26 @@ class ActivityService implements IActivityService {
   Future addRepostToActivityFeed(Post post, String newRepostID) async {
     final currentUserID = await _firestore.currentUserID();
 
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
+    final bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
 
     if (isNotPostOwner) {
+      // ignore: prefer_final_locals
       Activity newActivity = Activity.empty();
       final currentUserDoc = await usersRef.doc(currentUserID).get();
-      String name = await currentUserDoc.get('profileName');
-      name = name.isEmpty ? 'An Anonymous User' : name;
+      final name = currentUserDoc.get('profileName');
+      final finalName = name == '' ? 'An Anonymous User' : name.toString();
+      final imageURL = currentUserDoc.get('profileImageUrl').toString();
 
       final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-        activityType: ActivityType.REPOST,
+        activityType: ActivityType.repost,
         objectID: newRepostID,
-        ownerType: OwnerType.USER,
+        ownerType: OwnerType.user,
         ownerID: currentUserID,
-        titleSubject: name,
+        titleSubject: finalName,
         bodySubject: post.postHeader.getOrCrash(),
-        imageURL: currentUserDoc.get('profileImageUrl'),
+        imageURL: imageURL,
         profileID: currentUserID,
-        profileType: OwnerType.USER,
+        profileType: OwnerType.user,
       ));
 
       _sendActivityDTO(activityDTO, newActivity, post);
@@ -148,25 +150,27 @@ class ActivityService implements IActivityService {
     final currentUserID = await _firestore.currentUserID();
 
     final currentUserDoc = await usersRef.doc(currentUserID).get();
-    String name = await currentUserDoc.get('profileName');
-    name = name.isEmpty ? 'An Anonymous User' : name;
+    final name = currentUserDoc.get('profileName');
+    final finalName = name == '' ? 'An Anonymous User' : name.toString();
     final ownerType = _getOwnerType(post);
     final ownerID = _getOwnerID(post);
     final bodySubject = comment.commentBody.getOrCrash();
+    final imageURL = currentUserDoc.get('profileImageUrl').toString();
 
+    // ignore: prefer_final_locals
     Activity newActivity = Activity.empty();
     final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-      activityType: ActivityType.COMMENT,
+      activityType: ActivityType.comment,
       objectID: post.postID.getOrCrash(),
       ownerType: ownerType,
       ownerID: ownerID,
-      titleSubject: name,
+      titleSubject: finalName,
       bodySubject: bodySubject,
-      imageURL: currentUserDoc.get('profileImageUrl'),
+      imageURL: imageURL,
       profileID: currentUserID,
-      profileType: OwnerType.USER,
+      profileType: OwnerType.user,
     ));
-    bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
+    final bool isNotPostOwner = currentUserID != post.senderID.getOrCrash();
     if (isNotPostOwner) {
       _sendActivityDTO(activityDTO, newActivity, post);
     }
@@ -205,26 +209,27 @@ class ActivityService implements IActivityService {
   Future addPostToActivityFeed(Post post) async {
     DocumentSnapshot doc;
     String name;
-    dynamic profileType;
+    OwnerType profileType;
 
     final ownerType = _getOwnerType(post);
     final ownerID = _getOwnerID(post);
 
     if (post.orgID.getOrCrash().isNotEmpty) {
       doc = await organizationsRef.doc(post.orgID.getOrCrash()).get();
-      name = doc.get('name');
-      profileType = OwnerType.ORG;
+      name = doc.get('name').toString();
+      profileType = OwnerType.org;
     } else {
       doc = await usersRef.doc(post.senderID.getOrCrash()).get();
-      name = doc.get('profileName');
+      name = doc.get('profileName').toString();
       name = name.isEmpty ? 'An Anonymous User' : name;
-      profileType = OwnerType.USER;
+      profileType = OwnerType.user;
     }
 
-    final imageURL = doc.get('profileImageUrl');
+    final imageURL = doc.get('profileImageUrl').toString();
+    // ignore: prefer_final_locals
     Activity newActivity = Activity.empty();
     final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-      activityType: ActivityType.POST,
+      activityType: ActivityType.post,
       objectID: post.postID.getOrCrash(),
       ownerType: ownerType,
       ownerID: ownerID,
@@ -249,22 +254,23 @@ class ActivityService implements IActivityService {
     DocumentSnapshot doc;
     String name;
 
-    final ownerType = event.isOrg ? OwnerType.ORG : OwnerType.USER;
+    final ownerType = event.isOrg ? OwnerType.org : OwnerType.user;
     final ownerID = event.isOrg ? event.orgID : event.senderID;
-    final profileType = event.isOrg ? OwnerType.ORG : OwnerType.USER;
+    final profileType = event.isOrg ? OwnerType.org : OwnerType.user;
 
     if (event.isOrg) {
       doc = await organizationsRef.doc(event.orgID).get();
-      name = doc.get('name');
+      name = doc.get('name').toString();
     } else {
       doc = await usersRef.doc(event.senderID).get();
-      name = doc.get('profileName');
+      name = doc.get('profileName').toString();
       name = name.isEmpty ? 'An Anonymous User' : name;
     }
-    final imageURL = doc.get('profileImageUrl');
+    final imageURL = doc.get('profileImageUrl').toString();
+    // ignore: prefer_final_locals
     Activity newActivity = Activity.empty();
     final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-        activityType: ActivityType.EVENT,
+        activityType: ActivityType.event,
         objectID: event.eventID.getOrCrash(),
         ownerType: ownerType,
         ownerID: ownerID,
@@ -282,20 +288,22 @@ class ActivityService implements IActivityService {
   Future addFollowUserToActivityFeed(String userID) async {
     final currentUserID = await _firestore.currentUserID();
     final currentUserDoc = await usersRef.doc(currentUserID).get();
-    String name = currentUserDoc.get('profileName');
+    String name = currentUserDoc.get('profileName').toString();
     name = name.isEmpty ? 'An Anonymous User' : name;
+    final imageURL = currentUserDoc.get('profileImageUrl').toString();
 
+    // ignore: prefer_final_locals
     Activity newActivity = Activity.empty();
     final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-        activityType: ActivityType.FOLLOW,
+        activityType: ActivityType.follow,
         objectID: currentUserID,
-        ownerType: OwnerType.USER,
+        ownerType: OwnerType.user,
         ownerID: currentUserID,
         titleSubject: name,
         bodySubject: name,
-        imageURL: currentUserDoc.get('profileImageUrl'),
+        imageURL: imageURL,
         profileID: currentUserID,
-        profileType: OwnerType.USER));
+        profileType: OwnerType.user));
 
     activitiesRef
         .doc(userID)
@@ -309,21 +317,23 @@ class ActivityService implements IActivityService {
     final currentUserID = await _firestore.currentUserID();
     final currentUserDoc = await usersRef.doc(currentUserID).get();
     final orgDoc = await organizationsRef.doc(orgID).get();
-    String name = currentUserDoc.get('profileName');
+    String name = currentUserDoc.get('profileName').toString();
     name = name.isEmpty ? 'An Anonymous User' : name;
-    final orgName = orgDoc.get('name');
+    final orgName = orgDoc.get('name').toString();
+    final imageURL = currentUserDoc.get('profileImageUrl').toString();
 
+    // ignore: prefer_final_locals
     Activity newActivity = Activity.empty();
     final activityDTO = ActivityDTO.fromDomain(newActivity.copyWith(
-      activityType: ActivityType.FOLLOW,
+      activityType: ActivityType.follow,
       objectID: currentUserID,
-      ownerType: OwnerType.ORG,
+      ownerType: OwnerType.org,
       ownerID: orgID,
       titleSubject: orgName,
       bodySubject: name,
-      imageURL: currentUserDoc.get('profileImageUrl'),
+      imageURL: imageURL,
       profileID: currentUserID,
-      profileType: OwnerType.USER,
+      profileType: OwnerType.user,
     ));
     _notifyEboard(
         orgID: orgID,
@@ -333,25 +343,28 @@ class ActivityService implements IActivityService {
         senderID: '');
   }
 
+  @override
   Future addAdminAccessToActivityFeed(String userID, String orgID) async {
     final currentUserID = await _firestore.currentUserID();
     final currentUserDoc = await usersRef.doc(currentUserID).get();
     final orgDoc = await organizationsRef.doc(orgID).get();
-    String name = currentUserDoc.get('profileName');
+    String name = currentUserDoc.get('profileName').toString();
     name = name.isEmpty ? 'An Anonymous User' : name;
-    final orgName = orgDoc.get('name');
+    final orgName = orgDoc.get('name').toString();
+    final imageURL = orgDoc.get('profileImageUrl').toString();
 
+    // ignore: prefer_final_locals
     Activity newLikeActivity = Activity.empty();
     final activityDTO = ActivityDTO.fromDomain(newLikeActivity.copyWith(
-      activityType: ActivityType.ADMIN,
+      activityType: ActivityType.admin,
       objectID: orgID,
-      ownerType: OwnerType.ORG,
+      ownerType: OwnerType.org,
       ownerID: orgID,
       titleSubject: orgName,
       bodySubject: name,
-      imageURL: orgDoc.get('profileImageUrl'),
+      imageURL: imageURL,
       profileID: orgID,
-      profileType: OwnerType.ORG,
+      profileType: OwnerType.org,
     ));
 
     activitiesRef
@@ -377,20 +390,21 @@ Future _sendActivityDTO(
         .set(activityDTO.toJson());
   }
 
-  if (post.orgID.getOrCrash().isNotEmpty)
+  if (post.orgID.getOrCrash().isNotEmpty) {
     _notifyEboard(
         orgID: post.orgID.getOrCrash(),
         activityDTO: activityDTO,
         activityID: newActivity.activityID.getOrCrash(),
         senderID: post.senderID.getOrCrash(),
         repostID: post.repostID.getOrCrash());
+  }
 }
 
 Future _notifyFollowers(String activityID, ActivityDTO activityDTO,
     OwnerType ownerType, String ownerID) async {
   final followerIDs = await followersRef
       .doc(ownerID)
-      .collection(OwnerTypeHelper.stringOf(ownerType) + 'Followers')
+      .collection('${OwnerTypeHelper.stringOf(ownerType)}Followers')
       .where('notify', isEqualTo: true)
       .snapshots()
       .map((snapshot) => snapshot.docs.map((doc) => doc.id).toList())
@@ -429,7 +443,7 @@ Future _notifyEboard(
 }
 
 String _getOwnerID(Post post) {
-  String ownerID = post.repostID.getOrCrash().isNotEmpty
+  final String ownerID = post.repostID.getOrCrash().isNotEmpty
       ? post.repostID.getOrCrash()
       : post.orgID.getOrCrash().isNotEmpty
           ? post.orgID.getOrCrash()
@@ -438,11 +452,11 @@ String _getOwnerID(Post post) {
 }
 
 OwnerType _getOwnerType(Post post) {
-  OwnerType ownerType = post.repostID.getOrCrash().isNotEmpty
-      ? OwnerType.USER
+  final OwnerType ownerType = post.repostID.getOrCrash().isNotEmpty
+      ? OwnerType.user
       : post.orgID.getOrCrash().isEmpty
-          ? OwnerType.USER
-          : OwnerType.ORG;
+          ? OwnerType.user
+          : OwnerType.org;
   return ownerType;
 }
 

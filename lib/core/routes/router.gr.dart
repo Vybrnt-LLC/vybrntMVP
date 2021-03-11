@@ -12,7 +12,6 @@ import 'package:flutter/material.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../../features/authentication/presentation/screens/sign_in_page.dart';
-import '../../features/authentication/presentation/widgets/tags.dart';
 import '../../features/authentication/presentation/widgets/wrapper.dart';
 import '../../features/authentication/presentation/widgets/wrapper2.dart';
 import '../../features/calendar/domain/models/event.dart';
@@ -35,7 +34,6 @@ import '../report/report_page.dart';
 class Routes {
   static const String signInPage = '/sign-in-page';
   static const String wrapper = '/';
-  static const String tags = '/Tags';
   static const String wrapper2 = '/Wrapper2';
   static const String eventDetailImage = '/event-detail-image';
   static const String createEvent = '/create-event-screen';
@@ -54,7 +52,6 @@ class Routes {
   static const all = <String>{
     signInPage,
     wrapper,
-    tags,
     wrapper2,
     eventDetailImage,
     createEvent,
@@ -78,7 +75,6 @@ class Router extends RouterBase {
   final _routes = <RouteDef>[
     RouteDef(Routes.signInPage, page: SignInPage),
     RouteDef(Routes.wrapper, page: Wrapper),
-    RouteDef(Routes.tags, page: Tags),
     RouteDef(Routes.wrapper2, page: Wrapper2),
     RouteDef(Routes.eventDetailImage, page: EventDetailImage),
     RouteDef(Routes.createEvent, page: CreateEventScreen),
@@ -107,16 +103,6 @@ class Router extends RouterBase {
     Wrapper: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => Wrapper(),
-        settings: data,
-      );
-    },
-    Tags: (data) {
-      final args = data.getArgs<TagsArguments>(nullOk: false);
-      return MaterialPageRoute<dynamic>(
-        builder: (context) => Tags(
-          args.userID,
-          uid: args.uid,
-        ),
         settings: data,
       );
     },
@@ -256,7 +242,6 @@ class Router extends RouterBase {
       return MaterialPageRoute<dynamic>(
         builder: (context) => OrgListScreen(
           key: args.key,
-          onPush: args.onPush,
           orgIDList: args.orgIDList,
         ),
         settings: data,
@@ -299,13 +284,6 @@ class Router extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
-
-/// Tags arguments holder class
-class TagsArguments {
-  final String userID;
-  final dynamic uid;
-  TagsArguments({@required this.userID, this.uid});
-}
 
 /// Wrapper2 arguments holder class
 class Wrapper2Arguments {
@@ -387,9 +365,8 @@ class UserListScreenArguments {
 /// OrgListScreen arguments holder class
 class OrgListScreenArguments {
   final Key key;
-  final void Function(String) onPush;
   final KtList<String> orgIDList;
-  OrgListScreenArguments({this.key, this.onPush, this.orgIDList});
+  OrgListScreenArguments({this.key, this.orgIDList});
 }
 
 /// EditOrganizationPageScreen arguments holder class

@@ -1,4 +1,5 @@
 import 'package:animations/animations.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:bordered_text/bordered_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -54,11 +55,12 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     width: 125.0,
   ));
 
-  final snackBarBlock = SnackBar(content: Text('This org has been blocked'));
+  final snackBarBlock =
+      const SnackBar(content: Text('This org has been blocked'));
 
   final snackBarUnblocked =
-      SnackBar(content: Text('You have successfully unblocked this org'));
-  final snackBarNotify = SnackBar(
+      const SnackBar(content: Text('You have successfully unblocked this org'));
+  final snackBarNotify = const SnackBar(
       content:
           Text('Must be following the organization to be notified of updates'));
   // TickerProviderStateMixin allows the fade out/fade in animation when changing the active button
@@ -93,14 +95,14 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
   double _prevAniValue = 0.0;
 
   // these will be our tab icons. You can use whatever you like for the content of your buttons
-  List _icons = [
+  final List _icons = [
     Icons.whatshot,
     Icons.library_books,
     Icons.event,
     Icons.photo_library,
   ];
 
-  List _tabTitles = [
+  final List _tabTitles = [
     'Posts',
     'About',
     'Events',
@@ -108,18 +110,17 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
   ];
 
   // active button's foreground color
-  Color _foregroundOn = Colors.white;
-  Color _foregroundOff = Colors.black;
 
   // active button's background color
-  Color _backgroundOn = Colors.blue;
-  Color _backgroundOff = Colors.grey[300];
+  final Color _backgroundOn = Colors.blue;
+  final Color _backgroundOff = Colors.grey[300];
 
   // scroll controller for the TabBar
-  ScrollController _scrollController = new ScrollController();
+  final ScrollController _scrollController = ScrollController();
 
   // this will save the keys for each Tab in the Tab Bar, so we can retrieve their position and size for the scroll controller
-  List _keys = [];
+  // ignore: prefer_final_fields
+  List<GlobalKey> _keys = [];
 
   // regist if the the button was tapped
   bool _buttonTap = false;
@@ -130,7 +131,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
 
     for (int index = 0; index < _icons.length; index++) {
       // create a GlobalKey for each Tab
-      _keys.add(new GlobalKey());
+      _keys.add(GlobalKey());
     }
     // this creates the controller with 6 tabs (in our case)
     _controller = TabController(vsync: this, length: _icons.length);
@@ -139,8 +140,8 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     // this will execute the function every time the _controller.index value changes
     _controller.addListener(_handleTabChange);
 
-    _animationControllerOff =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 75));
+    _animationControllerOff = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 75));
     // so the inactive buttons start in their "final" state (color)
     _animationControllerOff.value = 1.0;
     // _colorTweenBackgroundOff =
@@ -150,8 +151,8 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     //     ColorTween(begin: _foregroundOn, end: _foregroundOff)
     //         .animate(_animationControllerOff);
 
-    _animationControllerOn =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 150));
+    _animationControllerOn = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 150));
     // so the inactive buttons start in their "final" state (color)
     _animationControllerOn.value = 1.0;
     _colorTweenBackgroundOn =
@@ -170,7 +171,6 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-    ContainerTransitionType _transitionType = ContainerTransitionType.fade;
     final currentUserID =
         Provider.of<UserData>(context, listen: false).currentUserID;
     FlutterStatusbarcolor.setNavigationBarColor(Colors.black);
@@ -178,7 +178,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
       final shareLink = state.shareLink;
       final name = widget.org.name;
       final String shareMessage =
-          'Check out $name\'s profile on Vybrnt! \n$shareLink';
+          "Check out $name's profile on Vybrnt! \n$shareLink";
       return Scaffold(
         floatingActionButton: state.isAdmin
             ? BlocProvider(
@@ -200,10 +200,11 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                   SliverAppBar(
                     actions: [
                       IconButton(
-                          icon: FaIcon(FontAwesomeIcons.share,
+                          icon: const FaIcon(FontAwesomeIcons.share,
                               color: Colors.white),
                           onPressed: () {
-                            final RenderBox box = context.findRenderObject();
+                            final RenderBox box =
+                                context.findRenderObject() as RenderBox;
                             Share.share(shareMessage,
                                 sharePositionOrigin:
                                     box.localToGlobal(Offset.zero) & box.size);
@@ -212,11 +213,11 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                         menuWidth: MediaQuery.of(context).size.width * 0.50,
                         blurSize: 5.0,
                         menuItemExtent: 45,
-                        menuBoxDecoration: BoxDecoration(
+                        menuBoxDecoration: const BoxDecoration(
                             color: Colors.grey,
                             borderRadius:
                                 BorderRadius.all(Radius.circular(15.0))),
-                        duration: Duration(milliseconds: 100),
+                        duration: const Duration(milliseconds: 100),
                         animateMenuItems: true,
                         blurBackgroundColor: Colors.black54,
                         menuOffset:
@@ -225,8 +226,8 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                             80.0, // Offset height to consider, for showing the menu item ( for example bottom navigation bar), so that the popup menu will be shown on top of selected item.
                         menuItems: <FocusedMenuItem>[
                           FocusedMenuItem(
-                              title: Text("Report"),
-                              trailingIcon: Icon(Icons.flag),
+                              title: const Text("Report"),
+                              trailingIcon: const Icon(Icons.flag),
                               onPressed: () =>
                                   TabNavigatorProvider.of(context) != null
                                       ? TabNavigatorProvider.of(context)
@@ -242,15 +243,13 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                                           Routes.report,
                                           arguments: ReportScreenArguments(
                                               currentUserID: currentUserID,
-                                              contentID: '',
-                                              contentType: '',
                                               ownerID:
                                                   widget.org.orgID.getOrCrash(),
                                               ownerType: 'org'))),
                         ],
                         onPressed: () {},
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
+                        child: const Padding(
+                          padding: EdgeInsets.all(8.0),
                           child: Icon(
                             Icons.more_vert,
                             color: Colors.white,
@@ -262,28 +261,26 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                     //centerTitle: false,
                     backgroundColor: stringToColor(widget.org.primaryColor),
                     leading: IconButton(
-                      icon: Icon(Icons.arrow_back),
+                      icon: const Icon(Icons.arrow_back),
                       onPressed: () => Navigator.pop(context),
                     ),
                     expandedHeight: 250.0,
-                    floating: false,
+
                     forceElevated: innerBoxIsScrolled,
                     pinned: true,
                     flexibleSpace: FlexibleSpaceBar(
                         centerTitle: false,
-                        titlePadding:
-                            EdgeInsetsDirectional.only(start: 65, bottom: 16),
+                        titlePadding: const EdgeInsetsDirectional.only(
+                            start: 65, bottom: 16),
                         title: Container(
                           width: 200,
                           //height: 250,
                           //alignment: Alignment.bottomCenter,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               OpenContainer<bool>(
-                                  closedColor: Color(0x00000000),
-                                  transitionType: _transitionType,
+                                  closedColor: const Color(0x00000000),
                                   openBuilder: (BuildContext _,
                                       VoidCallback openContainer) {
                                     return EventDetailImage(
@@ -307,36 +304,31 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                                         backgroundColor: Colors.white,
                                         backgroundImage: widget
                                                 .org.profileImageUrl.isEmpty
-                                            ? AssetImage(
-                                                'assets/images/user_placeholder.png')
+                                            ? Image.asset(
+                                                    'assets/images/user_placeholder.png')
+                                                .image
                                             : CachedNetworkImageProvider(
                                                 widget.org.profileImageUrl),
                                       ),
                                     );
                                   }),
-                              SizedBox(
+                              const SizedBox(
                                 width: 10,
                               ),
                               Container(
                                 alignment: Alignment.centerLeft,
                                 width: 150,
                                 height: 30,
-                                child: BorderedText(
-                                  strokeColor:
-                                      stringToColor(widget.org.primaryColor),
-                                  strokeWidth: 0.5,
-                                  child: Text(widget.org.name,
-                                      //textAlign: TextAlign.justify,
-                                      maxLines: 2,
-                                      //softWrap: false,
-                                      overflow: TextOverflow.fade,
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        decorationThickness: 2.0,
-                                        color: Colors.white,
-                                        fontSize: _getTextSize(widget.org.name),
-                                      )),
-                                ),
+                                child: AutoSizeText(widget.org.name,
+                                    //textAlign: TextAlign.justify,
+                                    maxLines: 2,
+                                    //softWrap: false,
+                                    overflow: TextOverflow.fade,
+                                    style: Theme.of(context)
+                                        .appBarTheme
+                                        .textTheme
+                                        .headline1
+                                        .copyWith(fontSize: 24)),
                               ),
                             ],
                           ),
@@ -354,110 +346,108 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                   ),
                   // _displayButton(user),
                   SliverPersistentHeader(
-                      delegate: SliverOrgHeaderDelegate(
-                          primaryColor: stringToColor(widget.org.primaryColor),
-                          userIDList: state.userIDList,
-                          expandedHeight: 150,
-                          org: widget.org,
-                          postCount: state.postCount,
-                          memberCount: state.memberCount,
-                          photoCount: state.photoCount,
-                          button3: state.isNotified
-                              ? FlatButton(
+                    delegate: SliverOrgHeaderDelegate(
+                        primaryColor: stringToColor(widget.org.primaryColor),
+                        userIDList: state.userIDList,
+                        expandedHeight: 150,
+                        org: widget.org,
+                        postCount: state.postCount,
+                        memberCount: state.memberCount,
+                        photoCount: state.photoCount,
+                        button3: state.isNotified
+                            ? FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                color: Colors.grey[200],
+                                onPressed: () => state.isFollowing
+                                    ? context.bloc<OrgBloc>().add(
+                                        OrgEvent.removeUserFromNotify(
+                                            widget.org.orgID.getOrCrash()))
+                                    : Scaffold.of(context)
+                                        .showSnackBar(snackBarNotify),
+                                child: const Icon(
+                                  Icons.notifications,
+                                  color: Colors.black,
+                                ))
+                            : FlatButton(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15)),
+                                color: stringToColor(widget.org.secondaryColor),
+                                onPressed: () => state.isFollowing
+                                    ? context.bloc<OrgBloc>().add(
+                                        OrgEvent.addUserToNotify(
+                                            widget.org.orgID.getOrCrash()))
+                                    : Scaffold.of(context)
+                                        .showSnackBar(snackBarNotify),
+                                child: const Icon(
+                                  Icons.notifications_none,
+                                  color: Colors.white,
+                                )),
+                        //primaryColor: _primaryColor,
+                        button1: _displayButton(stringToColor(widget.org.secondaryColor)),
+                        button2: state.isAdmin
+                            ? Container(
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                width: 100.0,
+                                child: FlatButton(
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(15)),
-                                  color: Colors.grey[200],
-                                  onPressed: () => state.isFollowing
-                                      ? context.bloc<OrgBloc>().add(
-                                          OrgEvent.removeUserFromNotify(
-                                              widget.org.orgID.getOrCrash()))
-                                      : Scaffold.of(context)
-                                          .showSnackBar(snackBarNotify),
-                                  child: Icon(
-                                    Icons.notifications,
-                                    color: Colors.black,
-                                  ))
-                              : FlatButton(
-                                  shape: RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(15)),
+                                  onPressed: () => TabNavigatorProvider.of(
+                                              context) !=
+                                          null
+                                      ? TabNavigatorProvider.of(context)
+                                          .pushEditOrgPage(context,
+                                              org: widget.org)
+                                      : getIt<NavigationService>().navigateTo(
+                                          Routes.editOrganizationPageScreen,
+                                          arguments:
+                                              EditOrganizationPageScreenArguments(
+                                                  org: widget.org)),
                                   color:
                                       stringToColor(widget.org.secondaryColor),
+                                  textColor: Colors.white,
+                                  child: const Text(
+                                    'Edit Profile',
+                                    style: TextStyle(fontSize: 12.0),
+                                  ),
+                                ),
+                              )
+                            : Container(
+                                height: 35,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  //border: Border.all(color: Colors.white),
+                                ),
+                                width: 100.0,
+                                child: FlatButton(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(15)),
                                   onPressed: () => state.isFollowing
                                       ? context.bloc<OrgBloc>().add(
-                                          OrgEvent.addUserToNotify(
-                                              widget.org.orgID.getOrCrash()))
-                                      : Scaffold.of(context).showSnackBar(snackBarNotify),
-                                  child: Icon(
-                                    Icons.notifications_none,
-                                    color: Colors.white,
-                                  )),
-                          //primaryColor: _primaryColor,
-                          button1: _displayButton(stringToColor(widget.org.secondaryColor)),
-                          button2: state.isAdmin
-                              ? Container(
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
+                                          OrgEvent.removeFollower(
+                                              widget.org.orgID.getOrCrash(),
+                                              currentUserID))
+                                      : context.bloc<OrgBloc>().add(
+                                          OrgEvent.addFollower(
+                                              widget.org.orgID.getOrCrash(),
+                                              currentUserID)),
+                                  color: state.isFollowing
+                                      ? Colors.grey[200]
+                                      : stringToColor(
+                                          widget.org.secondaryColor),
+                                  textColor: state.isFollowing
+                                      ? Colors.black
+                                      : Colors.white,
+                                  child: Text(
+                                    state.isFollowing ? 'Leave' : 'Join',
+                                    style: const TextStyle(fontSize: 13.0),
                                   ),
-                                  width: 100.0,
-                                  child: FlatButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    onPressed: () => TabNavigatorProvider.of(
-                                                context) !=
-                                            null
-                                        ? TabNavigatorProvider.of(context)
-                                            .pushEditOrgPage(context,
-                                                org: widget.org)
-                                        : getIt<NavigationService>().navigateTo(
-                                            Routes.editOrganizationPageScreen,
-                                            arguments:
-                                                EditOrganizationPageScreenArguments(
-                                                    org: widget.org)),
-                                    color: stringToColor(
-                                        widget.org.secondaryColor),
-                                    textColor: Colors.white,
-                                    child: Text(
-                                      'Edit Profile',
-                                      style: TextStyle(fontSize: 12.0),
-                                    ),
-                                  ),
-                                )
-                              : Container(
-                                  height: 35,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10),
-                                    //border: Border.all(color: Colors.white),
-                                  ),
-                                  width: 100.0,
-                                  child: FlatButton(
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius:
-                                            BorderRadius.circular(15)),
-                                    onPressed: () => state.isFollowing
-                                        ? context.bloc<OrgBloc>().add(
-                                            OrgEvent.removeFollower(
-                                                widget.org.orgID.getOrCrash(),
-                                                currentUserID))
-                                        : context.bloc<OrgBloc>().add(
-                                            OrgEvent.addFollower(
-                                                widget.org.orgID.getOrCrash(),
-                                                currentUserID)),
-                                    color: state.isFollowing
-                                        ? Colors.grey[200]
-                                        : stringToColor(
-                                            widget.org.secondaryColor),
-                                    textColor: state.isFollowing
-                                        ? Colors.black
-                                        : Colors.white,
-                                    child: Text(
-                                      state.isFollowing ? 'Leave' : 'Join',
-                                      style: TextStyle(fontSize: 13.0),
-                                    ),
-                                  ),
-                                )),
-                      pinned: false),
+                                ),
+                              )),
+                  ),
                   SliverPersistentHeader(
                     delegate: SliverOrgAppBarDelegate(
                       color: Colors.white, //Color.fromRGBO(10, 172, 193, 1.0),
@@ -466,7 +456,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                           // this generates our tabs buttons
                           child: ListView.builder(
                               // this gives the TabBar a bounce effect when scrolling farther than it's size
-                              physics: BouncingScrollPhysics(),
+                              physics: const BouncingScrollPhysics(),
                               controller: _scrollController,
                               // make the list horizontal
                               scrollDirection: Axis.horizontal,
@@ -477,7 +467,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                                     // each button's key
                                     key: _keys[index],
                                     // padding for the buttons
-                                    padding: EdgeInsets.all(6.0),
+                                    padding: const EdgeInsets.all(6.0),
                                     child: ButtonTheme(
                                         child: AnimatedBuilder(
                                       animation: _colorTweenBackgroundOn,
@@ -514,7 +504,8 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                                                       const EdgeInsets.fromLTRB(
                                                           0, 0, 0, 4),
                                                   child: Text(
-                                                    _tabTitles[index],
+                                                    _tabTitles[index]
+                                                        .toString(),
                                                     style: TextStyle(
                                                         fontSize:
                                                             _getFontSize(index),
@@ -543,7 +534,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                     create: (context) => getIt<PostWatcherBloc>()
                       ..add(PostWatcherEvent.getData(
                           widget.org.orgID.getOrCrash(), true)),
-                    child: new OrganizationPageFeedTab(
+                    child: OrganizationPageFeedTab(
                       orgID: widget.org.orgID.getOrCrash(),
                       org: widget.org,
                       // onPushPostDetail: widget.onPushPostDetail,
@@ -556,7 +547,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                       org: widget.org,
                     ),
                   ),
-                  new BlocProvider<EventListBloc>(
+                  BlocProvider<EventListBloc>(
                       create: (context) => getIt<EventListBloc>()
                         ..add(EventListEvent.getData(
                             widget.org.orgID.getOrCrash(), true)),
@@ -564,7 +555,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                         org: widget.org,
                         isAdmin: state.isAdmin,
                       )),
-                  new OrganizationPagePhotosTab(
+                  OrganizationPagePhotosTab(
                     org: widget.org,
                   ),
                 ],
@@ -574,7 +565,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     });
   }
 
-  _handleTabAnimation() {
+  void _handleTabAnimation() {
     // gets the value of the animation. For example, if one is between the 1st and the 2nd tab, this value will be 0.5
     _aniValue = _controller.animation.value;
 
@@ -589,7 +580,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
   }
 
   // runs when the displayed tab changes
-  _handleTabChange() {
+  void _handleTabChange() {
     // if a button was tapped, change the current index
     if (_buttonTap) _setCurrentIndex(_controller.index);
 
@@ -601,7 +592,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     _prevControllerIndex = _controller.index;
   }
 
-  _setCurrentIndex(int index) {
+  void _setCurrentIndex(int index) {
     // if we're actually changing the index
     if (index != _currentIndex) {
       setState(() {
@@ -616,7 +607,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     }
   }
 
-  _triggerAnimation() {
+  void _triggerAnimation() {
     // reset the animations so they're ready to go
     _animationControllerOn.reset();
     _animationControllerOff.reset();
@@ -626,12 +617,13 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     _animationControllerOff.forward();
   }
 
-  _scrollTo(int index) {
+  void _scrollTo(int index) {
     // get the screen width. This is used to check if we have an element off screen
     double screenWidth = MediaQuery.of(context).size.width;
 
     // get the button we want to scroll to
-    RenderBox renderBox = _keys[index].currentContext.findRenderObject();
+    RenderBox renderBox =
+        _keys[index].currentContext.findRenderObject() as RenderBox;
     // get its size
     double size = renderBox.size.width;
     // and position
@@ -643,7 +635,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     // if the button is to the left of the middle
     if (offset < 0) {
       // get the first button
-      renderBox = _keys[0].currentContext.findRenderObject();
+      renderBox = _keys[0].currentContext.findRenderObject() as RenderBox;
       // get the position of the first button of the TabBar
       position = renderBox.localToGlobal(Offset.zero).dx;
 
@@ -653,7 +645,8 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
       // if the button is to the right of the middle
 
       // get the last button
-      renderBox = _keys[_icons.length - 1].currentContext.findRenderObject();
+      renderBox = _keys[_icons.length - 1].currentContext.findRenderObject()
+          as RenderBox;
       // get its position
       position = renderBox.localToGlobal(Offset.zero).dx;
       // and size
@@ -670,7 +663,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
 
     // scroll the calculated ammount
     _scrollController.animateTo(offset + _scrollController.offset,
-        duration: new Duration(milliseconds: 150), curve: Curves.easeInOut);
+        duration: const Duration(milliseconds: 150), curve: Curves.easeInOut);
   }
 
   // _getBackgroundColor(int index) {
@@ -697,7 +690,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
   //   }
   // }
 
-  _getFontWeight(int index) {
+  FontWeight _getFontWeight(int index) {
     // the same as the above
     if (index == _currentIndex) {
       return FontWeight.bold;
@@ -706,7 +699,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     }
   }
 
-  _getFontSize(int index) {
+  double _getFontSize(int index) {
     // the same as the above
     if (index == _currentIndex) {
       return 15.0;
@@ -715,18 +708,16 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     }
   }
 
-  _getBottomLineWidth(int index) {
+  BorderSide _getBottomLineWidth(int index) {
     // the same as the above
     if (index == _currentIndex) {
-      return BorderSide(
-        width: 1.0,
-      );
+      return const BorderSide();
     } else {
       return BorderSide.none;
     }
   }
 
-  _displayButton(Color color) {
+  Widget _displayButton(Color color) {
     return Container(
       height: 35,
       // decoration: BoxDecoration(
@@ -740,7 +731,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
             .showSnackBar(snackBar), //widget.onPushEdit(_profileOrg),
         color: color,
         textColor: Colors.white,
-        child: Text(
+        child: const Text(
           'Messaging',
           style: TextStyle(fontSize: 12.0),
         ),
@@ -748,7 +739,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
     );
   }
 
-  _getTextSize(String name) {
+  double _getTextSize(String name) {
     if (name.length > 20) {
       return 8.0;
     } else if (name.length > 13) {

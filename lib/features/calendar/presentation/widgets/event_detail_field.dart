@@ -16,7 +16,6 @@ class EventDetailField extends StatefulWidget {
 
 class _EventDetailFieldState extends State<EventDetailField> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
-  bool _autovalidate = false;
   File _image;
   //final picker = ImagePicker();
 
@@ -35,7 +34,7 @@ class _EventDetailFieldState extends State<EventDetailField> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: TextFormField(
-              key: Key('titleField'),
+              key: const Key('titleField'),
               initialValue: state.event.eventName,
               decoration: const InputDecoration(
                   labelText: 'Title', hintText: 'General Body Meeting...'),
@@ -93,7 +92,7 @@ class _EventDetailFieldState extends State<EventDetailField> {
                   width: width,
                   color: Colors.grey[400],
                   child: _image == null
-                      ? Icon(
+                      ? const Icon(
                           Icons.add_a_photo,
                           size: 100,
                           color: Colors.white70,
@@ -116,65 +115,67 @@ class _EventDetailFieldState extends State<EventDetailField> {
     return null;
   }
 
-  _showSelectImageDialog() {
+  Future<Widget> _showSelectImageDialog() {
     return Platform.isIOS ? _iosBottomSheet() : _androidDialog();
   }
 
-  _iosBottomSheet() {
-    showCupertinoModalPopup(
+  Future<Widget> _iosBottomSheet() {
+    return showCupertinoModalPopup(
         context: context,
         builder: (BuildContext context) {
           return CupertinoActionSheet(
-            title: Text('Add Photo'),
+            title: const Text('Add Photo'),
             actions: <Widget>[
               CupertinoActionSheetAction(
-                child: Text('Take Photo'),
                 onPressed: () {
                   _handleImage(ImageSource.camera);
                   Navigator.of(context).pop();
                 },
+                child: const Text('Take Photo'),
               ),
               CupertinoActionSheetAction(
-                child: Text('Choose From Gallery'),
                 onPressed: () {
                   _handleImage(ImageSource.gallery);
                   Navigator.of(context).pop();
                 },
+                child: const Text('Choose From Gallery'),
               ),
             ],
             cancelButton: CupertinoActionSheetAction(
-              child: Text('Cancel'),
               onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
             ),
           );
         });
   }
 
-  _androidDialog() {
-    showDialog(
+  Future<Widget> _androidDialog() {
+    return showDialog(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: Text('Add Photo'),
+            title: const Text('Add Photo'),
             children: <Widget>[
               SimpleDialogOption(
-                  child: Text('Take Photo'),
-                  onPressed: () {
-                    _handleImage(ImageSource.camera);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () async {
+                  _handleImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Take Photo'),
+              ),
               SimpleDialogOption(
-                  child: Text('Choose From Gallery'),
-                  onPressed: () {
-                    _handleImage(ImageSource.gallery);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () async {
+                  _handleImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Choose From Gallery'),
+              ),
               SimpleDialogOption(
-                child: Text(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
                   'Cancel',
                   style: TextStyle(color: Colors.redAccent),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
               ),
             ],
           );
@@ -188,13 +189,13 @@ class _EventDetailFieldState extends State<EventDetailField> {
     // } catch (e) {
     //   print(e);
     // }
-    FilePickerResult result =
+    final FilePickerResult result =
         await FilePicker.platform.pickFiles(type: FileType.image);
 
     if (result != null) {
-      File file = File(result.files.single.path);
+      final File file = File(result.files.single.path);
 
-      File imageFile = await _cropImage(file);
+      final File imageFile = await _cropImage(file);
       setState(() {
         _image = imageFile;
         context
@@ -205,10 +206,10 @@ class _EventDetailFieldState extends State<EventDetailField> {
     //Navigator.pop(context);
   }
 
-  Future _cropImage(File imageFile) async {
-    File croppedImage = await ImageCropper.cropImage(
+  Future<File> _cropImage(File imageFile) async {
+    final File croppedImage = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
-      aspectRatio: CropAspectRatio(
+      aspectRatio: const CropAspectRatio(
         ratioX: 1.0,
         ratioY: 1.0,
       ),

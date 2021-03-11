@@ -30,8 +30,8 @@ class _$ValueFailureTearOff {
     );
   }
 
-  InvalidTimestamp<T> invalidTimestamp<T>({Timestamp failedValue}) {
-    return InvalidTimestamp<T>(
+  InvalidDateTime<T> invalidDateTime<T>({DateTime failedValue}) {
+    return InvalidDateTime<T>(
       failedValue: failedValue,
     );
   }
@@ -92,7 +92,7 @@ mixin _$ValueFailure<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -106,7 +106,7 @@ mixin _$ValueFailure<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -121,7 +121,7 @@ mixin _$ValueFailure<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -135,7 +135,7 @@ mixin _$ValueFailure<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -224,7 +224,7 @@ class _$InvalidBoolean<T> implements InvalidBoolean<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -236,7 +236,7 @@ class _$InvalidBoolean<T> implements InvalidBoolean<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -253,7 +253,7 @@ class _$InvalidBoolean<T> implements InvalidBoolean<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -276,7 +276,7 @@ class _$InvalidBoolean<T> implements InvalidBoolean<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -288,7 +288,7 @@ class _$InvalidBoolean<T> implements InvalidBoolean<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -305,7 +305,7 @@ class _$InvalidBoolean<T> implements InvalidBoolean<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -392,7 +392,7 @@ class _$InvalidInteger<T> implements InvalidInteger<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -404,7 +404,7 @@ class _$InvalidInteger<T> implements InvalidInteger<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -421,7 +421,7 @@ class _$InvalidInteger<T> implements InvalidInteger<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -444,7 +444,7 @@ class _$InvalidInteger<T> implements InvalidInteger<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -456,7 +456,7 @@ class _$InvalidInteger<T> implements InvalidInteger<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -473,7 +473,7 @@ class _$InvalidInteger<T> implements InvalidInteger<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -560,7 +560,7 @@ class _$InvalidString<T> implements InvalidString<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -572,7 +572,7 @@ class _$InvalidString<T> implements InvalidString<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -589,7 +589,7 @@ class _$InvalidString<T> implements InvalidString<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -612,7 +612,7 @@ class _$InvalidString<T> implements InvalidString<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -624,7 +624,7 @@ class _$InvalidString<T> implements InvalidString<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -641,7 +641,7 @@ class _$InvalidString<T> implements InvalidString<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -666,50 +666,49 @@ abstract class InvalidString<T> implements ValueFailure<T> {
   $InvalidStringCopyWith<T, InvalidString<T>> get copyWith;
 }
 
-abstract class $InvalidTimestampCopyWith<T, $Res> {
-  factory $InvalidTimestampCopyWith(
-          InvalidTimestamp<T> value, $Res Function(InvalidTimestamp<T>) then) =
-      _$InvalidTimestampCopyWithImpl<T, $Res>;
-  $Res call({Timestamp failedValue});
+abstract class $InvalidDateTimeCopyWith<T, $Res> {
+  factory $InvalidDateTimeCopyWith(
+          InvalidDateTime<T> value, $Res Function(InvalidDateTime<T>) then) =
+      _$InvalidDateTimeCopyWithImpl<T, $Res>;
+  $Res call({DateTime failedValue});
 }
 
-class _$InvalidTimestampCopyWithImpl<T, $Res>
+class _$InvalidDateTimeCopyWithImpl<T, $Res>
     extends _$ValueFailureCopyWithImpl<T, $Res>
-    implements $InvalidTimestampCopyWith<T, $Res> {
-  _$InvalidTimestampCopyWithImpl(
-      InvalidTimestamp<T> _value, $Res Function(InvalidTimestamp<T>) _then)
-      : super(_value, (v) => _then(v as InvalidTimestamp<T>));
+    implements $InvalidDateTimeCopyWith<T, $Res> {
+  _$InvalidDateTimeCopyWithImpl(
+      InvalidDateTime<T> _value, $Res Function(InvalidDateTime<T>) _then)
+      : super(_value, (v) => _then(v as InvalidDateTime<T>));
 
   @override
-  InvalidTimestamp<T> get _value => super._value as InvalidTimestamp<T>;
+  InvalidDateTime<T> get _value => super._value as InvalidDateTime<T>;
 
   @override
   $Res call({
     Object failedValue = freezed,
   }) {
-    return _then(InvalidTimestamp<T>(
-      failedValue: failedValue == freezed
-          ? _value.failedValue
-          : failedValue as Timestamp,
+    return _then(InvalidDateTime<T>(
+      failedValue:
+          failedValue == freezed ? _value.failedValue : failedValue as DateTime,
     ));
   }
 }
 
-class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
-  const _$InvalidTimestamp({this.failedValue});
+class _$InvalidDateTime<T> implements InvalidDateTime<T> {
+  const _$InvalidDateTime({this.failedValue});
 
   @override
-  final Timestamp failedValue;
+  final DateTime failedValue;
 
   @override
   String toString() {
-    return 'ValueFailure<$T>.invalidTimestamp(failedValue: $failedValue)';
+    return 'ValueFailure<$T>.invalidDateTime(failedValue: $failedValue)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is InvalidTimestamp<T> &&
+        (other is InvalidDateTime<T> &&
             (identical(other.failedValue, failedValue) ||
                 const DeepCollectionEquality()
                     .equals(other.failedValue, failedValue)));
@@ -720,8 +719,8 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
       runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
 
   @override
-  $InvalidTimestampCopyWith<T, InvalidTimestamp<T>> get copyWith =>
-      _$InvalidTimestampCopyWithImpl<T, InvalidTimestamp<T>>(this, _$identity);
+  $InvalidDateTimeCopyWith<T, InvalidDateTime<T>> get copyWith =>
+      _$InvalidDateTimeCopyWithImpl<T, InvalidDateTime<T>>(this, _$identity);
 
   @override
   @optionalTypeArgs
@@ -729,7 +728,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -741,7 +740,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -749,7 +748,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     assert(exceededLength != null);
     assert(multiLine != null);
     assert(invalidImageSelection != null);
-    return invalidTimestamp(failedValue);
+    return invalidDateTime(failedValue);
   }
 
   @override
@@ -758,7 +757,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -769,8 +768,8 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (invalidTimestamp != null) {
-      return invalidTimestamp(failedValue);
+    if (invalidDateTime != null) {
+      return invalidDateTime(failedValue);
     }
     return orElse();
   }
@@ -781,7 +780,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -793,7 +792,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -801,7 +800,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     assert(exceededLength != null);
     assert(multiLine != null);
     assert(invalidImageSelection != null);
-    return invalidTimestamp(this);
+    return invalidDateTime(this);
   }
 
   @override
@@ -810,7 +809,7 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -821,19 +820,18 @@ class _$InvalidTimestamp<T> implements InvalidTimestamp<T> {
     @required Result orElse(),
   }) {
     assert(orElse != null);
-    if (invalidTimestamp != null) {
-      return invalidTimestamp(this);
+    if (invalidDateTime != null) {
+      return invalidDateTime(this);
     }
     return orElse();
   }
 }
 
-abstract class InvalidTimestamp<T> implements ValueFailure<T> {
-  const factory InvalidTimestamp({Timestamp failedValue}) =
-      _$InvalidTimestamp<T>;
+abstract class InvalidDateTime<T> implements ValueFailure<T> {
+  const factory InvalidDateTime({DateTime failedValue}) = _$InvalidDateTime<T>;
 
-  Timestamp get failedValue;
-  $InvalidTimestampCopyWith<T, InvalidTimestamp<T>> get copyWith;
+  DateTime get failedValue;
+  $InvalidDateTimeCopyWith<T, InvalidDateTime<T>> get copyWith;
 }
 
 abstract class $InvalidListCopyWith<T, $Res> {
@@ -899,7 +897,7 @@ class _$InvalidList<T> implements InvalidList<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -911,7 +909,7 @@ class _$InvalidList<T> implements InvalidList<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -928,7 +926,7 @@ class _$InvalidList<T> implements InvalidList<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -951,7 +949,7 @@ class _$InvalidList<T> implements InvalidList<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -963,7 +961,7 @@ class _$InvalidList<T> implements InvalidList<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -980,7 +978,7 @@ class _$InvalidList<T> implements InvalidList<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -1079,7 +1077,7 @@ class _$InvalidUser<T> implements InvalidUser<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -1091,7 +1089,7 @@ class _$InvalidUser<T> implements InvalidUser<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1108,7 +1106,7 @@ class _$InvalidUser<T> implements InvalidUser<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -1131,7 +1129,7 @@ class _$InvalidUser<T> implements InvalidUser<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -1143,7 +1141,7 @@ class _$InvalidUser<T> implements InvalidUser<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1160,7 +1158,7 @@ class _$InvalidUser<T> implements InvalidUser<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -1261,7 +1259,7 @@ class _$InvalidOrganization<T> implements InvalidOrganization<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -1273,7 +1271,7 @@ class _$InvalidOrganization<T> implements InvalidOrganization<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1290,7 +1288,7 @@ class _$InvalidOrganization<T> implements InvalidOrganization<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -1313,7 +1311,7 @@ class _$InvalidOrganization<T> implements InvalidOrganization<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -1325,7 +1323,7 @@ class _$InvalidOrganization<T> implements InvalidOrganization<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1342,7 +1340,7 @@ class _$InvalidOrganization<T> implements InvalidOrganization<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -1427,7 +1425,7 @@ class _$Empty<T> implements Empty<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -1439,7 +1437,7 @@ class _$Empty<T> implements Empty<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1456,7 +1454,7 @@ class _$Empty<T> implements Empty<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -1479,7 +1477,7 @@ class _$Empty<T> implements Empty<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -1491,7 +1489,7 @@ class _$Empty<T> implements Empty<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1508,7 +1506,7 @@ class _$Empty<T> implements Empty<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -1605,7 +1603,7 @@ class _$ExceededLength<T> implements ExceededLength<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -1617,7 +1615,7 @@ class _$ExceededLength<T> implements ExceededLength<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1634,7 +1632,7 @@ class _$ExceededLength<T> implements ExceededLength<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -1657,7 +1655,7 @@ class _$ExceededLength<T> implements ExceededLength<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -1669,7 +1667,7 @@ class _$ExceededLength<T> implements ExceededLength<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1686,7 +1684,7 @@ class _$ExceededLength<T> implements ExceededLength<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -1775,7 +1773,7 @@ class _$MultiLine<T> implements MultiLine<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -1787,7 +1785,7 @@ class _$MultiLine<T> implements MultiLine<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1804,7 +1802,7 @@ class _$MultiLine<T> implements MultiLine<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -1827,7 +1825,7 @@ class _$MultiLine<T> implements MultiLine<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -1839,7 +1837,7 @@ class _$MultiLine<T> implements MultiLine<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1856,7 +1854,7 @@ class _$MultiLine<T> implements MultiLine<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
@@ -1958,7 +1956,7 @@ class _$InvalidImageSelection<T> implements InvalidImageSelection<T> {
     @required Result invalidBoolean(bool failedValue),
     @required Result invalidInteger(int failedValue),
     @required Result invalidString(String failedValue),
-    @required Result invalidTimestamp(Timestamp failedValue),
+    @required Result invalidDateTime(DateTime failedValue),
     @required Result invalidList(KtList<dynamic> failedValue),
     @required Result invalidUser(User failedValue),
     @required Result invalidOrganization(Organization failedValue),
@@ -1970,7 +1968,7 @@ class _$InvalidImageSelection<T> implements InvalidImageSelection<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -1987,7 +1985,7 @@ class _$InvalidImageSelection<T> implements InvalidImageSelection<T> {
     Result invalidBoolean(bool failedValue),
     Result invalidInteger(int failedValue),
     Result invalidString(String failedValue),
-    Result invalidTimestamp(Timestamp failedValue),
+    Result invalidDateTime(DateTime failedValue),
     Result invalidList(KtList<dynamic> failedValue),
     Result invalidUser(User failedValue),
     Result invalidOrganization(Organization failedValue),
@@ -2010,7 +2008,7 @@ class _$InvalidImageSelection<T> implements InvalidImageSelection<T> {
     @required Result invalidBoolean(InvalidBoolean<T> value),
     @required Result invalidInteger(InvalidInteger<T> value),
     @required Result invalidString(InvalidString<T> value),
-    @required Result invalidTimestamp(InvalidTimestamp<T> value),
+    @required Result invalidDateTime(InvalidDateTime<T> value),
     @required Result invalidList(InvalidList<T> value),
     @required Result invalidUser(InvalidUser<T> value),
     @required Result invalidOrganization(InvalidOrganization<T> value),
@@ -2022,7 +2020,7 @@ class _$InvalidImageSelection<T> implements InvalidImageSelection<T> {
     assert(invalidBoolean != null);
     assert(invalidInteger != null);
     assert(invalidString != null);
-    assert(invalidTimestamp != null);
+    assert(invalidDateTime != null);
     assert(invalidList != null);
     assert(invalidUser != null);
     assert(invalidOrganization != null);
@@ -2039,7 +2037,7 @@ class _$InvalidImageSelection<T> implements InvalidImageSelection<T> {
     Result invalidBoolean(InvalidBoolean<T> value),
     Result invalidInteger(InvalidInteger<T> value),
     Result invalidString(InvalidString<T> value),
-    Result invalidTimestamp(InvalidTimestamp<T> value),
+    Result invalidDateTime(InvalidDateTime<T> value),
     Result invalidList(InvalidList<T> value),
     Result invalidUser(InvalidUser<T> value),
     Result invalidOrganization(InvalidOrganization<T> value),
