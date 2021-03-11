@@ -36,21 +36,23 @@ class HomeFeedService implements IHomeFeedService {
 
   @override
   Stream<Either<EventFailure, KtList<Event>>> watchUpcomingEvents() async* {
-    final currentUserID = await _firestore.currentUserID();
-    yield* eventFeedRef
-        .doc(currentUserID)
-        .collection('userEventFeed')
-        .where('endTime', isGreaterThanOrEqualTo: Timestamp.now())
-        .orderBy('endTime')
-        .snapshots()
-        .map(
-          (snapshot) => right<EventFailure, KtList<Event>>(
-            snapshot.docs
-                .map((doc) => EventDto.fromFirestore(doc).toDomain())
-                .toImmutableList(),
-          ),
-        )
-        .onErrorReturnWith((e) {
+    //final currentUserID = await _firestore.currentUserID();
+    yield*
+        // eventFeedRef
+        //     .doc(currentUserID)
+        //     .collection('userEventFeed')
+        communityEventsRef
+            .where('endTime', isGreaterThanOrEqualTo: Timestamp.now())
+            .orderBy('endTime')
+            .snapshots()
+            .map(
+              (snapshot) => right<EventFailure, KtList<Event>>(
+                snapshot.docs
+                    .map((doc) => EventDto.fromFirestore(doc).toDomain())
+                    .toImmutableList(),
+              ),
+            )
+            .onErrorReturnWith((e) {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const EventFailure.insufficientPermissions());
       } else {

@@ -433,9 +433,22 @@ class PostCard extends StatelessWidget {
                     if (post.postURL.getOrCrash().isNotEmpty)
                       SimpleUrlPreview(
                         url: post.postURL.getOrCrash(),
-                        textColor: Colors.white,
-                        descriptionLines: 2,
+                        descriptionStyle: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            .copyWith(color: Colors.white),
+                        siteNameStyle: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            .copyWith(color: Colors.white),
+                        titleStyle: Theme.of(context)
+                            .textTheme
+                            .bodyText1
+                            .copyWith(color: Colors.white),
+
+                        //descriptionLines: 2,
                       )
+                    // _getURL(context, post)
                     else
                       const SizedBox.shrink(),
                   ]),
@@ -560,4 +573,22 @@ class PostCard extends StatelessWidget {
           ]));
     });
   }
+
+  // Widget _getURL(BuildContext context, Post post) {
+  //   final url = SimpleUrlPreview(
+  //     url: post.postURL.getOrCrash(),
+  //     //descriptionLines: 2,
+  //   );
+  //   if (url.onTap == null) {
+  //     return RichText(
+  //         text: TextSpan(
+  //             text: post.postURL.getOrCrash(),
+  //             style: Theme.of(context).textTheme.bodyText1.copyWith(
+  //                   color: Colors.blue,
+  //                   decoration: TextDecoration.underline,
+  //                 )));
+  //   } else {
+  //     return url;
+  //   }
+  // }
 }

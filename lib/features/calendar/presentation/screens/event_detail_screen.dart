@@ -344,7 +344,18 @@ class _EventDetailScreenState extends State<EventDetailScreen> {
                       if (widget.event.eventUrl.isNotEmpty)
                         SimpleUrlPreview(
                           url: widget.event.eventUrl,
-                          textColor: Colors.white,
+                          descriptionStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              .copyWith(color: Colors.white),
+                          siteNameStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              .copyWith(color: Colors.white),
+                          titleStyle: Theme.of(context)
+                              .textTheme
+                              .bodyText1
+                              .copyWith(color: Colors.white),
                           descriptionLines: 2,
                         )
                       else

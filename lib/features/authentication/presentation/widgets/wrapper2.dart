@@ -25,7 +25,7 @@ class Wrapper2 extends StatelessWidget {
           return ChangeNotifierProvider<TabNavigator>(
             create: (_) => TabNavigator(),
             child: AnimatedSplashScreen.withScreenFunction(
-              splash: 'assets/logos/vybrntecho.png',
+              splash: 'assets/logos/VYBrntfin-06.png',
               screenFunction: () async {
                 return WillPopScope(
                     onWillPop: () async {

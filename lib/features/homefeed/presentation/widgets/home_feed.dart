@@ -174,31 +174,62 @@ class _HomeFeedState extends State<HomeFeed> {
                               // );
                             },
                             loadSuccess: (state) {
-                              return ListView.builder(
-                                padding: const EdgeInsets.all(5.0),
-                                physics: const ClampingScrollPhysics(),
-                                shrinkWrap: true,
-                                scrollDirection: Axis.horizontal,
-                                itemCount: state.events.size,
-                                itemBuilder:
-                                    (BuildContext context, int index) =>
-                                        Padding(
-                                  key: ObjectKey(state.events[index]),
-                                  padding: const EdgeInsets.all(8),
-                                  child: _OpenContainerWrapper(
-                                      event: state.events[index],
-                                      transitionType: _transitionType,
-                                      closedBuilder: (BuildContext _,
-                                          VoidCallback openContainer) {
-                                        return _InkWellOverlay(
-                                          openContainer: openContainer,
-                                          width: 250,
-                                          child: EventCard(
-                                              event: state.events[index]),
-                                        );
-                                      }),
-                                ),
-                              );
+                              if (state.events.isEmpty()) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const SizedBox(
+                                          width: 20.0, height: 100.0),
+                                      Text("Find Your",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1),
+                                      const SizedBox(
+                                          width: 10.0, height: 100.0),
+                                      RotateAnimatedTextKit(
+                                          repeatForever: true,
+                                          //duration: Duration(minutes: 1),
+                                          text: const [
+                                            "Home",
+                                            "Vybe",
+                                            "Opportunities"
+                                          ],
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1),
+                                    ],
+                                  )),
+                                );
+                              } else {
+                                return ListView.builder(
+                                  padding: const EdgeInsets.all(5.0),
+                                  physics: const ClampingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: state.events.size,
+                                  itemBuilder:
+                                      (BuildContext context, int index) =>
+                                          Padding(
+                                    key: ObjectKey(state.events[index]),
+                                    padding: const EdgeInsets.all(8),
+                                    child: _OpenContainerWrapper(
+                                        event: state.events[index],
+                                        transitionType: _transitionType,
+                                        closedBuilder: (BuildContext _,
+                                            VoidCallback openContainer) {
+                                          return _InkWellOverlay(
+                                            openContainer: openContainer,
+                                            width: 250,
+                                            child: EventCard(
+                                                event: state.events[index]),
+                                          );
+                                        }),
+                                  ),
+                                );
+                              }
                             },
                           );
                         }),

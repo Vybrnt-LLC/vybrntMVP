@@ -254,6 +254,10 @@ class CalendarService implements ICalendarService {
             .set(eventDto.toJson());
       }
 
+      await communityEventsRef
+          .doc(event.eventID.getOrCrash())
+          .set(eventDto.toJson());
+
       await _activityService.addEventToActivityFeed(event);
       return right(unit);
     } on FirebaseException catch (e) {
