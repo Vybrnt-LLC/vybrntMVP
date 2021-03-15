@@ -49,7 +49,7 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
               ),
               //color: Colors.white,
               child: Center(
-                  child: Text(
+                  child: AutoSizeText(
                 headerText,
                 style:
                     const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
