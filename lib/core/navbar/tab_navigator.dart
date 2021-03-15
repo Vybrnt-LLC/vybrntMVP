@@ -264,6 +264,11 @@ class TabNavigator extends StatelessWidget with ChangeNotifier {
                 routeBuilders[TabNavigatorRoutes.eventDetail](context)));
   }
 
+  void popToRoot(BuildContext context) {
+    final routeBuilders = _routeBuilders(context);
+    Navigator.popUntil(context, ModalRoute.withName(TabNavigatorRoutes.root));
+  }
+
   Map<String, WidgetBuilder> _routeBuilders(BuildContext context,
       {User user,
       String type,

@@ -5,6 +5,7 @@ import 'package:vybrnt_mvp/core/navbar/curves.dart';
 import 'package:vybrnt_mvp/core/navbar/fluid_button.dart';
 import 'package:vybrnt_mvp/core/navbar/fluid_icon.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_color.dart';
+import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 
 typedef NavBarChangeCallback = void Function(int selectedIndex);
 
@@ -174,10 +175,11 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
   }
 
   void _handlePressed(int index) {
-    if (_selectedIndex == index || _xController.isAnimating) {
-      Navigator.of(context).popUntil(ModalRoute.withName("/"));
-      return;
-    }
+    // if (_selectedIndex == index) {
+    //   TabNavigatorProvider.of(context).popToRoot(context);
+    //   //Navigator.of(context).popUntil(ModalRoute.withName("/"));
+    //   return;
+    // }
 
     setState(() {
       _selectedIndex = index;

@@ -298,7 +298,7 @@ class _EditOrgDetailsState extends State<EditOrgDetails> {
                     TextFormField(
                       style: const TextStyle(fontSize: 18.0),
                       decoration: const InputDecoration(
-                        icon: const Icon(
+                        icon: Icon(
                           Icons.person_pin,
                           size: 30.0,
                         ),

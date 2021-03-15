@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -122,25 +123,23 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                             borderRadius: BorderRadius.circular(10.0)),
                         alignment: Alignment.center,
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border:
-                                  Border.all(width: 2.0, color: Colors.white),
-                              // boxShadow: [
-                              //   BoxShadow(blurRadius: 4, color: Colors.black)
-                              // ],
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            //color: Colors.white,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
+                          padding: const EdgeInsets.all(6.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                flex: 8,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
                                   child: Container(
-                                    height: 115,
-                                    width: 115,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 8.0, color: Colors.white),
+                                        boxShadow: const [
+                                          BoxShadow(blurRadius: 2)
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
                                     child: state.users[index].profileImageUrl
                                             .isEmpty
                                         ? Image.asset(
@@ -153,15 +152,42 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                                           ),
                                   ),
                                 ),
-                                Text(state.eboard[index].position,
-                                    style: const TextStyle(fontSize: 10)),
-                                const SizedBox(
-                                  height: 3,
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: AutoSizeText(
+                                    state.eboard[index].position,
+                                    minFontSize: 9,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .copyWith(color: Colors.white),
+                                  ),
                                 ),
-                                Text(state.users[index].profileName,
-                                    style: const TextStyle(fontSize: 10)),
-                              ],
-                            ),
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: AutoSizeText(
+                                    state.users[index].profileName,
+                                    minFontSize: 9,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         )),
                   );
@@ -229,33 +255,23 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                       if (widget.org.instagramURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Socicon.instagram),
-                            onPressed: () => launch(widget.org.instagramURL))
-                      else
-                        const SizedBox.shrink(),
+                            onPressed: () => launch(widget.org.instagramURL)),
                       if (widget.org.twitterURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Socicon.twitter),
-                            onPressed: () => launch(widget.org.twitterURL))
-                      else
-                        const SizedBox.shrink(),
+                            onPressed: () => launch(widget.org.twitterURL)),
                       if (widget.org.facebookURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Socicon.facebook),
-                            onPressed: () => launch(widget.org.facebookURL))
-                      else
-                        const SizedBox.shrink(),
+                            onPressed: () => launch(widget.org.facebookURL)),
                       if (widget.org.linkedInURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Socicon.linkedin),
-                            onPressed: () => launch(widget.org.linkedInURL))
-                      else
-                        const SizedBox.shrink(),
+                            onPressed: () => launch(widget.org.linkedInURL)),
                       if (widget.org.websiteURL.isNotEmpty)
                         IconButton(
                             icon: const Icon(Icons.web),
-                            onPressed: () => launch(widget.org.websiteURL))
-                      else
-                        const SizedBox.shrink(),
+                            onPressed: () => launch(widget.org.websiteURL)),
                     ],
                   )
                 ],

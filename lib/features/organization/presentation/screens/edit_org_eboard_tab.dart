@@ -118,7 +118,8 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
                     }
 
                     context.bloc<EditOrgBloc>().add(EditOrgEvent.addEMember(
-                        widget.state.org.orgID.getOrCrash()));
+                        widget.state.org.orgID.getOrCrash(),
+                        widget.state.eMember));
 
                     Scaffold.of(context).showSnackBar(snackBar);
                   },
