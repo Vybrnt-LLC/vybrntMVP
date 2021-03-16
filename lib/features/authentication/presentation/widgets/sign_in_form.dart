@@ -21,9 +21,9 @@ class SignInForm extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     bool supportsAppleSignIn = false;
-    TapGestureRecognizer onTapTerms = TapGestureRecognizer()
+    final TapGestureRecognizer onTapTerms = TapGestureRecognizer()
       ..onTap = _launchTerms;
-    TapGestureRecognizer onTapPrivacy = TapGestureRecognizer()
+    final TapGestureRecognizer onTapPrivacy = TapGestureRecognizer()
       ..onTap = _launchPrivacy;
 
     if (Platform.isIOS) {
@@ -60,12 +60,12 @@ class SignInForm extends StatelessWidget {
             : AutovalidateMode.disabled,
         child: ListView(
           children: <Widget>[
-            Center(
+            const Center(
               child: Padding(
-                padding: const EdgeInsets.fromLTRB(12.0, 30.0, 12.0, 0),
-                child: const Image(
-                  height: 350,
-                  image: AssetImage('assets/logo_clear.png'),
+                padding: EdgeInsets.fromLTRB(12.0, 30.0, 12.0, 0),
+                child: Image(
+                  height: 300,
+                  image: AssetImage('assets/logos/VYBrntfin-07.png'),
                 ),
               ),
             ),
@@ -139,20 +139,20 @@ class SignInForm extends StatelessWidget {
                   width: 50,
                   child: RichText(
                       text: TextSpan(
-                          style: TextStyle(color: Colors.grey),
+                          style: const TextStyle(color: Colors.grey),
                           children: [
-                        TextSpan(
+                        const TextSpan(
                             text:
                                 'By tapping Register, you are agreeing to the '),
                         TextSpan(
                             text: 'Terms of Use',
-                            style: TextStyle(color: Colors.blue),
+                            style: const TextStyle(color: Colors.blue),
                             recognizer: onTapTerms),
-                        TextSpan(text: ' and you are acknowledging the '),
+                        const TextSpan(text: ' and you are acknowledging the '),
                         TextSpan(
                           text: 'Privacy Policy',
                           recognizer: onTapPrivacy,
-                          style: TextStyle(color: Colors.blue),
+                          style: const TextStyle(color: Colors.blue),
                         ),
                       ]))),
             ),
@@ -165,32 +165,33 @@ class SignInForm extends StatelessWidget {
                 color: Colors.lightBlue,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+                  children: const [
                     Icon(
                       Socicon.google,
                       color: Colors.white,
                       size: 18.0,
                     ),
                     SizedBox(width: 5),
-                    const Text('Sign in with Google',
+                    Text('Sign in with Google',
                         style: TextStyle(
                             color: Colors.white,
                             //fontWeight: FontWeight.bold,
                             fontSize: 19.0)),
                   ],
                 )),
-            SizedBox(height: 10),
-            supportsAppleSignIn
-                ? SignInWithAppleButton(
-                    borderRadius: BorderRadius.all(Radius.zero),
-                    //text: 'SIGN IN WITH APPLE',
-                    onPressed: () async {
-                      context
-                          .bloc<SignInFormBloc>()
-                          .add(SignInFormEvent.signInWithApplePressed());
-                    },
-                  )
-                : SizedBox.shrink()
+            const SizedBox(height: 10),
+            if (supportsAppleSignIn)
+              SignInWithAppleButton(
+                borderRadius: const BorderRadius.all(Radius.zero),
+                //text: 'SIGN IN WITH APPLE',
+                onPressed: () async {
+                  context
+                      .bloc<SignInFormBloc>()
+                      .add(const SignInFormEvent.signInWithApplePressed());
+                },
+              )
+            else
+              const SizedBox.shrink()
           ],
         ),
       );

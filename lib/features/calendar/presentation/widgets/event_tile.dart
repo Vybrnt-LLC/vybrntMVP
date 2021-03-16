@@ -55,7 +55,8 @@ class EventTile extends StatelessWidget {
                   child: CircleAvatar(
                     radius: 20,
                     backgroundImage: state.user.profileImageUrl.isEmpty
-                        ? AssetImage('assets/images/user_placeholder.png')
+                        ? Image.asset('assets/images/user_placeholder.png')
+                            .image
                         : CachedNetworkImageProvider(
                             state.user.profileImageUrl),
                   ),
@@ -73,7 +74,8 @@ class EventTile extends StatelessWidget {
                     shape: GFAvatarShape.square,
                     size: 30.0,
                     backgroundImage: state.org.profileImageUrl.isEmpty
-                        ? AssetImage('assets/images/user_placeholder.png')
+                        ? Image.asset('assets/images/user_placeholder.png')
+                            .image
                         : CachedNetworkImageProvider(state.org.profileImageUrl),
                   ),
                 ), //event.name

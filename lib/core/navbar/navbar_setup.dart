@@ -41,7 +41,7 @@ class _NavBarSetUpState extends State<NavBarSetUp> {
 
   @override
   void initState() {
-    _child = HomeFeedScreen();
+    _child = const HomeFeedScreen();
     currentTab = TabItem1.homefeed;
     //final String currentUserID = Provider.of<UserData>(context).currentUserID;
     super.initState();
@@ -56,35 +56,33 @@ class _NavBarSetUpState extends State<NavBarSetUp> {
   };
 
   @override
-  Widget build(context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: WillPopScope(
-          onWillPop: () async =>
-              !await navigatorKeys[currentTab].currentState.maybePop(),
-          child: BlocBuilder<NavbarBloc, NavbarState>(
-            builder: (context, state) {
-              return Scaffold(
-                key: _scaffoldKey,
-                //resizeToAvoidBottomInset: false,
-                backgroundColor: Colors.white,
-                //extendBody: true,
-                //body: TabNavigator(child: _child, navigatorKey: navigatorKey,),
-                //body:_child,
-                body: Stack(children: <Widget>[
-                  _buildOffstageNavigator(TabItem1.homefeed),
-                  _buildOffstageNavigator(TabItem1.calendar),
-                  _buildOffstageNavigator(TabItem1.search),
-                  _buildOffstageNavigator(TabItem1.activity),
-                  _buildOffstageNavigator(TabItem1.userprofile),
-                ]),
-                bottomNavigationBar: //new Theme(
+  Widget build(BuildContext context) {
+    return WillPopScope(
+      onWillPop: () async =>
+          !await navigatorKeys[currentTab].currentState.maybePop(),
+      child: BlocBuilder<NavbarBloc, NavbarState>(
+        builder: (context, state) {
+          return Scaffold(
+            key: _scaffoldKey,
+            //resizeToAvoidBottomInset: false,
+            backgroundColor: Colors.white,
+            //extendBody: true,
+            //body: TabNavigator(child: _child, navigatorKey: navigatorKey,),
+            //body:_child,
+            body: Stack(children: <Widget>[
+              _buildOffstageNavigator(TabItem1.homefeed),
+              _buildOffstageNavigator(TabItem1.calendar),
+              _buildOffstageNavigator(TabItem1.search),
+              _buildOffstageNavigator(TabItem1.activity),
+              _buildOffstageNavigator(TabItem1.userprofile),
+            ]),
+            bottomNavigationBar: //new Theme(
 
-                    NavBar(onChange: _handleNavigationChange),
-              );
-            },
-          ),
-        ));
+                NavBar(onChange: _handleNavigationChange),
+          );
+        },
+      ),
+    );
   }
 
   void _handleNavigationChange(int index) {

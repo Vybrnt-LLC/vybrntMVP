@@ -22,7 +22,7 @@ class HiddenDrawer extends StatelessWidget {
   final ValueChanged<int> onPush1;
   final String userID;
 
-  HiddenDrawer({this.onPush1, this.userID});
+  const HiddenDrawer({this.onPush1, this.userID});
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +33,7 @@ class HiddenDrawer extends StatelessWidget {
             colorLineSelected: Colors.teal,
             baseStyle:
                 TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 25.0),
-            selectedStyle: TextStyle(color: Colors.teal),
+            selectedStyle: const TextStyle(color: Colors.teal),
           ),
           BlocProvider(
             create: (context) =>
@@ -68,11 +68,11 @@ class HiddenDrawer extends StatelessWidget {
             colorLineSelected: Colors.orange,
             baseStyle:
                 TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 25.0),
-            selectedStyle: TextStyle(color: Colors.orange),
+            selectedStyle: const TextStyle(color: Colors.orange),
           ),
           BlocProvider<BookmarkWatcherBloc>(
               create: (context) => getIt<BookmarkWatcherBloc>()
-                ..add(BookmarkWatcherEvent.getData()),
+                ..add(const BookmarkWatcherEvent.getData()),
               child: BookmarkScreen())),
       ScreenHiddenDrawer(
           ItemHiddenMenu(
@@ -80,7 +80,7 @@ class HiddenDrawer extends StatelessWidget {
             colorLineSelected: Colors.orange,
             baseStyle:
                 TextStyle(color: Colors.white.withOpacity(0.8), fontSize: 25.0),
-            selectedStyle: TextStyle(color: Colors.orange),
+            selectedStyle: const TextStyle(color: Colors.orange),
           ),
           BetaScreen()),
       // ScreenHiddenDrawer(
@@ -106,10 +106,7 @@ class HiddenDrawer extends StatelessWidget {
       },
       child: HiddenDrawerMenu(
         disableAppBarDefault: true,
-        isDraggable: true,
-        //userID: userID,
-        //SwipeBar(
-        initPositionSelected: 0,
+
         screens: itens,
         backgroundColorMenu: Colors.blue[900],
         //    typeOpen: TypeOpen.FROM_RIGHT,
@@ -119,7 +116,7 @@ class HiddenDrawer extends StatelessWidget {
         //    verticalScalePercent: 80.0,
         //    contentCornerRadius: 10.0,
         //    iconMenuAppBar: Icon(Icons.menu),
-        backgroundMenu: new DecorationImage(
+        backgroundMenu: const DecorationImage(
             fit: BoxFit.cover, image: ExactAssetImage('assets/background.png')),
         //    whithAutoTittleName: true,
         //    styleAutoTittleName: TextStyle(color: Colors.red),

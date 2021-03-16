@@ -9,6 +9,7 @@ import 'package:overlay_support/overlay_support.dart';
 
 import 'package:provider/provider.dart';
 import 'package:vybrnt_mvp/core/routes/navigation_service.dart';
+import 'package:vybrnt_mvp/core/ui/global/theme/bloc/theme_bloc.dart';
 import 'package:vybrnt_mvp/features/activity/repository/analytics_service.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 //import 'package:flutter/services.dart';
@@ -43,7 +44,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
       statusBarColor: Colors.blue, //or set color with: Color(0xFF0000FF)
     ));
     // FlutterStatusbarcolor.setStatusBarColor(Colors.white);
@@ -54,30 +55,37 @@ class MyApp extends StatelessWidget {
       child: ChangeNotifierProvider(
         create: (context) => UserData(),
         child: OverlaySupport(
-          child: MaterialApp(
-            color: Colors.white,
-            title: 'Vybrnt',
-            //  onGenerateRoute: ,
-
-            //theme: ThemeData.light(),
-            debugShowCheckedModeBanner: false,
-            builder: ExtendedNavigator.builder(
-                navigatorKey: getIt<NavigationService>().navigatorKey,
-                observers: [getIt<AnalyticsService>().getAnalyticsObserver()],
-                router: route.Router(),
-                initialRoute: '/',
-                builder: (ctx, extendedNav) => Theme(
-                      data: ThemeData.light(),
-                      child: extendedNav,
-                    )),
-            // onGenerateRoute: route.Router.onGenerateRoute,
-            // initialRoute: route.Router.wrapper,
-            // navigatorKey: route.Router.navigator.key,
-
-            // },
+          child: BlocProvider<ThemeBloc>(
+            create: (context) => ThemeBloc(),
+            child: BlocBuilder<ThemeBloc, ThemeState>(
+              builder: _buildWithTheme,
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildWithTheme(BuildContext context, ThemeState state) {
+    return MaterialApp(
+      color: Colors.white,
+      title: 'Vybrnt',
+      theme: state.themeData,
+      //  onGenerateRoute: ,
+
+      //theme: ThemeData.light(),
+      debugShowCheckedModeBanner: false,
+      builder: ExtendedNavigator.builder(
+          navigatorKey: getIt<NavigationService>().navigatorKey,
+          observers: [getIt<AnalyticsService>().getAnalyticsObserver()],
+          router: route.Router(),
+          initialRoute: '/',
+          builder: (ctx, extendedNav) => extendedNav),
+      // onGenerateRoute: route.Router.onGenerateRoute,
+      // initialRoute: route.Router.wrapper,
+      // navigatorKey: route.Router.navigator.key,
+
+      // },
     );
   }
 }

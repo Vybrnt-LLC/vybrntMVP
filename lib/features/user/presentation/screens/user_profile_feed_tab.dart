@@ -36,7 +36,8 @@ class _UserProfileFeedTabState extends State<UserProfileFeedTab> {
 
   @override
   Widget build(BuildContext context) {
-    ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+    const ContainerTransitionType _transitionType =
+        ContainerTransitionType.fade;
     final currentUserID = Provider.of<UserData>(context).currentUserID;
     //User sender = user;
     return BlocBuilder<PostWatcherBloc, PostWatcherState>(
@@ -46,69 +47,65 @@ class _UserProfileFeedTabState extends State<UserProfileFeedTab> {
           loadInProgress: (_) =>
               const Center(child: CircularProgressIndicator()),
           loadFailure: (state) {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           },
           loadSuccess: (state) {
-            return Container(
-              child: SafeArea(
-                top: false,
-                bottom: false,
-                child: RefreshIndicator(
-                  onRefresh: () async {
-                    context
-                        .bloc<PostWatcherBloc>()
-                        .add(PostWatcherEvent.getData(widget.userID, false));
-                  },
-                  child: CustomScrollView(
-                    key: PageStorageKey<String>(widget.name),
-                    slivers: <Widget>[
-                      SliverPadding(
-                        padding: const EdgeInsets.all(8.0),
-                        // In this example, the inner scroll view has
-                        // fixed-height list items, hence the use of
-                        // SliverFixedExtentList. However, one could use any
-                        // sliver widget here, e.g. SliverList or SliverGrid.
-                        sliver: SliverList(
-                          delegate: SliverChildBuilderDelegate(
-                            (BuildContext context, int index) {
-                              // This builder is called for each child.
-                              // In this example, we just number each list item.
-                              return _OpenContainerPostWrapper(
-                                  key: ObjectKey(state.posts[index]),
-                                  post: state.posts[index],
-                                  color:
-                                      stringToColor(widget.user.secondaryColor),
-                                  transitionType: _transitionType,
-                                  closedBuilder: (BuildContext _,
-                                      VoidCallback openContainer) {
-                                    return _InkWellOverlay(
-                                      openContainer: openContainer,
-                                      width: 250,
-                                      child: BlocProvider<PostActorBloc>(
-                                          create: (context) =>
-                                              getIt<PostActorBloc>()
-                                                ..add(PostActorEvent.getData(
-                                                    state.posts[index],
-                                                    currentUserID:
-                                                        currentUserID,
-                                                    senderID: state
-                                                        .posts[index].senderID
-                                                        .getOrCrash())),
-                                          child: Container(
-                                              child: PostCard(
-                                                  //user: _profileUser,
-                                                  post: state.posts[index],
-                                                  color: stringToColor(widget
-                                                      .user.secondaryColor)))),
-                                    );
-                                  });
-                            },
-                            childCount: state.posts.size,
-                          ),
+            return SafeArea(
+              top: false,
+              bottom: false,
+              child: RefreshIndicator(
+                onRefresh: () async {
+                  context
+                      .bloc<PostWatcherBloc>()
+                      .add(PostWatcherEvent.getData(widget.userID, false));
+                },
+                child: CustomScrollView(
+                  key: PageStorageKey<String>(widget.name),
+                  slivers: <Widget>[
+                    SliverPadding(
+                      padding: const EdgeInsets.all(8.0),
+                      // In this example, the inner scroll view has
+                      // fixed-height list items, hence the use of
+                      // SliverFixedExtentList. However, one could use any
+                      // sliver widget here, e.g. SliverList or SliverGrid.
+                      sliver: SliverList(
+                        delegate: SliverChildBuilderDelegate(
+                          (BuildContext context, int index) {
+                            // This builder is called for each child.
+                            // In this example, we just number each list item.
+                            return _OpenContainerPostWrapper(
+                                key: ObjectKey(state.posts[index]),
+                                post: state.posts[index],
+                                color:
+                                    stringToColor(widget.user.secondaryColor),
+                                transitionType: _transitionType,
+                                closedBuilder: (BuildContext _,
+                                    VoidCallback openContainer) {
+                                  return _InkWellOverlay(
+                                    openContainer: openContainer,
+                                    width: 250,
+                                    child: BlocProvider<PostActorBloc>(
+                                        create: (context) =>
+                                            getIt<PostActorBloc>()
+                                              ..add(PostActorEvent.getData(
+                                                  state.posts[index],
+                                                  currentUserID: currentUserID,
+                                                  senderID: state
+                                                      .posts[index].senderID
+                                                      .getOrCrash())),
+                                        child: PostCard(
+                                            //user: _profileUser,
+                                            post: state.posts[index],
+                                            color: stringToColor(
+                                                widget.user.secondaryColor))),
+                                  );
+                                });
+                          },
+                          childCount: state.posts.size,
                         ),
-                      )
-                    ],
-                  ),
+                      ),
+                    )
+                  ],
                 ),
               ),
             );
@@ -127,7 +124,7 @@ class _OpenContainerPostWrapper extends StatelessWidget {
     this.color,
   }) : super(key: key);
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Post post;

@@ -15,7 +15,7 @@ class CreateOrganizationPageDetailScreen extends StatefulWidget {
   final Organization org;
   final String name;
 
-  CreateOrganizationPageDetailScreen({this.org, this.name});
+  const CreateOrganizationPageDetailScreen({this.org, this.name});
   @override
   _CreateOrganizationPageDetailScreenState createState() =>
       _CreateOrganizationPageDetailScreenState();
@@ -29,7 +29,7 @@ class _CreateOrganizationPageDetailScreenState
   TabController _controller;
   ScrollController _scrollViewController;
   final snackBar =
-      SnackBar(content: Text('Your new community has been created!'));
+      const SnackBar(content: Text('Your new community has been created!'));
 
   @override
   void initState() {
@@ -52,6 +52,8 @@ class _CreateOrganizationPageDetailScreenState
     final currentUserID = Provider.of<UserData>(context)
         .currentUserID; //needed for  automatic mixin keep alive
     return BlocBuilder<EditOrgBloc, EditOrgState>(builder: (context, state) {
+      context.bloc<EditOrgBloc>().add(EditOrgEvent.eMemberSelected(
+          UniqueId.fromUniqueString(currentUserID)));
       return Scaffold(
         resizeToAvoidBottomInset: false,
         backgroundColor: Colors.white,
@@ -67,13 +69,13 @@ class _CreateOrganizationPageDetailScreenState
                 //     }),
                 centerTitle: true,
                 backgroundColor: Colors.black,
-                title: Text('Create An Organization Page'),
+                title: const Text('Create An Organization Page'),
                 pinned: true,
                 floating: true,
                 forceElevated: boxIsScrolled,
                 actions: <Widget>[
                   IconButton(
-                      icon: Icon(Icons.check),
+                      icon: const Icon(Icons.check),
                       onPressed: () {
                         context
                             .bloc<EditOrgBloc>()
@@ -85,7 +87,7 @@ class _CreateOrganizationPageDetailScreenState
             ];
           },
           body: EditOrgDetails(
-            key: PageStorageKey('orgCreateEboard'),
+            key: const PageStorageKey('orgCreateEboard'),
             org: widget.org,
             state: state,
             createOrEdit: "Create",

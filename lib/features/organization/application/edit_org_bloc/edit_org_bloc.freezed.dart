@@ -24,9 +24,10 @@ class _$EditOrgEventTearOff {
     );
   }
 
-  AddEMember addEMember(String orgID) {
+  AddEMember addEMember(String orgID, EMember eMember) {
     return AddEMember(
       orgID,
+      eMember,
     );
   }
 
@@ -203,7 +204,7 @@ mixin _$EditOrgEvent {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -236,7 +237,7 @@ mixin _$EditOrgEvent {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -420,7 +421,7 @@ class _$GetEditOrgData implements GetEditOrgData {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -487,7 +488,7 @@ class _$GetEditOrgData implements GetEditOrgData {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -697,7 +698,7 @@ class _$GetSearch implements GetSearch {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -764,7 +765,7 @@ class _$GetSearch implements GetSearch {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -922,7 +923,9 @@ abstract class $AddEMemberCopyWith<$Res> {
   factory $AddEMemberCopyWith(
           AddEMember value, $Res Function(AddEMember) then) =
       _$AddEMemberCopyWithImpl<$Res>;
-  $Res call({String orgID});
+  $Res call({String orgID, EMember eMember});
+
+  $EMemberCopyWith<$Res> get eMember;
 }
 
 class _$AddEMemberCopyWithImpl<$Res> extends _$EditOrgEventCopyWithImpl<$Res>
@@ -936,22 +939,38 @@ class _$AddEMemberCopyWithImpl<$Res> extends _$EditOrgEventCopyWithImpl<$Res>
   @override
   $Res call({
     Object orgID = freezed,
+    Object eMember = freezed,
   }) {
     return _then(AddEMember(
       orgID == freezed ? _value.orgID : orgID as String,
+      eMember == freezed ? _value.eMember : eMember as EMember,
     ));
+  }
+
+  @override
+  $EMemberCopyWith<$Res> get eMember {
+    if (_value.eMember == null) {
+      return null;
+    }
+    return $EMemberCopyWith<$Res>(_value.eMember, (value) {
+      return _then(_value.copyWith(eMember: value));
+    });
   }
 }
 
 class _$AddEMember implements AddEMember {
-  const _$AddEMember(this.orgID) : assert(orgID != null);
+  const _$AddEMember(this.orgID, this.eMember)
+      : assert(orgID != null),
+        assert(eMember != null);
 
   @override
   final String orgID;
+  @override
+  final EMember eMember;
 
   @override
   String toString() {
-    return 'EditOrgEvent.addEMember(orgID: $orgID)';
+    return 'EditOrgEvent.addEMember(orgID: $orgID, eMember: $eMember)';
   }
 
   @override
@@ -959,12 +978,16 @@ class _$AddEMember implements AddEMember {
     return identical(this, other) ||
         (other is AddEMember &&
             (identical(other.orgID, orgID) ||
-                const DeepCollectionEquality().equals(other.orgID, orgID)));
+                const DeepCollectionEquality().equals(other.orgID, orgID)) &&
+            (identical(other.eMember, eMember) ||
+                const DeepCollectionEquality().equals(other.eMember, eMember)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(orgID);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(orgID) ^
+      const DeepCollectionEquality().hash(eMember);
 
   @override
   $AddEMemberCopyWith<AddEMember> get copyWith =>
@@ -975,7 +998,7 @@ class _$AddEMember implements AddEMember {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -1034,7 +1057,7 @@ class _$AddEMember implements AddEMember {
     assert(twitterURLChanged != null);
     assert(adminTitleChanged != null);
     assert(linkedInURLChanged != null);
-    return addEMember(orgID);
+    return addEMember(orgID, eMember);
   }
 
   @override
@@ -1042,7 +1065,7 @@ class _$AddEMember implements AddEMember {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -1074,7 +1097,7 @@ class _$AddEMember implements AddEMember {
   }) {
     assert(orElse != null);
     if (addEMember != null) {
-      return addEMember(orgID);
+      return addEMember(orgID, eMember);
     }
     return orElse();
   }
@@ -1190,9 +1213,10 @@ class _$AddEMember implements AddEMember {
 }
 
 abstract class AddEMember implements EditOrgEvent {
-  const factory AddEMember(String orgID) = _$AddEMember;
+  const factory AddEMember(String orgID, EMember eMember) = _$AddEMember;
 
   String get orgID;
+  EMember get eMember;
   $AddEMemberCopyWith<AddEMember> get copyWith;
 }
 
@@ -1262,7 +1286,7 @@ class _$RemoveFAQ implements RemoveFAQ {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -1329,7 +1353,7 @@ class _$RemoveFAQ implements RemoveFAQ {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -1540,7 +1564,7 @@ class _$SaveFAQ implements SaveFAQ {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -1607,7 +1631,7 @@ class _$SaveFAQ implements SaveFAQ {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -1821,7 +1845,7 @@ class _$QuestionChanged implements QuestionChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -1888,7 +1912,7 @@ class _$QuestionChanged implements QuestionChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -2100,7 +2124,7 @@ class _$AnswerChanged implements AnswerChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -2167,7 +2191,7 @@ class _$AnswerChanged implements AnswerChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -2389,7 +2413,7 @@ class _$RemoveEMember implements RemoveEMember {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -2456,7 +2480,7 @@ class _$RemoveEMember implements RemoveEMember {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -2670,7 +2694,7 @@ class _$EBoardReceived implements EBoardReceived {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -2737,7 +2761,7 @@ class _$EBoardReceived implements EBoardReceived {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -2949,7 +2973,7 @@ class _$FAQsReceived implements FAQsReceived {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -3016,7 +3040,7 @@ class _$FAQsReceived implements FAQsReceived {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -3232,7 +3256,7 @@ class _$SearchReceived implements SearchReceived {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -3299,7 +3323,7 @@ class _$SearchReceived implements SearchReceived {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -3488,7 +3512,7 @@ class _$SaveOrg implements SaveOrg {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -3555,7 +3579,7 @@ class _$SaveOrg implements SaveOrg {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -3763,7 +3787,7 @@ class _$CreateOrg implements CreateOrg {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -3830,7 +3854,7 @@ class _$CreateOrg implements CreateOrg {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -4054,7 +4078,7 @@ class _$OrgProfileImageChanged implements OrgProfileImageChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -4121,7 +4145,7 @@ class _$OrgProfileImageChanged implements OrgProfileImageChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -4347,7 +4371,7 @@ class _$OrgBannerImageChanged implements OrgBannerImageChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -4414,7 +4438,7 @@ class _$OrgBannerImageChanged implements OrgBannerImageChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -4628,7 +4652,7 @@ class _$NameChanged implements NameChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -4695,7 +4719,7 @@ class _$NameChanged implements NameChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -4907,7 +4931,7 @@ class _$AbbvChanged implements AbbvChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -4974,7 +4998,7 @@ class _$AbbvChanged implements AbbvChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -5188,7 +5212,7 @@ class _$PrimaryColorChanged implements PrimaryColorChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -5255,7 +5279,7 @@ class _$PrimaryColorChanged implements PrimaryColorChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -5475,7 +5499,7 @@ class _$SecondaryColorChanged implements SecondaryColorChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -5542,7 +5566,7 @@ class _$SecondaryColorChanged implements SecondaryColorChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -5762,7 +5786,7 @@ class _$MissionStatementChanged implements MissionStatementChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -5829,7 +5853,7 @@ class _$MissionStatementChanged implements MissionStatementChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -6042,7 +6066,7 @@ class _$EmailChanged implements EmailChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -6109,7 +6133,7 @@ class _$EmailChanged implements EmailChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -6328,7 +6352,7 @@ class _$OfficeLocationChanged implements OfficeLocationChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -6395,7 +6419,7 @@ class _$OfficeLocationChanged implements OfficeLocationChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -6609,7 +6633,7 @@ class _$EMemberSelected implements EMemberSelected {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -6676,7 +6700,7 @@ class _$EMemberSelected implements EMemberSelected {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -6890,7 +6914,7 @@ class _$PositionChanged implements PositionChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -6957,7 +6981,7 @@ class _$PositionChanged implements PositionChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -7171,7 +7195,7 @@ class _$InstagramURLChanged implements InstagramURLChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -7238,7 +7262,7 @@ class _$InstagramURLChanged implements InstagramURLChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -7453,7 +7477,7 @@ class _$FacebookURLChanged implements FacebookURLChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -7520,7 +7544,7 @@ class _$FacebookURLChanged implements FacebookURLChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -7734,7 +7758,7 @@ class _$WebsiteURLChanged implements WebsiteURLChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -7801,7 +7825,7 @@ class _$WebsiteURLChanged implements WebsiteURLChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -8015,7 +8039,7 @@ class _$TwitterURLChanged implements TwitterURLChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -8082,7 +8106,7 @@ class _$TwitterURLChanged implements TwitterURLChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -8296,7 +8320,7 @@ class _$AdminTitleChanged implements AdminTitleChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -8363,7 +8387,7 @@ class _$AdminTitleChanged implements AdminTitleChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),
@@ -8577,7 +8601,7 @@ class _$LinkedInURLChanged implements LinkedInURLChanged {
   Result when<Result extends Object>({
     @required Result getData(Organization org),
     @required Result getSearch(String name),
-    @required Result addEMember(String orgID),
+    @required Result addEMember(String orgID, EMember eMember),
     @required Result removeFAQ(String faqID, String orgID),
     @required Result saveFAQ(String orgID),
     @required Result questionChanged(String question),
@@ -8644,7 +8668,7 @@ class _$LinkedInURLChanged implements LinkedInURLChanged {
   Result maybeWhen<Result extends Object>({
     Result getData(Organization org),
     Result getSearch(String name),
-    Result addEMember(String orgID),
+    Result addEMember(String orgID, EMember eMember),
     Result removeFAQ(String faqID, String orgID),
     Result saveFAQ(String orgID),
     Result questionChanged(String question),

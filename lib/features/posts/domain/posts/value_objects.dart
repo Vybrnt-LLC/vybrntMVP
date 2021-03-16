@@ -260,10 +260,10 @@ class RepostCount extends ValueObject<int> {
 }
 
 //PostTimestamp - the Timestamp of when the post was uploaded, useful for sorting posts chronologically or potentially recommending posts (like count / time being uploaded)
-class PostTime extends ValueObject<Timestamp> {
-  final Either<ValueFailure<Timestamp>, Timestamp> value;
+class PostTime extends ValueObject<DateTime> {
+  final Either<ValueFailure<DateTime>, DateTime> value;
 
-  factory PostTime(Timestamp input) {
+  factory PostTime(DateTime input) {
     assert(input != null);
     return PostTime._(
       validateTime(input),
@@ -309,10 +309,10 @@ class CommentBody extends ValueObject<String> {
 }
 
 //CommentTimestamp - the Timestamp of when the comment was uploaded
-class CommentDate extends ValueObject<Timestamp> {
-  final Either<ValueFailure<Timestamp>, Timestamp> value;
+class CommentDate extends ValueObject<DateTime> {
+  final Either<ValueFailure<DateTime>, DateTime> value;
 
-  factory CommentDate(Timestamp input) {
+  factory CommentDate(DateTime input) {
     assert(input != null);
     return CommentDate._(
       validateTime(input),

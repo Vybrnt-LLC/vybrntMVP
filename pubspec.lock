@@ -502,7 +502,7 @@ packages:
       name: flutter_cache_manager
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.1.1"
+    version: "2.1.0"
   flutter_cache_store:
     dependency: transitive
     description:
@@ -545,6 +545,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.5"
+  flutter_link_preview:
+    dependency: "direct main"
+    description:
+      name: flutter_link_preview
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.5.6"
   flutter_local_notifications:
     dependency: "direct main"
     description:
@@ -662,6 +669,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.7.1"
+  gbk2utf8:
+    dependency: transitive
+    description:
+      name: gbk2utf8
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   get_it:
     dependency: "direct main"
     description:
@@ -723,7 +737,7 @@ packages:
     description:
       path: "."
       ref: HEAD
-      resolved-ref: d931297d54cc5faa285a9a219fcbd7d1092a4606
+      resolved-ref: c3e125f482c82e575c5782076a21481fab7c0966
       url: "https://github.com/Vybrnt-LLC/hidden_drawer_menu"
     source: git
     version: "2.0.1"
@@ -1197,7 +1211,7 @@ packages:
       name: simple_url_preview
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.0"
+    version: "2.0.0"
   sky_engine:
     dependency: transitive
     description: flutter
@@ -1223,7 +1237,7 @@ packages:
       name: sqflite
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.3.2+2"
+    version: "1.3.1+2"
   sqflite_common:
     dependency: transitive
     description:
@@ -1442,5 +1456,5 @@ packages:
     source: hosted
     version: "2.2.1"
 sdks:
-  dart: ">=2.10.2 <2.11.0"
-  flutter: ">=1.22.2 <2.0.0"
+  dart: ">=2.10.0 <2.11.0"
+  flutter: ">=1.22.0 <2.0.0"

@@ -12,12 +12,12 @@ class SliverOrgHeaderDelegate extends SliverPersistentHeaderDelegate {
   int postCount;
   int memberCount;
   int photoCount;
-  final dynamic button1;
-  final dynamic button2;
-  final dynamic button3;
+  final Widget button1;
+  final Widget button2;
+  final Widget button3;
   final Color primaryColor;
 
-  KtList userIDList;
+  KtList<String> userIDList;
 
   SliverOrgHeaderDelegate(
       {this.button3,
@@ -41,7 +41,7 @@ class SliverOrgHeaderDelegate extends SliverPersistentHeaderDelegate {
         overflow: Overflow.visible,
         children: [
           Opacity(
-            opacity: (1 - shrinkOffset / expandedHeight),
+            opacity: 1 - shrinkOffset / expandedHeight,
             child: Container(
               color: primaryColor,
               child: Column(
@@ -53,11 +53,11 @@ class SliverOrgHeaderDelegate extends SliverPersistentHeaderDelegate {
                       children: [
                         Column(children: [
                           Text('$postCount',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18)),
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18)),
                           Text('Posts',
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 18))
+                              style: const TextStyle(
+                                  color: Colors.white, fontSize: 18))
                         ]),
                         GestureDetector(
                           onTap: () => TabNavigatorProvider.of(context) != null

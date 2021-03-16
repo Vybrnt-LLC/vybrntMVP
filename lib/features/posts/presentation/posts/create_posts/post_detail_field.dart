@@ -34,7 +34,7 @@ class _PostDetailFieldState extends State<PostDetailField> {
           Padding(
             padding: const EdgeInsets.all(10.0),
             child: TextFormField(
-              key: Key('titleField'),
+              key: const Key('titleField'),
               initialValue: state.post.postHeader.getOrCrash(),
               decoration: const InputDecoration(
                   labelText: '*Title', hintText: 'General Body Meeting...'),
@@ -78,12 +78,14 @@ class _PostDetailFieldState extends State<PostDetailField> {
               },
             ),
           ),
-          commentableAndrepostable(context, state.post.repostable.getOrCrash(),
-              state.post.commentable.getOrCrash()),
+          commentableAndrepostable(
+              context: context,
+              repostable: state.post.repostable.getOrCrash(),
+              commentable: state.post.commentable.getOrCrash()),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Add Image"),
+              const Text("Add Image"),
               Switch(
                   value: state.isImageToggled,
                   onChanged: (value) {
@@ -93,25 +95,26 @@ class _PostDetailFieldState extends State<PostDetailField> {
                   }),
             ],
           ),
-          state.isImageToggled
-              ? GestureDetector(
-                  onTap: _showSelectImageDialog,
-                  child: Container(
-                      height: width,
-                      width: width,
-                      color: Colors.grey[400],
-                      child: _image == null
-                          ? Icon(
-                              Icons.add_a_photo,
-                              size: 100,
-                              color: Colors.white70,
-                            )
-                          : Image(
-                              image: FileImage(_image),
-                              fit: BoxFit.cover) // add file function
+          if (state.isImageToggled)
+            GestureDetector(
+                onTap: _showSelectImageDialog,
+                child: Container(
+                    height: width,
+                    width: width,
+                    color: Colors.grey[400],
+                    child: _image == null
+                        ? const Icon(
+                            Icons.add_a_photo,
+                            size: 100,
+                            color: Colors.white70,
+                          )
+                        : Image(
+                            image: FileImage(_image),
+                            fit: BoxFit.cover) // add file function
 
-                      ))
-              : SizedBox.shrink()
+                    ))
+          else
+            const SizedBox.shrink()
         ]),
       );
     });
@@ -124,63 +127,67 @@ class _PostDetailFieldState extends State<PostDetailField> {
     return null;
   }
 
-  _showSelectImageDialog() {
+  Future<Widget> _showSelectImageDialog() {
     return Platform.isIOS ? _iosBottomSheet() : _androidDialog();
   }
 
-  _iosBottomSheet() {
-    showCupertinoModalPopup(
+  Future<Widget> _iosBottomSheet() {
+    return showCupertinoModalPopup(
         context: context,
         builder: (BuildContext context) {
           return CupertinoActionSheet(
-            title: Text('Add Photo'),
+            title: const Text('Add Photo'),
             actions: <Widget>[
               CupertinoActionSheetAction(
-                  child: Text('Take Photo'),
-                  onPressed: () {
-                    _handleImage(ImageSource.camera);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () {
+                  _handleImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Take Photo'),
+              ),
               CupertinoActionSheetAction(
-                  child: Text('Choose From Gallery'),
-                  onPressed: () {
-                    _handleImage(ImageSource.gallery);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () {
+                  _handleImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Choose From Gallery'),
+              ),
             ],
             cancelButton: CupertinoActionSheetAction(
-              child: Text('Cancel'),
               onPressed: () => Navigator.of(context).pop(),
+              child: const Text('Cancel'),
             ),
           );
         });
   }
 
-  _androidDialog() {
-    showDialog(
+  Future<Widget> _androidDialog() {
+    return showDialog(
         context: context,
         builder: (BuildContext context) {
           return SimpleDialog(
-            title: Text('Add Photo'),
+            title: const Text('Add Photo'),
             children: <Widget>[
               SimpleDialogOption(
-                  child: Text('Take Photo'),
-                  onPressed: () {
-                    _handleImage(ImageSource.camera);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () {
+                  _handleImage(ImageSource.camera);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Take Photo'),
+              ),
               SimpleDialogOption(
-                  child: Text('Choose From Gallery'),
-                  onPressed: () {
-                    _handleImage(ImageSource.gallery);
-                    Navigator.of(context).pop();
-                  }),
+                onPressed: () {
+                  _handleImage(ImageSource.gallery);
+                  Navigator.of(context).pop();
+                },
+                child: const Text('Choose From Gallery'),
+              ),
               SimpleDialogOption(
-                child: Text(
+                onPressed: () => Navigator.of(context).pop(),
+                child: const Text(
                   'Cancel',
                   style: TextStyle(color: Colors.redAccent),
                 ),
-                onPressed: () => Navigator.of(context).pop(),
               ),
             ],
           );
@@ -194,13 +201,13 @@ class _PostDetailFieldState extends State<PostDetailField> {
     // } catch (e) {
     //   print(e);
     // }
-    FilePickerResult result =
+    final FilePickerResult result =
         await FilePicker.platform.pickFiles(type: FileType.image);
 
     if (result != null) {
-      File file = File(result.files.single.path);
+      final File file = File(result.files.single.path);
 
-      File imageFile = await _cropImage(file);
+      final File imageFile = await _cropImage(file);
       setState(() {
         _image = imageFile;
         context
@@ -208,15 +215,15 @@ class _PostDetailFieldState extends State<PostDetailField> {
             .add(CreatePostFormEvent.imageURLChanged(File(imageFile.path)));
         context
             .bloc<CreatePostFormBloc>()
-            .add(CreatePostFormEvent.imageURLChanged((imageFile)));
+            .add(CreatePostFormEvent.imageURLChanged(imageFile));
       });
     }
   }
 
-  Future _cropImage(File imageFile) async {
-    File croppedImage = await ImageCropper.cropImage(
+  Future<File> _cropImage(File imageFile) async {
+    final File croppedImage = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
-      aspectRatio: CropAspectRatio(
+      aspectRatio: const CropAspectRatio(
         ratioX: 1.0,
         ratioY: 1.0,
       ),
@@ -225,9 +232,9 @@ class _PostDetailFieldState extends State<PostDetailField> {
   }
 
   Widget commentableAndrepostable(
-      BuildContext context, bool repostable, bool commentable) {
+      {BuildContext context, bool repostable, bool commentable}) {
     return Column(children: [
-      Text("Allow users to share post?"),
+      const Text("Allow users to share post?"),
       Checkbox(
           onChanged: (bool value) {
             setState(() {
@@ -237,7 +244,7 @@ class _PostDetailFieldState extends State<PostDetailField> {
             });
           },
           value: repostable),
-      Text("Allow users to comment on post?"),
+      const Text("Allow users to comment on post?"),
       Checkbox(
           onChanged: (bool value) {
             setState(() {

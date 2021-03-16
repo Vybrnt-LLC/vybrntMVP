@@ -127,18 +127,19 @@ class CreateEventScaffold extends StatelessWidget {
             title: BlocBuilder<CreateEventBloc, CreateEventState>(
               buildWhen: (p, c) => p.isEditing != c.isEditing,
               builder: (context, state) => Text(
-                state.isEditing ? 'Edit an event' : 'CREATE AN EVENT',
-                style: GoogleFonts.getFont('Barlow Condensed',
-                    fontWeight: FontWeight.bold,
-                    fontStyle: FontStyle.italic,
-                    fontSize: 28),
+                state.isEditing ? 'Edit an event' : 'New Event',
+                style: Theme.of(context)
+                    .appBarTheme
+                    .textTheme
+                    .headline1
+                    .copyWith(fontSize: 26.0),
               ),
             ),
             actions: <Widget>[
               Builder(
                 builder: (context) {
                   return IconButton(
-                    icon: Icon(Icons.check),
+                    icon: const Icon(Icons.check),
                     onPressed: () {
                       context
                           .bloc<CreateEventBloc>()

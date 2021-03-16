@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:vybrnt_mvp/features/organization/application/edit_org_bloc/edit_org_bloc.dart';
-import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 import 'package:dropdown_search/dropdown_search.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user_list_model.dart';
 
@@ -18,7 +17,7 @@ class EditOrgEboardTab extends StatefulWidget {
 
 class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
   final _formKey = GlobalKey<FormState>();
-  final snackBar = SnackBar(content: Text('New Admin Saved!'));
+  final snackBar = const SnackBar(content: Text('New Admin Saved!'));
 
   @override
   Widget build(BuildContext context) {
@@ -29,14 +28,14 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
         child: CustomScrollView(
           key: PageStorageKey<String>(widget.name),
           slivers: <Widget>[
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
                 child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text('Manage Administrative Members'),
             )),
-            SliverToBoxAdapter(
+            const SliverToBoxAdapter(
                 child: Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 'Each admin will be able to edit this profile, as well as create posts and events for your members',
                 style: TextStyle(fontSize: 10),
@@ -44,8 +43,8 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
             )),
             SliverToBoxAdapter(
               child: TextFormField(
-                style: TextStyle(fontSize: 18.0),
-                decoration: InputDecoration(
+                style: const TextStyle(fontSize: 18.0),
+                decoration: const InputDecoration(
                   icon: Icon(
                     Icons.book,
                     size: 30.0,
@@ -53,7 +52,7 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
                   labelText: 'Position',
                 ),
                 validator: (input) =>
-                    input.trim().length < 0 ? 'Please enter a position' : null,
+                    input.trim().isEmpty ? 'Please enter a position' : null,
                 onChanged: (input) => context
                     .bloc<EditOrgBloc>()
                     .add(EditOrgEvent.positionChanged(input)),
@@ -72,8 +71,9 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
                           child: CircleAvatar(
                             radius: 22,
                             backgroundImage: user.profileImageUrl.isEmpty
-                                ? AssetImage(
-                                    'assets/images/user_placeholder.png')
+                                ? Image.asset(
+                                        'assets/images/user_placeholder.png')
+                                    .image
                                 : CachedNetworkImageProvider(
                                     user.profileImageUrl),
                           ),
@@ -95,7 +95,7 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
                     return state.search.asList();
                   },
                   itemAsString: (UserList u) => u.profileName,
-                  onChanged: (UserList data) => print(data),
+
                   onSaved: (selectedUser) => context
                       .bloc<EditOrgBloc>()
                       .add(EditOrgEvent.eMemberSelected(selectedUser.userID)),
@@ -104,7 +104,7 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
             ),
             SliverToBoxAdapter(
               child: Container(
-                margin: EdgeInsets.all(20.0),
+                margin: const EdgeInsets.all(20.0),
                 height: 40.0,
                 width: 250.0,
                 child: FlatButton(
@@ -116,16 +116,16 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
                       //   _isLoading = true;
                       // });
                     }
-                    final orgID = widget.state.org.orgID.getOrCrash();
-                    print(orgID);
+
                     context.bloc<EditOrgBloc>().add(EditOrgEvent.addEMember(
-                        widget.state.org.orgID.getOrCrash()));
+                        widget.state.org.orgID.getOrCrash(),
+                        widget.state.eMember));
 
                     Scaffold.of(context).showSnackBar(snackBar);
                   },
                   color: Colors.blue,
                   textColor: Colors.white,
-                  child: Text(
+                  child: const Text(
                     'Add Eboard Member',
                     style: TextStyle(fontSize: 18.0),
                   ),
@@ -140,34 +140,13 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
                 key: UniqueKey(),
                 delegate: SliverChildBuilderDelegate(
                   (BuildContext context, int index) {
-                    int colorValue = int.parse(
+                    final int colorValue = int.parse(
                         widget.state.users[index].primaryColor,
                         radix: 16);
-                    final userColor = new Color(colorValue);
+                    final userColor = Color(colorValue);
 
                     return Slidable(
-                      actionPane: SlidableDrawerActionPane(),
-                      actionExtentRatio: 0.25,
-                      child: Container(
-                        color: Colors.white,
-                        child: ListTile(
-                          leading: CircleAvatar(
-                            backgroundColor: userColor,
-                            radius: 30.0,
-                            child: CircleAvatar(
-                              radius: 27,
-                              backgroundImage:
-                                  state.users[index].profileImageUrl.isEmpty
-                                      ? AssetImage(
-                                          'assets/images/user_placeholder.png')
-                                      : CachedNetworkImageProvider(
-                                          state.users[index].profileImageUrl),
-                            ),
-                          ),
-                          title: Text(state.users[index].profileName),
-                          subtitle: Text(state.eboard[index].position),
-                        ),
-                      ),
+                      actionPane: const SlidableDrawerActionPane(),
                       actions: <Widget>[
                         IconSlideAction(
                           caption: 'Delete',
@@ -179,6 +158,27 @@ class _EditOrgEboardTabState extends State<EditOrgEboardTab> {
                                   state.org.orgID.getOrCrash())),
                         ),
                       ],
+                      child: Container(
+                        color: Colors.white,
+                        child: ListTile(
+                          leading: CircleAvatar(
+                            backgroundColor: userColor,
+                            radius: 30.0,
+                            child: CircleAvatar(
+                              radius: 27,
+                              backgroundImage: state
+                                      .users[index].profileImageUrl.isEmpty
+                                  ? Image.asset(
+                                          'assets/images/user_placeholder.png')
+                                      .image
+                                  : CachedNetworkImageProvider(
+                                      state.users[index].profileImageUrl),
+                            ),
+                          ),
+                          title: Text(state.users[index].profileName),
+                          subtitle: Text(state.eboard[index].position),
+                        ),
+                      ),
                     );
                   },
                   childCount: state.eboard.size,

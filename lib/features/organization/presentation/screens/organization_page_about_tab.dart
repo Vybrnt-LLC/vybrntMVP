@@ -1,3 +1,6 @@
+import 'dart:math';
+
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -10,7 +13,6 @@ import 'package:vybrnt_mvp/core/routes/router.gr.dart';
 import 'package:vybrnt_mvp/features/authentication/domain/models/user_data_model.dart';
 import 'package:vybrnt_mvp/features/organization/application/edit_org_bloc/edit_org_bloc.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
-import 'dart:math' as math;
 
 import '../../../../socicon_icons.dart';
 
@@ -32,7 +34,6 @@ class OrganizationPageAboutTab extends StatefulWidget {
 class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
   SliverPersistentHeader makeHeader(String headerText, int index) {
     return SliverPersistentHeader(
-      pinned: false,
       delegate: _SliverAppBarDelegate(
         minHeight: 60.0,
         maxHeight: 100.0,
@@ -43,14 +44,15 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                 color: Colors.white,
                 border: Border(
                     top: index != 0
-                        ? BorderSide(width: 0.7, color: Colors.black)
+                        ? const BorderSide(width: 0.7)
                         : BorderSide.none),
               ),
               //color: Colors.white,
               child: Center(
-                  child: Text(
+                  child: AutoSizeText(
                 headerText,
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
+                style:
+                    const TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
               ))),
         ),
       ),
@@ -58,8 +60,8 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
   }
 
   Color _stringToColor(String colorString) {
-    int colorValue = int.parse(colorString, radix: 16);
-    Color color = new Color(colorValue);
+    final int colorValue = int.parse(colorString, radix: 16);
+    final Color color = Color(colorValue);
     return color;
   }
 
@@ -69,37 +71,38 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
     return BlocBuilder<EditOrgBloc, EditOrgState>(builder: (context, state) {
       return CustomScrollView(
         slivers: <Widget>[
-          widget.org.missionStatement.isNotEmpty
-              ? makeHeader('Mission', 0)
-              : SliverToBoxAdapter(child: SizedBox.shrink()),
-          widget.org.missionStatement.isNotEmpty
-              ? SliverPadding(
-                  padding: EdgeInsets.all(8),
-                  sliver: SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        Text(
-                          widget.org.missionStatement,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20, height: 1.5),
-                        ),
-                        SizedBox(
-                          height: 20,
-                        ),
-                      ],
+          if (widget.org.missionStatement.isNotEmpty)
+            makeHeader('Mission', 0)
+          else
+            const SliverToBoxAdapter(child: SizedBox.shrink()),
+          if (widget.org.missionStatement.isNotEmpty)
+            SliverPadding(
+              padding: const EdgeInsets.all(8),
+              sliver: SliverToBoxAdapter(
+                child: Column(
+                  children: [
+                    Text(
+                      widget.org.missionStatement,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20, height: 1.5),
                     ),
-                  ),
-                )
-              : SliverToBoxAdapter(child: SizedBox.shrink()),
-          makeHeader('The ' + state.org.adminTitle, 1),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                  ],
+                ),
+              ),
+            )
+          else
+            const SliverToBoxAdapter(child: SizedBox.shrink()),
+          makeHeader(state.org.adminTitle, 1),
           SliverPadding(
             padding: const EdgeInsets.all(8.0),
             sliver: SliverGrid(
-              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+              gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                 maxCrossAxisExtent: 300.0,
                 mainAxisSpacing: 10.0,
                 crossAxisSpacing: 10.0,
-                childAspectRatio: 1.0,
               ),
               delegate: SliverChildBuilderDelegate(
                 (BuildContext context, int index) {
@@ -116,31 +119,27 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                             color:
                                 _stringToColor(state.users[index].primaryColor),
                             border: Border.all(width: 2.0, color: Colors.white),
-                            boxShadow: [
-                              BoxShadow(blurRadius: 4, color: Colors.black)
-                            ],
+                            boxShadow: const [BoxShadow(blurRadius: 4)],
                             borderRadius: BorderRadius.circular(10.0)),
                         alignment: Alignment.center,
                         child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              border:
-                                  Border.all(width: 2.0, color: Colors.white),
-                              // boxShadow: [
-                              //   BoxShadow(blurRadius: 4, color: Colors.black)
-                              // ],
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            //color: Colors.white,
-                            child: Column(
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.all(4.0),
+                          padding: const EdgeInsets.all(6.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Flexible(
+                                flex: 8,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(3.0),
                                   child: Container(
-                                    height: 115,
-                                    width: 115,
+                                    decoration: BoxDecoration(
+                                        border: Border.all(
+                                            width: 8.0, color: Colors.white),
+                                        boxShadow: const [
+                                          BoxShadow(blurRadius: 2)
+                                        ],
+                                        borderRadius:
+                                            BorderRadius.circular(10.0)),
                                     child: state.users[index].profileImageUrl
                                             .isEmpty
                                         ? Image.asset(
@@ -153,15 +152,42 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                                           ),
                                   ),
                                 ),
-                                Text(state.eboard[index].position,
-                                    style: TextStyle(fontSize: 10)),
-                                SizedBox(
-                                  height: 3,
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: AutoSizeText(
+                                    state.eboard[index].position,
+                                    minFontSize: 9,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .copyWith(color: Colors.white),
+                                  ),
                                 ),
-                                Text(state.users[index].profileName,
-                                    style: TextStyle(fontSize: 10)),
-                              ],
-                            ),
+                              ),
+                              Flexible(
+                                flex: 2,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(2.0),
+                                  child: AutoSizeText(
+                                    state.users[index].profileName,
+                                    minFontSize: 9,
+                                    maxLines: 2,
+                                    textAlign: TextAlign.center,
+                                    style: Theme.of(context)
+                                        .textTheme
+                                        .bodyText1
+                                        .copyWith(
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         )),
                   );
@@ -172,87 +198,90 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
           ),
           makeHeader('Contact', 2),
           SliverPadding(
-            padding: EdgeInsets.all(4),
+            padding: const EdgeInsets.all(4),
             sliver: SliverToBoxAdapter(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  widget.org.email.isNotEmpty
-                      ? Text(
-                          'Organization Email:',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20, height: 1.5),
-                        )
-                      : SizedBox.shrink(),
-                  widget.org.email.isNotEmpty
-                      ? SizedBox(height: 5)
-                      : SizedBox.shrink(),
-                  widget.org.email.isNotEmpty
-                      ? Text(
-                          widget.org.email,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20, height: 1.5),
-                        )
-                      : SizedBox.shrink(),
-                  widget.org.email.isNotEmpty
-                      ? SizedBox(
-                          height: 20,
-                        )
-                      : SizedBox.shrink(),
-                  widget.org.officeLocation.isNotEmpty
-                      ? Text(
-                          'Office Location:',
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20, height: 1.5),
-                        )
-                      : SizedBox.shrink(),
-                  widget.org.officeLocation.isNotEmpty
-                      ? SizedBox(height: 5)
-                      : SizedBox.shrink(),
-                  widget.org.officeLocation.isNotEmpty
-                      ? Text(
-                          widget.org.officeLocation,
-                          textAlign: TextAlign.center,
-                          style: TextStyle(fontSize: 20, height: 1.5),
-                        )
-                      : SizedBox.shrink(),
+                  if (widget.org.email.isNotEmpty)
+                    const Text(
+                      'Organization Email:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20, height: 1.5),
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  if (widget.org.email.isNotEmpty)
+                    const SizedBox(height: 5)
+                  else
+                    const SizedBox.shrink(),
+                  if (widget.org.email.isNotEmpty)
+                    Text(
+                      widget.org.email,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20, height: 1.5),
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  if (widget.org.email.isNotEmpty)
+                    const SizedBox(
+                      height: 20,
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  if (widget.org.officeLocation.isNotEmpty)
+                    const Text(
+                      'Office Location:',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontSize: 20, height: 1.5),
+                    )
+                  else
+                    const SizedBox.shrink(),
+                  if (widget.org.officeLocation.isNotEmpty)
+                    const SizedBox(height: 5)
+                  else
+                    const SizedBox.shrink(),
+                  if (widget.org.officeLocation.isNotEmpty)
+                    Text(
+                      widget.org.officeLocation,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(fontSize: 20, height: 1.5),
+                    )
+                  else
+                    const SizedBox.shrink(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
-                      widget.org.instagramURL.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(Socicon.instagram),
-                              onPressed: () => launch(widget.org.instagramURL))
-                          : SizedBox.shrink(),
-                      widget.org.twitterURL.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(Socicon.twitter),
-                              onPressed: () => launch(widget.org.twitterURL))
-                          : SizedBox.shrink(),
-                      widget.org.facebookURL.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(Socicon.facebook),
-                              onPressed: () => launch(widget.org.facebookURL))
-                          : SizedBox.shrink(),
-                      widget.org.linkedInURL.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(Socicon.linkedin),
-                              onPressed: () => launch(widget.org.linkedInURL))
-                          : SizedBox.shrink(),
-                      widget.org.websiteURL.isNotEmpty
-                          ? IconButton(
-                              icon: Icon(Icons.web),
-                              onPressed: () => launch(widget.org.websiteURL))
-                          : SizedBox.shrink(),
+                      if (widget.org.instagramURL.isNotEmpty)
+                        IconButton(
+                            icon: const Icon(Socicon.instagram),
+                            onPressed: () => launch(widget.org.instagramURL)),
+                      if (widget.org.twitterURL.isNotEmpty)
+                        IconButton(
+                            icon: const Icon(Socicon.twitter),
+                            onPressed: () => launch(widget.org.twitterURL)),
+                      if (widget.org.facebookURL.isNotEmpty)
+                        IconButton(
+                            icon: const Icon(Socicon.facebook),
+                            onPressed: () => launch(widget.org.facebookURL)),
+                      if (widget.org.linkedInURL.isNotEmpty)
+                        IconButton(
+                            icon: const Icon(Socicon.linkedin),
+                            onPressed: () => launch(widget.org.linkedInURL)),
+                      if (widget.org.websiteURL.isNotEmpty)
+                        IconButton(
+                            icon: const Icon(Icons.web),
+                            onPressed: () => launch(widget.org.websiteURL)),
                     ],
                   )
                 ],
               ),
             ),
           ),
-          state.faqs.isEmpty()
-              ? SliverToBoxAdapter(child: SizedBox.shrink())
-              : makeHeader('FAQ', 3),
+          if (state.faqs.isEmpty())
+            const SliverToBoxAdapter(child: SizedBox.shrink())
+          else
+            makeHeader('FAQ', 3),
           SliverList(
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
@@ -270,14 +299,14 @@ class _OrganizationPageAboutTabState extends State<OrganizationPageAboutTab> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             Text(state.faqs[index].question,
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     fontSize: 28.0)),
-                            SizedBox(
+                            const SizedBox(
                               height: 5,
                             ),
                             Text(state.faqs[index].answer,
-                                style: TextStyle(fontSize: 20.0)),
+                                style: const TextStyle(fontSize: 20.0)),
                           ],
                         ),
                       ),
@@ -306,11 +335,11 @@ class _SliverAppBarDelegate extends SliverPersistentHeaderDelegate {
   @override
   double get minExtent => minHeight;
   @override
-  double get maxExtent => math.max(maxHeight, minHeight);
+  double get maxExtent => max(maxHeight, minHeight);
   @override
   Widget build(
       BuildContext context, double shrinkOffset, bool overlapsContent) {
-    return new SizedBox.expand(child: child);
+    return SizedBox.expand(child: child);
   }
 
   @override

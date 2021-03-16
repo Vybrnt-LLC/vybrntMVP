@@ -24,7 +24,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
 
   AuthBloc(this._authFacade, this._pushNotificationService,
       this._analyticsService, this._navigationService, this._dynamicLinkService)
-      : super(AuthState.initial());
+      : super(const AuthState.initial());
 
   @override
   Stream<AuthState> mapEventToState(

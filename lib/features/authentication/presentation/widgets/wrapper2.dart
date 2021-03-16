@@ -20,20 +20,21 @@ class Wrapper2 extends StatelessWidget {
     return FutureBuilder(
         future: firestore.currentUserID(),
         builder: (context, snapshot) {
-          Provider.of<UserData>(context).currentUserID = snapshot.data;
+          Provider.of<UserData>(context).currentUserID =
+              snapshot.data.toString();
           return ChangeNotifierProvider<TabNavigator>(
             create: (_) => TabNavigator(),
             child: AnimatedSplashScreen.withScreenFunction(
-              splash: 'assets/vybrnt_title_clear.png',
+              splash: 'assets/logos/VYBrntfin-06.png',
               screenFunction: () async {
-                return new WillPopScope(
+                return WillPopScope(
                     onWillPop: () async {
                       return false;
                     },
-                    child: HiddenDrawer());
+                    child: const HiddenDrawer());
               },
               splashIconSize: 300.0,
-              splashTransition: SplashTransition.fadeTransition,
+              duration: 2000,
               pageTransitionType: PageTransitionType.rightToLeft,
             ),
           );

@@ -10,9 +10,7 @@ import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
-import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
-import 'package:vybrnt_mvp/features/activity/repository/activity_dtos.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
@@ -94,6 +92,7 @@ class UserService implements IUserService {
         .map((event) => event.docs.map((e) => e.id).toImmutableList());
   }
 
+  @override
   Stream<KtList<String>> getUserPhotos(String userID) async* {
     yield* photosRef
         .doc(userID)
@@ -215,7 +214,7 @@ class UserService implements IUserService {
     if (currentUserID == userID) {
       return false;
     }
-    DocumentSnapshot followingDoc = await followersRef
+    final DocumentSnapshot followingDoc = await followersRef
         .doc(userID)
         .collection('userFollowers')
         .doc(currentUserID)
@@ -226,7 +225,7 @@ class UserService implements IUserService {
       return false;
     }
     try {
-      result = followingDoc.get('notify');
+      result = followingDoc.get('notify') as bool;
     } catch (e) {
       return false;
     }
@@ -260,10 +259,10 @@ class UserService implements IUserService {
 
   @override
   Future<KtList<UserList>> getUserKtList(KtList<String> userIDList) async {
-    KtMutableList<UserList> users = KtMutableList.empty();
+    final KtMutableList<UserList> users = KtMutableList.empty();
 
     for (int i = 0; i < userIDList.size; i++) {
-      UserList user = await getUserList(userIDList[i]);
+      final UserList user = await getUserList(userIDList[i]);
       users.add(user);
     }
     return users;
@@ -272,10 +271,12 @@ class UserService implements IUserService {
   @override
   Future<KtList<User>> getUserWithColorsKtListFromEMember(
       KtList<EMember> eMemberList) async {
+    // ignore: prefer_final_locals
     KtMutableList<User> users = KtMutableList.empty();
 
     for (int i = 0; i < eMemberList.size; i++) {
-      User user = await getUserWithColor(eMemberList[i].userID.getOrCrash());
+      final User user =
+          await getUserWithColor(eMemberList[i].userID.getOrCrash());
       users.add(user);
     }
     return users;
@@ -283,6 +284,7 @@ class UserService implements IUserService {
 
   @override
   Future<KtList<OrgList>> getOrgKtList(KtList<String> orgIDList) async {
+    // ignore: prefer_final_locals
     KtMutableList<OrgList> orgs = KtMutableList.empty();
 
     for (int i = 0; i < orgIDList.size; i++) {
@@ -298,47 +300,51 @@ class UserService implements IUserService {
     usersRef.doc(user.userID.getOrCrash()).update(userDto.toJson());
   }
 
+  @override
   Future<String> uploadUserProfileImage(String url, File imageFile) async {
     String photoId = Uuid().v4();
-    File image = await compressImage(photoId, imageFile);
+    final File image = await compressImage(photoId, imageFile);
 
     if (url.isNotEmpty) {
       // Updating user Profile image
-      RegExp exp = RegExp(r'userProfile_(.*).jpg');
+      final RegExp exp = RegExp(r'userProfile_(.*).jpg');
       photoId = exp.firstMatch(url)[1];
     }
 
-    StorageUploadTask uploadTask = storageRef
+    final StorageUploadTask uploadTask = storageRef
         .child('images/users/userProfile_$photoId.jpg')
         .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
+    final StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    final downloadUrl = await storageSnap.ref.getDownloadURL();
+    return downloadUrl.toString();
   }
 
+  @override
   Future<String> uploadUserBannerImage(String url, File imageFile) async {
     String photoId = Uuid().v4();
-    File image = await compressImage(photoId, imageFile);
+    final File image = await compressImage(photoId, imageFile);
 
     if (url.isNotEmpty) {
       // Updating user Profile image
-      RegExp exp = RegExp(r'userBanner_(.*).jpg');
+      final RegExp exp = RegExp(r'userBanner_(.*).jpg');
       photoId = exp.firstMatch(url)[1];
     }
 
-    StorageUploadTask uploadTask =
+    final StorageUploadTask uploadTask =
         storageRef.child('images/users/userBanner_$photoId.jpg').putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
+    final StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    final downloadUrl = await storageSnap.ref.getDownloadURL();
+    return downloadUrl.toString();
   }
 
+  @override
   Future<File> compressImage(String photoId, File image) async {
     final tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
-    File compressedImageFile = await FlutterImageCompress.compressAndGetFile(
-        image.absolute.path, '$path/img_$photoId.jpg',
-        quality: 70);
+    final File compressedImageFile =
+        await FlutterImageCompress.compressAndGetFile(
+            image.absolute.path, '$path/img_$photoId.jpg',
+            quality: 70);
     return compressedImageFile;
   }
 

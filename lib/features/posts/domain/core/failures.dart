@@ -8,55 +8,52 @@ part 'failures.freezed.dart';
 
 @freezed
 abstract class ValueFailure<T> with _$ValueFailure<T> {
-
-  const factory ValueFailure.invalidBoolean({ 
+  const factory ValueFailure.invalidBoolean({
     bool failedValue,
   }) = InvalidBoolean<T>;
 
-  const factory ValueFailure.invalidInteger({ 
+  const factory ValueFailure.invalidInteger({
     int failedValue,
   }) = InvalidInteger<T>;
 
-  const factory ValueFailure.invalidString({ 
-    String failedValue, 
+  const factory ValueFailure.invalidString({
+    String failedValue,
   }) = InvalidString<T>;
-  
-  const factory ValueFailure.invalidTimestamp({ 
-    Timestamp failedValue,
-  }) = InvalidTimestamp<T>;
 
-   const factory ValueFailure.invalidList({ 
+  const factory ValueFailure.invalidDateTime({
+    DateTime failedValue,
+  }) = InvalidDateTime<T>;
+
+  const factory ValueFailure.invalidList({
     KtList failedValue,
   }) = InvalidList<T>;
 
-  const factory ValueFailure.invalidUser({ 
+  const factory ValueFailure.invalidUser({
     User failedValue,
   }) = InvalidUser<T>;
 
-  const factory ValueFailure.invalidOrganization({ 
+  const factory ValueFailure.invalidOrganization({
     Organization failedValue,
   }) = InvalidOrganization<T>;
 
-
   //PostBody & Header (any type of string input)
-  const factory ValueFailure.empty({ 
+  const factory ValueFailure.empty({
     @required T failedValue,
   }) = Empty<T>;
 
-  const factory ValueFailure.exceededLength({ 
+  const factory ValueFailure.exceededLength({
     @required T failedValue,
-    @required int max, 
+    @required int max,
   }) = ExceededLength<T>;
 
   //Header only - (keeps headers short and manageable)
-  const factory ValueFailure.multiLine({ 
+  const factory ValueFailure.multiLine({
     @required T failedValue,
   }) = MultiLine<T>;
 
-
-  //Image 
-  const factory ValueFailure.invalidImageSelection({ 
+  //Image
+  const factory ValueFailure.invalidImageSelection({
     @required T postImageURL,
-    @required bool imageToggled, 
+    @required bool imageToggled,
   }) = InvalidImageSelection<T>;
 }

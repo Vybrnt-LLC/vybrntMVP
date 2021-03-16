@@ -15,24 +15,25 @@ class UserListScreen extends StatefulWidget {
   final KtList<String> userIDList;
   final String title;
 
-  UserListScreen({Key key, this.userIDList, this.title}) : super(key: key);
+  const UserListScreen({Key key, this.userIDList, this.title})
+      : super(key: key);
 
   @override
   _UserListScreenState createState() => _UserListScreenState();
 }
 
 class _UserListScreenState extends State<UserListScreen> {
-  _buildUserTile(UserList user, String currentUserID) {
+  ListTile _buildUserTile(UserList user, String currentUserID) {
     return ListTile(
       leading: CircleAvatar(
         radius: 20.0,
         backgroundImage: user.profileImageUrl.isEmpty
-            ? AssetImage('assets/images/user_placeholder.png')
+            ? Image.asset('assets/images/user_placeholder.png').image
             : CachedNetworkImageProvider(user.profileImageUrl),
       ),
       title: user.profileName.isNotEmpty
           ? Text(user.profileName)
-          : Text('Anonymous User'),
+          : const Text('Anonymous User'),
       onTap: () => (currentUserID == user.userID.getOrCrash())
           ? {}
           : TabNavigatorProvider.of(context) != null
@@ -58,21 +59,19 @@ class _UserListScreenState extends State<UserListScreen> {
           title: Text(widget.title),
         ),
         backgroundColor: Colors.white,
-        body: Container(
-          child: SafeArea(
-            bottom: false,
-            child: BlocBuilder<UserListBloc, UserListState>(
-                builder: (context, state) {
-              return ListView.builder(
-                itemCount: state.users.size,
-                itemBuilder: (BuildContext context, int index) {
-                  //Needs to be updated
+        body: SafeArea(
+          bottom: false,
+          child: BlocBuilder<UserListBloc, UserListState>(
+              builder: (context, state) {
+            return ListView.builder(
+              itemCount: state.users.size,
+              itemBuilder: (BuildContext context, int index) {
+                //Needs to be updated
 
-                  return _buildUserTile(state.users[index], currentUserID);
-                },
-              );
-            }),
-          ),
+                return _buildUserTile(state.users[index], currentUserID);
+              },
+            );
+          }),
         ),
       ),
     );

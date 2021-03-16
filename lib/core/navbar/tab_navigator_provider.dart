@@ -4,7 +4,7 @@ import 'package:vybrnt_mvp/core/navbar/tab_navigator.dart';
 class TabNavigatorProvider extends InheritedWidget {
   final TabNavigator tabNavigator;
 
-  TabNavigatorProvider({
+  const TabNavigatorProvider({
     Key key,
     @required this.tabNavigator,
     Widget child,

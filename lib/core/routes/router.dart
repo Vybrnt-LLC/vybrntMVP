@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:vybrnt_mvp/core/report/report_page.dart';
 import 'package:vybrnt_mvp/features/authentication/presentation/screens/sign_in_page.dart';
-import 'package:vybrnt_mvp/features/authentication/presentation/widgets/tags.dart';
 import 'package:vybrnt_mvp/features/authentication/presentation/widgets/wrapper.dart';
 import 'package:vybrnt_mvp/features/authentication/presentation/widgets/wrapper2.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/screens/create_event_screen.dart';
@@ -25,7 +24,6 @@ import 'package:vybrnt_mvp/features/user/presentation/screens/user_screen.dart';
     // initial route is named "/"
     MaterialRoute(page: SignInPage, name: 'signInPage', initial: false),
     MaterialRoute(page: Wrapper, name: 'wrapper', initial: true),
-    MaterialRoute(page: Tags, name: 'tags', initial: false),
     MaterialRoute(page: Wrapper2, name: 'wrapper2', initial: false),
     MaterialRoute(
         page: EventDetailImage, name: 'eventDetailImage', initial: false),

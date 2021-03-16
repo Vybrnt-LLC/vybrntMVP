@@ -7,7 +7,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getflutter/components/avatar/gf_avatar.dart';
 import 'package:getflutter/shape/gf_avatar_shape.dart';
 import 'package:image_cropper/image_cropper.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:vybrnt_mvp/features/user/application/edit_user_bloc/edit_user_bloc.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 
@@ -23,15 +22,15 @@ class EditUserDetails extends StatefulWidget {
 class _EditUserDetailsState extends State<EditUserDetails> {
   final _formKey = GlobalKey<FormState>();
   //final picker = ImagePicker();
-  final snackBar = SnackBar(content: Text('Submitted!'));
+  final snackBar = const SnackBar(content: Text('Submitted!'));
   bool _isLoading = false;
   File _profileImage;
   File _bannerImage;
 
-  Future _cropImage(File imageFile) async {
-    File croppedImage = await ImageCropper.cropImage(
+  Future<File> _cropImage(File imageFile) async {
+    final File croppedImage = await ImageCropper.cropImage(
       sourcePath: imageFile.path,
-      aspectRatio: CropAspectRatio(
+      aspectRatio: const CropAspectRatio(
         ratioX: 1.0,
         ratioY: 1.0,
       ),
@@ -39,13 +38,13 @@ class _EditUserDetailsState extends State<EditUserDetails> {
     return croppedImage;
   }
 
-  _displayProfileImage(String profileImageUrl) {
+  ImageProvider<Object> _displayProfileImage(String profileImageUrl) {
     // No new profile image
     if (_profileImage == null) {
       // No existing profile image
       if (profileImageUrl.isEmpty) {
         // Display placeholder
-        return AssetImage('assets/images/user_placeholder.png');
+        return Image.asset('assets/images/user_placeholder.png').image;
       } else {
         // User profile image exists
         return CachedNetworkImageProvider(profileImageUrl);
@@ -56,13 +55,13 @@ class _EditUserDetailsState extends State<EditUserDetails> {
     }
   }
 
-  _displayBannerImage(String bannerImageUrl) {
+  ImageProvider<Object> _displayBannerImage(String bannerImageUrl) {
     // No new banner image
     if (_bannerImage == null) {
       // No existing banner image
       if (bannerImageUrl.isEmpty) {
         // Display placeholder
-        return AssetImage('assets/images/user_placeholder.png');
+        return Image.asset('assets/images/user_placeholder.png').image;
       } else {
         // User banner image exists
         return CachedNetworkImageProvider(bannerImageUrl);
@@ -75,20 +74,20 @@ class _EditUserDetailsState extends State<EditUserDetails> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(child:
-        BlocBuilder<EditUserBloc, EditUserState>(builder: (context, state) {
+    return BlocBuilder<EditUserBloc, EditUserState>(builder: (context, state) {
       return GestureDetector(
         onTap: () => FocusScope.of(context).unfocus(),
         child: ListView(
           children: <Widget>[
-            _isLoading
-                ? LinearProgressIndicator(
-                    backgroundColor: Colors.blue[200],
-                    valueColor: AlwaysStoppedAnimation(Colors.blue),
-                  )
-                : SizedBox.shrink(),
+            if (_isLoading)
+              LinearProgressIndicator(
+                backgroundColor: Colors.blue[200],
+                valueColor: const AlwaysStoppedAnimation(Colors.blue),
+              )
+            else
+              const SizedBox.shrink(),
             Padding(
-              padding: EdgeInsets.all(5.0),
+              padding: const EdgeInsets.all(5.0),
               child: Form(
                 key: _formKey,
                 child: Column(
@@ -113,14 +112,15 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                                 // } catch (e) {
                                 //   print(e);
                                 // }
-                                FilePickerResult result = await FilePicker
+                                final FilePickerResult result = await FilePicker
                                     .platform
                                     .pickFiles(type: FileType.image);
 
                                 if (result != null) {
-                                  File file = File(result.files.single.path);
+                                  final File file =
+                                      File(result.files.single.path);
 
-                                  File imageFile = await _cropImage(file);
+                                  final File imageFile = await _cropImage(file);
 
                                   if (imageFile != null) {
                                     setState(() {
@@ -160,14 +160,15 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                                 // } catch (e) {
                                 //   print(e);
                                 // }
-                                FilePickerResult result = await FilePicker
+                                final FilePickerResult result = await FilePicker
                                     .platform
                                     .pickFiles(type: FileType.image);
 
                                 if (result != null) {
-                                  File file = File(result.files.single.path);
+                                  final File file =
+                                      File(result.files.single.path);
 
-                                  File imageFile = await _cropImage(file);
+                                  final File imageFile = await _cropImage(file);
                                   if (imageFile != null) {
                                     setState(() {
                                       _bannerImage = imageFile;
@@ -192,15 +193,15 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                     ),
                     TextFormField(
                       initialValue: widget.user.profileName,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 18.0),
+                      decoration: const InputDecoration(
                         icon: Icon(
                           Icons.person,
                           size: 30.0,
                         ),
                         labelText: 'Name',
                       ),
-                      validator: (input) => input.trim().length < 1
+                      validator: (input) => input.trim().isEmpty
                           ? 'Please enter a valid name'
                           : null,
                       onChanged: (input) => context
@@ -212,8 +213,8 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                       maxLines: null,
                       maxLength: 500,
                       initialValue: widget.user.bio,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 18.0),
+                      decoration: const InputDecoration(
                         icon: Icon(
                           Icons.book,
                           size: 30.0,
@@ -229,32 +230,31 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                     ),
                     TextFormField(
                       initialValue: widget.user.major,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 18.0),
+                      decoration: const InputDecoration(
                         icon: Icon(
                           Icons.email,
                           size: 30.0,
                         ),
                         labelText: 'Major',
                       ),
-                      validator: (input) => input.trim().length < 1
-                          ? 'Please enter a major'
-                          : null,
+                      validator: (input) =>
+                          input.trim().isEmpty ? 'Please enter a major' : null,
                       onChanged: (input) => context
                           .bloc<EditUserBloc>()
                           .add(EditUserEvent.majorChanged(input)),
                     ),
                     TextFormField(
                       initialValue: widget.user.email,
-                      style: TextStyle(fontSize: 18.0),
-                      decoration: InputDecoration(
+                      style: const TextStyle(fontSize: 18.0),
+                      decoration: const InputDecoration(
                         icon: Icon(
                           Icons.email,
                           size: 30.0,
                         ),
                         labelText: 'Email',
                       ),
-                      validator: (input) => input.trim().length < 1
+                      validator: (input) => input.trim().isEmpty
                           ? 'Please enter a valid email'
                           : null,
                       onChanged: (input) => context
@@ -262,7 +262,7 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                           .add(EditUserEvent.emailChanged(input)),
                     ),
                     Container(
-                      margin: EdgeInsets.all(20.0),
+                      margin: const EdgeInsets.all(20.0),
                       height: 40.0,
                       width: 250.0,
                       child: FlatButton(
@@ -272,13 +272,13 @@ class _EditUserDetailsState extends State<EditUserDetails> {
                           }
                           context
                               .bloc<EditUserBloc>()
-                              .add(EditUserEvent.saveUser());
+                              .add(const EditUserEvent.saveUser());
 
                           Scaffold.of(context).showSnackBar(snackBar);
                         },
                         color: Colors.blue,
                         textColor: Colors.white,
-                        child: Text(
+                        child: const Text(
                           'Save Profile',
                           style: TextStyle(fontSize: 18.0),
                         ),
@@ -291,6 +291,6 @@ class _EditUserDetailsState extends State<EditUserDetails> {
           ],
         ),
       );
-    }));
+    });
   }
 }

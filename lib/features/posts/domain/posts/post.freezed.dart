@@ -236,7 +236,7 @@ class __$PostCopyWithImpl<$Res> extends _$PostCopyWithImpl<$Res>
   }
 }
 
-class _$_Post extends _Post {
+class _$_Post with DiagnosticableTreeMixin implements _Post {
   const _$_Post(
       {@required this.postID,
       @required this.senderID,
@@ -269,8 +269,7 @@ class _$_Post extends _Post {
         assert(commentCount != null),
         assert(repostable != null),
         assert(repostCount != null),
-        assert(postTime != null),
-        super._();
+        assert(postTime != null);
 
   @override
   final PostID postID;
@@ -306,8 +305,31 @@ class _$_Post extends _Post {
   final PostTime postTime;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'Post(postID: $postID, senderID: $senderID, orgID: $orgID, eventID: $eventID, repostID: $repostID, postType: $postType, postHeader: $postHeader, postBody: $postBody, postImageURL: $postImageURL, postURL: $postURL, likeCount: $likeCount, commentable: $commentable, commentCount: $commentCount, repostable: $repostable, repostCount: $repostCount, postTime: $postTime)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Post'))
+      ..add(DiagnosticsProperty('postID', postID))
+      ..add(DiagnosticsProperty('senderID', senderID))
+      ..add(DiagnosticsProperty('orgID', orgID))
+      ..add(DiagnosticsProperty('eventID', eventID))
+      ..add(DiagnosticsProperty('repostID', repostID))
+      ..add(DiagnosticsProperty('postType', postType))
+      ..add(DiagnosticsProperty('postHeader', postHeader))
+      ..add(DiagnosticsProperty('postBody', postBody))
+      ..add(DiagnosticsProperty('postImageURL', postImageURL))
+      ..add(DiagnosticsProperty('postURL', postURL))
+      ..add(DiagnosticsProperty('likeCount', likeCount))
+      ..add(DiagnosticsProperty('commentable', commentable))
+      ..add(DiagnosticsProperty('commentCount', commentCount))
+      ..add(DiagnosticsProperty('repostable', repostable))
+      ..add(DiagnosticsProperty('repostCount', repostCount))
+      ..add(DiagnosticsProperty('postTime', postTime));
   }
 
   @override
@@ -387,8 +409,7 @@ class _$_Post extends _Post {
       __$PostCopyWithImpl<_Post>(this, _$identity);
 }
 
-abstract class _Post extends Post {
-  const _Post._() : super._();
+abstract class _Post implements Post {
   const factory _Post(
       {@required PostID postID,
       @required SenderID senderID,

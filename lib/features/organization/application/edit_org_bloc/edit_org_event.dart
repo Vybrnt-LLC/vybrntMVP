@@ -4,7 +4,8 @@ part of 'edit_org_bloc.dart';
 abstract class EditOrgEvent with _$EditOrgEvent {
   const factory EditOrgEvent.getData(Organization org) = GetEditOrgData;
   const factory EditOrgEvent.getSearch(String name) = GetSearch;
-  const factory EditOrgEvent.addEMember(String orgID) = AddEMember;
+  const factory EditOrgEvent.addEMember(String orgID, EMember eMember) =
+      AddEMember;
   const factory EditOrgEvent.removeFAQ(String faqID, String orgID) = RemoveFAQ;
   const factory EditOrgEvent.saveFAQ(String orgID) = SaveFAQ;
   const factory EditOrgEvent.questionChanged(String question) = QuestionChanged;

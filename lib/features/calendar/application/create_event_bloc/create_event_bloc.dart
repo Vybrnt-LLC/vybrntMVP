@@ -61,10 +61,11 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
         );
       },
       adminReceived: (e) async* {
+        // ignore: prefer_final_locals
         KtList<OrgList> orgs = await _orgService.getOrgKtList(e.admins);
-        User currentUser =
+        final User currentUser =
             await _eventDetailService.getUserProfile(e.currentUserID);
-        OrgList currentUserList = OrgList(
+        final OrgList currentUserList = OrgList(
             primaryColor: currentUser.primaryColor,
             secondaryColor: currentUser.primaryColor,
             abbv: '',
@@ -174,16 +175,11 @@ class CreateEventBloc extends Bloc<CreateEventEvent, CreateEventState> {
           saveFailureOrSuccessOption: none(),
         );
         if (state.event.failureOption.isNone()) {
-          failureOrSuccess = state.isEditing
-              ? await _calendarService.update(
-                  event: state.event,
-                  categories: state.categories,
-                  orgID: state.id)
-              : await _calendarService.create(
-                  profileImageUrl: profileImageUrl,
-                  event: state.event,
-                  categories: state.categories,
-                  orgID: state.id);
+          failureOrSuccess = await _calendarService.create(
+              profileImageUrl: profileImageUrl,
+              event: state.event,
+              categories: state.categories,
+              orgID: state.id);
         }
         if (failureOrSuccess.isRight()) {
           await _analyticsService.logEventCreated(

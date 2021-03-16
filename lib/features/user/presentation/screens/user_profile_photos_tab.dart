@@ -19,17 +19,19 @@ class UserProfilePhotosTab extends StatefulWidget {
 }
 
 class _UserProfilePhotosTabState extends State<UserProfilePhotosTab> {
+  @override
   void initState() {
     super.initState();
     _setupPhotos();
   }
 
-  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+  final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
 
   List<Photo> _photos = [];
 
-  _setupPhotos() async {
-    List<Photo> photos = await DatabaseService.getUserPhotos(widget.userID);
+  Future<void> _setupPhotos() async {
+    final List<Photo> photos =
+        await DatabaseService.getUserPhotos(widget.userID);
     setState(() {
       _photos = photos;
     });
@@ -37,53 +39,52 @@ class _UserProfilePhotosTabState extends State<UserProfilePhotosTab> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: SafeArea(
-        top: false,
-        bottom: false,
-        child: RefreshIndicator(
-            onRefresh: () => _setupPhotos(),
-            child: Builder(builder: (BuildContext context) {
-              return CustomScrollView(
-                key: PageStorageKey<String>(widget.name),
-                slivers: <Widget>[
-                  SliverPadding(
-                    padding: const EdgeInsets.all(8.0),
-                    sliver: SliverGrid(
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        ///no.of items in the horizontal axis
-                        crossAxisSpacing: 8.0,
-                        mainAxisSpacing: 8.0,
-                        crossAxisCount: 2,
-                      ),
-                      delegate: SliverChildBuilderDelegate(
-                        (BuildContext context, int index) {
-                          // This builder is called for each child.
-                          // In this example, we just number each list item.
-                          Photo photo = _photos[index];
-                          return OpenContainer<bool>(
-                              transitionType: _transitionType,
-                              openBuilder:
-                                  (BuildContext _, VoidCallback openContainer) {
-                                return EventDetailImage(photo.imageUrl);
-                              },
-                              closedShape: const RoundedRectangleBorder(),
-                              closedElevation: 0.0,
-                              closedBuilder:
-                                  (BuildContext _, VoidCallback openContainer) {
-                                return PhotoView(
-                                  photo: photo,
-                                );
-                              });
-                        },
-                        childCount: _photos.length,
-                      ),
+    return SafeArea(
+      top: false,
+      bottom: false,
+      child: RefreshIndicator(
+          onRefresh: () => _setupPhotos(),
+          child: Builder(builder: (BuildContext context) {
+            return CustomScrollView(
+              key: PageStorageKey<String>(widget.name),
+              slivers: <Widget>[
+                SliverPadding(
+                  padding: const EdgeInsets.all(8.0),
+                  sliver: SliverGrid(
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                      ///no.of items in the horizontal axis
+                      crossAxisSpacing: 8.0,
+                      mainAxisSpacing: 8.0,
+                      crossAxisCount: 2,
+                    ),
+                    delegate: SliverChildBuilderDelegate(
+                      (BuildContext context, int index) {
+                        // This builder is called for each child.
+                        // In this example, we just number each list item.
+                        final Photo photo = _photos[index];
+                        return OpenContainer<bool>(
+                            transitionType: _transitionType,
+                            openBuilder:
+                                (BuildContext _, VoidCallback openContainer) {
+                              return EventDetailImage(photo.imageUrl);
+                            },
+                            closedShape: const RoundedRectangleBorder(),
+                            closedElevation: 0.0,
+                            closedBuilder:
+                                (BuildContext _, VoidCallback openContainer) {
+                              return PhotoView(
+                                photo: photo,
+                              );
+                            });
+                      },
+                      childCount: _photos.length,
                     ),
                   ),
-                ],
-              );
-            })),
-      ),
+                ),
+              ],
+            );
+          })),
     );
   }
 }

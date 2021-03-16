@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_image_compress/flutter_image_compress.dart';
 import 'package:meta/meta.dart';
 import 'package:rxdart/rxdart.dart';
@@ -12,7 +13,6 @@ import 'package:uuid/uuid.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/activity/domain/activity.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
-import 'package:vybrnt_mvp/features/activity/repository/activity_dtos.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 import 'package:vybrnt_mvp/features/organization/services/org_dtos.dart';
@@ -47,7 +47,7 @@ class PostRepository implements IPostRepository {
     }
     yield* postsRef
         .doc(postCollectionID)
-        .collection(type + 'Posts')
+        .collection('${type}Posts')
         .orderBy('postTime', descending: true)
         .snapshots()
         .map(
@@ -61,7 +61,7 @@ class PostRepository implements IPostRepository {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const PostFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const PostFailure.unexpected());
       }
     });
@@ -75,7 +75,7 @@ class PostRepository implements IPostRepository {
 
       await postsRef
           .doc(ownerID)
-          .collection(OwnerTypeHelper.stringOf(ownerType) + "Posts")
+          .collection("${OwnerTypeHelper.stringOf(ownerType)}Posts")
           .doc(post.postID.getOrCrash())
           .delete();
 
@@ -85,8 +85,8 @@ class PostRepository implements IPostRepository {
       await bookmarksRef.doc(post.postID.getOrCrash()).delete();
       return right(success);
     } catch (e) {
-      print(e.toString());
-      return left(PostFailure.unexpected());
+      debugPrint(e.toString());
+      return left(const PostFailure.unexpected());
     }
   }
 
@@ -119,7 +119,7 @@ class PostRepository implements IPostRepository {
     if (userDoc.exists) {
       return UserDto.fromFirestore(userDoc).toDomain();
     }
-    print("reached user doesn't exist");
+    debugPrint("reached user doesn't exist");
     return User.empty();
   }
 
@@ -143,7 +143,7 @@ class PostRepository implements IPostRepository {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const PostFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const PostFailure.unexpected());
       }
     });
@@ -161,7 +161,7 @@ class PostRepository implements IPostRepository {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const PostFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const PostFailure.unexpected());
       }
     });
@@ -181,7 +181,7 @@ class PostRepository implements IPostRepository {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const PostFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const PostFailure.unexpected());
       }
     });
@@ -200,7 +200,7 @@ class PostRepository implements IPostRepository {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const PostFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const PostFailure.unexpected());
       }
     });
@@ -208,7 +208,7 @@ class PostRepository implements IPostRepository {
 
   @override
   Stream<Either<PostFailure, KtList<Post>>> watchPostBookmarks() async* {
-    String currentUserID = await _firestore.currentUserID();
+    final String currentUserID = await _firestore.currentUserID();
 
     yield* userBookmarksRef
         .doc(currentUserID)
@@ -222,7 +222,7 @@ class PostRepository implements IPostRepository {
       if (e is FirebaseException && e.message.contains('PERMISSION_DENIED')) {
         return left(const PostFailure.insufficientPermissions());
       } else {
-        print(e);
+        debugPrint(e.toString());
         return left(const PostFailure.unexpected());
       }
     });
@@ -242,7 +242,7 @@ class PostRepository implements IPostRepository {
       await _activityService.addLikeToActivityFeed(post);
       return right(success);
     } catch (e) {
-      return left(PostFailure.unexpected());
+      return left(const PostFailure.unexpected());
     }
   }
 
@@ -261,7 +261,7 @@ class PostRepository implements IPostRepository {
 
       return right(success);
     } catch (e) {
-      return left(PostFailure.unexpected());
+      return left(const PostFailure.unexpected());
     }
   }
 
@@ -270,7 +270,7 @@ class PostRepository implements IPostRepository {
       String currentUserID, Post post) async {
     Unit success;
     try {
-      String newRepostID =
+      final String newRepostID =
           postsRef.doc(currentUserID).collection('userPosts').doc().id;
 
       repostsRef
@@ -287,7 +287,7 @@ class PostRepository implements IPostRepository {
 
       return right(success);
     } catch (e) {
-      return left(PostFailure.unexpected());
+      return left(const PostFailure.unexpected());
     }
   }
 
@@ -335,13 +335,13 @@ class PostRepository implements IPostRepository {
     try {
       Unit success;
 
-      DocumentSnapshot ds = await repostsRef
+      final DocumentSnapshot ds = await repostsRef
           .doc(post.postID.getOrCrash())
           .collection('postReposts')
           .doc(currentUserID)
           .get();
 
-      String repostID = ds.get('repostID');
+      final repostID = ds.get('repostID');
 
       repostsRef
           .doc(post.postID.getOrCrash())
@@ -351,14 +351,14 @@ class PostRepository implements IPostRepository {
       postsRef
           .doc(currentUserID)
           .collection('userPosts')
-          .doc(repostID)
+          .doc(repostID.toString())
           .delete();
 
       //await removeRepostFromActivityFeed(post, repostID);
 
       return right(success);
     } catch (e) {
-      return left(PostFailure.unexpected());
+      return left(const PostFailure.unexpected());
     }
   }
 
@@ -380,7 +380,7 @@ class PostRepository implements IPostRepository {
           .set(PostDTO.fromDomain(post).toJson());
       return right(success);
     } catch (e) {
-      return left(PostFailure.unexpected());
+      return left(const PostFailure.unexpected());
     }
   }
 
@@ -401,28 +401,29 @@ class PostRepository implements IPostRepository {
           .delete();
       return right(success);
     } catch (e) {
-      return left(PostFailure.unexpected());
+      return left(const PostFailure.unexpected());
     }
   }
 
   @override
   Future<String> uploadPostImage(File imageFile) async {
-    String eventImageId = Uuid().v4();
-    File image = await compressImage(eventImageId, imageFile);
-    StorageUploadTask uploadTask = storageRef
+    final String eventImageId = Uuid().v4();
+    final File image = await compressImage(eventImageId, imageFile);
+    final StorageUploadTask uploadTask = storageRef
         .child('images/events/event_$eventImageId.jpg')
         .putFile(image);
-    StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
-    String downloadUrl = await storageSnap.ref.getDownloadURL();
-    return downloadUrl;
+    final StorageTaskSnapshot storageSnap = await uploadTask.onComplete;
+    final downloadUrl = await storageSnap.ref.getDownloadURL();
+    return downloadUrl.toString();
   }
 
   Future<File> compressImage(String imageID, File image) async {
     final tempDir = await getTemporaryDirectory();
     final path = tempDir.path;
-    File compressedImageFile = await FlutterImageCompress.compressAndGetFile(
-        image.absolute.path, '$path/img_$imageID.jpg',
-        quality: 70);
+    final File compressedImageFile =
+        await FlutterImageCompress.compressAndGetFile(
+            image.absolute.path, '$path/img_$imageID.jpg',
+            quality: 70);
     return compressedImageFile;
   }
 
@@ -431,7 +432,7 @@ class PostRepository implements IPostRepository {
       Post post, Comment comment) async {
     final currentUserID = await _firestore.currentUserID();
     try {
-      String newCommentID = commentsRef
+      final String newCommentID = commentsRef
           .doc(post.postID.getOrCrash())
           .collection('postComments')
           .doc()
@@ -450,8 +451,10 @@ class PostRepository implements IPostRepository {
           .doc(post.postID.getOrCrash())
           .collection('postComments')
           .snapshots()
-          .map((snapshots) =>
-              snapshots.docs.map((doc) => doc['senderID']).toSet().toList())
+          .map((snapshots) => snapshots.docs
+              .map((doc) => doc['senderID'].toString())
+              .toSet()
+              .toList())
           .first;
       await _activityService.addCommentToActivityFeed(
           post, newComment, ownersOfComments);
@@ -496,7 +499,7 @@ class PostRepository implements IPostRepository {
       @required String orgID}) async {
     try {
       final currentUserID = await _firestore.currentUserID();
-      String newPostID =
+      final String newPostID =
           postsRef.doc(currentUserID).collection('userPosts').doc().id;
 
       if (orgID.isEmpty || orgID.contains("Empty")) {
@@ -551,14 +554,14 @@ class PostRepository implements IPostRepository {
     DocumentSnapshot postDoc;
 
     postDoc =
-        await postsRef.doc(typeID).collection(type + 'Posts').doc(postID).get();
+        await postsRef.doc(typeID).collection('${type}Posts').doc(postID).get();
 
     return PostDTO.fromFirestore(postDoc).toDomain();
   }
 }
 
 String _getOwnerID(Post post) {
-  String ownerID = post.repostID.getOrCrash().isNotEmpty
+  final String ownerID = post.repostID.getOrCrash().isNotEmpty
       ? post.repostID.getOrCrash()
       : post.orgID.getOrCrash().isNotEmpty
           ? post.orgID.getOrCrash()
@@ -567,10 +570,10 @@ String _getOwnerID(Post post) {
 }
 
 OwnerType _getOwnerType(Post post) {
-  OwnerType ownerType = post.repostID.getOrCrash().isNotEmpty
-      ? OwnerType.USER
+  final OwnerType ownerType = post.repostID.getOrCrash().isNotEmpty
+      ? OwnerType.user
       : post.orgID.getOrCrash().isEmpty
-          ? OwnerType.USER
-          : OwnerType.ORG;
+          ? OwnerType.user
+          : OwnerType.org;
   return ownerType;
 }

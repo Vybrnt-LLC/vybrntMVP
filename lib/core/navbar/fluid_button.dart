@@ -6,21 +6,21 @@ import 'package:vybrnt_mvp/core/navbar/tab_color.dart';
 import './fluid_icon.dart';
 import './curves.dart';
 
-typedef void FluidNavBarButtonPressedCallback();
+typedef FluidNavBarButtonPressedCallback = void Function();
 
 class FluidNavBarButton extends StatefulWidget {
-  static const nominalExtent = const Size(64, 64);
+  static const nominalExtent = Size(64, 64);
 
   final FluidFillIconData _iconData;
   final bool _selected;
   final FluidNavBarButtonPressedCallback _onPressed;
-  final dynamic _icon;
+  final Widget _icon;
 
-  FluidNavBarButton(
+  const FluidNavBarButton(
       {FluidFillIconData iconData,
       bool selected,
       FluidNavBarButtonPressedCallback onPressed,
-      dynamic icon})
+      Widget icon})
       : _iconData = iconData,
         _selected = selected,
         _onPressed = onPressed,
@@ -28,7 +28,9 @@ class FluidNavBarButton extends StatefulWidget {
 
   @override
   State createState() {
-    return _FluidNavBarButtonState(_iconData, _selected, _onPressed, _icon);
+    // ignore: no_logic_in_create_state
+    return _FluidNavBarButtonState(
+        selected: _selected, onPressed: _onPressed, icon: _icon);
   }
 }
 
@@ -41,13 +43,13 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton>
   //FluidFillIconData _iconData;
   bool _selected;
   FluidNavBarButtonPressedCallback _onPressed;
-  dynamic _icon;
+  Widget _icon;
 
   AnimationController _animationController;
   Animation<double> _animation;
 
-  _FluidNavBarButtonState(FluidFillIconData iconData, bool selected,
-      FluidNavBarButtonPressedCallback onPressed, dynamic icon)
+  _FluidNavBarButtonState(
+      {bool selected, FluidNavBarButtonPressedCallback onPressed, Widget icon})
       : // _iconData = iconData,
         _selected = selected,
         _onPressed = onPressed,
@@ -76,10 +78,11 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton>
   }
 
   @override
-  Widget build(context) {
+  Widget build(BuildContext context) {
     final tabColor = Provider.of<TabColor>(context).color;
     const ne = FluidNavBarButton.nominalExtent;
-    final offsetCurve = _selected ? ElasticOutCurve(0.38) : Curves.easeInQuint;
+    final offsetCurve =
+        _selected ? const ElasticOutCurve(0.38) : Curves.easeInQuint;
     //final scaleCurve = _selected ? CenteredElasticOutCurve(0.6) : CenteredElasticInCurve(0.6);
 
     final progress = LinearPointCurve(0.28, 0.0).transform(_animation.value);
@@ -101,10 +104,10 @@ class _FluidNavBarButtonState extends State<FluidNavBarButton>
         child: Container(
           // This container just draws a circle with a certain radius and offset
           margin: EdgeInsets.all(ne.width / 2 - _radius),
-          constraints: BoxConstraints.tight(Size.square(_radius * 2)),
+          constraints: BoxConstraints.tight(const Size.square(_radius * 2)),
           decoration: ShapeDecoration(
             color: tabColor,
-            shape: CircleBorder(),
+            shape: const CircleBorder(),
           ),
           transform: Matrix4.translationValues(0, -offset, 0),
           // Create a fluid fill icon that get's filled in with a slight delay to the buttons animation

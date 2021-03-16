@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:animations/animations.dart';
 
 import 'package:flutter/material.dart';
@@ -37,7 +38,7 @@ class CategoryFeed extends StatefulWidget {
 }
 
 class _CategoryFeedState extends State<CategoryFeed> {
-  ContainerTransitionType _transitionType = ContainerTransitionType.fade;
+  final ContainerTransitionType _transitionType = ContainerTransitionType.fade;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController _scrollController;
 
@@ -70,7 +71,7 @@ class _CategoryFeedState extends State<CategoryFeed> {
                     child: CircularProgressIndicator(),
                   ),
               loadFailure: (state) {
-                return Icon(
+                return const Icon(
                     Icons.error_outline); // return CriticalFailureDisplay(
                 //   failure: state.eventFailure,
                 // );
@@ -91,66 +92,93 @@ class _CategoryFeedState extends State<CategoryFeed> {
                           padding: const EdgeInsets.fromLTRB(10, 10, 0, 2),
                           child: Text(
                             'Campus Events',
-                            style: TextStyle(fontSize: 18),
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),
-                      SliverPersistentHeader(
-                          pinned: false,
-                          delegate: SliverHomeEventDelegate(
-                            eventList: BlocBuilder<CategoryEventsBloc,
-                                CategoryEventsState>(builder: (context, state) {
-                              return state.map(
-                                initial: (_) => Container(),
-                                loadInProgress: (_) => const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                                loadFailure: (state) {
-                                  return Icon(Icons
-                                      .error_outline); // return CriticalFailureDisplay(
-                                  //   failure: state.eventFailure,
-                                  // );
-                                },
-                                loadSuccess: (state) {
-                                  return Container(
-                                    child: ListView.builder(
-                                      padding: EdgeInsets.all(5.0),
-                                      physics: ClampingScrollPhysics(),
-                                      shrinkWrap: true,
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount: state.events.size,
-                                      itemBuilder:
-                                          (BuildContext context, int index) =>
-                                              Padding(
-                                        key: ObjectKey(state.events[index]),
-                                        padding: EdgeInsets.all(8),
-                                        child: _OpenContainerWrapper(
-                                            event: state.events[index],
-                                            transitionType: _transitionType,
-                                            closedBuilder: (BuildContext _,
-                                                VoidCallback openContainer) {
-                                              return _InkWellOverlay(
-                                                openContainer: openContainer,
-                                                width: 250,
-                                                child: EventCard(
-                                                    key: ObjectKey(
-                                                        state.events[index]),
-                                                    event: state.events[index]),
-                                              );
-                                            }),
-                                      ),
-                                    ),
-                                  );
-                                },
-                              );
-                            }),
-                          )),
+                      SliverPersistentHeader(delegate: SliverHomeEventDelegate(
+                        eventList: BlocBuilder<CategoryEventsBloc,
+                            CategoryEventsState>(builder: (context, state) {
+                          return state.map(
+                            initial: (_) => Container(),
+                            loadInProgress: (_) => const Center(
+                              child: CircularProgressIndicator(),
+                            ),
+                            loadFailure: (state) {
+                              return const Icon(Icons
+                                  .error_outline); // return CriticalFailureDisplay(
+                              //   failure: state.eventFailure,
+                              // );
+                            },
+                            loadSuccess: (state) {
+                              if (state.events.isEmpty()) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Center(
+                                      child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      const SizedBox(
+                                          width: 20.0, height: 100.0),
+                                      Text("Find Your",
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1),
+                                      const SizedBox(
+                                          width: 10.0, height: 100.0),
+                                      RotateAnimatedTextKit(
+                                          repeatForever: true,
+                                          //duration: Duration(minutes: 1),
+                                          text: const [
+                                            "Home",
+                                            "Vybe",
+                                            "Opportunities"
+                                          ],
+                                          textStyle: Theme.of(context)
+                                              .textTheme
+                                              .subtitle1),
+                                    ],
+                                  )),
+                                );
+                              } else {
+                                return ListView.builder(
+                                  padding: const EdgeInsets.all(5.0),
+                                  physics: const ClampingScrollPhysics(),
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: state.events.size,
+                                  itemBuilder:
+                                      (BuildContext context, int index) =>
+                                          Padding(
+                                    key: ObjectKey(state.events[index]),
+                                    padding: const EdgeInsets.all(8),
+                                    child: _OpenContainerWrapper(
+                                        event: state.events[index],
+                                        transitionType: _transitionType,
+                                        closedBuilder: (BuildContext _,
+                                            VoidCallback openContainer) {
+                                          return _InkWellOverlay(
+                                            openContainer: openContainer,
+                                            width: 250,
+                                            child: EventCard(
+                                                key: ObjectKey(
+                                                    state.events[index]),
+                                                event: state.events[index]),
+                                          );
+                                        }),
+                                  ),
+                                );
+                              }
+                            },
+                          );
+                        }),
+                      )),
                       SliverToBoxAdapter(
                         child: Padding(
                           padding: const EdgeInsets.fromLTRB(10, 2, 0, 2),
                           child: Text(
-                            'Post Feed',
-                            style: TextStyle(fontSize: 18),
+                            'Latests Posts',
+                            style: Theme.of(context).textTheme.subtitle1,
                           ),
                         ),
                       ),
@@ -178,16 +206,13 @@ class _CategoryFeedState extends State<CategoryFeed> {
                                                 senderID: state
                                                     .posts[index].senderID
                                                     .getOrCrash())),
-                                      child: Container(
-                                          child: PostCard(
-                                              key:
-                                                  ObjectKey(state.posts[index]),
-                                              //user: _profileUser,
-                                              post: state.posts[index],
-                                              color: HomeCategories
-                                                  .predefinedColors[
-                                                      widget.index]
-                                                  .color))),
+                                      child: PostCard(
+                                          key: ObjectKey(state.posts[index]),
+                                          //user: _profileUser,
+                                          post: state.posts[index],
+                                          color: HomeCategories
+                                              .predefinedColors[widget.index]
+                                              .color)),
                                 );
                               },
                             );
@@ -211,7 +236,7 @@ class _OpenContainerWrapper extends StatelessWidget {
     this.event,
   });
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Event event;
@@ -250,7 +275,7 @@ class _OpenContainerPostWrapper extends StatelessWidget {
     this.index,
   }) : super(key: key);
 
-  final OpenContainerBuilder closedBuilder;
+  final CloseContainerBuilder closedBuilder;
   final ContainerTransitionType transitionType;
   final ClosedCallback<bool> onClosed;
   final Post post;

@@ -5,8 +5,9 @@ import 'package:vybrnt_mvp/core/navbar/curves.dart';
 import 'package:vybrnt_mvp/core/navbar/fluid_button.dart';
 import 'package:vybrnt_mvp/core/navbar/fluid_icon.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_color.dart';
+import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 
-typedef void NavBarChangeCallback(int selectedIndex);
+typedef NavBarChangeCallback = void Function(int selectedIndex);
 
 class NavBar extends StatefulWidget {
   static const double nominalHeight = 63.0;
@@ -15,7 +16,7 @@ class NavBar extends StatefulWidget {
 
   final NavBarChangeCallback onChange;
 
-  NavBar({this.onChange, this.onSelectTab});
+  const NavBar({this.onChange, this.onSelectTab});
 
   @override
   State createState() => _NavBarState();
@@ -58,12 +59,12 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
   }
 
   @override
-  Widget build(context) {
-    Color tabColor = Provider.of<TabColor>(context).color;
+  Widget build(BuildContext context) {
+    final Color tabColor = Provider.of<TabColor>(context).color;
     // The fluid nav bar consists of two components, the liquid background pane and the buttons
     // Build a stack with the buttons overlayed on top of the background pane
     final appSize = MediaQuery.of(context).size;
-    final height = NavBar.nominalHeight;
+    const height = NavBar.nominalHeight;
     return Container(
       width: appSize.width,
       height: NavBar.nominalHeight,
@@ -93,7 +94,7 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
 
   Widget _buildBackground(Color tabColor) {
     // This widget acts purely as a container that controlls how the `_BackgroundCurvePainter` draws
-    final inCurve = ElasticOutCurve(0.38);
+    const inCurve = ElasticOutCurve(0.38);
     return CustomPaint(
       painter: _BackgroundCurvePainter(
         _xController.value * MediaQuery.of(context).size.width,
@@ -107,7 +108,7 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
   }
 
   List<FluidNavBarButton> _buildButtons(Color tabColor) {
-    List<FluidFillIconData> icons = [
+    final List<FluidFillIconData> icons = [
       FluidFillIcons.home,
       FluidFillIcons.calendar,
       FluidFillIcons.organizations,
@@ -116,37 +117,37 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
     ];
 
     List<dynamic> newIcons = [
-      new Tab(
+      const Tab(
         icon: Icon(
           MdiIcons.homeVariant,
           color: Colors.white,
         ),
       ),
-      new Tab(
+      const Tab(
         icon: Icon(
           MdiIcons.calendarBlank,
           color: Colors.white,
         ),
       ),
-      new Tab(icon: Icon(Icons.search, color: Colors.white)),
-      new Tab(
+      const Tab(icon: Icon(Icons.search, color: Colors.white)),
+      const Tab(
         icon: Icon(
           Icons.notifications,
           color: Colors.white,
         ),
       ),
-      new Tab(
+      const Tab(
         icon: Icon(
           Icons.person,
           color: Colors.white,
         ),
       ),
     ];
-    var buttons = List<FluidNavBarButton>(5);
+    final buttons = List<FluidNavBarButton>(5);
     for (var i = 0; i < 5; ++i) {
       buttons[i] = FluidNavBarButton(
           iconData: icons[i],
-          icon: newIcons[i],
+          icon: newIcons[i] as Widget,
           selected: _selectedIndex == i,
           onPressed: () => _handlePressed(i));
     }
@@ -174,10 +175,11 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
   }
 
   void _handlePressed(int index) {
-    if (_selectedIndex == index || _xController.isAnimating) {
-      Navigator.of(context).popUntil(ModalRoute.withName("/"));
-      return;
-    }
+    // if (_selectedIndex == index) {
+    //   TabNavigatorProvider.of(context).popToRoot(context);
+    //   //Navigator.of(context).popUntil(ModalRoute.withName("/"));
+    //   return;
+    // }
 
     setState(() {
       _selectedIndex = index;
@@ -186,14 +188,15 @@ class _NavBarState extends State<NavBar> with TickerProviderStateMixin {
     _yController.value = 1.0;
     _xController.animateTo(
         _indexToPosition(index) / MediaQuery.of(context).size.width,
-        duration: Duration(milliseconds: 620));
+        duration: const Duration(milliseconds: 620));
     Future.delayed(
-      Duration(milliseconds: 500),
+      const Duration(milliseconds: 500),
       () {
-        _yController.animateTo(1.0, duration: Duration(milliseconds: 1200));
+        _yController.animateTo(1.0,
+            duration: const Duration(milliseconds: 1200));
       },
     );
-    _yController.animateTo(0.0, duration: Duration(milliseconds: 300));
+    _yController.animateTo(0.0, duration: const Duration(milliseconds: 300));
 
     if (widget.onChange != null) {
       widget.onChange(index);
@@ -226,7 +229,7 @@ class _BackgroundCurvePainter extends CustomPainter {
         _color = color;
 
   @override
-  void paint(canvas, size) {
+  void paint(Canvas canvas, Size size) {
     // Paint two cubic bezier curves using various linear interpolations based off of the `_normalizedY` value
     final norm = LinearPointCurve(0.5, 2.0).transform(_normalizedY) / 2;
 

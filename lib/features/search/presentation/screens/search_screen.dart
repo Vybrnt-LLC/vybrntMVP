@@ -8,7 +8,6 @@ import 'package:hidden_drawer_menu/controllers/simple_hidden_drawer_controller.d
 import 'package:vybrnt_mvp/core/injection.dart';
 import 'package:vybrnt_mvp/core/navbar/tab_navigator_provider.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
-import 'package:vybrnt_mvp/core/swipe_menu/widgets/simple_hidden_drawer_provider.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
 import 'package:vybrnt_mvp/features/search/application/bloc/search_bloc.dart';
 import 'package:vybrnt_mvp/features/user/application/fab_bloc/fab_bloc.dart';
@@ -26,7 +25,7 @@ class SearchScreen extends StatefulWidget {
 
 class _SearchScreenState extends State<SearchScreen>
     with TickerProviderStateMixin {
-  TextEditingController _searchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
   ScrollController _scrollViewController;
 
   // TextEditingController _searchOrgController = TextEditingController();
@@ -34,7 +33,7 @@ class _SearchScreenState extends State<SearchScreen>
 
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  _buildUserTile(UserList user) {
+  Widget _buildUserTile(UserList user) {
     return ListTile(
       key: ObjectKey(user),
       leading: CircleAvatar(
@@ -43,7 +42,7 @@ class _SearchScreenState extends State<SearchScreen>
         child: CircleAvatar(
           radius: 20.0,
           backgroundImage: user.profileImageUrl.isEmpty
-              ? AssetImage('assets/images/user_placeholder.png')
+              ? Image.asset('assets/images/user_placeholder.png').image
               : CachedNetworkImageProvider(user.profileImageUrl),
         ),
       ),
@@ -53,7 +52,7 @@ class _SearchScreenState extends State<SearchScreen>
     );
   }
 
-  _buildOrgTile(OrgList org) {
+  Widget _buildOrgTile(OrgList org) {
     return ListTile(
         key: ObjectKey(org),
         leading: Container(
@@ -64,10 +63,10 @@ class _SearchScreenState extends State<SearchScreen>
           child: GFAvatar(
             shape: GFAvatarShape.square,
             borderRadius: BorderRadius.circular(9),
-            radius: 15.0,
+            radius: 18.0,
             backgroundColor: Colors.white,
             backgroundImage: org.profileImageUrl.isEmpty
-                ? AssetImage('assets/images/user_placeholder.png')
+                ? Image.asset('assets/images/user_placeholder.png').image
                 : CachedNetworkImageProvider(org.profileImageUrl),
           ),
         ),
@@ -77,7 +76,7 @@ class _SearchScreenState extends State<SearchScreen>
     // });
   }
 
-  _clearSearch() {
+  void _clearSearch() {
     WidgetsBinding.instance
         .addPostFrameCallback((_) => _searchController.clear());
     // WidgetsBinding.instance
@@ -125,13 +124,13 @@ class _SearchScreenState extends State<SearchScreen>
                       forceElevated: boxIsScrolled,
                       bottom: TabBar(
                         controller: _controller,
-                        tabs: [
+                        tabs: const [
                           Tab(icon: Icon(Icons.group), text: 'Orgs'),
                           Tab(icon: Icon(Icons.person), text: 'Users'),
                         ],
                       ),
                       leading: IconButton(
-                          icon: Icon(Icons.menu),
+                          icon: const Icon(Icons.menu),
                           onPressed: () {
                             SimpleHiddenDrawerController.of(context).toggle();
                           }),
@@ -152,26 +151,22 @@ class _SearchScreenState extends State<SearchScreen>
                             }
                           }
                         },
-                        style: GoogleFonts.getFont('Barlow Condensed',
-                            fontWeight: FontWeight.bold,
-                            fontStyle: FontStyle.italic,
-                            fontSize: 20,
-                            color: Colors.white),
+                        style: Theme.of(context).textTheme.subtitle1,
                         decoration: InputDecoration(
-                            focusedBorder: UnderlineInputBorder(
+                            focusedBorder: const UnderlineInputBorder(
                               borderSide: BorderSide(color: Colors.blue),
                             ),
                             contentPadding:
-                                EdgeInsets.symmetric(vertical: 15.0),
+                                const EdgeInsets.symmetric(vertical: 15.0),
                             border: InputBorder.none,
                             hintText: 'Enter Search',
-                            hintStyle: TextStyle(color: Colors.white),
+                            hintStyle: const TextStyle(color: Colors.white),
                             fillColor: Colors.white,
                             suffixIcon: IconButton(
-                                icon: Icon(
+                                icon: const Icon(
                                   Icons.clear,
                                 ),
-                                onPressed: _clearSearch())),
+                                onPressed: () => _clearSearch())),
                       ),
                     ),
                   ];
@@ -180,7 +175,7 @@ class _SearchScreenState extends State<SearchScreen>
                   Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: CustomScrollView(
-                        key: PageStorageKey<String>('org'),
+                        key: const PageStorageKey<String>('org'),
                         slivers: <Widget>[
                           SliverList(
                             delegate: SliverChildBuilderDelegate(
@@ -197,7 +192,7 @@ class _SearchScreenState extends State<SearchScreen>
                   Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: CustomScrollView(
-                          key: PageStorageKey<String>('qwe'),
+                          key: const PageStorageKey<String>('qwe'),
                           slivers: <Widget>[
                             SliverList(
                               delegate: SliverChildBuilderDelegate(

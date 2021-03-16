@@ -18,6 +18,7 @@ final organizationsRef = _firestore.collection('organizations');
 final calendarOrgsRef = _firestore.collection('calendarOrgs');
 final orgToUserCalendarRef = _firestore.collection('orgToUserCalendar');
 final eventFeedRef = _firestore.collection('eventFeeds');
+final communityEventsRef = _firestore.collection('communityEvents');
 final categoriesRef = _firestore.collection('categories');
 final faqsRef = _firestore.collection('faqs');
 final eboardRef = _firestore.collection('eboard');

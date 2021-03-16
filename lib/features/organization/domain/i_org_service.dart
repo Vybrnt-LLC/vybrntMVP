@@ -32,7 +32,7 @@ abstract class IOrgService {
   Stream<KtList<String>> admins(String orgID);
   Stream<KtList<String>> members(String orgID);
   Stream<Either<EventFailure, KtList<Event>>> watchOrgEvents(
-      String orgID, bool isOrg);
+      {String orgID, bool isOrg});
   Future<Either<OrgFailure, Unit>> updateOrganization(Organization org);
   Future<Either<OrgFailure, Unit>> createOrganization(Organization org);
   Stream<KtList<FAQ>> watchFAQ(String orgID);
@@ -41,7 +41,7 @@ abstract class IOrgService {
   Future addEMember(EMember eMember, String orgID);
   Future removeEMember(String userID, String orgID);
   Future addFAQ(FAQ faq, String orgID);
-  Future removeFAQ(String faqID, orgID);
+  Future removeFAQ(String faqID, String orgID);
   Future<String> uploadOrgProfileImage(String url, File imageFile);
   Future<String> uploadOrgBannerImage(String url, File imageFile);
   Future<File> compressImage(String photoId, File image);

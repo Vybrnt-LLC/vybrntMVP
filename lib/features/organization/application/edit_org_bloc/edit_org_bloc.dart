@@ -80,9 +80,11 @@ class EditOrgBloc extends Bloc<EditOrgEvent, EditOrgState> {
         );
         if (state.org.failureOption.isNone()) {
           failureOrSuccess = await _orgService.createOrganization(state.org);
-          add(EditOrgEvent.eMemberSelected(
-              UniqueId.fromUniqueString(e.currentUserID)));
-          add(EditOrgEvent.addEMember(state.org.orgID.getOrCrash()));
+          // add(EditOrgEvent.eMemberSelected(
+          //     UniqueId.fromUniqueString(e.currentUserID)));
+
+          add(EditOrgEvent.addEMember(
+              state.org.orgID.getOrCrash(), state.eMember));
           //yield initialState;
         }
 
@@ -94,7 +96,7 @@ class EditOrgBloc extends Bloc<EditOrgEvent, EditOrgState> {
           eMember: EMember.empty(),
         );
       } else {
-        failureOrSuccess = left(OrgFailure.unableToUpdate());
+        failureOrSuccess = left(const OrgFailure.unableToUpdate());
         yield state.copyWith(
           isSaving: false,
           showErrorMessages: true,
@@ -118,7 +120,7 @@ class EditOrgBloc extends Bloc<EditOrgEvent, EditOrgState> {
           saveFailureOrSuccessOption: optionOf(failureOrSuccess),
         );
       } else {
-        failureOrSuccess = left(OrgFailure.emptyEMember());
+        failureOrSuccess = left(const OrgFailure.emptyEMember());
         yield state.copyWith(
           isSaving: false,
           showErrorMessages: true,
@@ -126,13 +128,17 @@ class EditOrgBloc extends Bloc<EditOrgEvent, EditOrgState> {
         );
       }
     }, addEMember: (e) async* {
-      await _orgService.addEMember(state.eMember, e.orgID);
+      final eMember =
+          state.eMember.position.isEmpty ? e.eMember : state.eMember;
+      await _orgService.addEMember(eMember, e.orgID);
     }, removeEMember: (e) async* {
       if (state.eboard.size > 1) {
         await _orgService.removeEMember(e.userID, e.orgID);
       }
     }, eMemberSelected: (e) async* {
-      yield state.copyWith(eMember: state.eMember.copyWith(userID: e.userID));
+      yield state.copyWith(
+          saveFailureOrSuccessOption: none(),
+          eMember: state.eMember.copyWith(userID: e.userID));
     }, positionChanged: (e) async* {
       yield state.copyWith(
           saveFailureOrSuccessOption: none(),
@@ -152,14 +158,14 @@ class EditOrgBloc extends Bloc<EditOrgEvent, EditOrgState> {
     }, removeFAQ: (e) async* {
       await _orgService.removeFAQ(e.faqID, e.orgID);
     }, orgProfileImageChanged: (e) async* {
-      String profileImageUrl =
+      final String profileImageUrl =
           await _orgService.uploadOrgProfileImage(e.url, e.image);
       yield state.copyWith(
         saveFailureOrSuccessOption: none(),
         org: state.org.copyWith(profileImageUrl: profileImageUrl),
       );
     }, orgBannerImageChanged: (e) async* {
-      String bannerImageUrl =
+      final String bannerImageUrl =
           await _orgService.uploadOrgBannerImage(e.url, e.image);
       yield state.copyWith(
         saveFailureOrSuccessOption: none(),

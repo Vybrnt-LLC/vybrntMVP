@@ -25,13 +25,13 @@ class ReportScreen extends StatefulWidget {
 
 class _ReportScreenState extends State<ReportScreen> {
   String message = '';
-  final snackBar = SnackBar(content: Text('Report submitted'));
+  final snackBar = const SnackBar(content: Text('Report submitted'));
   @override
   Widget build(BuildContext context) {
     final textEditingController = TextEditingController();
     return Scaffold(
         appBar: AppBar(
-          title: Text(
+          title: const Text(
             'Report Inappropriate or Objectable Content',
             style: TextStyle(fontSize: 15),
           ),
@@ -52,7 +52,7 @@ class _ReportScreenState extends State<ReportScreen> {
                   minLines: 5,
                   onChanged: (value) => message = value,
                 )),
-            SizedBox(
+            const SizedBox(
               height: 15,
             ),
             Center(
@@ -66,10 +66,10 @@ class _ReportScreenState extends State<ReportScreen> {
                     currentUserID: widget.currentUserID,
                     message: message);
                 Scaffold.of(context).showSnackBar(snackBar);
-                await new Future.delayed(new Duration(milliseconds: 1500));
+                await Future.delayed(const Duration(milliseconds: 1500));
                 Navigator.pop(context);
               },
-              child: Text('Save'),
+              child: const Text('Save'),
             ))
           ],
         ));
