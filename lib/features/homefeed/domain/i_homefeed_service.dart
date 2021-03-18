@@ -16,4 +16,5 @@ abstract class IHomeFeedService {
   Stream<Either<PostFailure, KtList<Post>>> watchPostFeedPaginated(
       String currentUserID);
   void resetPostList();
+  Future<bool> showSurvey();
 }

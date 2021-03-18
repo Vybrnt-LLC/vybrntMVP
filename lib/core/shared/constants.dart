@@ -27,9 +27,10 @@ final bookmarksRef = _firestore.collection('bookmarks');
 final userBookmarksRef = _firestore.collection('userBookmarks');
 final blockedRef = _firestore.collection('blocked');
 final reportsRef = _firestore.collection('reports');
+final surveysRef = _firestore.collection('survey');
 
 Color stringToColor(String colorString) {
-  int colorValue = int.parse(colorString, radix: 16);
-  Color color = new Color(colorValue);
+  final int colorValue = int.parse(colorString, radix: 16);
+  final Color color = Color(colorValue);
   return color;
 }

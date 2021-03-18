@@ -222,4 +222,14 @@ class HomeFeedService implements IHomeFeedService {
     _lastDocument = null;
     _hasMorePosts = true;
   }
+
+  @override
+  Future<bool> showSurvey() async {
+    final currentUserID = await _firestore.currentUserID();
+    final counterDoc = await surveysRef.doc(currentUserID).get();
+    final counter = counterDoc.get('counter') as int;
+    final showSurvey = counter / 3 == 0;
+
+    return showSurvey;
+  }
 }

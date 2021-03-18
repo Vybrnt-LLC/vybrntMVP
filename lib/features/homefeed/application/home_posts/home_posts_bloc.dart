@@ -36,10 +36,13 @@ class HomePostsBloc extends Bloc<HomePostsEvent, HomePostsState> {
           //.watchPostFeedPaginated(e.currentUserID)
           .listen((post) => add(HomePostsEvent.postsReceived(post)));
     }, postsReceived: (e) async* {
+      final showSurvey = await _homeFeedService.showSurvey();
       yield e.failureOrNotes.fold(
         (f) => HomePostsState.loadFailure(f),
         (posts) => HomePostsState.loadSuccess(
-            posts), // send the posts back to the requestMoreData
+            posts: posts,
+            showSurvey:
+                showSurvey), // send the posts back to the requestMoreData
       );
     }, requestMoreData: (e) async* {
       _homeFeedService.requestMoreData(e.currentUserID);

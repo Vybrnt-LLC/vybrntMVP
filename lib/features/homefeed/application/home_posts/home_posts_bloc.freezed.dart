@@ -452,9 +452,10 @@ class _$HomePostsStateTearOff {
     return const DataTransferInProgress();
   }
 
-  LoadSuccess loadSuccess(KtList<Post> posts) {
+  LoadSuccess loadSuccess({KtList<Post> posts, bool showSurvey}) {
     return LoadSuccess(
-      posts,
+      posts: posts,
+      showSurvey: showSurvey,
     );
   }
 
@@ -473,14 +474,14 @@ mixin _$HomePostsState {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loadInProgress(),
-    @required Result loadSuccess(KtList<Post> posts),
+    @required Result loadSuccess(KtList<Post> posts, bool showSurvey),
     @required Result loadFailure(PostFailure postFailure),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loadInProgress(),
-    Result loadSuccess(KtList<Post> posts),
+    Result loadSuccess(KtList<Post> posts, bool showSurvey),
     Result loadFailure(PostFailure postFailure),
     @required Result orElse(),
   });
@@ -551,7 +552,7 @@ class _$Initial implements Initial {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loadInProgress(),
-    @required Result loadSuccess(KtList<Post> posts),
+    @required Result loadSuccess(KtList<Post> posts, bool showSurvey),
     @required Result loadFailure(PostFailure postFailure),
   }) {
     assert(initial != null);
@@ -566,7 +567,7 @@ class _$Initial implements Initial {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loadInProgress(),
-    Result loadSuccess(KtList<Post> posts),
+    Result loadSuccess(KtList<Post> posts, bool showSurvey),
     Result loadFailure(PostFailure postFailure),
     @required Result orElse(),
   }) {
@@ -651,7 +652,7 @@ class _$DataTransferInProgress implements DataTransferInProgress {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loadInProgress(),
-    @required Result loadSuccess(KtList<Post> posts),
+    @required Result loadSuccess(KtList<Post> posts, bool showSurvey),
     @required Result loadFailure(PostFailure postFailure),
   }) {
     assert(initial != null);
@@ -666,7 +667,7 @@ class _$DataTransferInProgress implements DataTransferInProgress {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loadInProgress(),
-    Result loadSuccess(KtList<Post> posts),
+    Result loadSuccess(KtList<Post> posts, bool showSurvey),
     Result loadFailure(PostFailure postFailure),
     @required Result orElse(),
   }) {
@@ -717,7 +718,7 @@ abstract class $LoadSuccessCopyWith<$Res> {
   factory $LoadSuccessCopyWith(
           LoadSuccess value, $Res Function(LoadSuccess) then) =
       _$LoadSuccessCopyWithImpl<$Res>;
-  $Res call({KtList<Post> posts});
+  $Res call({KtList<Post> posts, bool showSurvey});
 }
 
 class _$LoadSuccessCopyWithImpl<$Res> extends _$HomePostsStateCopyWithImpl<$Res>
@@ -732,22 +733,27 @@ class _$LoadSuccessCopyWithImpl<$Res> extends _$HomePostsStateCopyWithImpl<$Res>
   @override
   $Res call({
     Object posts = freezed,
+    Object showSurvey = freezed,
   }) {
     return _then(LoadSuccess(
-      posts == freezed ? _value.posts : posts as KtList<Post>,
+      posts: posts == freezed ? _value.posts : posts as KtList<Post>,
+      showSurvey:
+          showSurvey == freezed ? _value.showSurvey : showSurvey as bool,
     ));
   }
 }
 
 class _$LoadSuccess implements LoadSuccess {
-  const _$LoadSuccess(this.posts) : assert(posts != null);
+  const _$LoadSuccess({this.posts, this.showSurvey});
 
   @override
   final KtList<Post> posts;
+  @override
+  final bool showSurvey;
 
   @override
   String toString() {
-    return 'HomePostsState.loadSuccess(posts: $posts)';
+    return 'HomePostsState.loadSuccess(posts: $posts, showSurvey: $showSurvey)';
   }
 
   @override
@@ -755,12 +761,17 @@ class _$LoadSuccess implements LoadSuccess {
     return identical(this, other) ||
         (other is LoadSuccess &&
             (identical(other.posts, posts) ||
-                const DeepCollectionEquality().equals(other.posts, posts)));
+                const DeepCollectionEquality().equals(other.posts, posts)) &&
+            (identical(other.showSurvey, showSurvey) ||
+                const DeepCollectionEquality()
+                    .equals(other.showSurvey, showSurvey)));
   }
 
   @override
   int get hashCode =>
-      runtimeType.hashCode ^ const DeepCollectionEquality().hash(posts);
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(posts) ^
+      const DeepCollectionEquality().hash(showSurvey);
 
   @override
   $LoadSuccessCopyWith<LoadSuccess> get copyWith =>
@@ -771,14 +782,14 @@ class _$LoadSuccess implements LoadSuccess {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loadInProgress(),
-    @required Result loadSuccess(KtList<Post> posts),
+    @required Result loadSuccess(KtList<Post> posts, bool showSurvey),
     @required Result loadFailure(PostFailure postFailure),
   }) {
     assert(initial != null);
     assert(loadInProgress != null);
     assert(loadSuccess != null);
     assert(loadFailure != null);
-    return loadSuccess(posts);
+    return loadSuccess(posts, showSurvey);
   }
 
   @override
@@ -786,13 +797,13 @@ class _$LoadSuccess implements LoadSuccess {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loadInProgress(),
-    Result loadSuccess(KtList<Post> posts),
+    Result loadSuccess(KtList<Post> posts, bool showSurvey),
     Result loadFailure(PostFailure postFailure),
     @required Result orElse(),
   }) {
     assert(orElse != null);
     if (loadSuccess != null) {
-      return loadSuccess(posts);
+      return loadSuccess(posts, showSurvey);
     }
     return orElse();
   }
@@ -830,9 +841,11 @@ class _$LoadSuccess implements LoadSuccess {
 }
 
 abstract class LoadSuccess implements HomePostsState {
-  const factory LoadSuccess(KtList<Post> posts) = _$LoadSuccess;
+  const factory LoadSuccess({KtList<Post> posts, bool showSurvey}) =
+      _$LoadSuccess;
 
   KtList<Post> get posts;
+  bool get showSurvey;
   $LoadSuccessCopyWith<LoadSuccess> get copyWith;
 }
 
@@ -907,7 +920,7 @@ class _$LoadFailure implements LoadFailure {
   Result when<Result extends Object>({
     @required Result initial(),
     @required Result loadInProgress(),
-    @required Result loadSuccess(KtList<Post> posts),
+    @required Result loadSuccess(KtList<Post> posts, bool showSurvey),
     @required Result loadFailure(PostFailure postFailure),
   }) {
     assert(initial != null);
@@ -922,7 +935,7 @@ class _$LoadFailure implements LoadFailure {
   Result maybeWhen<Result extends Object>({
     Result initial(),
     Result loadInProgress(),
-    Result loadSuccess(KtList<Post> posts),
+    Result loadSuccess(KtList<Post> posts, bool showSurvey),
     Result loadFailure(PostFailure postFailure),
     @required Result orElse(),
   }) {
