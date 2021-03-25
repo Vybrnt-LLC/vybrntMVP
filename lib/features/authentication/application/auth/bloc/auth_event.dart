@@ -10,4 +10,8 @@ abstract class AuthEvent with _$AuthEvent {
       SetAnalyticsUserID;
   const factory AuthEvent.navigateTo({String routeName, dynamic arguments}) =
       NavigateTo;
+  const factory AuthEvent.updateCounter(String currentUserID) =
+      updateCounter;
+  const factory AuthEvent.dontShowAgain(String currentUserID) =
+      dontShowAgain;
 }

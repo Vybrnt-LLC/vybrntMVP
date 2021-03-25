@@ -38,6 +38,18 @@ class _$AuthEventTearOff {
       arguments: arguments,
     );
   }
+
+  updateCounter updateCounter(String currentUserID) {
+    return updateCounter(
+      currentUserID,
+    );
+  }
+
+  dontShowAgain dontShowAgain(String currentUserID) {
+    return dontShowAgain(
+      currentUserID,
+    );
+  }
 }
 
 // ignore: unused_element
@@ -51,6 +63,8 @@ mixin _$AuthEvent {
     @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -59,6 +73,8 @@ mixin _$AuthEvent {
     Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -69,6 +85,8 @@ mixin _$AuthEvent {
         Result initializePushNotifications(InitializePushNotifications value),
     @required Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -77,6 +95,8 @@ mixin _$AuthEvent {
     Result initializePushNotifications(InitializePushNotifications value),
     Result setAnalyticsUserID(SetAnalyticsUserID value),
     Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
     @required Result orElse(),
   });
 }
@@ -135,12 +155,16 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return authCheckRequested();
   }
 
@@ -152,6 +176,8 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -170,12 +196,16 @@ class _$AuthCheckRequested implements AuthCheckRequested {
         Result initializePushNotifications(InitializePushNotifications value),
     @required Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return authCheckRequested(this);
   }
 
@@ -187,6 +217,8 @@ class _$AuthCheckRequested implements AuthCheckRequested {
     Result initializePushNotifications(InitializePushNotifications value),
     Result setAnalyticsUserID(SetAnalyticsUserID value),
     Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -239,12 +271,16 @@ class _$SignedOut implements SignedOut {
     @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return signedOut();
   }
 
@@ -256,6 +292,8 @@ class _$SignedOut implements SignedOut {
     Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -274,12 +312,16 @@ class _$SignedOut implements SignedOut {
         Result initializePushNotifications(InitializePushNotifications value),
     @required Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return signedOut(this);
   }
 
@@ -291,6 +333,8 @@ class _$SignedOut implements SignedOut {
     Result initializePushNotifications(InitializePushNotifications value),
     Result setAnalyticsUserID(SetAnalyticsUserID value),
     Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -370,12 +414,16 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return initializePushNotifications(env);
   }
 
@@ -387,6 +435,8 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -405,12 +455,16 @@ class _$InitializePushNotifications implements InitializePushNotifications {
         Result initializePushNotifications(InitializePushNotifications value),
     @required Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return initializePushNotifications(this);
   }
 
@@ -422,6 +476,8 @@ class _$InitializePushNotifications implements InitializePushNotifications {
     Result initializePushNotifications(InitializePushNotifications value),
     Result setAnalyticsUserID(SetAnalyticsUserID value),
     Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -505,12 +561,16 @@ class _$SetAnalyticsUserID implements SetAnalyticsUserID {
     @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return setAnalyticsUserID(currentUserID);
   }
 
@@ -522,6 +582,8 @@ class _$SetAnalyticsUserID implements SetAnalyticsUserID {
     Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -540,12 +602,16 @@ class _$SetAnalyticsUserID implements SetAnalyticsUserID {
         Result initializePushNotifications(InitializePushNotifications value),
     @required Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return setAnalyticsUserID(this);
   }
 
@@ -557,6 +623,8 @@ class _$SetAnalyticsUserID implements SetAnalyticsUserID {
     Result initializePushNotifications(InitializePushNotifications value),
     Result setAnalyticsUserID(SetAnalyticsUserID value),
     Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -644,12 +712,16 @@ class _$NavigateTo implements NavigateTo {
     @required Result initializePushNotifications(String env),
     @required Result setAnalyticsUserID(String currentUserID),
     @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return navigateTo(routeName, arguments);
   }
 
@@ -661,6 +733,8 @@ class _$NavigateTo implements NavigateTo {
     Result initializePushNotifications(String env),
     Result setAnalyticsUserID(String currentUserID),
     Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -679,12 +753,16 @@ class _$NavigateTo implements NavigateTo {
         Result initializePushNotifications(InitializePushNotifications value),
     @required Result setAnalyticsUserID(SetAnalyticsUserID value),
     @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
   }) {
     assert(authCheckRequested != null);
     assert(signedOut != null);
     assert(initializePushNotifications != null);
     assert(setAnalyticsUserID != null);
     assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
     return navigateTo(this);
   }
 
@@ -696,6 +774,8 @@ class _$NavigateTo implements NavigateTo {
     Result initializePushNotifications(InitializePushNotifications value),
     Result setAnalyticsUserID(SetAnalyticsUserID value),
     Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -713,6 +793,292 @@ abstract class NavigateTo implements AuthEvent {
   String get routeName;
   dynamic get arguments;
   $NavigateToCopyWith<NavigateTo> get copyWith;
+}
+
+abstract class $updateCounterCopyWith<$Res> {
+  factory $updateCounterCopyWith(
+          updateCounter value, $Res Function(updateCounter) then) =
+      _$updateCounterCopyWithImpl<$Res>;
+  $Res call({String currentUserID});
+}
+
+class _$updateCounterCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
+    implements $updateCounterCopyWith<$Res> {
+  _$updateCounterCopyWithImpl(
+      updateCounter _value, $Res Function(updateCounter) _then)
+      : super(_value, (v) => _then(v as updateCounter));
+
+  @override
+  updateCounter get _value => super._value as updateCounter;
+
+  @override
+  $Res call({
+    Object currentUserID = freezed,
+  }) {
+    return _then(updateCounter(
+      currentUserID == freezed ? _value.currentUserID : currentUserID as String,
+    ));
+  }
+}
+
+class _$updateCounter implements updateCounter {
+  const _$updateCounter(this.currentUserID) : assert(currentUserID != null);
+
+  @override
+  final String currentUserID;
+
+  @override
+  String toString() {
+    return 'AuthEvent.updateCounter(currentUserID: $currentUserID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is updateCounter &&
+            (identical(other.currentUserID, currentUserID) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUserID, currentUserID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(currentUserID);
+
+  @override
+  $updateCounterCopyWith<updateCounter> get copyWith =>
+      _$updateCounterCopyWithImpl<updateCounter>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result authCheckRequested(),
+    @required Result signedOut(),
+    @required Result initializePushNotifications(String env),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
+    return updateCounter(currentUserID);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result authCheckRequested(),
+    Result signedOut(),
+    Result initializePushNotifications(String env),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateCounter != null) {
+      return updateCounter(currentUserID);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result authCheckRequested(AuthCheckRequested value),
+    @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
+    return updateCounter(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result authCheckRequested(AuthCheckRequested value),
+    Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (updateCounter != null) {
+      return updateCounter(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class updateCounter implements AuthEvent {
+  const factory updateCounter(String currentUserID) = _$updateCounter;
+
+  String get currentUserID;
+  $updateCounterCopyWith<updateCounter> get copyWith;
+}
+
+abstract class $dontShowAgainCopyWith<$Res> {
+  factory $dontShowAgainCopyWith(
+          dontShowAgain value, $Res Function(dontShowAgain) then) =
+      _$dontShowAgainCopyWithImpl<$Res>;
+  $Res call({String currentUserID});
+}
+
+class _$dontShowAgainCopyWithImpl<$Res> extends _$AuthEventCopyWithImpl<$Res>
+    implements $dontShowAgainCopyWith<$Res> {
+  _$dontShowAgainCopyWithImpl(
+      dontShowAgain _value, $Res Function(dontShowAgain) _then)
+      : super(_value, (v) => _then(v as dontShowAgain));
+
+  @override
+  dontShowAgain get _value => super._value as dontShowAgain;
+
+  @override
+  $Res call({
+    Object currentUserID = freezed,
+  }) {
+    return _then(dontShowAgain(
+      currentUserID == freezed ? _value.currentUserID : currentUserID as String,
+    ));
+  }
+}
+
+class _$dontShowAgain implements dontShowAgain {
+  const _$dontShowAgain(this.currentUserID) : assert(currentUserID != null);
+
+  @override
+  final String currentUserID;
+
+  @override
+  String toString() {
+    return 'AuthEvent.dontShowAgain(currentUserID: $currentUserID)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is dontShowAgain &&
+            (identical(other.currentUserID, currentUserID) ||
+                const DeepCollectionEquality()
+                    .equals(other.currentUserID, currentUserID)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(currentUserID);
+
+  @override
+  $dontShowAgainCopyWith<dontShowAgain> get copyWith =>
+      _$dontShowAgainCopyWithImpl<dontShowAgain>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result authCheckRequested(),
+    @required Result signedOut(),
+    @required Result initializePushNotifications(String env),
+    @required Result setAnalyticsUserID(String currentUserID),
+    @required Result navigateTo(String routeName, dynamic arguments),
+    @required Result updateCounter(String currentUserID),
+    @required Result dontShowAgain(String currentUserID),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
+    return dontShowAgain(currentUserID);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result authCheckRequested(),
+    Result signedOut(),
+    Result initializePushNotifications(String env),
+    Result setAnalyticsUserID(String currentUserID),
+    Result navigateTo(String routeName, dynamic arguments),
+    Result updateCounter(String currentUserID),
+    Result dontShowAgain(String currentUserID),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (dontShowAgain != null) {
+      return dontShowAgain(currentUserID);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result authCheckRequested(AuthCheckRequested value),
+    @required Result signedOut(SignedOut value),
+    @required
+        Result initializePushNotifications(InitializePushNotifications value),
+    @required Result setAnalyticsUserID(SetAnalyticsUserID value),
+    @required Result navigateTo(NavigateTo value),
+    @required Result updateCounter(updateCounter value),
+    @required Result dontShowAgain(dontShowAgain value),
+  }) {
+    assert(authCheckRequested != null);
+    assert(signedOut != null);
+    assert(initializePushNotifications != null);
+    assert(setAnalyticsUserID != null);
+    assert(navigateTo != null);
+    assert(updateCounter != null);
+    assert(dontShowAgain != null);
+    return dontShowAgain(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result authCheckRequested(AuthCheckRequested value),
+    Result signedOut(SignedOut value),
+    Result initializePushNotifications(InitializePushNotifications value),
+    Result setAnalyticsUserID(SetAnalyticsUserID value),
+    Result navigateTo(NavigateTo value),
+    Result updateCounter(updateCounter value),
+    Result dontShowAgain(dontShowAgain value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (dontShowAgain != null) {
+      return dontShowAgain(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class dontShowAgain implements AuthEvent {
+  const factory dontShowAgain(String currentUserID) = _$dontShowAgain;
+
+  String get currentUserID;
+  $dontShowAgainCopyWith<dontShowAgain> get copyWith;
 }
 
 class _$AuthStateTearOff {

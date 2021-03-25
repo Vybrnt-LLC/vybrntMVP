@@ -19,4 +19,6 @@ abstract class IAuthFacade {
   Future<Either<AuthFailure, Unit>> signInWithApple();
   Future<void> signOut();
   bool isUserRegistering();
+  Future<bool> updateCounter();
+  Future<bool> dontShowAgain();
 }

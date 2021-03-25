@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dartz/dartz.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/material.dart';
@@ -260,3 +261,47 @@ Future addVybrntToFollowList(String currentUserID) async {
       .doc(currentUserID)
       .set({'isToggled': true, 'notify': true});
 }
+
+@override
+  Future<bool> updateCounter(String currentUserID) async {
+
+    final counterDoc = await 
+        .collection('surveyCounter')
+        .doc(currentUserID)
+        .set({'counter': 0});
+    if (counterDoc == null || !counterDoc.exists) {
+      return false;
+    }
+    try {
+      int counter = counterDoc.get('counter') as int;
+      counterDoc
+      .collection('surveyCounter')
+      .doc(currentUserID)
+      .update({'counter': counter++});
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }
+
+  @override
+  Future<bool> dontShowAgain() async {
+    final currentUserID = await _firestore.currentUserID();
+
+    DocumentSnapshot dontShowDoc = await dontShowAgainDoc
+        .collection('dontShowSurveyAgain')
+        .doc(currentUserID)
+        .set();
+    if (dontShowDoc == null || !dontShowDoc.exists) {
+      return false;
+    }
+    try {
+      dontShowDoc
+      .collection('dontShowSurveryAgain')
+      .doc(currentUserID)
+      .update({'showSurveys': false});
+    } catch (e) {
+      return false;
+    }
+    return true;
+  }

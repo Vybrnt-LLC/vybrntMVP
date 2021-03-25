@@ -46,6 +46,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await _analyticsService.setUserProperties(userID: e.currentUserID);
     }, navigateTo: (e) async* {
       await _navigationService.navigateTo(e.routeName, arguments: e.arguments);
+    }, updateCounter: (e) async* {
+      await _authFacade.updateCounter(currentuserID: e.currentUserID);
+    }, dontShowAgain: (e) async* {
+      await _authFacade.dontShowAgain(currentuserID: e.currentUserID);
     });
   }
 }
