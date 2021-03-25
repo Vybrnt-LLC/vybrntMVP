@@ -19,11 +19,12 @@ import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_sc
 import 'package:vybrnt_mvp/features/user/presentation/screens/edit_user_profile_screen.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/org_list_screen.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/user_screen.dart';
-
+import 'package:vybrnt_mvp/features/authentication/presentation/screens/forgot_my_password_page.dart';
 @MaterialAutoRouter(
   routes: <AutoRoute>[
     // initial route is named "/"
     MaterialRoute(page: SignInPage, name: 'signInPage', initial: false),
+    MaterialRoute(page: ForgotMyPasswordPage, name: 'forgotMyPasswordPage', initial: false),
     MaterialRoute(page: Wrapper, name: 'wrapper', initial: true),
     MaterialRoute(page: Tags, name: 'tags', initial: false),
     MaterialRoute(page: Wrapper2, name: 'wrapper2', initial: false),

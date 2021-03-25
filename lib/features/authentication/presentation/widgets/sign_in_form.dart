@@ -130,6 +130,15 @@ class SignInForm extends StatelessWidget {
                                   .registerWithEmailAndPasswordPressed());
                         },
                         child: const Text('REGISTER'))),
+                Expanded(
+                    child: FlatButton(
+                      onPressed:() {
+                            context.navigator.push(route.Routes.forgotMyPasswordPage);
+                            },
+                        child: const Text('FORGOT MY PASSWORD'))),
+                   
+                    
+                
               ],
             ),
             Padding(

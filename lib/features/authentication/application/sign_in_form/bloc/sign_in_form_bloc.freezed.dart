@@ -39,6 +39,10 @@ class _$SignInFormEventTearOff {
   SignInWithApplePressed signInWithApplePressed() {
     return const SignInWithApplePressed();
   }
+
+  ForgotMyPasswordPressed forgotMyPasswordPressed() {
+    return const ForgotMyPasswordPressed();
+  }
 }
 
 // ignore: unused_element
@@ -53,6 +57,7 @@ mixin _$SignInFormEvent {
     @required Result signInWithEmailAndPasswordPressed(),
     @required Result signInWithGooglePressed(),
     @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
   });
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
@@ -62,6 +67,7 @@ mixin _$SignInFormEvent {
     Result signInWithEmailAndPasswordPressed(),
     Result signInWithGooglePressed(),
     Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
     @required Result orElse(),
   });
   @optionalTypeArgs
@@ -76,6 +82,7 @@ mixin _$SignInFormEvent {
             SignInWithEmailAndPassworedPressed value),
     @required Result signInWithGooglePressed(SignInWithGooglePressed value),
     @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
   });
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
@@ -87,6 +94,7 @@ mixin _$SignInFormEvent {
         SignInWithEmailAndPassworedPressed value),
     Result signInWithGooglePressed(SignInWithGooglePressed value),
     Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
     @required Result orElse(),
   });
 }
@@ -170,6 +178,7 @@ class _$EmailChanged implements EmailChanged {
     @required Result signInWithEmailAndPasswordPressed(),
     @required Result signInWithGooglePressed(),
     @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -177,6 +186,7 @@ class _$EmailChanged implements EmailChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return emailChanged(emailStr);
   }
 
@@ -189,6 +199,7 @@ class _$EmailChanged implements EmailChanged {
     Result signInWithEmailAndPasswordPressed(),
     Result signInWithGooglePressed(),
     Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -211,6 +222,7 @@ class _$EmailChanged implements EmailChanged {
             SignInWithEmailAndPassworedPressed value),
     @required Result signInWithGooglePressed(SignInWithGooglePressed value),
     @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -218,6 +230,7 @@ class _$EmailChanged implements EmailChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return emailChanged(this);
   }
 
@@ -232,6 +245,7 @@ class _$EmailChanged implements EmailChanged {
         SignInWithEmailAndPassworedPressed value),
     Result signInWithGooglePressed(SignInWithGooglePressed value),
     Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -313,6 +327,7 @@ class _$PasswordChanged implements PasswordChanged {
     @required Result signInWithEmailAndPasswordPressed(),
     @required Result signInWithGooglePressed(),
     @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -320,6 +335,7 @@ class _$PasswordChanged implements PasswordChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return passwordChanged(passwordStr);
   }
 
@@ -332,6 +348,7 @@ class _$PasswordChanged implements PasswordChanged {
     Result signInWithEmailAndPasswordPressed(),
     Result signInWithGooglePressed(),
     Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -354,6 +371,7 @@ class _$PasswordChanged implements PasswordChanged {
             SignInWithEmailAndPassworedPressed value),
     @required Result signInWithGooglePressed(SignInWithGooglePressed value),
     @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -361,6 +379,7 @@ class _$PasswordChanged implements PasswordChanged {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return passwordChanged(this);
   }
 
@@ -375,6 +394,7 @@ class _$PasswordChanged implements PasswordChanged {
         SignInWithEmailAndPassworedPressed value),
     Result signInWithGooglePressed(SignInWithGooglePressed value),
     Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -439,6 +459,7 @@ class _$RegisterWithEmailAndPassworedPressed
     @required Result signInWithEmailAndPasswordPressed(),
     @required Result signInWithGooglePressed(),
     @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -446,6 +467,7 @@ class _$RegisterWithEmailAndPassworedPressed
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return registerWithEmailAndPasswordPressed();
   }
 
@@ -458,6 +480,7 @@ class _$RegisterWithEmailAndPassworedPressed
     Result signInWithEmailAndPasswordPressed(),
     Result signInWithGooglePressed(),
     Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -480,6 +503,7 @@ class _$RegisterWithEmailAndPassworedPressed
             SignInWithEmailAndPassworedPressed value),
     @required Result signInWithGooglePressed(SignInWithGooglePressed value),
     @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -487,6 +511,7 @@ class _$RegisterWithEmailAndPassworedPressed
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return registerWithEmailAndPasswordPressed(this);
   }
 
@@ -501,6 +526,7 @@ class _$RegisterWithEmailAndPassworedPressed
         SignInWithEmailAndPassworedPressed value),
     Result signInWithGooglePressed(SignInWithGooglePressed value),
     Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -563,6 +589,7 @@ class _$SignInWithEmailAndPassworedPressed
     @required Result signInWithEmailAndPasswordPressed(),
     @required Result signInWithGooglePressed(),
     @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -570,6 +597,7 @@ class _$SignInWithEmailAndPassworedPressed
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return signInWithEmailAndPasswordPressed();
   }
 
@@ -582,6 +610,7 @@ class _$SignInWithEmailAndPassworedPressed
     Result signInWithEmailAndPasswordPressed(),
     Result signInWithGooglePressed(),
     Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -604,6 +633,7 @@ class _$SignInWithEmailAndPassworedPressed
             SignInWithEmailAndPassworedPressed value),
     @required Result signInWithGooglePressed(SignInWithGooglePressed value),
     @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -611,6 +641,7 @@ class _$SignInWithEmailAndPassworedPressed
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return signInWithEmailAndPasswordPressed(this);
   }
 
@@ -625,6 +656,7 @@ class _$SignInWithEmailAndPassworedPressed
         SignInWithEmailAndPassworedPressed value),
     Result signInWithGooglePressed(SignInWithGooglePressed value),
     Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -682,6 +714,7 @@ class _$SignInWithGooglePressed implements SignInWithGooglePressed {
     @required Result signInWithEmailAndPasswordPressed(),
     @required Result signInWithGooglePressed(),
     @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -689,6 +722,7 @@ class _$SignInWithGooglePressed implements SignInWithGooglePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return signInWithGooglePressed();
   }
 
@@ -701,6 +735,7 @@ class _$SignInWithGooglePressed implements SignInWithGooglePressed {
     Result signInWithEmailAndPasswordPressed(),
     Result signInWithGooglePressed(),
     Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -723,6 +758,7 @@ class _$SignInWithGooglePressed implements SignInWithGooglePressed {
             SignInWithEmailAndPassworedPressed value),
     @required Result signInWithGooglePressed(SignInWithGooglePressed value),
     @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -730,6 +766,7 @@ class _$SignInWithGooglePressed implements SignInWithGooglePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return signInWithGooglePressed(this);
   }
 
@@ -744,6 +781,7 @@ class _$SignInWithGooglePressed implements SignInWithGooglePressed {
         SignInWithEmailAndPassworedPressed value),
     Result signInWithGooglePressed(SignInWithGooglePressed value),
     Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -800,6 +838,7 @@ class _$SignInWithApplePressed implements SignInWithApplePressed {
     @required Result signInWithEmailAndPasswordPressed(),
     @required Result signInWithGooglePressed(),
     @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -807,6 +846,7 @@ class _$SignInWithApplePressed implements SignInWithApplePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return signInWithApplePressed();
   }
 
@@ -819,6 +859,7 @@ class _$SignInWithApplePressed implements SignInWithApplePressed {
     Result signInWithEmailAndPasswordPressed(),
     Result signInWithGooglePressed(),
     Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -841,6 +882,7 @@ class _$SignInWithApplePressed implements SignInWithApplePressed {
             SignInWithEmailAndPassworedPressed value),
     @required Result signInWithGooglePressed(SignInWithGooglePressed value),
     @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
   }) {
     assert(emailChanged != null);
     assert(passwordChanged != null);
@@ -848,6 +890,7 @@ class _$SignInWithApplePressed implements SignInWithApplePressed {
     assert(signInWithEmailAndPasswordPressed != null);
     assert(signInWithGooglePressed != null);
     assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
     return signInWithApplePressed(this);
   }
 
@@ -862,6 +905,7 @@ class _$SignInWithApplePressed implements SignInWithApplePressed {
         SignInWithEmailAndPassworedPressed value),
     Result signInWithGooglePressed(SignInWithGooglePressed value),
     Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
     @required Result orElse(),
   }) {
     assert(orElse != null);
@@ -874,6 +918,130 @@ class _$SignInWithApplePressed implements SignInWithApplePressed {
 
 abstract class SignInWithApplePressed implements SignInFormEvent {
   const factory SignInWithApplePressed() = _$SignInWithApplePressed;
+}
+
+abstract class $ForgotMyPasswordPressedCopyWith<$Res> {
+  factory $ForgotMyPasswordPressedCopyWith(ForgotMyPasswordPressed value,
+          $Res Function(ForgotMyPasswordPressed) then) =
+      _$ForgotMyPasswordPressedCopyWithImpl<$Res>;
+}
+
+class _$ForgotMyPasswordPressedCopyWithImpl<$Res>
+    extends _$SignInFormEventCopyWithImpl<$Res>
+    implements $ForgotMyPasswordPressedCopyWith<$Res> {
+  _$ForgotMyPasswordPressedCopyWithImpl(ForgotMyPasswordPressed _value,
+      $Res Function(ForgotMyPasswordPressed) _then)
+      : super(_value, (v) => _then(v as ForgotMyPasswordPressed));
+
+  @override
+  ForgotMyPasswordPressed get _value => super._value as ForgotMyPasswordPressed;
+}
+
+class _$ForgotMyPasswordPressed implements ForgotMyPasswordPressed {
+  const _$ForgotMyPasswordPressed();
+
+  @override
+  String toString() {
+    return 'SignInFormEvent.forgotMyPasswordPressed()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is ForgotMyPasswordPressed);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result emailChanged(String emailStr),
+    @required Result passwordChanged(String passwordStr),
+    @required Result registerWithEmailAndPasswordPressed(),
+    @required Result signInWithEmailAndPasswordPressed(),
+    @required Result signInWithGooglePressed(),
+    @required Result signInWithApplePressed(),
+    @required Result forgotMyPasswordPressed(),
+  }) {
+    assert(emailChanged != null);
+    assert(passwordChanged != null);
+    assert(registerWithEmailAndPasswordPressed != null);
+    assert(signInWithEmailAndPasswordPressed != null);
+    assert(signInWithGooglePressed != null);
+    assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
+    return forgotMyPasswordPressed();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result emailChanged(String emailStr),
+    Result passwordChanged(String passwordStr),
+    Result registerWithEmailAndPasswordPressed(),
+    Result signInWithEmailAndPasswordPressed(),
+    Result signInWithGooglePressed(),
+    Result signInWithApplePressed(),
+    Result forgotMyPasswordPressed(),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (forgotMyPasswordPressed != null) {
+      return forgotMyPasswordPressed();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result emailChanged(EmailChanged value),
+    @required Result passwordChanged(PasswordChanged value),
+    @required
+        Result registerWithEmailAndPasswordPressed(
+            RegisterWithEmailAndPassworedPressed value),
+    @required
+        Result signInWithEmailAndPasswordPressed(
+            SignInWithEmailAndPassworedPressed value),
+    @required Result signInWithGooglePressed(SignInWithGooglePressed value),
+    @required Result signInWithApplePressed(SignInWithApplePressed value),
+    @required Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
+  }) {
+    assert(emailChanged != null);
+    assert(passwordChanged != null);
+    assert(registerWithEmailAndPasswordPressed != null);
+    assert(signInWithEmailAndPasswordPressed != null);
+    assert(signInWithGooglePressed != null);
+    assert(signInWithApplePressed != null);
+    assert(forgotMyPasswordPressed != null);
+    return forgotMyPasswordPressed(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result emailChanged(EmailChanged value),
+    Result passwordChanged(PasswordChanged value),
+    Result registerWithEmailAndPasswordPressed(
+        RegisterWithEmailAndPassworedPressed value),
+    Result signInWithEmailAndPasswordPressed(
+        SignInWithEmailAndPassworedPressed value),
+    Result signInWithGooglePressed(SignInWithGooglePressed value),
+    Result signInWithApplePressed(SignInWithApplePressed value),
+    Result forgotMyPasswordPressed(ForgotMyPasswordPressed value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (forgotMyPasswordPressed != null) {
+      return forgotMyPasswordPressed(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ForgotMyPasswordPressed implements SignInFormEvent {
+  const factory ForgotMyPasswordPressed() = _$ForgotMyPasswordPressed;
 }
 
 class _$SignInFormStateTearOff {

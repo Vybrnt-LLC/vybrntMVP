@@ -234,7 +234,20 @@ class FirebaseAuthFacade implements IAuthFacade {
   Future<void> signOut() async {
     return Future.wait([_googleSignIn.signOut(), _firebaseAuth.signOut()]);
   }
+
+  Future<Either<AuthFailure, Unit>> forgotMyPassword({EmailAddress emailAddress}) async {
+    try{
+      await _firebaseAuth.sendPasswordResetEmail(email: emailAddress.getOrCrash());
+      return right(unit);
+    }
+    on firebaseAuth.FirebaseAuthException catch (e){
+        print(e);
+        return left(const AuthFailure.serverError());
+    }      
+  }
 }
+
+
 
 Future addVybrntToFollowList(String currentUserID) async {
   final orgID = 'cec10340-090e-11eb-a5dc-1d0e34e32b97';
