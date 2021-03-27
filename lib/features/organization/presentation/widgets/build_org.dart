@@ -198,6 +198,7 @@ class _BuildOrgState extends State<BuildOrg> with TickerProviderStateMixin {
                   (BuildContext context, bool innerBoxIsScrolled) {
                 return <Widget>[
                   SliverAppBar(
+                    elevation: 0,
                     actions: [
                       IconButton(
                           icon: const FaIcon(FontAwesomeIcons.share,

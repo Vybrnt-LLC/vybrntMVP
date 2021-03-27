@@ -202,6 +202,7 @@ class _BuildUserState extends State<BuildUser> {
                     (BuildContext context, bool innerBoxIsScrolled) {
                   return <Widget>[
                     SliverAppBar(
+                      elevation: 0,
                       actions: [
                         IconButton(
                             icon: const FaIcon(FontAwesomeIcons.share,
