@@ -11,6 +11,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:kt_dart/kt.dart';
 
+import '../../features/authentication/presentation/screens/forgot_my_password_page.dart';
 import '../../features/authentication/presentation/screens/sign_in_page.dart';
 import '../../features/authentication/presentation/widgets/wrapper.dart';
 import '../../features/authentication/presentation/widgets/wrapper2.dart';
@@ -33,6 +34,7 @@ import '../report/report_page.dart';
 
 class Routes {
   static const String signInPage = '/sign-in-page';
+  static const String forgotMyPasswordPage = '/forgot-my-password-page';
   static const String wrapper = '/';
   static const String wrapper2 = '/Wrapper2';
   static const String eventDetailImage = '/event-detail-image';
@@ -51,6 +53,7 @@ class Routes {
   static const String report = '/report-screen';
   static const all = <String>{
     signInPage,
+    forgotMyPasswordPage,
     wrapper,
     wrapper2,
     eventDetailImage,
@@ -74,6 +77,7 @@ class Router extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.signInPage, page: SignInPage),
+    RouteDef(Routes.forgotMyPasswordPage, page: ForgotMyPasswordPage),
     RouteDef(Routes.wrapper, page: Wrapper),
     RouteDef(Routes.wrapper2, page: Wrapper2),
     RouteDef(Routes.eventDetailImage, page: EventDetailImage),
@@ -97,6 +101,12 @@ class Router extends RouterBase {
     SignInPage: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => SignInPage(),
+        settings: data,
+      );
+    },
+    ForgotMyPasswordPage: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => ForgotMyPasswordPage(),
         settings: data,
       );
     },

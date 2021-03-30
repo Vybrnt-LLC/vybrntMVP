@@ -43,23 +43,43 @@ class SignInFormBloc extends Bloc<SignInFormEvent, SignInFormState> {
     }, signInWithEmailAndPasswordPressed: (e) async* {
       yield* _performActionOnAuthFacadeWithEmailAndPassword(
           _authFacade.signInWithEmailAndPassword, false);
-    }, signInWithGooglePressed: (e) async* {
+    }, forgotMyPasswordPressed: (e) async* {
+      Either<AuthFailure, Unit> failureOrSuccess;
+      final isEmailValid = state.emailAddress.isValid();
+       if (isEmailValid) {
       yield state.copyWith(
         isSubmitting: true,
         authFailureOrSuccessOption: none(),
       );
-      final failureOrSuccess = await _authFacade.signInWithGoogle();
-      if (failureOrSuccess.isRight()) {
-        if (_authFacade.isUserRegistering()) {
-          await _analyticsService.logSignUp();
-        } else {
-          await _analyticsService.logLogin();
-        }
+
+      failureOrSuccess = await _authFacade.forgotMyPassword(
+          emailAddress: state.emailAddress);
       }
       yield state.copyWith(
         isSubmitting: false,
-        authFailureOrSuccessOption: some(failureOrSuccess),
+        showErrorMessages: true,
+        authFailureOrSuccessOption: optionOf(failureOrSuccess),
       );
+
+    },
+    
+    signInWithGooglePressed: (e) async* {
+        yield state.copyWith(
+          isSubmitting: true,
+          authFailureOrSuccessOption: none(),
+        );
+        final failureOrSuccess = await _authFacade.signInWithGoogle();
+        if (failureOrSuccess.isRight()) {
+          if (_authFacade.isUserRegistering()) {
+            await _analyticsService.logSignUp();
+          } else {
+            await _analyticsService.logLogin();
+          }
+        }
+        yield state.copyWith(
+          isSubmitting: false,
+          authFailureOrSuccessOption: some(failureOrSuccess),
+        );
     }, signInWithApplePressed: (e) async* {
       yield state.copyWith(
         isSubmitting: true,

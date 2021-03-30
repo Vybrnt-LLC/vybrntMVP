@@ -788,10 +788,10 @@ packages:
     description:
       path: "packages/image_picker/image_picker"
       ref: HEAD
-      resolved-ref: f0ad6f041e5cb94fb065c40e8d7c8a13bd54d831
+      resolved-ref: "15f890f68171fa5b2df2cf0f239211cca51bb61d"
       url: "https://github.com/knaeckeKami/plugins.git"
     source: git
-    version: "0.6.7+11"
+    version: "0.6.7+14"
   image_picker_platform_interface:
     dependency: transitive
     description:

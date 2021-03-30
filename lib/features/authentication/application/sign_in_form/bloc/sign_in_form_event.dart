@@ -13,4 +13,6 @@ abstract class SignInFormEvent with _$SignInFormEvent {
       SignInWithGooglePressed;
   const factory SignInFormEvent.signInWithApplePressed() =
       SignInWithApplePressed;
+  const factory SignInFormEvent.forgotMyPasswordPressed() =
+      ForgotMyPasswordPressed;
 }
