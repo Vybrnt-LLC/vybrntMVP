@@ -18,6 +18,16 @@ class _$ValueFailureTearOff {
     );
   }
 
+  InvalidUsername<T> invalidUsername<T>({@required String failedValue}) {
+    return InvalidUsername<T>(
+      failedValue: failedValue,
+    );
+  }
+
+  UnavailableUsername<T> unavailableUsername<T>() {
+    return UnavailableUsername<T>();
+  }
+
   ShortPassword<T> shortPassword<T>({@required String failedValue}) {
     return ShortPassword<T>(
       failedValue: failedValue,
@@ -73,6 +83,8 @@ mixin _$ValueFailure<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -84,6 +96,8 @@ mixin _$ValueFailure<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -96,6 +110,8 @@ mixin _$ValueFailure<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -107,6 +123,8 @@ mixin _$ValueFailure<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -194,6 +212,8 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -203,6 +223,8 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -217,6 +239,8 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -237,6 +261,8 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -246,6 +272,8 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -260,6 +288,8 @@ class _$InvalidEmail<T> implements InvalidEmail<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -283,6 +313,306 @@ abstract class InvalidEmail<T> implements ValueFailure<T> {
 
   String get failedValue;
   $InvalidEmailCopyWith<T, InvalidEmail<T>> get copyWith;
+}
+
+abstract class $InvalidUsernameCopyWith<T, $Res> {
+  factory $InvalidUsernameCopyWith(
+          InvalidUsername<T> value, $Res Function(InvalidUsername<T>) then) =
+      _$InvalidUsernameCopyWithImpl<T, $Res>;
+  $Res call({String failedValue});
+}
+
+class _$InvalidUsernameCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements $InvalidUsernameCopyWith<T, $Res> {
+  _$InvalidUsernameCopyWithImpl(
+      InvalidUsername<T> _value, $Res Function(InvalidUsername<T>) _then)
+      : super(_value, (v) => _then(v as InvalidUsername<T>));
+
+  @override
+  InvalidUsername<T> get _value => super._value as InvalidUsername<T>;
+
+  @override
+  $Res call({
+    Object failedValue = freezed,
+  }) {
+    return _then(InvalidUsername<T>(
+      failedValue:
+          failedValue == freezed ? _value.failedValue : failedValue as String,
+    ));
+  }
+}
+
+class _$InvalidUsername<T> implements InvalidUsername<T> {
+  const _$InvalidUsername({@required this.failedValue})
+      : assert(failedValue != null);
+
+  @override
+  final String failedValue;
+
+  @override
+  String toString() {
+    return 'ValueFailure<$T>.invalidUsername(failedValue: $failedValue)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is InvalidUsername<T> &&
+            (identical(other.failedValue, failedValue) ||
+                const DeepCollectionEquality()
+                    .equals(other.failedValue, failedValue)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^ const DeepCollectionEquality().hash(failedValue);
+
+  @override
+  $InvalidUsernameCopyWith<T, InvalidUsername<T>> get copyWith =>
+      _$InvalidUsernameCopyWithImpl<T, InvalidUsername<T>>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
+    @required Result shortPassword(String failedValue),
+    @required Result exceedingLength(T failedValue, int max),
+    @required Result empty(T failedValue),
+    @required Result multiline(T failedValue),
+    @required Result numberTooLarge(T failedValue, num max),
+    @required Result listTooLong(T failedValue, int max),
+    @required Result invalidPhotoUrl(T failedValue),
+  }) {
+    assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
+    assert(shortPassword != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(numberTooLarge != null);
+    assert(listTooLong != null);
+    assert(invalidPhotoUrl != null);
+    return invalidUsername(failedValue);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
+    Result shortPassword(String failedValue),
+    Result exceedingLength(T failedValue, int max),
+    Result empty(T failedValue),
+    Result multiline(T failedValue),
+    Result numberTooLarge(T failedValue, num max),
+    Result listTooLong(T failedValue, int max),
+    Result invalidPhotoUrl(T failedValue),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (invalidUsername != null) {
+      return invalidUsername(failedValue);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
+    @required Result shortPassword(ShortPassword<T> value),
+    @required Result exceedingLength(ExceedingLength<T> value),
+    @required Result empty(Empty<T> value),
+    @required Result multiline(Multiline<T> value),
+    @required Result numberTooLarge(NumberTooLarge<T> value),
+    @required Result listTooLong(ListTooLong<T> value),
+    @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
+  }) {
+    assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
+    assert(shortPassword != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(numberTooLarge != null);
+    assert(listTooLong != null);
+    assert(invalidPhotoUrl != null);
+    return invalidUsername(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
+    Result shortPassword(ShortPassword<T> value),
+    Result exceedingLength(ExceedingLength<T> value),
+    Result empty(Empty<T> value),
+    Result multiline(Multiline<T> value),
+    Result numberTooLarge(NumberTooLarge<T> value),
+    Result listTooLong(ListTooLong<T> value),
+    Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (invalidUsername != null) {
+      return invalidUsername(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class InvalidUsername<T> implements ValueFailure<T> {
+  const factory InvalidUsername({@required String failedValue}) =
+      _$InvalidUsername<T>;
+
+  String get failedValue;
+  $InvalidUsernameCopyWith<T, InvalidUsername<T>> get copyWith;
+}
+
+abstract class $UnavailableUsernameCopyWith<T, $Res> {
+  factory $UnavailableUsernameCopyWith(UnavailableUsername<T> value,
+          $Res Function(UnavailableUsername<T>) then) =
+      _$UnavailableUsernameCopyWithImpl<T, $Res>;
+}
+
+class _$UnavailableUsernameCopyWithImpl<T, $Res>
+    extends _$ValueFailureCopyWithImpl<T, $Res>
+    implements $UnavailableUsernameCopyWith<T, $Res> {
+  _$UnavailableUsernameCopyWithImpl(UnavailableUsername<T> _value,
+      $Res Function(UnavailableUsername<T>) _then)
+      : super(_value, (v) => _then(v as UnavailableUsername<T>));
+
+  @override
+  UnavailableUsername<T> get _value => super._value as UnavailableUsername<T>;
+}
+
+class _$UnavailableUsername<T> implements UnavailableUsername<T> {
+  const _$UnavailableUsername();
+
+  @override
+  String toString() {
+    return 'ValueFailure<$T>.unavailableUsername()';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) || (other is UnavailableUsername<T>);
+  }
+
+  @override
+  int get hashCode => runtimeType.hashCode;
+
+  @override
+  @optionalTypeArgs
+  Result when<Result extends Object>({
+    @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
+    @required Result shortPassword(String failedValue),
+    @required Result exceedingLength(T failedValue, int max),
+    @required Result empty(T failedValue),
+    @required Result multiline(T failedValue),
+    @required Result numberTooLarge(T failedValue, num max),
+    @required Result listTooLong(T failedValue, int max),
+    @required Result invalidPhotoUrl(T failedValue),
+  }) {
+    assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
+    assert(shortPassword != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(numberTooLarge != null);
+    assert(listTooLong != null);
+    assert(invalidPhotoUrl != null);
+    return unavailableUsername();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeWhen<Result extends Object>({
+    Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
+    Result shortPassword(String failedValue),
+    Result exceedingLength(T failedValue, int max),
+    Result empty(T failedValue),
+    Result multiline(T failedValue),
+    Result numberTooLarge(T failedValue, num max),
+    Result listTooLong(T failedValue, int max),
+    Result invalidPhotoUrl(T failedValue),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unavailableUsername != null) {
+      return unavailableUsername();
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  Result map<Result extends Object>({
+    @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
+    @required Result shortPassword(ShortPassword<T> value),
+    @required Result exceedingLength(ExceedingLength<T> value),
+    @required Result empty(Empty<T> value),
+    @required Result multiline(Multiline<T> value),
+    @required Result numberTooLarge(NumberTooLarge<T> value),
+    @required Result listTooLong(ListTooLong<T> value),
+    @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
+  }) {
+    assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
+    assert(shortPassword != null);
+    assert(exceedingLength != null);
+    assert(empty != null);
+    assert(multiline != null);
+    assert(numberTooLarge != null);
+    assert(listTooLong != null);
+    assert(invalidPhotoUrl != null);
+    return unavailableUsername(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  Result maybeMap<Result extends Object>({
+    Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
+    Result shortPassword(ShortPassword<T> value),
+    Result exceedingLength(ExceedingLength<T> value),
+    Result empty(Empty<T> value),
+    Result multiline(Multiline<T> value),
+    Result numberTooLarge(NumberTooLarge<T> value),
+    Result listTooLong(ListTooLong<T> value),
+    Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
+    @required Result orElse(),
+  }) {
+    assert(orElse != null);
+    if (unavailableUsername != null) {
+      return unavailableUsername(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class UnavailableUsername<T> implements ValueFailure<T> {
+  const factory UnavailableUsername() = _$UnavailableUsername<T>;
 }
 
 abstract class $ShortPasswordCopyWith<T, $Res> {
@@ -346,6 +676,8 @@ class _$ShortPassword<T> implements ShortPassword<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -355,6 +687,8 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -369,6 +703,8 @@ class _$ShortPassword<T> implements ShortPassword<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -389,6 +725,8 @@ class _$ShortPassword<T> implements ShortPassword<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -398,6 +736,8 @@ class _$ShortPassword<T> implements ShortPassword<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -412,6 +752,8 @@ class _$ShortPassword<T> implements ShortPassword<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -507,6 +849,8 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -516,6 +860,8 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -530,6 +876,8 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -550,6 +898,8 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -559,6 +909,8 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -573,6 +925,8 @@ class _$ExceedingLength<T> implements ExceedingLength<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -656,6 +1010,8 @@ class _$Empty<T> implements Empty<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -665,6 +1021,8 @@ class _$Empty<T> implements Empty<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -679,6 +1037,8 @@ class _$Empty<T> implements Empty<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -699,6 +1059,8 @@ class _$Empty<T> implements Empty<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -708,6 +1070,8 @@ class _$Empty<T> implements Empty<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -722,6 +1086,8 @@ class _$Empty<T> implements Empty<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -806,6 +1172,8 @@ class _$Multiline<T> implements Multiline<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -815,6 +1183,8 @@ class _$Multiline<T> implements Multiline<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -829,6 +1199,8 @@ class _$Multiline<T> implements Multiline<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -849,6 +1221,8 @@ class _$Multiline<T> implements Multiline<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -858,6 +1232,8 @@ class _$Multiline<T> implements Multiline<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -872,6 +1248,8 @@ class _$Multiline<T> implements Multiline<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -966,6 +1344,8 @@ class _$NumberTooLarge<T> implements NumberTooLarge<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -975,6 +1355,8 @@ class _$NumberTooLarge<T> implements NumberTooLarge<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -989,6 +1371,8 @@ class _$NumberTooLarge<T> implements NumberTooLarge<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -1009,6 +1393,8 @@ class _$NumberTooLarge<T> implements NumberTooLarge<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -1018,6 +1404,8 @@ class _$NumberTooLarge<T> implements NumberTooLarge<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1032,6 +1420,8 @@ class _$NumberTooLarge<T> implements NumberTooLarge<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -1128,6 +1518,8 @@ class _$ListTooLong<T> implements ListTooLong<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -1137,6 +1529,8 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1151,6 +1545,8 @@ class _$ListTooLong<T> implements ListTooLong<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -1171,6 +1567,8 @@ class _$ListTooLong<T> implements ListTooLong<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -1180,6 +1578,8 @@ class _$ListTooLong<T> implements ListTooLong<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1194,6 +1594,8 @@ class _$ListTooLong<T> implements ListTooLong<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),
@@ -1281,6 +1683,8 @@ class _$InvalidPhotoUrl<T> implements InvalidPhotoUrl<T> {
   @optionalTypeArgs
   Result when<Result extends Object>({
     @required Result invalidEmail(String failedValue),
+    @required Result invalidUsername(String failedValue),
+    @required Result unavailableUsername(),
     @required Result shortPassword(String failedValue),
     @required Result exceedingLength(T failedValue, int max),
     @required Result empty(T failedValue),
@@ -1290,6 +1694,8 @@ class _$InvalidPhotoUrl<T> implements InvalidPhotoUrl<T> {
     @required Result invalidPhotoUrl(T failedValue),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1304,6 +1710,8 @@ class _$InvalidPhotoUrl<T> implements InvalidPhotoUrl<T> {
   @optionalTypeArgs
   Result maybeWhen<Result extends Object>({
     Result invalidEmail(String failedValue),
+    Result invalidUsername(String failedValue),
+    Result unavailableUsername(),
     Result shortPassword(String failedValue),
     Result exceedingLength(T failedValue, int max),
     Result empty(T failedValue),
@@ -1324,6 +1732,8 @@ class _$InvalidPhotoUrl<T> implements InvalidPhotoUrl<T> {
   @optionalTypeArgs
   Result map<Result extends Object>({
     @required Result invalidEmail(InvalidEmail<T> value),
+    @required Result invalidUsername(InvalidUsername<T> value),
+    @required Result unavailableUsername(UnavailableUsername<T> value),
     @required Result shortPassword(ShortPassword<T> value),
     @required Result exceedingLength(ExceedingLength<T> value),
     @required Result empty(Empty<T> value),
@@ -1333,6 +1743,8 @@ class _$InvalidPhotoUrl<T> implements InvalidPhotoUrl<T> {
     @required Result invalidPhotoUrl(InvalidPhotoUrl<T> value),
   }) {
     assert(invalidEmail != null);
+    assert(invalidUsername != null);
+    assert(unavailableUsername != null);
     assert(shortPassword != null);
     assert(exceedingLength != null);
     assert(empty != null);
@@ -1347,6 +1759,8 @@ class _$InvalidPhotoUrl<T> implements InvalidPhotoUrl<T> {
   @optionalTypeArgs
   Result maybeMap<Result extends Object>({
     Result invalidEmail(InvalidEmail<T> value),
+    Result invalidUsername(InvalidUsername<T> value),
+    Result unavailableUsername(UnavailableUsername<T> value),
     Result shortPassword(ShortPassword<T> value),
     Result exceedingLength(ExceedingLength<T> value),
     Result empty(Empty<T> value),

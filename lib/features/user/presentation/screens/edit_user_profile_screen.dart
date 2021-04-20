@@ -10,7 +10,7 @@ import 'package:vybrnt_mvp/features/user/presentation/screens/edit_user_details.
 class EditUserProfileScreen extends StatefulWidget {
   final User user;
 
-  EditUserProfileScreen({this.user});
+  const EditUserProfileScreen({this.user});
   @override
   _EditUserProfileScreenState createState() => _EditUserProfileScreenState();
 }
@@ -49,13 +49,13 @@ class _EditUserProfileScreenState extends State<EditUserProfileScreen>
               SliverAppBar(
                 centerTitle: true,
                 backgroundColor: Colors.black,
-                title: Text('Edit Profile'),
+                title: const Text('Edit Profile'),
                 pinned: true,
                 floating: true,
                 forceElevated: boxIsScrolled,
                 bottom: TabBar(
                   controller: _controller,
-                  tabs: [
+                  tabs: const [
                     Tab(icon: Icon(Icons.info), text: 'About'),
                     Tab(icon: Icon(Icons.color_lens), text: 'Colors'),
                   ],

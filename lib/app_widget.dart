@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitDown,
     ]);
     SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
-      statusBarColor: Colors.blue, //or set color with: Color(0xFF0000FF)
+      statusBarColor: Color(0xFFA4528A), //or set color with: Color(0xFF0000FF)
     ));
     // FlutterStatusbarcolor.setStatusBarColor(Colors.white);
     // FlutterStatusbarcolor.setStatusBarWhiteForeground(false);

@@ -14,7 +14,7 @@ class _$UserTearOff {
 
   _User call(
       {@required UniqueId userID,
-      @required String userName,
+      @required Username userName,
       @required String profileName,
       @required String bannerImageUrl,
       @required String profileImageUrl,
@@ -43,7 +43,7 @@ const $User = _$UserTearOff();
 
 mixin _$User {
   UniqueId get userID;
-  String get userName;
+  Username get userName;
   String get profileName;
   String get bannerImageUrl;
   String get profileImageUrl;
@@ -61,7 +61,7 @@ abstract class $UserCopyWith<$Res> {
       _$UserCopyWithImpl<$Res>;
   $Res call(
       {UniqueId userID,
-      String userName,
+      Username userName,
       String profileName,
       String bannerImageUrl,
       String profileImageUrl,
@@ -94,7 +94,7 @@ class _$UserCopyWithImpl<$Res> implements $UserCopyWith<$Res> {
   }) {
     return _then(_value.copyWith(
       userID: userID == freezed ? _value.userID : userID as UniqueId,
-      userName: userName == freezed ? _value.userName : userName as String,
+      userName: userName == freezed ? _value.userName : userName as Username,
       profileName:
           profileName == freezed ? _value.profileName : profileName as String,
       bannerImageUrl: bannerImageUrl == freezed
@@ -122,7 +122,7 @@ abstract class _$UserCopyWith<$Res> implements $UserCopyWith<$Res> {
   @override
   $Res call(
       {UniqueId userID,
-      String userName,
+      Username userName,
       String profileName,
       String bannerImageUrl,
       String profileImageUrl,
@@ -156,7 +156,7 @@ class __$UserCopyWithImpl<$Res> extends _$UserCopyWithImpl<$Res>
   }) {
     return _then(_User(
       userID: userID == freezed ? _value.userID : userID as UniqueId,
-      userName: userName == freezed ? _value.userName : userName as String,
+      userName: userName == freezed ? _value.userName : userName as Username,
       profileName:
           profileName == freezed ? _value.profileName : profileName as String,
       bannerImageUrl: bannerImageUrl == freezed
@@ -204,7 +204,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
   @override
   final UniqueId userID;
   @override
-  final String userName;
+  final Username userName;
   @override
   final String profileName;
   @override
@@ -298,7 +298,7 @@ class _$_User with DiagnosticableTreeMixin implements _User {
 abstract class _User implements User {
   const factory _User(
       {@required UniqueId userID,
-      @required String userName,
+      @required Username userName,
       @required String profileName,
       @required String bannerImageUrl,
       @required String profileImageUrl,
@@ -311,7 +311,7 @@ abstract class _User implements User {
   @override
   UniqueId get userID;
   @override
-  String get userName;
+  Username get userName;
   @override
   String get profileName;
   @override

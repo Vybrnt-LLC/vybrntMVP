@@ -1,5 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
+import 'package:regexpattern/regexpattern.dart';
 
 import 'failures.dart';
 
@@ -11,6 +12,18 @@ Either<ValueFailure<String>, String> validateEmailAddress(String input) {
     return right(input);
   } else {
     return left(ValueFailure.invalidEmail(failedValue: input));
+  }
+}
+//^(?=.{8,20}$)(?![_.])(?!.*[_.]{2})[a-zA-Z0-9._]+(?<![_.])$
+
+Either<ValueFailure<String>, String> validateUsername(String input) {
+  const emailRegex =
+      r"""^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+""";
+
+  if (input.isUsername()) {
+    return right(input);
+  } else {
+    return left(ValueFailure.invalidUsername(failedValue: input));
   }
 }
 

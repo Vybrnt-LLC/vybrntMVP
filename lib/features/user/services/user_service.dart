@@ -9,12 +9,15 @@ import 'package:path_provider/path_provider.dart';
 import 'package:uuid/uuid.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:vybrnt_mvp/core/auth/firestore_helpers.dart';
+import 'package:vybrnt_mvp/core/auth/value_objects.dart';
 import 'package:vybrnt_mvp/core/shared/constants.dart';
 import 'package:vybrnt_mvp/features/activity/domain/i_activity_service.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
 import 'package:vybrnt_mvp/features/calendar/services/event_dtos.dart';
+import 'package:vybrnt_mvp/features/homefeed/domain/models/university.dart';
+import 'package:vybrnt_mvp/features/homefeed/service/university_dto.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/emember.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 import 'package:vybrnt_mvp/features/organization/services/org_dtos.dart';
@@ -22,6 +25,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:vybrnt_mvp/features/organization/services/org_list_dtos.dart';
 import 'package:vybrnt_mvp/features/user/domain/i_user_service.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
+import 'package:vybrnt_mvp/features/user/domain/models/user_failure.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user_list_model.dart';
 import 'package:vybrnt_mvp/features/user/services/user_dtos.dart';
 import 'package:vybrnt_mvp/features/user/services/user_list_dtos.dart';
@@ -415,5 +419,64 @@ class UserService implements IUserService {
         value.reference.delete();
       }
     });
+  }
+
+  @override
+  Future<bool> isUsernameTaken(String username) async {
+    final isUsernameTaken =
+        (await usersRef.where('userName', isEqualTo: username).get())
+            .docs
+            .isNotEmpty;
+    return isUsernameTaken;
+  }
+
+  @override
+  Future<Either<UserFailure, Unit>> saveOnboardingInfo(
+      Map<String, dynamic> info) async {}
+
+  @override
+  Future<List<University>> getUniversities() async {
+    final universitiesSnapshot = await universitiesRef.get();
+    final listOfUniversities = universitiesSnapshot.docs
+        .map((doc) => UniversityDto.fromFirestore(doc).toDomain())
+        .toList();
+
+    return listOfUniversities;
+  }
+
+  @override
+  Future<List<String>> getColleges(String universityID) async {
+    final universitySnapshot = await universitiesRef.doc(universityID).get();
+    final collegesHashMap =
+        universitySnapshot['colleges'] as Map<dynamic, dynamic>;
+    final collegesMap = Map<String, dynamic>.from(collegesHashMap);
+    final listOfColleges = List<String>.from(collegesMap.keys);
+    return listOfColleges;
+  }
+
+  @override
+  Future<List<String>> getCampuses(String universityID) async {
+    final universitySnapshot = await universitiesRef.doc(universityID).get();
+    final listOfCampuses =
+        List<String>.from(universitySnapshot['campuses'] as List<dynamic>);
+    return listOfCampuses;
+  }
+
+  @override
+  Future<List<String>> getMajors(
+      String universityID, List<String> listOfColleges) async {
+    List<String> listOfMajors = [];
+    final universitySnapshot = await universitiesRef.doc(universityID).get();
+    final collegesHashMap =
+        universitySnapshot['colleges'] as Map<dynamic, dynamic>;
+    final collegesMap = Map<String, List<dynamic>>.from(collegesHashMap);
+    for (int i = 0; i < listOfColleges.length; i++) {
+      if (collegesMap.containsKey(listOfColleges[i])) {
+        final collegesMapAsString =
+            List<String>.from(collegesMap[listOfColleges[i]]);
+        listOfMajors.addAll(collegesMapAsString);
+      }
+    }
+    return listOfMajors;
   }
 }

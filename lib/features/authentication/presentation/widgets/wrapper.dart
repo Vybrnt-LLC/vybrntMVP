@@ -33,7 +33,7 @@ class Wrapper extends StatelessWidget {
             },
             unauthenticated: (_) {
               //ExtendedNavigator.of(context);
-              context.navigator.replace(route.Routes.signInPage);
+              context.navigator.replace(route.Routes.welcome);
               //Navigator.pop(context);
             });
       },

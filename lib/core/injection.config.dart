@@ -52,6 +52,7 @@ import '../features/activity/domain/i_push_notification.dart';
 import '../features/user/domain/i_user_service.dart';
 import 'navbar/application/bloc/navbar_bloc.dart';
 import 'routes/navigation_service.dart';
+import '../features/authentication/application/onboarding_info/onboarding_info_bloc.dart';
 import '../features/organization/application/bloc/org_bloc.dart';
 import '../features/calendar/application/org_bloc/org_calendar_bloc.dart';
 import '../features/organization/services/org_service.dart';
@@ -107,6 +108,7 @@ GetIt $initGetIt(
   gh.factory<NavbarBloc>(() => NavbarBloc(get<AnalyticsService>()));
   gh.lazySingleton<NavigationService>(
       () => firebaseInjectableModule.navigationService);
+  gh.factory<OnboardingInfoBloc>(() => OnboardingInfoBloc(get<IUserService>()));
   gh.factory<OrgCalendarBloc>(
       () => OrgCalendarBloc(get<ICalendarService>(), get<IOrgService>()));
   gh.factory<OrgWatcherBloc>(() => OrgWatcherBloc(get<IOrgService>()));

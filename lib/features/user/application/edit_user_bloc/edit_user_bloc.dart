@@ -32,13 +32,13 @@ class EditUserBloc extends Bloc<EditUserEvent, EditUserState> {
     }, saveUser: (e) async* {
       await _userService.updateUser(state.user);
     }, userProfileImageChanged: (e) async* {
-      String profileImageUrl =
+      final String profileImageUrl =
           await _userService.uploadUserProfileImage(e.url, e.image);
       yield state.copyWith(
         user: state.user.copyWith(profileImageUrl: profileImageUrl),
       );
     }, userBannerImageChanged: (e) async* {
-      String bannerImageUrl =
+      final String bannerImageUrl =
           await _userService.uploadUserBannerImage(e.url, e.image);
       yield state.copyWith(
         user: state.user.copyWith(bannerImageUrl: bannerImageUrl),

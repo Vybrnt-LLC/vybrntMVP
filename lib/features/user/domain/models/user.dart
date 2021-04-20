@@ -10,7 +10,7 @@ part 'user.freezed.dart';
 abstract class User with _$User {
   const factory User({
     @required UniqueId userID,
-    @required String userName,
+    @required Username userName,
     @required String profileName,
     @required String bannerImageUrl,
     @required String profileImageUrl,
@@ -23,7 +23,7 @@ abstract class User with _$User {
 
   factory User.empty() => User(
         userID: UniqueId(),
-        userName: '',
+        userName: Username('Username'),
         profileName: '',
         bannerImageUrl: '',
         profileImageUrl: '',

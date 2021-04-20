@@ -2,13 +2,17 @@ import 'dart:io';
 
 import 'package:dartz/dartz.dart';
 import 'package:kt_dart/kt.dart';
+import 'package:vybrnt_mvp/core/auth/value_objects.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/event_failure.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/event.dart';
 import 'package:vybrnt_mvp/features/calendar/domain/models/org_list_model.dart';
+import 'package:vybrnt_mvp/features/homefeed/domain/models/university.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/emember.dart';
 import 'package:vybrnt_mvp/features/organization/domain/models/organization.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user.dart';
 import 'package:vybrnt_mvp/features/user/domain/models/user_list_model.dart';
+
+import 'models/user_failure.dart';
 
 abstract class IUserService {
   Future<OrgList> getOrgList(String orgID);
@@ -39,4 +43,14 @@ abstract class IUserService {
   Future<bool> isBlocking(String userID);
   Future blockUser(String userID);
   Future unblockUser(String userID);
+  Future<bool> isUsernameTaken(String username);
+  Future<Either<UserFailure, Unit>> saveOnboardingInfo(
+      Map<String, dynamic> info);
+  Future<List<University>> getUniversities();
+  Future<List<String>> getColleges(String universityID);
+  Future<List<String>> getCampuses(String universityID);
+  Future<List<String>> getMajors(
+      String universityID, List<String> listOfColleges);
+
+  //Need to change this and state so that the valueobject and method return a failure.
 }

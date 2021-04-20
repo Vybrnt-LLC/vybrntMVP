@@ -26,7 +26,7 @@ abstract class UserDto with _$UserDto {
   factory UserDto.fromDomain(User user) {
     return UserDto(
       userID: user.userID.getOrCrash(),
-      userName: user.userName,
+      userName: user.userName.getOrCrash(),
       profileName: user.profileName,
       bannerImageUrl: user.bannerImageUrl,
       profileImageUrl: user.profileImageUrl,
@@ -64,7 +64,7 @@ extension UserDtoX on UserDto {
     return User(
       userID: UniqueId.fromUniqueString(userID),
       profileName: profileName,
-      userName: userName,
+      userName: Username(userName),
       bannerImageUrl: bannerImageUrl,
       profileImageUrl: profileImageUrl,
       bio: bio,

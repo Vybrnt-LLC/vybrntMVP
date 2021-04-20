@@ -6,6 +6,7 @@ enum AppTheme {
   greenDark,
   blueLight,
   blueDark,
+  purpleLight,
 }
 
 final appThemeData = {
@@ -35,6 +36,36 @@ final appThemeData = {
         subtitle1: subtitle1TextStyle,
         bodyText1: body1TextStyle,
         bodyText2: body2TextStyle),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+      backgroundColor: const Color(0xFFA4528A),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+    )),
+  ),
+  AppTheme.purpleLight: ThemeData(
+    brightness: Brightness.light,
+    primaryColor: const Color(0xFFA4528A),
+    appBarTheme:
+        const AppBarTheme(textTheme: TextTheme(headline1: appBarTextStyle)),
+    textTheme: const TextTheme(
+        headline1: headline1TextStyle,
+        subtitle1: subtitle1TextStyle,
+        bodyText1: body1TextStyle,
+        bodyText2: body2TextStyle),
+    inputDecorationTheme: const InputDecorationTheme(
+      filled: true,
+      border: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.all(Radius.circular(30.0))),
+      fillColor: Colors.black12,
+    ),
+    elevatedButtonTheme: ElevatedButtonThemeData(
+        style: TextButton.styleFrom(
+      backgroundColor: const Color(0xFFA4528A),
+      shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(15.0))),
+    )),
   ),
   AppTheme.blueDark: ThemeData(
     brightness: Brightness.dark,

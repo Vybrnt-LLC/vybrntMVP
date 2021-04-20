@@ -59,17 +59,18 @@ class SignInForm extends StatelessWidget {
             ? AutovalidateMode.always
             : AutovalidateMode.disabled,
         child: ListView(
+          padding: const EdgeInsets.all(16.0),
           children: <Widget>[
             const Center(
               child: Padding(
                 padding: EdgeInsets.fromLTRB(12.0, 30.0, 12.0, 0),
                 child: Image(
-                  height: 300,
+                  height: 250,
                   image: AssetImage('assets/logos/VYBrntfin-07.png'),
                 ),
               ),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 25),
             TextFormField(
                 decoration: const InputDecoration(
                   prefixIcon: Icon(Icons.email),
@@ -113,32 +114,33 @@ class SignInForm extends StatelessWidget {
             ),
             const SizedBox(height: 8),
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
-                Expanded(
-                    child: FlatButton(
-                        onPressed: () {
-                          context.bloc<SignInFormBloc>().add(
-                              const SignInFormEvent
-                                  .signInWithEmailAndPasswordPressed());
-                        },
-                        child: const Text('SIGN IN'))),
-                Expanded(
-                    child: FlatButton(
-                        onPressed: () {
-                          context.bloc<SignInFormBloc>().add(
-                              const SignInFormEvent
-                                  .registerWithEmailAndPasswordPressed());
-                        },
-                        child: const Text('REGISTER'))),
-                Expanded(
-                    child: FlatButton(
-                      onPressed:() {
-                            context.navigator.push(route.Routes.forgotMyPasswordPage);
-                            },
-                        child: const Text('FORGOT MY PASSWORD'))),
-                   
-                    
-                
+                FlatButton(
+                    onPressed: () {
+                      context.bloc<SignInFormBloc>().add(const SignInFormEvent
+                          .signInWithEmailAndPasswordPressed());
+                    },
+                    child: Text('Sign In',
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: const Color(0xFFA4528A),
+                            fontWeight: FontWeight.bold))),
+                // Expanded(
+                //     child: FlatButton(
+                //         onPressed: () {
+                //           context.bloc<SignInFormBloc>().add(
+                //               const SignInFormEvent
+                //                   .registerWithEmailAndPasswordPressed());
+                //         },
+                //         child: const Text('REGISTER'))),
+                TextButton(
+                    onPressed: () {
+                      context.navigator.push(route.Routes.forgotMyPasswordPage);
+                    },
+                    child: Text('Forgot My Password',
+                        style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            color: const Color(0xFFA4528A),
+                            fontWeight: FontWeight.bold))),
               ],
             ),
             Padding(
@@ -165,29 +167,31 @@ class SignInForm extends StatelessWidget {
                         ),
                       ]))),
             ),
-            FlatButton(
-                onPressed: () {
-                  context
-                      .bloc<SignInFormBloc>()
-                      .add(const SignInFormEvent.signInWithGooglePressed());
-                },
-                color: Colors.lightBlue,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      Socicon.google,
-                      color: Colors.white,
-                      size: 18.0,
-                    ),
-                    SizedBox(width: 5),
-                    Text('Sign in with Google',
-                        style: TextStyle(
-                            color: Colors.white,
-                            //fontWeight: FontWeight.bold,
-                            fontSize: 19.0)),
-                  ],
-                )),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ElevatedButton(
+                  onPressed: () {
+                    context
+                        .bloc<SignInFormBloc>()
+                        .add(const SignInFormEvent.signInWithGooglePressed());
+                  },
+                  //color: const Color(0xFFA4528A),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Icon(
+                        Socicon.google,
+                        color: Colors.white,
+                        //size: 18.0,
+                      ),
+                      const SizedBox(width: 10),
+                      Text('Sign in with Google',
+                          style: Theme.of(context).textTheme.bodyText1.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold)),
+                    ],
+                  )),
+            ),
             const SizedBox(height: 10),
             if (supportsAppleSignIn)
               SignInWithAppleButton(

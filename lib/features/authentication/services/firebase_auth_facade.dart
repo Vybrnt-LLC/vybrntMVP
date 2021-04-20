@@ -91,7 +91,7 @@ class FirebaseAuthFacade implements IAuthFacade {
           .doc(postDTO.postID)
           .set(postDTO.toJson());
     } catch (e) {
-      print(e);
+      debugPrint(e.toString());
     }
   }
 
@@ -242,19 +242,18 @@ class FirebaseAuthFacade implements IAuthFacade {
     return Future.wait([_googleSignIn.signOut(), _firebaseAuth.signOut()]);
   }
 
-  Future<Either<AuthFailure, Unit>> forgotMyPassword({EmailAddress emailAddress}) async {
-    try{
-      await _firebaseAuth.sendPasswordResetEmail(email: emailAddress.getOrCrash());
+  @override
+  Future<Either<AuthFailure, Unit>> forgotMyPassword(
+      {EmailAddress emailAddress}) async {
+    try {
+      await _firebaseAuth.sendPasswordResetEmail(
+          email: emailAddress.getOrCrash());
       return right(unit);
+    } catch (e) {
+      return left(const AuthFailure.serverError());
     }
-    on firebaseAuth.FirebaseAuthException catch (e){
-        print(e);
-        return left(const AuthFailure.serverError());
-    }      
   }
 }
-
-
 
 Future addVybrntToFollowList(String currentUserID) async {
   const orgID = 'cec10340-090e-11eb-a5dc-1d0e34e32b97';
@@ -272,4 +271,6 @@ Future addVybrntToFollowList(String currentUserID) async {
       .collection('orgFollowers')
       .doc(currentUserID)
       .set({'isToggled': true, 'notify': true});
+
+  //final docs = usersRef.where('username', isEqualTo: 'JSakyi').get();
 }

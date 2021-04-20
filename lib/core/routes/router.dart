@@ -1,7 +1,13 @@
 import 'package:auto_route/auto_route_annotations.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:vybrnt_mvp/core/report/report_page.dart';
+import 'package:vybrnt_mvp/features/authentication/presentation/screens/intro_screen.dart';
+import 'package:vybrnt_mvp/features/authentication/presentation/screens/onboarding_account_screen.dart';
+import 'package:vybrnt_mvp/features/authentication/presentation/screens/onboarding_follow.dart';
+import 'package:vybrnt_mvp/features/authentication/presentation/screens/onboarding_info_screen.dart';
+import 'package:vybrnt_mvp/features/authentication/presentation/screens/onboarding_vyb.dart';
 import 'package:vybrnt_mvp/features/authentication/presentation/screens/sign_in_page.dart';
+import 'package:vybrnt_mvp/features/authentication/presentation/screens/welcome_screen.dart';
 import 'package:vybrnt_mvp/features/authentication/presentation/widgets/wrapper.dart';
 import 'package:vybrnt_mvp/features/authentication/presentation/widgets/wrapper2.dart';
 import 'package:vybrnt_mvp/features/calendar/presentation/screens/create_event_screen.dart';
@@ -13,17 +19,32 @@ import 'package:vybrnt_mvp/features/messaging/presentation/screens/messaging_scr
 import 'package:vybrnt_mvp/features/organization/presentation/screens/edit_organization_page_screen.dart';
 import 'package:vybrnt_mvp/features/organization/presentation/screens/org_screen.dart';
 import 'package:vybrnt_mvp/features/organization/presentation/screens/user_list_screen.dart';
-import 'package:vybrnt_mvp/features/posts/presentation/core/post_detail_with_bloc_provider.dart';
 import 'package:vybrnt_mvp/features/posts/presentation/posts/post_detail/post_screen.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/edit_user_profile_screen.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/org_list_screen.dart';
 import 'package:vybrnt_mvp/features/user/presentation/screens/user_screen.dart';
 import 'package:vybrnt_mvp/features/authentication/presentation/screens/forgot_my_password_page.dart';
+
 @MaterialAutoRouter(
   routes: <AutoRoute>[
     // initial route is named "/"
     MaterialRoute(page: SignInPage, name: 'signInPage', initial: false),
-    MaterialRoute(page: ForgotMyPasswordPage, name: 'forgotMyPasswordPage', initial: false),
+    MaterialRoute(page: WelcomeScreen, name: 'welcome', initial: false),
+    MaterialRoute(page: IntroScreen, name: 'intro', initial: false),
+    MaterialRoute(
+        page: OnboardingAccountScreen,
+        name: 'onboardingAccount',
+        initial: false),
+    MaterialRoute(
+        page: OnboardingInfoScreen, name: 'onboardingInfo', initial: false),
+    MaterialRoute(
+        page: OnboardingVybScreen, name: 'onboardingVyb', initial: false),
+    MaterialRoute(
+        page: OnboardingFollowScreen, name: 'onboardingFollow', initial: false),
+    MaterialRoute(
+        page: ForgotMyPasswordPage,
+        name: 'forgotMyPasswordPage',
+        initial: false),
     MaterialRoute(page: Wrapper, name: 'wrapper', initial: true),
     MaterialRoute(page: Wrapper2, name: 'wrapper2', initial: false),
     MaterialRoute(

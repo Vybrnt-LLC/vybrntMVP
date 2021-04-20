@@ -61,6 +61,7 @@ dependencies:
   flutter_bloc: ^6.0.5
   flutter_circle_color_picker: ^0.2.0
   flutter_datetime_picker: ^1.3.8
+  flutter_form_builder: ^4.2.0
   flutter_hooks: ^0.10.0
   flutter_image_compress: ^0.6.3
   flutter_link_preview: ^1.5.6
@@ -83,6 +84,7 @@ dependencies:
   image_cropper: ^1.2.1
   injectable: ^1.0.4
   intl: ^0.16.1
+  introduction_screen: ^1.0.9
   json_annotation: ^3.0.1
   kt_dart: ^0.7.0+1
   like_button: ^1.0.4
@@ -94,6 +96,7 @@ dependencies:
   path_provider: ^1.2.0
   provider: ^4.0.2
   provider_architecture: ^1.0.5
+  regexpattern: ^1.0.0
   reorderables: ^0.3.2
   responsive_builder: ^0.1.4
   rxdart: ^0.23.1
@@ -144,6 +147,8 @@ flutter:
     - assets/categories/
     - assets/gifs/
     - assets/logos/
+    - assets/motto/
+    - assets/onboarding/
     - config/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware.

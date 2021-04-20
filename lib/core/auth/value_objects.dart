@@ -26,11 +26,10 @@ abstract class ValueObject<T> implements IValidatable {
   }
 
   @override
-  bool operator == (Object o) {
-    if(identical(this, o)) return true;
+  bool operator ==(Object o) {
+    if (identical(this, o)) return true;
 
-    return o is ValueObject<T> &&
-    o.value == value;
+    return o is ValueObject<T> && o.value == value;
   }
 
   @override
@@ -73,4 +72,18 @@ class StringSingleLine extends ValueObject<String> {
   }
 
   const StringSingleLine._(this.value);
+}
+
+class Username extends ValueObject<String> {
+  @override
+  final Either<ValueFailure<String>, String> value;
+
+  factory Username(String input) {
+    assert(input != null);
+    return Username._(
+      validateUsername(input),
+    );
+  }
+
+  const Username._(this.value);
 }

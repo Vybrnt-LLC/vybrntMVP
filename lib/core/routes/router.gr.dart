@@ -12,7 +12,13 @@ import 'package:flutter/material.dart';
 import 'package:kt_dart/kt.dart';
 
 import '../../features/authentication/presentation/screens/forgot_my_password_page.dart';
+import '../../features/authentication/presentation/screens/intro_screen.dart';
+import '../../features/authentication/presentation/screens/onboarding_account_screen.dart';
+import '../../features/authentication/presentation/screens/onboarding_follow.dart';
+import '../../features/authentication/presentation/screens/onboarding_info_screen.dart';
+import '../../features/authentication/presentation/screens/onboarding_vyb.dart';
 import '../../features/authentication/presentation/screens/sign_in_page.dart';
+import '../../features/authentication/presentation/screens/welcome_screen.dart';
 import '../../features/authentication/presentation/widgets/wrapper.dart';
 import '../../features/authentication/presentation/widgets/wrapper2.dart';
 import '../../features/calendar/domain/models/event.dart';
@@ -34,6 +40,12 @@ import '../report/report_page.dart';
 
 class Routes {
   static const String signInPage = '/sign-in-page';
+  static const String welcome = '/welcome-screen';
+  static const String intro = '/intro-screen';
+  static const String onboardingAccount = '/onboarding-account-screen';
+  static const String onboardingInfo = '/onboarding-info-screen';
+  static const String onboardingVyb = '/onboarding-vyb-screen';
+  static const String onboardingFollow = '/onboarding-follow-screen';
   static const String forgotMyPasswordPage = '/forgot-my-password-page';
   static const String wrapper = '/';
   static const String wrapper2 = '/Wrapper2';
@@ -53,6 +65,12 @@ class Routes {
   static const String report = '/report-screen';
   static const all = <String>{
     signInPage,
+    welcome,
+    intro,
+    onboardingAccount,
+    onboardingInfo,
+    onboardingVyb,
+    onboardingFollow,
     forgotMyPasswordPage,
     wrapper,
     wrapper2,
@@ -77,6 +95,12 @@ class Router extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.signInPage, page: SignInPage),
+    RouteDef(Routes.welcome, page: WelcomeScreen),
+    RouteDef(Routes.intro, page: IntroScreen),
+    RouteDef(Routes.onboardingAccount, page: OnboardingAccountScreen),
+    RouteDef(Routes.onboardingInfo, page: OnboardingInfoScreen),
+    RouteDef(Routes.onboardingVyb, page: OnboardingVybScreen),
+    RouteDef(Routes.onboardingFollow, page: OnboardingFollowScreen),
     RouteDef(Routes.forgotMyPasswordPage, page: ForgotMyPasswordPage),
     RouteDef(Routes.wrapper, page: Wrapper),
     RouteDef(Routes.wrapper2, page: Wrapper2),
@@ -101,6 +125,48 @@ class Router extends RouterBase {
     SignInPage: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => SignInPage(),
+        settings: data,
+      );
+    },
+    WelcomeScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => WelcomeScreen(),
+        settings: data,
+      );
+    },
+    IntroScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => IntroScreen(),
+        settings: data,
+      );
+    },
+    OnboardingAccountScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OnboardingAccountScreen(),
+        settings: data,
+      );
+    },
+    OnboardingInfoScreen: (data) {
+      final args = data.getArgs<OnboardingInfoScreenArguments>(
+        orElse: () => OnboardingInfoScreenArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OnboardingInfoScreen(
+          key: args.key,
+          firestore: args.firestore,
+        ),
+        settings: data,
+      );
+    },
+    OnboardingVybScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OnboardingVybScreen(),
+        settings: data,
+      );
+    },
+    OnboardingFollowScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => OnboardingFollowScreen(),
         settings: data,
       );
     },
@@ -294,6 +360,13 @@ class Router extends RouterBase {
 /// ************************************************************************
 /// Arguments holder classes
 /// *************************************************************************
+
+/// OnboardingInfoScreen arguments holder class
+class OnboardingInfoScreenArguments {
+  final Key key;
+  final FirebaseFirestore firestore;
+  OnboardingInfoScreenArguments({this.key, this.firestore});
+}
 
 /// Wrapper2 arguments holder class
 class Wrapper2Arguments {
