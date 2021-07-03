@@ -432,7 +432,7 @@ class UserService implements IUserService {
 
   @override
   Future<Either<UserFailure, Unit>> saveOnboardingInfo(
-      Map<String, dynamic> info) async {}
+      Map<String, dynamic> info, User user) async {}
 
   @override
   Future<List<University>> getUniversities() async {

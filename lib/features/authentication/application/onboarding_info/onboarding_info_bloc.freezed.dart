@@ -966,10 +966,8 @@ class _$OnboardingInfoStateTearOff {
       @required bool showErrorMessages,
       @required bool isSaving,
       @required bool isUsernameTaken,
-      @required String username,
       @required User user,
       @required University university,
-      @required String campusID,
       @required List<University> listOfUniversities,
       @required List<String> listOfColleges,
       @required List<String> listOfMajors,
@@ -980,10 +978,8 @@ class _$OnboardingInfoStateTearOff {
       showErrorMessages: showErrorMessages,
       isSaving: isSaving,
       isUsernameTaken: isUsernameTaken,
-      username: username,
       user: user,
       university: university,
-      campusID: campusID,
       listOfUniversities: listOfUniversities,
       listOfColleges: listOfColleges,
       listOfMajors: listOfMajors,
@@ -1001,10 +997,8 @@ mixin _$OnboardingInfoState {
   bool get showErrorMessages;
   bool get isSaving;
   bool get isUsernameTaken;
-  String get username;
   User get user;
   University get university;
-  String get campusID;
   List<University> get listOfUniversities;
   List<String> get listOfColleges;
   List<String> get listOfMajors;
@@ -1023,10 +1017,8 @@ abstract class $OnboardingInfoStateCopyWith<$Res> {
       bool showErrorMessages,
       bool isSaving,
       bool isUsernameTaken,
-      String username,
       User user,
       University university,
-      String campusID,
       List<University> listOfUniversities,
       List<String> listOfColleges,
       List<String> listOfMajors,
@@ -1051,10 +1043,8 @@ class _$OnboardingInfoStateCopyWithImpl<$Res>
     Object showErrorMessages = freezed,
     Object isSaving = freezed,
     Object isUsernameTaken = freezed,
-    Object username = freezed,
     Object user = freezed,
     Object university = freezed,
-    Object campusID = freezed,
     Object listOfUniversities = freezed,
     Object listOfColleges = freezed,
     Object listOfMajors = freezed,
@@ -1072,11 +1062,9 @@ class _$OnboardingInfoStateCopyWithImpl<$Res>
       isUsernameTaken: isUsernameTaken == freezed
           ? _value.isUsernameTaken
           : isUsernameTaken as bool,
-      username: username == freezed ? _value.username : username as String,
       user: user == freezed ? _value.user : user as User,
       university:
           university == freezed ? _value.university : university as University,
-      campusID: campusID == freezed ? _value.campusID : campusID as String,
       listOfUniversities: listOfUniversities == freezed
           ? _value.listOfUniversities
           : listOfUniversities as List<University>,
@@ -1127,10 +1115,8 @@ abstract class _$OnboardingInfoStateCopyWith<$Res>
       bool showErrorMessages,
       bool isSaving,
       bool isUsernameTaken,
-      String username,
       User user,
       University university,
-      String campusID,
       List<University> listOfUniversities,
       List<String> listOfColleges,
       List<String> listOfMajors,
@@ -1159,10 +1145,8 @@ class __$OnboardingInfoStateCopyWithImpl<$Res>
     Object showErrorMessages = freezed,
     Object isSaving = freezed,
     Object isUsernameTaken = freezed,
-    Object username = freezed,
     Object user = freezed,
     Object university = freezed,
-    Object campusID = freezed,
     Object listOfUniversities = freezed,
     Object listOfColleges = freezed,
     Object listOfMajors = freezed,
@@ -1180,11 +1164,9 @@ class __$OnboardingInfoStateCopyWithImpl<$Res>
       isUsernameTaken: isUsernameTaken == freezed
           ? _value.isUsernameTaken
           : isUsernameTaken as bool,
-      username: username == freezed ? _value.username : username as String,
       user: user == freezed ? _value.user : user as User,
       university:
           university == freezed ? _value.university : university as University,
-      campusID: campusID == freezed ? _value.campusID : campusID as String,
       listOfUniversities: listOfUniversities == freezed
           ? _value.listOfUniversities
           : listOfUniversities as List<University>,
@@ -1210,10 +1192,8 @@ class _$_OnboardingInfoState implements _OnboardingInfoState {
       @required this.showErrorMessages,
       @required this.isSaving,
       @required this.isUsernameTaken,
-      @required this.username,
       @required this.user,
       @required this.university,
-      @required this.campusID,
       @required this.listOfUniversities,
       @required this.listOfColleges,
       @required this.listOfMajors,
@@ -1223,10 +1203,8 @@ class _$_OnboardingInfoState implements _OnboardingInfoState {
         assert(showErrorMessages != null),
         assert(isSaving != null),
         assert(isUsernameTaken != null),
-        assert(username != null),
         assert(user != null),
         assert(university != null),
-        assert(campusID != null),
         assert(listOfUniversities != null),
         assert(listOfColleges != null),
         assert(listOfMajors != null),
@@ -1242,13 +1220,9 @@ class _$_OnboardingInfoState implements _OnboardingInfoState {
   @override
   final bool isUsernameTaken;
   @override
-  final String username;
-  @override
   final User user;
   @override
   final University university;
-  @override
-  final String campusID;
   @override
   final List<University> listOfUniversities;
   @override
@@ -1262,7 +1236,7 @@ class _$_OnboardingInfoState implements _OnboardingInfoState {
 
   @override
   String toString() {
-    return 'OnboardingInfoState(saveFailureOrSuccessOption: $saveFailureOrSuccessOption, showErrorMessages: $showErrorMessages, isSaving: $isSaving, isUsernameTaken: $isUsernameTaken, username: $username, user: $user, university: $university, campusID: $campusID, listOfUniversities: $listOfUniversities, listOfColleges: $listOfColleges, listOfMajors: $listOfMajors, listOfSelectedColleges: $listOfSelectedColleges, listOfCampuses: $listOfCampuses)';
+    return 'OnboardingInfoState(saveFailureOrSuccessOption: $saveFailureOrSuccessOption, showErrorMessages: $showErrorMessages, isSaving: $isSaving, isUsernameTaken: $isUsernameTaken, user: $user, university: $university, listOfUniversities: $listOfUniversities, listOfColleges: $listOfColleges, listOfMajors: $listOfMajors, listOfSelectedColleges: $listOfSelectedColleges, listOfCampuses: $listOfCampuses)';
   }
 
   @override
@@ -1283,17 +1257,11 @@ class _$_OnboardingInfoState implements _OnboardingInfoState {
             (identical(other.isUsernameTaken, isUsernameTaken) ||
                 const DeepCollectionEquality()
                     .equals(other.isUsernameTaken, isUsernameTaken)) &&
-            (identical(other.username, username) ||
-                const DeepCollectionEquality()
-                    .equals(other.username, username)) &&
             (identical(other.user, user) ||
                 const DeepCollectionEquality().equals(other.user, user)) &&
             (identical(other.university, university) ||
                 const DeepCollectionEquality()
                     .equals(other.university, university)) &&
-            (identical(other.campusID, campusID) ||
-                const DeepCollectionEquality()
-                    .equals(other.campusID, campusID)) &&
             (identical(other.listOfUniversities, listOfUniversities) ||
                 const DeepCollectionEquality()
                     .equals(other.listOfUniversities, listOfUniversities)) &&
@@ -1318,10 +1286,8 @@ class _$_OnboardingInfoState implements _OnboardingInfoState {
       const DeepCollectionEquality().hash(showErrorMessages) ^
       const DeepCollectionEquality().hash(isSaving) ^
       const DeepCollectionEquality().hash(isUsernameTaken) ^
-      const DeepCollectionEquality().hash(username) ^
       const DeepCollectionEquality().hash(user) ^
       const DeepCollectionEquality().hash(university) ^
-      const DeepCollectionEquality().hash(campusID) ^
       const DeepCollectionEquality().hash(listOfUniversities) ^
       const DeepCollectionEquality().hash(listOfColleges) ^
       const DeepCollectionEquality().hash(listOfMajors) ^
@@ -1340,10 +1306,8 @@ abstract class _OnboardingInfoState implements OnboardingInfoState {
       @required bool showErrorMessages,
       @required bool isSaving,
       @required bool isUsernameTaken,
-      @required String username,
       @required User user,
       @required University university,
-      @required String campusID,
       @required List<University> listOfUniversities,
       @required List<String> listOfColleges,
       @required List<String> listOfMajors,
@@ -1359,13 +1323,9 @@ abstract class _OnboardingInfoState implements OnboardingInfoState {
   @override
   bool get isUsernameTaken;
   @override
-  String get username;
-  @override
   User get user;
   @override
   University get university;
-  @override
-  String get campusID;
   @override
   List<University> get listOfUniversities;
   @override

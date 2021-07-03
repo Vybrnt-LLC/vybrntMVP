@@ -45,7 +45,7 @@ abstract class IUserService {
   Future unblockUser(String userID);
   Future<bool> isUsernameTaken(String username);
   Future<Either<UserFailure, Unit>> saveOnboardingInfo(
-      Map<String, dynamic> info);
+      Map<String, dynamic> info, User user);
   Future<List<University>> getUniversities();
   Future<List<String>> getColleges(String universityID);
   Future<List<String>> getCampuses(String universityID);

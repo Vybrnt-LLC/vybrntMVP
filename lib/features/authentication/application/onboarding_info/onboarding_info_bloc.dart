@@ -57,7 +57,8 @@ class OnboardingInfoBloc
         isSaving: true,
         saveFailureOrSuccessOption: none(),
       );
-      final failureOrSuccess = await _userService.saveOnboardingInfo(e.data);
+      final failureOrSuccess =
+          await _userService.saveOnboardingInfo(e.data, state.user);
 
       yield state.copyWith(
         isSaving: false,
